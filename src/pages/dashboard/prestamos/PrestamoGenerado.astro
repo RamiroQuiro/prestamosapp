@@ -1,0 +1,31 @@
+---
+import ContenedorInputForm from "../../../components/moleculas/ContenedorInputForm.astro";
+
+---
+
+<div class="flex flex-col items-start w-full justify-normal gap-2 border-y py-5" >
+    <ContenedorInputForm
+      label="importe x cuotas"
+      type="number"
+      name="importeCuota"
+      value={150}
+    />
+    <ContenedorInputForm
+      label="total a pagar"
+      type="number"
+      name="montoTotal"
+      value={150}
+    />
+    <ContenedorInputForm
+      label="Interes Generado"
+      type="number"
+      name="interesGenerado"
+      value={150}
+    />
+    <ContenedorInputForm
+      label="fecha"
+      type="date"
+      name="fechaInicio"
+      value={150}
+    />
+  </div>

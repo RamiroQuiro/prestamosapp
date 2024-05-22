@@ -6,14 +6,15 @@ export default {
 			colors: {
 				primary: {
 					100: '#5B2CE4',
-					200: '#B290B8',
-					300:'#6C84AA',
+					200: '#5F48A3',
+					300:'#8E884A',
+					400:'#4C4563',
 					'bg-claro': '#E9E9F1',
 					'bg-componentes': '#FFFFFF',
-					'resaltado': '#FFFACD',
+					'resaltado': '#E3D32B',
 					'texto': '#2E273F',
-					'error': "#FF7F50",
-					'bacSidebar':'#1B2728'
+					'error': "#BF0404",
+					'background':'#E9E9F1'
 				}
 			},
 			fontFamily: {

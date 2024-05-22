@@ -1,0 +1,59 @@
+---
+import Button1 from "../../../components/atomos/Button1.astro";
+import ContenedorBoton from "../../../components/moleculas/ContenedorBoton.astro";
+import ContenedorInputForm from "../../../components/moleculas/ContenedorInputForm.astro";
+import ContenedorInputSelected from "../../../components/moleculas/ContenedorInputSelected.astro";
+
+const opciones = [
+  {
+    name: "tasa1",
+    id: 1,
+  },
+  {
+    name: "tasa2",
+    id: 2,
+  },
+  {
+    name: "tasa3",
+    id: 3,
+  },
+];
+---
+
+<form action="POST" class="flex flex-col items-start border-y p-5 w-full">
+  <ContenedorInputForm
+    label="Buscar Clientes"
+    type="search"
+    name="searchCliente"
+    styleInput=""
+  />
+  <div class="flex items-center w-full justify-normal">
+    <ContenedorInputForm
+      label="importe de credito"
+      type="number"
+      name="importeCredito"
+    />
+    <ContenedorInputSelected
+    label="Modalidad de Pago"
+    name="modalidadPago"
+    options={opciones}
+  />
+  </div>
+  <div class="flex items-center w-full justify-normal">
+    <ContenedorInputSelected
+      label="Seleccionar Interes"
+      name="tipoInteres"
+      options={opciones}
+    />
+    <ContenedorInputSelected
+    label="N° de Cuotas"
+    name="nCuotas"
+    options={opciones}
+  />
+  </div>
+
+<ContenedorBoton>
+    
+    <Button1>Generar Prestamo</Button1>
+</ContenedorBoton>
+</form>

@@ -1,20 +1,33 @@
 ---
-import Titulo1 from "../../../components/atomo/Titulo1.astro";
+import Button1 from "../../../components/atomos/Button1.astro";
+import Titulo1 from "../../../components/atomos/Titulo1.astro";
+import ContenedorBoton from "../../../components/moleculas/ContenedorBoton.astro";
+import ContenedorInputForm from "../../../components/moleculas/ContenedorInputForm.astro";
 import MainDash from "../../../components/organismos/MainDash.astro";
 import Layoutdash from "../layouts/Layoutdash.astro";
-import FormularioPrestamo from '../../../components/organismos/FormularioPrestamo.astro'
-
+import FormularioPrestamo from "./FormularioPrestamo.astro";
+import PrestamoGenerado from "./PrestamoGenerado.astro";
 ---
+
 <Layoutdash title="Prestamos">
-
-<MainDash>
-
-    <div class=" flex w-full p-5 flex-col items-start justify-start">
-        <Titulo1>Prestamos</Titulo1>
-        <div class="w-full flex items-start">
-            <FormularioPrestamo/>
-            <div class="w-2/6">Muesta de numeros</div>
-        </div>
+  <MainDash>
+    <div class="flex w-full p-5 flex-col items-start justify-start">
+      <Titulo1>Prestamos</Titulo1>
+      <div class="w-full flex items-start">
+        <FormularioPrestamo />
+      </div>
     </div>
-</MainDash>
+    <div
+      class="flex w-2/6 p-5 flex-col items-  bg-primary-300/40 rounded-lg justify-start"
+    >
+      <Titulo1>Prestamo Generado</Titulo1>
+
+      <PrestamoGenerado/>
+
+    <ContenedorBoton>
+        <Button1>Confirmar</Button1>
+        <Button1>limpiar</Button1>
+        </ContenedorBoton>
+    </div>
+  </MainDash>
 </Layoutdash>
