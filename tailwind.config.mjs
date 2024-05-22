@@ -17,7 +17,7 @@ export default {
 				}
 			},
 			fontFamily: {
-				monserrat: ['Montserrat']
+				'IndieFlower': ['IndieFlower','serif']
 			},
 		},
 	},

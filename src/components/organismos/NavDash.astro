@@ -1,4 +1,6 @@
 ---
+import Titulo1 from "../atomo/Titulo1.astro";
+
 
 
 
@@ -7,15 +9,21 @@ const fecha = Date();
 
 
 <nav
-class="fixed bg-primary-bg-componentes md:w-[78vw] w-full right-0 rounded-bl-3xl text-sm text-primary-texto shadow-md md:h-36 flex flex-col items-center justify-start"
+class="fixed border-l-2 border-primary-100/80 bg-primary-bg-componentes md:w-10/12 w-full right-0 rounded-bl-3xl text-sm text-primary-texto shadow-md md:h-36 flex flex-col items-center justify-start"
 >
 <div class="w-full flex  h-full items-center justify-normal border-b pb-2">
   <div class="px-5 md:hidden">RamiroCode</div>
-  <div class="flex flex-col bg-blue-500 items-start px-5 md:w-1/4 flex-shrink">
-    <p>Biendenido!</p>
-    <p>{fecha}</p>
+  <div class="flex flex-col items-start px-5 md:w-1/4 flex-shrink">
+    <Titulo1>Biendenido!</Titulo1>
+    <span class="text-sm font-semibold fonme">  {
+      new Date().toLocaleDateString("es-AR", {
+        day: "2-digit",
+        month: "short",
+        year: "numeric",
+      })
+    }</span>
   </div>
-  <div <div class="flex items-start bg-red-500 justify-end gap-5 px-5 w-full flex-shrink">
+  <div <div class="flex items-start  justify-end gap-5 px-5 w-full flex-shrink">
     <button>simulador</button>
     <div>cerrar sesion</div>
   </div>
