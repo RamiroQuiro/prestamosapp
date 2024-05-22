@@ -1,16 +1,14 @@
 ---
+import InputForm from "../atomo/InputForm.astro";
+import LabelForm from "../atomo/LabelForm.astro";
+
 
 ---
 
 <form action="POST" class="flex flex-col items-start border-y p-5 w-full">
-  <div class="w-full flex items flex-col items-start gap-3 -md p-3">
-    <label for="cliente" class="text-primary-100">Buscar Cliente</label>
-    <input
-      type="search"
-      name="cliente"
-      id="cliente"
-      class="w-full bg-gray-200/50 text-base focus:ring-0 focus:border-0 px-2 py-1"
-    />
+  <div class="w-full flex items flex-col items-start gap-1 -md p-3">
+  <LabelForm htmlFor="clientes">Buscar Clientes</LabelForm>
+   <InputForm type="search" name="clientes"/>
   </div>
   <div class="flex items-center w-full justify-normal">
     <div class="w-full flex items flex-col items-start gap-3 -md p-3">
