@@ -1,13 +1,12 @@
 ---
-import NavDash from '../../../components/organismos/NavDash.astro';
-
+import NavDash from "../../../components/organismos/NavDash.astro";
+import Sidebar from "../../../components/organismos/Sidebar.astro";
 
 interface Props {
   title: string;
 }
 
 const { title } = Astro.props;
-
 ---
 
 <!doctype html>
@@ -21,13 +20,9 @@ const { title } = Astro.props;
     <title>{title}</title>
   </head>
   <body class="bg-primary-bg-claro min-h-screen">
-  <NavDash/>
-<sidebar class="fixed top-0 left-0 w-[18vw] bg-primary-bg-componentes h-screen flex items-start justify-normal gap-2 ">
-	<div class="border-b w-full h-1/6">
-		<h2>Rama Code</h2>
-	</div>
-</sidebar>
-  <slot />
+    <NavDash />
+ <Sidebar/>
+    <slot />
   </body>
 </html>
 <style is:global>

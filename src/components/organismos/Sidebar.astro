@@ -1,0 +1,65 @@
+---
+import ButtonSidebar from "../moleculas/ButtonSidebar.astro";
+---
+
+<sidebar
+  class="md:fixed z-20 absolute md:top-0 bottom-0 left-0 md:w-[15vw] w-full bg-primary-bg-componentes h-20 md:h-screen flex md: flex-col items-start justify-normal gap-2"
+>
+  <div class="border-b w-full h-1/6 hidden md:flex">
+    <h2>Rama Code</h2>
+  </div>
+  <div class="flex flex-col items-start w-full gap-6">
+    <div class="w-full flex items-center justify-normal gap-3">
+      <div class="w-full pl-5 flex md:flex-col items-start gap-5 mt-5">
+        <ButtonSidebar span="inicio" href="/dashboard">
+          <g id="SVGRepo_bgCarrier" stroke-width="0"></g><g
+            id="SVGRepo_tracerCarrier"
+            stroke-linecap="round"
+            stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"
+            ><path
+              d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"
+            ></path></g
+          >
+        </ButtonSidebar>
+        
+        <ButtonSidebar span="prestamos" href="/dashboard/prestamos">
+          <g id="SVGRepo_bgCarrier" stroke-width="0"></g><g
+            id="SVGRepo_tracerCarrier"
+            stroke-linecap="round"
+            stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"
+            ><path
+              d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"
+            ></path></g
+          >
+        </ButtonSidebar>
+        
+        <ButtonSidebar span="clientes" href="/dashboard/clientes">
+          <g id="SVGRepo_bgCarrier" stroke-width="0"></g><g
+            id="SVGRepo_tracerCarrier"
+            stroke-linecap="round"
+            stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"
+            ><path
+              d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"
+            ></path></g
+          >
+        </ButtonSidebar>
+        
+        <ButtonSidebar span="ajustes" href="/dashboard/ajustes">
+          <g id="SVGRepo_bgCarrier" stroke-width="0"></g><g
+            id="SVGRepo_tracerCarrier"
+            stroke-linecap="round"
+            stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"
+            ><path
+              d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"
+            ></path></g
+          >
+        </ButtonSidebar>
+        
+        
+        <div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</sidebar>

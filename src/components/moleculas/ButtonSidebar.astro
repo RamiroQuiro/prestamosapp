@@ -1,0 +1,24 @@
+---
+import SpanButtonSidebar from "../atomo/SpanButtonSidebar.astro";
+import SvgSidebar from "../atomo/SvgSidebar.astro";
+
+const { span, href } = Astro.props;
+
+const url = Astro.url;
+// Verifica si la ruta actual contiene el href
+const isHrefInUrl = url.pathname == href;
+---
+
+<a
+  href={href}
+  class={`${isHrefInUrl ? "fill-white font-bold " : "fill-primary-100 font-semibold"} z-20 rounded-lg text-primary-100 flex group gap- w hover:scale-105  relative duration-300   cursor-pointer items-center justify-start text-xs  -md py-2 gap-2 p-1.5`}
+>
+<SvgSidebar isHrefInUrl={isHrefInUrl}>
+  <slot />
+  </SvgSidebar>
+  <div
+    class="  text-white w- mx-auto w-full text-left py-0.5 -md duration-300  md:top-2 -top-full -semibold md:left-[105%] left group-hover:flex group-hover:translate-x-1.5  "
+  >
+    <SpanButtonSidebar span={span} />
+  </div>
+</a>
