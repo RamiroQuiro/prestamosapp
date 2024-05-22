@@ -20,7 +20,7 @@ const onClick=()=>{
     
       <Titulo1> Clientes </Titulo1>
       <div class="w-1/6 m-auto absolute top-2 right-0">
-        <Button1 client:load handleClick={onClick}>crear cliente</Button1>
+        <Button1 client:load handleClick={()=>{console.log('hola men')}}>crear cliente</Button1>
       </div>
       <div
         class="w-full p-5 border-y gap-x-5 my-2 flex items-center justify-center"
