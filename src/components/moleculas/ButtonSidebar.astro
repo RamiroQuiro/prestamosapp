@@ -11,7 +11,7 @@ const isHrefInUrl = url.pathname == href;
 
 <a
   href={href}
-  class={`${isHrefInUrl ? "fill-white font-bold " : "fill-primary-100 font-semibold"} z-20 rounded-lg text-primary-100 flex group gap- w hover:scale-105  relative duration-300   cursor-pointer items-center justify-start text-xs  -md py-2 gap-2 p-1.5`}
+  class={`${isHrefInUrl ? "fill-white font-bold bg-primary-100/10 border border-primary-100/50  " : "fill-primary-100 font-semibold border border-transparent"} z-20  rounded-lg text-primary-100 flex group gap- w hover:scale-105  relative duration-300   cursor-pointer items-center justify-start text-xs  -md py-2 gap-2 p-1.5`}
 >
 <SvgSidebar isHrefInUrl={isHrefInUrl}>
   <slot />

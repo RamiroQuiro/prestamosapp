@@ -2,10 +2,10 @@
 import InputForm from "../atomos/InputForm.astro";
 import LabelForm from "../atomos/LabelForm.astro";
 
-const { htmlFor,label,type,name,styleInput,value}=Astro.props
+const { htmlFor,label,type,name,styleInput,value ,styleContenedor}=Astro.props
 ---
 
-<div class="w-full flex items flex-col items-start gap- duration-300 group -md ">
+<div class= {`${styleContenedor} w-full flex items flex-col items-start gap- duration-300 group -md `}>
   <LabelForm name={name}>{label}</LabelForm>
   <InputForm  value={value} type={type} name={name} style={styleInput} />
 </div>

@@ -1,0 +1,43 @@
+---
+---
+
+<div
+
+id="mensaje-modal"
+class="modall  fixed top-0 left-0 w-full h-full items-center  justify-center z-40 bg-gray-900/50 backdrop-blur-sm">
+  <div
+    class="text-center z-30 flex items-center relative capitalize text-sm font-thin flex-col justify-center gap-5 lg:min-h-[30vh]  min-w-[33%] p-5 bg-white -lg"
+  >
+    <div
+      class="text-center z-30 flex items-center flex-col justify-center gap-5 "
+    >
+      <p id="textoModal"></p>
+      <div class="modal-buttons flex items-center gap-3">
+        <button
+          id="botonAceptar"
+          class="px-2 py-1 -lg bg-blue-500 capitalize text-white hover:bg-blue-400 duration-300"
+          >Confirmar</button
+        >
+        <button
+          id="botonCerrarModal"
+          class="px-2 py-1 -lg bg-blue-500 capitalize text-white hover:bg-blue-400 duration-300"
+          >Cancelar</button
+        >
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .modall{
+      display: none;
+  }
+  
+      .modal {
+      position: relative;
+      width: 100px;
+      height: 100px;
+    }
+
+  </style>
+  
