@@ -1,5 +1,6 @@
 ---
 import Button1 from "../../../components/atomos/Button1.astro";
+import FormCont from "../../../components/atomos/FormCont.astro";
 import ContenedorBoton from "../../../components/moleculas/ContenedorBoton.astro";
 import ContenedorInputForm from "../../../components/moleculas/ContenedorInputForm.astro";
 import ContenedorInputSelected from "../../../components/moleculas/ContenedorInputSelected.astro";
@@ -20,7 +21,7 @@ const opciones = [
 ];
 ---
 
-<form action="POST" class="flex flex-col items-start border-y p-5 w-full">
+<FormCont action="POST">
   <ContenedorInputForm
     label="Buscar Clientes"
     type="search"
@@ -56,4 +57,4 @@ const opciones = [
     
     <Button1>Generar Prestamo</Button1>
 </ContenedorBoton>
-</form>
+</FormCont>

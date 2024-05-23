@@ -4,12 +4,14 @@ import MainDash from "../../../components/organismos/MainDash.astro";
 import Titulo1 from "../../../components/atomos/Titulo1.astro";
 import ContenedorInputForm from "../../../components/moleculas/ContenedorInputForm.astro";
 import Button1 from "../../../components/atomos/Button1.astro";
-import Tabla from './tablas/Tabla.astro'
-import FormularioCliente from './FormularioCliente.astro'
+import Modal from "../../../components/moleculas/Modal.astro";
+import Tabla from "./tablas/Tabla.astro";
+import FormularioCliente from "./FormularioCliente.astro";
+import ContenedeorModal from "../../../components/organismos/ContenedeorModal.astro";
 
-const onClick=()=>{
- window.location.href='/dashboard'
-}
+const onClick = () => {
+  window.location.href = "/dashboard";
+};
 ---
 
 <Layoutdash title="Clientes">
@@ -17,11 +19,11 @@ const onClick=()=>{
     <div
       class="flex flex-col items-start justify-normal w-full px-5 py-2 relative"
     >
-    
       <Titulo1> Clientes </Titulo1>
       <div class="w-1/6 m-auto absolute top-2 right-0">
-        <FormularioCliente/>
-        <Button1 onClick={onClick}  id="crearClient">crear cliente</Button1>
+        <ContenedeorModal open="Crear Cliente">
+          <FormularioCliente />
+        </ContenedeorModal>
       </div>
       <div
         class="w-full p-5 border-y gap-x-5 my-2 flex items-center justify-center"
@@ -33,21 +35,8 @@ const onClick=()=>{
           styleContenedor="w-8/12"
         />
       </div>
-      
-      <div class="w-full"><Tabla/></div>
+
+      <div class="w-full"><Tabla /></div>
     </div>
-    </MainDash>
+  </MainDash>
 </Layoutdash>
-
-<script>
-import { modalMensaje } from "../../../components/Modal/modal"
-
-  const btnCrearCliente=document.getElementById('crearClient')
-const miFormulario =document.getElementById('miFormulario')
-
-btnCrearCliente.addEventListener('click',()=>{
-  miFormulario.style.display='block';
-  modalMensaje(miFormulario,true)
-})
-
-</script>

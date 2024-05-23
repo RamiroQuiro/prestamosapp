@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import Button1 from '../atomos/Button1'
-import { modalMensaje } from '../Modal/modal'
 import FormularioCliente from '../../pages/dashboard/clientes/FormularioCliente.astro'
 
 export default function ContenedorBotonNewClient({}) {

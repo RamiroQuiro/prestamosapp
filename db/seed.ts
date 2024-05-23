@@ -5,7 +5,7 @@ export default async function seed() {
 
 	await db.insert(User).values([
     {
-      id: "ñlsdkfñlks-ñlsdkfñslk-ñsldkfñsk",
+      id: "123456",
       email: "rama.exe.13@gmail.com",
       userName: "ramiroChango",
     },
