@@ -1,11 +1,20 @@
 ---
-
-const {onClick}=Astro.props
-
+const { onClick, id } = Astro.props;
 ---
 
 <button
-onclick={onClick}
+  id={id}
+
   class="px-3 py-2 rounded-lg font-semibold capitalize border-primary-100 duration-300 text-xs border-dashed border bg-primary-200/20 hover:bg-primary-200 hover:text-white hover:border-primary-resaltado"
-  ><slot /></button
->
+  ><slot />
+</button>
+
+<script define:vars={{id,onClick}}>
+import { modalMensaje } from "../Modal/modal"
+
+  const btn=document.getElementById(id)
+
+  btn.addEventListener('click',()=>{
+onClick()
+  })
+</script>

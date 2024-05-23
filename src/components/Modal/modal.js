@@ -4,7 +4,7 @@ const modalMensaje = (mensaje,isFormulario) => {
     const parrafo = document.getElementById('textoModal');
     const closeButton = document.getElementById('botonCerrarModal');
     const botonAceptar = document.getElementById('botonAceptar');
-
+console.log(mensaje)
     return new Promise((resolve, reject) => {
 
         // Crea un elemento para la notificación

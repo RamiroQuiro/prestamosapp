@@ -3,9 +3,9 @@ import Layoutdash from "../layouts/Layoutdash.astro";
 import MainDash from "../../../components/organismos/MainDash.astro";
 import Titulo1 from "../../../components/atomos/Titulo1.astro";
 import ContenedorInputForm from "../../../components/moleculas/ContenedorInputForm.astro";
-import Button1 from "../../../components/atomos/Button1";
+import Button1 from "../../../components/atomos/Button1.astro";
 import Tabla from './tablas/Tabla.astro'
-
+import FormularioCliente from './FormularioCliente.astro'
 
 const onClick=()=>{
  window.location.href='/dashboard'
@@ -20,7 +20,8 @@ const onClick=()=>{
     
       <Titulo1> Clientes </Titulo1>
       <div class="w-1/6 m-auto absolute top-2 right-0">
-        <Button1 client:load handleClick={()=>{console.log('hola men')}}>crear cliente</Button1>
+        <FormularioCliente/>
+        <Button1 onClick={onClick}  id="crearClient">crear cliente</Button1>
       </div>
       <div
         class="w-full p-5 border-y gap-x-5 my-2 flex items-center justify-center"
@@ -37,3 +38,16 @@ const onClick=()=>{
     </div>
     </MainDash>
 </Layoutdash>
+
+<script>
+import { modalMensaje } from "../../../components/Modal/modal"
+
+  const btnCrearCliente=document.getElementById('crearClient')
+const miFormulario =document.getElementById('miFormulario')
+
+btnCrearCliente.addEventListener('click',()=>{
+  miFormulario.style.display='block';
+  modalMensaje(miFormulario,true)
+})
+
+</script>
