@@ -23,10 +23,10 @@ const opciones = [
 
 <FormCont action="POST">
   <ContenedorInputForm
-    label="Buscar Clientes"
-    type="search"
-    name="searchCliente"
-    styleInput=""
+    label="Cliente"
+    type="text"
+    name="selectCliente"
+    styleInput="font-semibold"
   />
   <div class="flex items-center w-full justify-normal">
     <ContenedorInputForm
@@ -58,3 +58,17 @@ const opciones = [
     <Button1>Generar Prestamo</Button1>
 </ContenedorBoton>
 </FormCont>
+
+<script>
+    import {busqueda} from '../../../context/store'
+  // Nos suscribimos a los cambios en 'busqueda'
+     const unsubscribe = busqueda.subscribe(clientSelect => {
+      document.getElementById('selectCliente').value=''
+      if(clientSelect.clientSelect.nombre){
+        // Concatenamos los valores de 'nombre', 'apellido' y 'dni'
+    const fullName = clientSelect.clientSelect.nombre + ' ' + clientSelect.clientSelect.apellido + '   Dni:' + clientSelect.clientSelect.dni;
+        document.getElementById('selectCliente').value = fullName || '';
+      }
+    })
+
+</script>

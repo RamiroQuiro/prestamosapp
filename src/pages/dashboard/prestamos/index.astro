@@ -3,16 +3,28 @@ import Button1 from "../../../components/atomos/Button1.astro";
 import Titulo1 from "../../../components/atomos/Titulo1.astro";
 import ContenedorBoton from "../../../components/moleculas/ContenedorBoton.astro";
 import ContenedorInputForm from "../../../components/moleculas/ContenedorInputForm.astro";
+import FormularioDeBusqueda from "../../../components/organismos/FormularioDeBusqueda";
 import MainDash from "../../../components/organismos/MainDash.astro";
 import Layoutdash from "../layouts/Layoutdash.astro";
 import FormularioPrestamo from "./FormularioPrestamo.astro";
 import PrestamoGenerado from "./PrestamoGenerado.astro";
+
+import { eq, User, db, Cliente } from "astro:db";
+const userId = "123456";
+const clientes = await db
+  .select()
+  .from(Cliente)
+  .where(eq(Cliente.usuarioId, userId));
+
+
 ---
 
 <Layoutdash title="Prestamos">
   <MainDash>
     <div class="flex w-full p-5 flex-col items-start justify-start">
-      <Titulo1>Prestamos</Titulo1>
+     <div class="flex mb-2 items-center justify-between w-full gap-5">
+       <Titulo1>Prestamos</Titulo1>
+      <FormularioDeBusqueda clientes={clientes} client:load/></div>
       <div class="w-full flex items-start">
         <FormularioPrestamo />
       </div>
@@ -31,3 +43,12 @@ import PrestamoGenerado from "./PrestamoGenerado.astro";
     </div>
   </MainDash>
 </Layoutdash>
+
+
+<script>
+  import {busqueda} from '../../../context/store'
+
+  const contextoBusqueda=busqueda.get()
+
+  console.log('este es el index de prestamos ->',contextoBusqueda)
+</script>

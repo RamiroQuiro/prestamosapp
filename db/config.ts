@@ -8,7 +8,7 @@ export const User = defineTable({
     nombre: column.text({optional:true}),
     apellido: column.text({optional:true}),
     password:column.text({optional:true}),
-    DNI: column.number({optional:true}),
+    dni: column.number({optional:true}),
     srcPhoto: column.text({optional:true}),
     celular: column.text({optional:true}),
     direccion: column.text({optional:true}),
@@ -25,7 +25,7 @@ export const Cliente = defineTable({
   columns: {
     id: column.text({ primaryKey: true }),
     usuarioId: column.text({ references: () => User.columns.id }),
-    DNI: column.number({optional:true}),
+    dni: column.number({optional:true}),
     srcPhoto: column.text({optional:true}),
     nombre: column.text(),
     apellido: column.text({optional:true}),

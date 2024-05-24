@@ -19,24 +19,24 @@ const { title } = Astro.props;
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
   </head>
-  <body class="bg-primary-bg-claro min-h-screen relative overflow-x-hidden flex flex-col">
+  <body
+    class="bg-primary-bg-claro min-h-screen relative overflow-x-hidden flex flex-col"
+  >
     <!-- <LoaderGral/> -->
     <NavDash />
- <Sidebar/>
+    <Sidebar />
     <slot />
   </body>
 </html>
 <style is:global>
+  /* Registra tu font family personalizada y le indicamos al navegador dónde encontrarla. */
 
-
-   /* Registra tu font family personalizada y le indicamos al navegador dónde encontrarla. */
-
-   @font-face {
-  font-family: 'IndieFlower';
-  src: url('/font/IndieFlower-Regular.ttf') format('ttf');
-  font-weight: 400;
-  font-style: normal;
-}
+  @font-face {
+    font-family: "IndieFlower";
+    src: url("/font/IndieFlower-Regular.ttf") format("ttf");
+    font-weight: 400;
+    font-style: normal;
+  }
 
   :root {
     --accent: 136, 58, 234;
@@ -48,8 +48,6 @@ const { title } = Astro.props;
       rgb(var(--accent-light)) 30%,
       white 60%
     );
-  
-
   }
   html {
     font-family: system-ui, sans-serif;

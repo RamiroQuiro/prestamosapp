@@ -10,5 +10,11 @@ export default async function seed() {
       userName: "ramiroChango",
     },
   
+    {
+      id: "11223344",
+      email: "rama@gmail.com",
+      userName: "ramiroChangoQuiroga",
+    },
+  
   ]);
 }

@@ -30,7 +30,7 @@ console.log(now)
       apellido:apellido,
       direccion:direccion,
       celular: cel,
-      DNI: dni,
+      dni: dni,
       // fechaCreacion:now,
       // fechaActualizacion:now,
       
