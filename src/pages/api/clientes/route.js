@@ -15,21 +15,24 @@ export async function GET({ params }) {
 
 export async function POST({ request }) {
   const { email, nombre, apellido, dni, direccion, cel ,userId} = await request.json();
-console.log('email:',email, ' nombre',nombre, ' apellido',apellido,' dni',dni, ' direccion',direccion,' cel',cel,' userId',userId )
+// console.log('email:',email, ' nombre',nombre, ' apellido',apellido,' dni',dni, ' direccion',direccion,' cel',cel,' userId',userId )
   try {
     const id = generateUid(email);
+    const now = new Date().toISOString(); // Crea un nuevo objeto Date y conviértelo a una cadena ISO
 
+
+console.log(now)
     const createUser = await db.insert(Cliente).values({
       id: id,
       usuarioId:userId,
-      email,
-      nombre,
-      apellido,
-      direccion,
+      email:email,
+      nombre:nombre,
+      apellido:apellido,
+      direccion:direccion,
       celular: cel,
       DNI: dni,
-      fechaCreacion:Date.now(),
-      fechaActualizacion:Date.now(),
+      // fechaCreacion:now,
+      // fechaActualizacion:now,
       
     });
 
@@ -40,6 +43,7 @@ console.log('email:',email, ' nombre',nombre, ' apellido',apellido,' dni',dni, '
           status: 200,
         }))
   } catch (error) {
+    console.log(error)
     return new Response(
         JSON.stringify({
           data: "error, no andando",

@@ -42,7 +42,7 @@ const {userId}={userId:'kñlksñdlfks'}
   const formulario = document.getElementById("formularioCliente");
 
   formulario.addEventListener("submit", async (e) => {
-    e.preventDefault()
+
     const formData = new FormData(e.target);
     formData.append('userId','123456')
     const data = Object.fromEntries(formData.entries());

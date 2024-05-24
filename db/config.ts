@@ -36,8 +36,8 @@ export const Cliente = defineTable({
     departamento: column.text({optional:true}),
     ciudad: column.text({optional:true}),
     pais: column.text({optional:true}),
-    fechaCreacion: column.date(),
-    fechaActualizacion: column.date(),
+    // fechaCreacion: column.date(),
+    // fechaActualizacion: column.date(),
   },
 });
 
