@@ -5,23 +5,37 @@ import ContenedorBoton from "../../../components/moleculas/ContenedorBoton.astro
 import ContenedorInputForm from "../../../components/moleculas/ContenedorInputForm.astro";
 import ContenedorInputSelected from "../../../components/moleculas/ContenedorInputSelected.astro";
 
-const opciones = [
+const interes = [
   {
-    name: "tasa1",
+    name: "5%",
     id: 1,
+    value: 5,
   },
   {
-    name: "tasa2",
+    name: "10%",
     id: 2,
+    value: 10,
   },
   {
-    name: "tasa3",
+    name: "15%",
     id: 3,
+    value: 15,
   },
+  {
+    name: "54%",
+    id: 4,
+    value: 54,
+  },
+];
+const cuotas = [
+  { name: 3, id: 1, value: 3 },
+  { name: 6, id: 2, value: 6 },
+  { name: 9, id: 3, value: 9 },
+  { name: 12, id: 4, value: 12 },
 ];
 ---
 
-<FormCont action="POST">
+<FormCont>
   <ContenedorInputForm
     label="Cliente"
     type="text"
@@ -35,40 +49,89 @@ const opciones = [
       name="importeCredito"
     />
     <ContenedorInputSelected
-    label="Modalidad de Pago"
-    name="modalidadPago"
-    options={opciones}
-  />
+      label="Modalidad de Pago"
+      name="modalidadPago"
+      options={[]}
+    />
   </div>
   <div class="flex items-center w-full justify-normal">
     <ContenedorInputSelected
       label="Seleccionar Interes"
       name="tipoInteres"
-      options={opciones}
+      options={interes}
     />
     <ContenedorInputSelected
-    label="N° de Cuotas"
-    name="nCuotas"
-    options={opciones}
-  />
+      label="N° de Cuotas"
+      name="nCuotas"
+      options={cuotas}
+    />
   </div>
 
-<ContenedorBoton>
-    
-    <Button1>Generar Prestamo</Button1>
-</ContenedorBoton>
+  <ContenedorBoton>
+    <Button1 class="" id="generarPrestamo">Generar Prestamo</Button1>
+  </ContenedorBoton>
 </FormCont>
 
 <script>
-    import {busqueda} from '../../../context/store'
+  import { busqueda, prestamoSimulado } from "../../../context/store";
   // Nos suscribimos a los cambios en 'busqueda'
-     const unsubscribe = busqueda.subscribe(clientSelect => {
-      document.getElementById('selectCliente').value=''
-      if(clientSelect.clientSelect.nombre){
-        // Concatenamos los valores de 'nombre', 'apellido' y 'dni'
-    const fullName = clientSelect.clientSelect.nombre + ' ' + clientSelect.clientSelect.apellido + '   Dni:' + clientSelect.clientSelect.dni;
-        document.getElementById('selectCliente').value = fullName || '';
-      }
-    })
+  const unsubscribe = busqueda.subscribe((clientSelect) => {
+    document.getElementById("selectCliente").value = "";
+    if (clientSelect.clientSelect.nombre) {
+      // Concatenamos los valores de 'nombre', 'apellido' y 'dni'
+      const fullName =
+        clientSelect.clientSelect.nombre +
+        " " +
+        clientSelect.clientSelect.apellido +
+        "   Dni:" +
+        clientSelect.clientSelect.dni;
+      document.getElementById("selectCliente").value = fullName || "";
+    }
+  });
 
+  // funcion simulador
+  function calcularCuota(importe, tasaInteres, nCuotas) {
+    // Convertimos la tasa de interés a decimal y la dividimos entre 12 para obtener la tasa mensual
+    let tasaMensual = tasaInteres / 100 / 12;
+
+    // Calculamos el monto de cada cuota
+    let cuota =
+      importe * (tasaMensual / (1 - Math.pow(1 + tasaMensual, -nCuotas)));
+
+    return cuota.toFixed();
+  }
+
+  function calcularGanancia(importe, cuota, nCuotas) {
+    // Calculamos el monto total del préstamo
+    let totalPrestamo = cuota * nCuotas;
+
+    // Calculamos la ganancia restando el monto original del préstamo al monto total del préstamo
+    let ganancia = totalPrestamo - importe;
+
+    // Redondeamos la ganancia a dos decimales
+    ganancia = parseFloat(ganancia.toFixed(2));
+
+    return ganancia;
+}
+
+  document
+    .getElementById("generarPrestamo")
+    .addEventListener("click", function (e) {
+      e.preventDefault();
+      let importe = parseFloat(document.getElementById("importeCredito").value);
+      let tasaInteres = parseFloat(
+        document.getElementById("tipoInteres").value
+      );
+      let nCuotas = parseInt(document.getElementById("nCuotas").value);
+      let cuota = calcularCuota(importe, tasaInteres, nCuotas);
+      let ganancia=calcularGanancia(importe,cuota,nCuotas)
+      
+      prestamoSimulado.set({
+        importeCuota: cuota,
+        nCuota: nCuotas,
+        interes: tasaInteres,
+        interesGenerado:ganancia,
+        montoTotal: cuota*nCuotas,
+      });
+    });
 </script>

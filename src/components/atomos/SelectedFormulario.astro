@@ -9,7 +9,7 @@ const {options,name}=Astro.props
     options.map((opcion)=>{
 
         return(
-        <option value={opcion.id} id={opcion.id} class="">{opcion.name}</option>
+        <option value={opcion.value} id={opcion.id} class="">{opcion.name}</option>
         )
     })
    }

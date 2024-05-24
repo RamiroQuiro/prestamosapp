@@ -4,28 +4,25 @@ import ContenedorInputForm from "../../../components/moleculas/ContenedorInputFo
 ---
 
 <div class="flex flex-col items-start w-full justify-normal gap-2 border-y py-5" >
-    <ContenedorInputForm
-      label="importe x cuotas"
-      type="number"
-      name="importeCuota"
-      value={150}
-    />
-    <ContenedorInputForm
-      label="total a pagar"
-      type="number"
-      name="montoTotal"
-      value={150}
-    />
-    <ContenedorInputForm
-      label="Interes Generado"
-      type="number"
-      name="interesGenerado"
-      value={150}
-    />
-    <ContenedorInputForm
-      label="fecha"
-      type="date"
-      name="fechaInicio"
-      value={150}
-    />
+    <ContenedorInputForm label="importe x cuotas" type="number" name="importeCuota" value={150}/>
+    <ContenedorInputForm label="total a pagar" type="number" name="montoTotal" value={150}/>
+    <ContenedorInputForm  label="Interes Generado" type="number" name="interesGenerado" value={150} />
+    <ContenedorInputForm label="fecha" type="date" name="fechaInicio" value={150} />
   </div>
+
+  <script>
+        import {prestamoSimulado} from '../../../context/store'
+        // Nos suscribimos a los cambios en 'busqueda'
+        const unsubscribe = prestamoSimulado.subscribe(prestamoSimulado => {
+     console.log('estamos en la parte presamos',prestamoSimulado)
+        document.getElementById('importeCuota').value=prestamoSimulado.importeCuota
+        document.getElementById('montoTotal').value=prestamoSimulado.montoTotal
+        document.getElementById('interesGenerado').value=prestamoSimulado.interesGenerado
+      
+      
+
+          // Concatenamos los valores de 'nombre', 'apellido' y 'dni'
+     
+    })
+
+  </script>
