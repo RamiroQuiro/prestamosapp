@@ -1,4 +1,4 @@
-import { column, defineDb, defineTable } from "astro:db";
+import { NOW, column, defineDb, defineTable } from "astro:db";
 
 export const User = defineTable({
   columns: {
@@ -36,7 +36,7 @@ export const Cliente = defineTable({
     departamento: column.text({optional:true}),
     ciudad: column.text({optional:true}),
     pais: column.text({optional:true}),
-    // fechaCreacion: column.date(),
+    fechaCreacion: column.date({default:NOW}),
     // fechaActualizacion: column.date(),
   },
 });
@@ -48,12 +48,12 @@ export const Prestamo = defineTable({
     usuarioId: column.text({ references: () => User.columns.id }),
     montoTotal: column.number(),
     tasaInteres: column.number(),
-    periodo: column.number(), // en días
+    nCuotas: column.number(), // en días
     fechaInicio: column.date(),
-    fechaFin: column.date(),
-    montoRestante:column.number(),
-    estado: column.text(), // 'activo', 'cancelado', 'finalizado'
-    terminado: column.boolean(),
+    fechaFin: column.date({optional:true}),
+    montoRestante:column.number({optional:true}),
+    estado: column.text({default:'activo'}), // 'activo', 'cancelado', 'finalizado'
+    terminado: column.boolean({default:false}),
   },
 });
 

@@ -14,12 +14,12 @@ const useBusquedaFiltros = (arr) => {
       const encontrado = arr?.filter((leg) => {
         // Comprobamos si cada campo coincide con la búsqueda
         let busquedaNombre = leg.nombre?.toUpperCase().includes(search?.toUpperCase());
-        let dni = leg.dni?.toUpperCase().includes(search?.toUpperCase());
+      
         let email = leg.email?.toUpperCase().includes(search?.toUpperCase());
         let apellido = leg.apellido?.toUpperCase().includes(search?.toUpperCase());
 
         // Si alguno de los campos coincide y el elemento está activo, lo retornamos
-        if (busquedaNombre || dni || email || apellido) {
+        if (busquedaNombre ||  email || apellido) {
           // if (leg.activo == true) {
             return leg;
           // }

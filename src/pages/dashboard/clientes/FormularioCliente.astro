@@ -57,8 +57,11 @@ const {userId}={userId:'kñlksñdlfks'}
      
         body: JSON.stringify(data),
     });
-
     console.log(response)
+if (response.ok) {
+  window.location.reload()
+}
+    // console.log(response)
     } catch (error) {
       console.log(error)
     }

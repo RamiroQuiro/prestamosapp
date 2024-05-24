@@ -15,61 +15,74 @@ const clientes = await db
   .select()
   .from(Cliente)
   .where(eq(Cliente.usuarioId, userId));
-
-
 ---
 
 <Layoutdash title="Prestamos">
   <MainDash>
     <div class="flex w-full p-5 flex-col items-start justify-start">
-     <div class="flex mb-2 items-center justify-between w-full gap-5">
-       <Titulo1>Prestamos</Titulo1>
-      <FormularioDeBusqueda clientes={clientes} client:load/></div>
+      <div class="flex mb-2 items-center justify-between w-full gap-5">
+        <Titulo1>Prestamos</Titulo1>
+        <FormularioDeBusqueda clientes={clientes} client:load />
+      </div>
       <div class="w-full flex items-start">
         <FormularioPrestamo />
       </div>
     </div>
     <div
-      class="flex w-2/6 p-5 flex-col items-  bg-primary-300/40 rounded-lg justify-start"
+      class="flex w-2/6 p-5 flex-col items- bg-primary-300/40 rounded-lg justify-start"
     >
       <Titulo1>Prestamo Generado</Titulo1>
 
-      <PrestamoGenerado/>
+      <PrestamoGenerado />
 
-    <ContenedorBoton>
-        <Button1 id="generarPrestamo">Confirmar</Button1>
+      <ContenedorBoton>
+        <Button1 id="cargarPrestamo">Confirmar</Button1>
         <Button1 id="limpiarSimulador">limpiar</Button1>
-        </ContenedorBoton>
+      </ContenedorBoton>
     </div>
   </MainDash>
 </Layoutdash>
 
-
 <script>
-  import {busqueda, prestamoSimulado} from '../../../context/store'
-document.getElementById('limpiarSimulador').addEventListener('click',()=>{
-  prestamoSimulado.set({
-    usuarioId:'',
-    clienteId:'',
-    importeCuota:0,
-    montoTotal:0,
-    interesGenerado:0,
-    tasaInteres:0,
-    nCuota:0,
-})
-})
+  import { busqueda, prestamoSimulado } from "../../../context/store";
 
-document.getElementById('generarPrestamo').addEventListener('click',async()=>{
+  document.getElementById("limpiarSimulador").addEventListener("click", () => {
+    prestamoSimulado.set({
+      usuarioId: "",
+      clienteId: "",
+      importeCuota: 0,
+      montoTotal: 0,
+      interesGenerado: 0,
+      tasaInteres: 0,
+      nCuotas: 0,
+    });
+  });
+</script>
+<script>
+  import { prestamoSimulado } from "../../../context/store";
 
-  try {
-    const res=await fetch('api/prestamo/getPres')
-  } catch (error) {
-    
-  }
+  const formulario = document.getElementById(
+    "prestamoGenerado"
+  ) as HTMLFormElement;
 
-})
-  const contextoBusqueda=busqueda.get()
+  const formData = new FormData(formulario);
+  document
+    .getElementById("cargarPrestamo")
+    .addEventListener("click", async (e) => {
+      const contextoPrestamo = prestamoSimulado.get();
 
-
-  
+      try {
+        const res = await fetch("/api/prestamos/setPrest", {
+          method: "POST",
+          body: JSON.stringify({
+            contextoPrestamo,
+          }),
+        });
+        if (res.ok) {
+          window.location.reload();
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    });
 </script>

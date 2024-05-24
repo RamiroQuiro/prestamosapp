@@ -80,7 +80,9 @@ const modalidad = [
 <script>
   import { busqueda, prestamoSimulado } from "../../../context/store";
   // Nos suscribimos a los cambios en 'busqueda'
+let userId=''
   const unsubscribe = busqueda.subscribe((clientSelect) => {
+    userId=clientSelect.clientSelect.usuarioId
     document.getElementById("selectCliente").value = "";
     if (clientSelect.clientSelect.nombre) {
       // Concatenamos los valores de 'nombre', 'apellido' y 'dni'
@@ -133,8 +135,9 @@ const modalidad = [
       
       prestamoSimulado.set({
         clienteId:busqueda.get().clientSelect.id,
+        usuarioId:userId,
         importeCuota: cuota,
-        nCuota: nCuotas,
+        nCuotas: nCuotas,
         tasaInteres: tasaInteres,
         interesGenerado:ganancia,
         montoTotal: cuota*nCuotas,

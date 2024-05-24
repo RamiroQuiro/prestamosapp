@@ -13,7 +13,8 @@ const prestamoSimulado=atom({
     montoTotal:0,
     interesGenerado:0,
     tasaInteres:0,
-    nCuota:0,
+    nCuotas:0,
+    fechaInicio:'',
 
 })
 

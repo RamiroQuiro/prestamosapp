@@ -1,8 +1,12 @@
 import { Cliente, User, db } from "astro:db";
-import { createHash } from "crypto";
+import { createHash, randomBytes } from "crypto";
 
-const generateUid = (email) => {
+export const generateUidEmail = (email) => {
   return createHash("sha256").update(email).digest("hex");
+};
+
+export const generateUid = () => {
+  return randomBytes(16).toString('hex');
 };
 export async function GET({ params }) {
   console.log("andando");
@@ -17,7 +21,7 @@ export async function POST({ request }) {
   const { email, nombre, apellido, dni, direccion, cel ,userId} = await request.json();
 // console.log('email:',email, ' nombre',nombre, ' apellido',apellido,' dni',dni, ' direccion',direccion,' cel',cel,' userId',userId )
   try {
-    const id = generateUid(email);
+    const id = generateUidEmail(email);
     const now = new Date().toISOString(); // Crea un nuevo objeto Date y conviértelo a una cadena ISO
 
 

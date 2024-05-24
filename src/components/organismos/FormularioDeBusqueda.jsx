@@ -9,7 +9,7 @@ export default function FormularioDeBusqueda({ value, clientes, id }) {
     const arr = []
     const $clienteSelect = useStore(busqueda)
 
-    console.log($clienteSelect)
+    // console.log($clienteSelect)
     const { encontrado, handleSearch, search, setSearch } = useBusquedaFiltros(clientes)
 
     const handleClick = (leg) => {
@@ -25,7 +25,7 @@ export default function FormularioDeBusqueda({ value, clientes, id }) {
 
             <input
             onChange={handleSearch}
-                placeholder='Busquea de cliente'
+                placeholder='Busqueda de cliente...'
                 value={search}
                 type="search" name="busquedaCliente" id="busquedaCliente" className=' w-full text-sm bg-primary-200/10  rounded-md group-hover:ring-2  border-gray-300  ring-primary-200/60 focus:ring-2  outline-none transition-colors duration-200 ease-in-out px-2 py-2' />
             {search?.length >= 2 && (
