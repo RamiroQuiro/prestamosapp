@@ -33,6 +33,11 @@ const cuotas = [
   { name: 9, id: 3, value: 9 },
   { name: 12, id: 4, value: 12 },
 ];
+const modalidad = [
+  { name: 'semanal', id: 1, value: 'semanal' },
+  { name: 'quincenal', id: 2, value: 'quincenal'},
+  { name: 'mensual', id: 3, value: 'mensual'},
+];
 ---
 
 <FormCont>
@@ -51,7 +56,7 @@ const cuotas = [
     <ContenedorInputSelected
       label="Modalidad de Pago"
       name="modalidadPago"
-      options={[]}
+      options={modalidad}
     />
   </div>
   <div class="flex items-center w-full justify-normal">

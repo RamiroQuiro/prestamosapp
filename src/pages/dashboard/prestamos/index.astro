@@ -37,8 +37,8 @@ const clientes = await db
       <PrestamoGenerado/>
 
     <ContenedorBoton>
-        <Button1>Confirmar</Button1>
-        <Button1>limpiar</Button1>
+        <Button1 id="generarPrestamo">Confirmar</Button1>
+        <Button1 id="limpiarSimulador">limpiar</Button1>
         </ContenedorBoton>
     </div>
   </MainDash>
@@ -46,9 +46,30 @@ const clientes = await db
 
 
 <script>
-  import {busqueda} from '../../../context/store'
+  import {busqueda, prestamoSimulado} from '../../../context/store'
+document.getElementById('limpiarSimulador').addEventListener('click',()=>{
+  prestamoSimulado.set({
+    usuarioId:'',
+    clienteId:'',
+    importeCuota:0,
+    montoTotal:0,
+    interesGenerado:0,
+    tasaInteres:0,
+    nCuota:0,
+})
+})
 
+document.getElementById('generarPrestamo').addEventListener('click',async()=>{
+
+  try {
+    const res=await fetch('api/prestamo/getPres')
+  } catch (error) {
+    
+  }
+
+})
   const contextoBusqueda=busqueda.get()
 
-  console.log('este es el index de prestamos ->',contextoBusqueda)
+
+  
 </script>

@@ -4,7 +4,7 @@ import ContenedorInputForm from "../../../components/moleculas/ContenedorInputFo
 ---
 
 <div class="flex flex-col items-start w-full justify-normal gap-2 border-y py-5" >
-    <ContenedorInputForm label="importe x cuotas" type="number" name="importeCuota" />
+    <ContenedorInputForm label="importe de cuota" type="number" name="importeCuota" />
     <ContenedorInputForm label="total a pagar" type="number" name="montoTotal"/>
     <ContenedorInputForm  label="Interes Generado" type="number" name="interesGenerado" />
     <ContenedorInputForm label="fecha" type="date" name="fechaInicio"  />
@@ -13,11 +13,17 @@ import ContenedorInputForm from "../../../components/moleculas/ContenedorInputFo
   <script>
         import {prestamoSimulado} from '../../../context/store'
         // Nos suscribimos a los cambios en 'busqueda'
+
+const convertidoraPrecio=(number)=>{
+return new Intl.NumberFormat('ars', { maximumSignificantDigits: 3 }).format(number)
+}
+
         const unsubscribe = prestamoSimulado.subscribe(prestamoSimulado => {
     //  console.log('estamos en la parte presamos',prestamoSimulado)
-        document.getElementById('importeCuota').value=prestamoSimulado.importeCuota
-        document.getElementById('montoTotal').value=prestamoSimulado.montoTotal
-        document.getElementById('interesGenerado').value=prestamoSimulado.interesGenerado
+   
+        document.getElementById('importeCuota').value=convertidoraPrecio(prestamoSimulado.importeCuota)
+        document.getElementById('montoTotal').value=convertidoraPrecio(prestamoSimulado.montoTotal)
+        document.getElementById('interesGenerado').value=convertidoraPrecio(prestamoSimulado.interesGenerado)
       
       
 
