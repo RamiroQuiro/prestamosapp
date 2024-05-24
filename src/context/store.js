@@ -7,10 +7,12 @@ const busqueda=atom({
 })
 
 const prestamoSimulado=atom({
+    usuarioId:'',
+    clienteId:'',
     importeCuota:0,
     montoTotal:0,
     interesGenerado:0,
-    interes:0,
+    tasaInteres:0,
     nCuota:0,
 
 })

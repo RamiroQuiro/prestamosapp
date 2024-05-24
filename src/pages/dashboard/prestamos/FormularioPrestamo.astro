@@ -127,9 +127,10 @@ const cuotas = [
       let ganancia=calcularGanancia(importe,cuota,nCuotas)
       
       prestamoSimulado.set({
+        clienteId:busqueda.get().clientSelect.id,
         importeCuota: cuota,
         nCuota: nCuotas,
-        interes: tasaInteres,
+        tasaInteres: tasaInteres,
         interesGenerado:ganancia,
         montoTotal: cuota*nCuotas,
       });
