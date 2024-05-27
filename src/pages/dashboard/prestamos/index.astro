@@ -55,6 +55,7 @@ const clientes = await db
       interesGenerado: 0,
       tasaInteres: 0,
       nCuotas: 0,
+      fechaInicio:''
     });
   });
 </script>
@@ -69,6 +70,7 @@ const clientes = await db
   document
     .getElementById("cargarPrestamo")
     .addEventListener("click", async (e) => {
+      e.preventDefault()
       const contextoPrestamo = prestamoSimulado.get();
 
       try {
@@ -78,8 +80,10 @@ const clientes = await db
             contextoPrestamo,
           }),
         });
+        const data=await res.json()
+        console.log(data)
         if (res.ok) {
-          window.location.reload();
+        document.location.href= `/dashboard/prestamos/listar/${data.id}`
         }
       } catch (error) {
         console.log(error);

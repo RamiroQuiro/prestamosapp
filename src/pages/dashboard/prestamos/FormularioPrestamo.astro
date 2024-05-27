@@ -105,7 +105,7 @@ let userId=''
     let cuota =
       importe * (tasaMensual / (1 - Math.pow(1 + tasaMensual, -nCuotas)));
 
-    return cuota.toFixed();
+    return  parseFloat(cuota.toFixed(2));
   }
 
   function calcularGanancia(importe, cuota, nCuotas) {
@@ -125,22 +125,22 @@ let userId=''
     .getElementById("generarPrestamo")
     .addEventListener("click", function (e) {
       e.preventDefault();
-      let importe = parseFloat(document.getElementById("importeCredito").value);
-      let tasaInteres = parseFloat(
-        document.getElementById("tipoInteres").value
-      );
-      let nCuotas = parseInt(document.getElementById("nCuotas").value);
+      let importe =document.getElementById("importeCredito").value
+      let tasaInteres = document.getElementById("tipoInteres").value
+      let nCuotas =document.getElementById("nCuotas").value
       let cuota = calcularCuota(importe, tasaInteres, nCuotas);
       let ganancia=calcularGanancia(importe,cuota,nCuotas)
-      
+      const dateNow=new Date()
+
       prestamoSimulado.set({
         clienteId:busqueda.get().clientSelect.id,
         usuarioId:userId,
-        importeCuota: cuota,
+        montoCuota: cuota,
         nCuotas: nCuotas,
         tasaInteres: tasaInteres,
         interesGenerado:ganancia,
         montoTotal: cuota*nCuotas,
+        fechaInicio:dateNow
       });
     });
 </script>

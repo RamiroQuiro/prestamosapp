@@ -1,0 +1,17 @@
+---
+import Titulo1 from "../../../../components/atomos/Titulo1.astro";
+import MainDash from "../../../../components/organismos/MainDash.astro";
+import Layoutdash from "../../layouts/Layoutdash.astro";
+import Tabla from "./tablas/Tabla.astro";
+---
+
+<Layoutdash title="Prestamos">
+  <MainDash> 
+    <div class="flex flex-col items-start justify-normal w-full px-5 py-2 relative">
+      <Titulo1> Prestamos </Titulo1>
+  <div class="py-5 w-full px-5">
+    <Tabla/>
+  </div>
+</div>
+</MainDash>
+</Layoutdash>

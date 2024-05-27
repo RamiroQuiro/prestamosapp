@@ -9,7 +9,7 @@ import {db,User,Cliente} from 'astro:db'
 const users=await db.select().from(User)
 const prestamos=await db.select().from(Prestamo)
 console.log('prestamos ->',prestamos)
-// console.log(users)
+console.log(users)
 // console.log(clientes)
 ---
 

@@ -1,4 +1,4 @@
-import { Cliente, User, db } from "astro:db";
+import { Cliente, User, db, eq } from "astro:db";
 import { createHash, randomBytes } from "crypto";
 
 export const generateUidEmail = (email) => {
@@ -21,11 +21,21 @@ export async function POST({ request }) {
   const { email, nombre, apellido, dni, direccion, cel ,userId} = await request.json();
 // console.log('email:',email, ' nombre',nombre, ' apellido',apellido,' dni',dni, ' direccion',direccion,' cel',cel,' userId',userId )
   try {
-    const id = generateUidEmail(email);
-    const now = new Date().toISOString(); // Crea un nuevo objeto Date y conviértelo a una cadena ISO
+   
+    const clientExist = await db.select().from(Cliente).where(eq(Cliente.email, email))
+    if (clientExist.length!==0) {
+      console.log(`cliente ya registrado con el email ${email}.`);
+      return new Response(
+        JSON.stringify({
+          data: "error, user does not exist",
+          status: 400,
+        }))
+    }
 
 
-console.log(now)
+ const id = generateUidEmail(email);
+    // const now = new Date()// Crea un nuevo objeto Date y conviértelo a una cadena ISO
+
     const createUser = await db.insert(Cliente).values({
       id: id,
       usuarioId:userId,
@@ -35,12 +45,11 @@ console.log(now)
       direccion:direccion,
       celular: cel,
       dni: dni,
-      // fechaCreacion:now,
       // fechaActualizacion:now,
       
     });
 
-    console.log("nuevo usuario creado en base de datos ->", createUser);
+
     return new Response(
         JSON.stringify({
           data: "andando",

@@ -1,40 +1,61 @@
 ---
 import ContenedorInputForm from "../../../components/moleculas/ContenedorInputForm.astro";
-
 ---
 
-<form id="prestamoGenerado" class="flex flex-col items-start w-full justify-normal gap-2 border-y py-5" >
-    <ContenedorInputForm label="importe de cuota" type="number" name="importeCuota" />
-    <ContenedorInputForm label="total a pagar" type="number" name="montoTotal"/>
-    <ContenedorInputForm  label="Interes Generado" type="number" name="interesGenerado" />
-    <ContenedorInputForm label="fecha" type="date" name="fechaInicio"  />
-  </form>
+<form
+  id="prestamoGenerado"
+  class="flex flex-col items-start w-full justify-normal gap-2 border-y py-5"
+>
+  <ContenedorInputForm
+    label="importe de cuota"
+    type="number"
+    name="montoCuota"
+  />
+  <ContenedorInputForm label="total a pagar" type="number" name="montoTotal" />
+  <ContenedorInputForm
+    label="Interes Generado"
+    type="number"
+    name="interesGenerado"
+  />
+  <ContenedorInputForm label="fecha" type="date" name="fechaInicio" />
+</form>
 
-  <script>
-        import {prestamoSimulado} from '../../../context/store'
-        // Nos suscribimos a los cambios en 'busqueda'
-const fInicio=document.getElementById('fechaInicio')
-const convertidoraPrecio=(number)=>{
-return new Intl.NumberFormat('ars', { maximumSignificantDigits: 3 }).format(number)
-}
+<script>
+  import { prestamoSimulado } from "../../../context/store";
+  // Nos suscribimos a los cambios en 'busqueda'
+  const fInicio = document.getElementById("fechaInicio");
+  export const convertidoraPrecio = (number) => {
+    return new Intl.NumberFormat("ars", { maximumSignificantDigits: 3 }).format(
+      number
+    );
+  };
 
-fInicio.addEventListener('change',(e)=>{
-  prestamoSimulado.set({
-    ...prestamoSimulado.get(),fechaInicio:e.target.value
-  })
-})
+  fInicio.addEventListener("change", (e) => {
+    prestamoSimulado.set({
+      ...prestamoSimulado.get(),
+      fechaInicio: e.target.value,
+    });
+  });
 
-        const unsubscribe = prestamoSimulado.subscribe(prestamoSimulado => {
-      console.log('estamos en la parte presamos',prestamoSimulado)
-   
-        document.getElementById('importeCuota').value=convertidoraPrecio(prestamoSimulado.importeCuota)
-        document.getElementById('montoTotal').value=convertidoraPrecio(prestamoSimulado.montoTotal)
-        document.getElementById('interesGenerado').value=convertidoraPrecio(prestamoSimulado.interesGenerado)
-      
-      
+  const unsubscribe = prestamoSimulado.subscribe((prestamoSimulado) => {
+    // console.log("estamos en la parte presamos", prestamoSimulado);
+    const fecha = prestamoSimulado.fechaInicio;
+    const año = fecha.getFullYear();
+    const mes = fecha.getMonth() + 1; // getMonth() devuelve un índice basado en 0, por lo que se suma 1
+    const dia = fecha.getDate();
+    const fechaFormateada =
+      año +
+      "-" +
+      (mes < 10 ? "0" + mes : mes) +
+      "-" +
+      (dia < 10 ? "0" + dia : dia);
 
-          // Concatenamos los valores de 'nombre', 'apellido' y 'dni'
-     
-    })
+    document.getElementById("montoCuota").value = prestamoSimulado.montoCuota;
+    document.getElementById("montoTotal").value = prestamoSimulado.montoTotal;
+    document.getElementById("interesGenerado").value =
+      prestamoSimulado.interesGenerado;
+    document.getElementById("fechaInicio").value = fechaFormateada;
 
-  </script>
+    // Concatenamos los valores de 'nombre', 'apellido' y 'dni'
+  });
+</script>

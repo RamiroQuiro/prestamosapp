@@ -1,5 +1,14 @@
 ---
-const{styleTr}=Astro.props
+const{styleTr, id}=Astro.props
+
+const href=`${Astro.url.origin}/dashboard/prestamos/listar/${id}`
+
 ---
 
-<tr class={`${styleTr}`}><slot/></tr>
+<tr id={id} class={`${styleTr}`}>
+        <slot/>
+</tr>
+
+<script define:vars={{href,id}}>
+    document.getElementById(id).addEventListener('click',()=>window.location.href=href)
+</script>

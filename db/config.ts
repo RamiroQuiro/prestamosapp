@@ -16,8 +16,8 @@ export const User = defineTable({
     departamento: column.text({optional:true}),
     ciudad: column.text({optional:true}),
     pais: column.text({optional:true}),
-    // fechaCreacion: column.date(),
-    // fechaActualizacion: column.date(),
+     fechaCreacion: column.date({default:NOW}),
+     fechaActualizacion: column.date({optional:true}),
   },
 });
 
@@ -37,7 +37,7 @@ export const Cliente = defineTable({
     ciudad: column.text({optional:true}),
     pais: column.text({optional:true}),
     fechaCreacion: column.date({default:NOW}),
-    // fechaActualizacion: column.date(),
+    fechaActualizacion: column.date({optional:true}),
   },
 });
 
@@ -47,10 +47,12 @@ export const Prestamo = defineTable({
     clienteId: column.text({ references: () => Cliente.columns.id }),
     usuarioId: column.text({ references: () => User.columns.id }),
     montoTotal: column.number(),
+    montoCuota:column.number(),
     tasaInteres: column.number(),
     nCuotas: column.number(), // en días
     fechaInicio: column.date(),
     fechaFin: column.date({optional:true}),
+    fechaCreacion:column.date({default:NOW}),
     montoRestante:column.number({optional:true}),
     estado: column.text({default:'activo'}), // 'activo', 'cancelado', 'finalizado'
     terminado: column.boolean({default:false}),
