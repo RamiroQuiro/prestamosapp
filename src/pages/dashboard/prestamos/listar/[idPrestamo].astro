@@ -3,13 +3,23 @@ import MainDash from "../../../../components/organismos/MainDash.astro";
 import Layoutdash from "../../layouts/Layoutdash.astro";
 
 const {idPrestamo}=Astro.params
+let prestamo={}
+try {
+const res=await fetch(`${Astro.url.origin}/api/prestamos/${idPrestamo}`)
+
+console.log(res)
+} catch (error) {
+    console.log(error)
+}
 ---
 
 <Layoutdash>
     <MainDash>
+        <div class="flex w-full p-5 flex-col items-start justify-start">
 
-        hola
-
+            <div>N° de DNI: {}</div>
+            <div></div>
+   </div>
 
         {idPrestamo}
     </MainDash>
