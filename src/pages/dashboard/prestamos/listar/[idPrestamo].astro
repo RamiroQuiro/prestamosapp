@@ -1,26 +1,67 @@
 ---
 import MainDash from "../../../../components/organismos/MainDash.astro";
+import Stats from "../../../../components/moleculas/Stats.astro";
 import Layoutdash from "../../layouts/Layoutdash.astro";
+import ContenedorStats from "../../../../components/organismos/ContenedorStats.astro";
+import Tabla from "./tablas/Tabla.astro";
+import Button2 from "../../../../components/atomos/Button2.astro";
+import Body from "./BodyTabkaPresatmo.astro";
 
-const {idPrestamo}=Astro.params
-let prestamo={}
+const { idPrestamo } = Astro.params;
+let prestamo = {};
+let cliente = {};
+let fechaFormateada = "";
+let cuotas = [];
+
+export const formatHora = (date) => {
+  const fecha = new Date(date);
+  const año = fecha.getFullYear();
+  const mes = fecha.getMonth() + 1; // getMonth() devuelve un índice basado en 0, por lo que se suma 1
+  const dia = fecha.getDate();
+  return (
+    año +
+    "-" +
+    (mes < 10 ? "0" + mes : mes) +
+    "-" +
+    (dia < 10 ? "0" + dia : dia)
+  );
+};
+
 try {
-const res=await fetch(`${Astro.url.origin}/api/prestamos/${idPrestamo}`)
-
-console.log(res)
+  const res = await fetch(`${Astro.url.origin}/api/prestamos/${idPrestamo}`);
+  const data = await res.json();
+  prestamo = await data?.data.prestamo.Prestamo;
+  cliente = await data?.data.prestamo.Cliente;
+  cuotas = await data?.data.cuotas;
+  // console.log(cuotas)
 } catch (error) {
-    console.log(error)
+  console.log(error);
 }
+
+const cabecera = ["N° Cuota", "F Vencimiento", "importe", "estado", "accion"];
 ---
 
-<Layoutdash>
-    <MainDash>
-        <div class="flex w-full p-5 flex-col items-start justify-start">
+<Layoutdash title={cliente?.nombre + " " + cliente?.apellido + " prestamo"}>
+  <MainDash>
+    <div class="flex w-full flex-col items-start justify-start">
+      <ContenedorStats
+        prestamo={prestamo}
+        cliente={cliente}
+        fechaFormateada={formatHora(prestamo.fechaInicio)}
+      />
+      <div class="w-full flex flex-col items-center justify-normal py-5">
+        <div class="flex items-center w-full text-xs justify-evenly py-3">
+          <Button2>email</Button2>
+          <Button2>whatsapp</Button2>
+          <Button2>pdf</Button2>
+        </div>
+        <div class="w-full">
 
-            <div>N° de DNI: {}</div>
-            <div></div>
-   </div>
-
-        {idPrestamo}
-    </MainDash>
+          <Tabla cabecera={cabecera}>
+            <Body arrayBody={cuotas} />
+          </Tabla>
+        </div>
+      </div>
+    </div>
+  </MainDash>
 </Layoutdash>

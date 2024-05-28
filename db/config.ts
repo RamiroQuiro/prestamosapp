@@ -49,6 +49,7 @@ export const Prestamo = defineTable({
     montoTotal: column.number(),
     montoCuota:column.number(),
     tasaInteres: column.number(),
+    modalidad:column.text({default:'mensual'}),
     nCuotas: column.number(), // en días
     fechaInicio: column.date(),
     fechaFin: column.date({optional:true}),
@@ -58,6 +59,19 @@ export const Prestamo = defineTable({
     terminado: column.boolean({default:false}),
   },
 });
+
+export const Cuota = defineTable({
+  columns: {
+    id: column.text({ primaryKey: true }),
+    prestamoId: column.text({ references: () => Prestamo.columns.id }),
+    numeroCuota: column.number(),
+    fechaVencimiento: column.date(),
+    monto: column.number(),
+    pagada: column.boolean({default:false}),
+    fechaPago: column.date({optional:true}),
+  },
+});
+
 
 export const Pago = defineTable({
   columns: {
@@ -106,5 +120,5 @@ export const RegistroActividades = defineTable({
 });
 // https://astro.build/db/config
 export default defineDb({
-  tables: {User,Prestamo,Cliente,Pago,Configuracion,HistorialConfiguracion,RegistroActividades},
+  tables: {User,Prestamo,Cliente,Pago,Configuracion,HistorialConfiguracion,Cuota,RegistroActividades},
 });

@@ -5,8 +5,7 @@ import Titulo1 from "../../../components/atomos/Titulo1.astro";
 import ContenedorBoton from "../../../components/moleculas/ContenedorBoton.astro";
 import ContenedorInputForm from "../../../components/moleculas/ContenedorInputForm.astro";
 
-
-const {userId}={userId:'kñlksñdlfks'}
+const { userId } = { userId: "kñlksñdlfks" };
 ---
 
 <FormCont id="formularioCliente">
@@ -42,29 +41,26 @@ const {userId}={userId:'kñlksñdlfks'}
   const formulario = document.getElementById("formularioCliente");
 
   formulario.addEventListener("submit", async (e) => {
-
     const formData = new FormData(e.target);
-    formData.append('userId','123456')
+    formData.append("userId", "123456");
     const data = Object.fromEntries(formData.entries());
 
-    
     try {
       const response = await fetch("/api/clientes/route", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-     
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+
         body: JSON.stringify(data),
-    });
-    console.log(response)
-if (response.ok) {
-  window.location.reload()
-}
-    // console.log(response)
+      });
+      console.log(response);
+      if (response.ok) {
+        window.location.reload();
+      }
+      // console.log(response)
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   });
- 
 </script>

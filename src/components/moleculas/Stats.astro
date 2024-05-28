@@ -1,0 +1,22 @@
+---
+
+const {cliente,id}=Astro.props
+
+---
+
+
+<div id={id} class={`${cliente? 'cursor-pointer':''} relative justify-center  flex px-3 py-1  flex-w text-primary-texto fill-primary-texto md:flex-row flex-col items-center rounded-full border-[1px] border-gray-200 bg-white bg-clip-border shadow-md shadow-[#F3F3F3] dark:border-[#ffffff33] dark:!bg-navy-800 dark:text-white dark:shadow-none`}>
+    <div class=" w-auto  flex items-center">
+    <div class="rounded-full mx-auto bg-lightPrimary p-3 dark:bg-navy-700">
+        <span class="flex items-center  dark:text-white">
+      <slot class="w-6 h-6"/>
+      
+        </span>
+    </div>
+    </div>
+    <div class=" flex capitalize w-auto flex-col justify-center">
+    <p class=" text-sm font-medium "><slot name="label"/></p>
+    <h4 class="text font-thin text-sm dark:text-white"><slot name="value"/></h4>
+    </div>
+</div>
+<script define:vars={{id}}>document.getElementById(id).addEventListener('click',()=>document.location.href=`/dashboard/clientes/${id}`)</script>

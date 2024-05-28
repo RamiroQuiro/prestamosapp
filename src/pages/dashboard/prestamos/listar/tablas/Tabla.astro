@@ -1,13 +1,18 @@
 ---
 import Head from "./Head.astro";
 import Body from "./Body.astro";
+
+
+const {cabecera}=Astro.props
+
+const arraBody=[]
 ---
 
 <div class="w-full overflow-x-auto">
   <table
     class="items-center bg-transparent w-full border-collapse rounded-md overflow-hidden"
   >
-    <Head />
-    <Body />
+    <Head cabecera={cabecera} />
+   <slot />
   </table>
 </div>
