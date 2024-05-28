@@ -1,40 +1,17 @@
 ---
 import { Prestamo,eq, User, db, Cliente } from "astro:db";
 import Tr from "../../../../../components/atomos/Tr.astro";
-const userId = "123456";
-const prestamos = await db
-  .select()
-  .from(Prestamo)
-  .where(eq(Prestamo.usuarioId, userId))
-  .innerJoin(Cliente,eq(Prestamo.clienteId,Cliente.id))
+import TRBody from "../../../../../components/atomos/TRBody.astro";
 
+const {arrayBody}=Astro.props
 ---
 
 <tbody>
   {
-    prestamos.map((client) => {
-      
+    arrayBody.map((client) => {
+      console.log('cada elemento ->,',client)
       return (
-        <Tr id={client.Prestamo.id} styleTr="hover:bg-primary-200/20 duration-300 cursor-pointer border-b">
-          <th class="border-t-0 px-4 align-middle border-l-0 capitalize border-r-0 text-xs whitespace-nowrap p-3 text-left text-primary-100 ">
-            {client?.Cliente.nombre}
-          </th>
-          <th class="border-t-0 px-4 align-middle border-l-0 capitalize border-r-0 text-xs whitespace-nowrap p-3 text-left text-primary-100 ">
-            {client?.Cliente.apellido}
-          </th>
-          <td class="border-t-0 px-4 align-middle lowercase border-l-0 border-r-0 text-xs whitespace-nowrap  ">
-            $ {client?.Prestamo?.montoCuota.toLocaleString()}
-          </td>
-          <td class="border-t-0 px-4 align-center border-l-0 border-r-0 text-xs whitespace-nowrap ">
-            {client?.Prestamo.nCuotas}
-          </td>
-          <td class="border-t-0 px-4 align-middle lowercase border-l-0 border-r-0 text-xs whitespace-nowrap  ">
-            $ {client?.Prestamo.montoTotal.toLocaleString()}
-          </td>
-          <td class="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap ">
-            {client?.Prestamo.tasaInteres} %
-          </td>
-        </Tr>
+        <TRBody data={client} styleTr="hover:bg-primary-200/20 duration-300 cursor-pointer border-b" />
       );
     })
   }

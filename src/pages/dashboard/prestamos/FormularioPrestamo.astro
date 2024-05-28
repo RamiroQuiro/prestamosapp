@@ -128,6 +128,7 @@ let userId=''
       let importe =document.getElementById("importeCredito").value
       let tasaInteres = document.getElementById("tipoInteres").value
       let nCuotas =document.getElementById("nCuotas").value
+      let modalidad =document.getElementById("modalidad").value
       let cuota = calcularCuota(importe, tasaInteres, nCuotas);
       let ganancia=calcularGanancia(importe,cuota,nCuotas)
       const dateNow=new Date()
@@ -137,6 +138,7 @@ let userId=''
         usuarioId:userId,
         montoCuota: cuota,
         nCuotas: nCuotas,
+        modalidad,
         tasaInteres: tasaInteres,
         interesGenerado:ganancia,
         montoTotal: cuota*nCuotas,

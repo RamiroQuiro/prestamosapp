@@ -43,25 +43,27 @@ const cabecera = ["N° Cuota", "F Vencimiento", "importe", "estado", "accion"];
 
 <Layoutdash title={cliente?.nombre + " " + cliente?.apellido + " prestamo"}>
   <MainDash>
-    <div class="flex w-full flex-col items-start justify-start">
-      <ContenedorStats
-        prestamo={prestamo}
-        cliente={cliente}
-        fechaFormateada={formatHora(prestamo.fechaInicio)}
-      />
-      <div class="w-full flex flex-col items-center justify-normal py-5">
-        <div class="flex items-center w-full text-xs justify-evenly py-3">
-          <Button2>email</Button2>
-          <Button2>whatsapp</Button2>
-          <Button2>pdf</Button2>
+    <div
+      class="flex flex-col items-start bg-0 justify-normal w-full px-5 py-2 relative"
+    >
+    
+        <ContenedorStats
+          prestamo={prestamo}
+          cliente={cliente}
+          fechaFormateada={formatHora(prestamo?.fechaInicio)}
+        />
+        <div class="w-full flex flex-col mt-4 items-center justify-normal ">
+          <div class="flex items-center w- text-xs justify-evenly gap-5 py-3">
+            <Button2>email</Button2>
+            <Button2>whatsapp</Button2>
+            <Button2>pdf</Button2>
+          </div>
+          <div class="w-2/3">
+            <Tabla cabecera={cabecera}>
+              <Body arrayBody={cuotas} />
+            </Tabla>
+          </div>
         </div>
-        <div class="w-full">
-
-          <Tabla cabecera={cabecera}>
-            <Body arrayBody={cuotas} />
-          </Tabla>
-        </div>
-      </div>
     </div>
   </MainDash>
 </Layoutdash>

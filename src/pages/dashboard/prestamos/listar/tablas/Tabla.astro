@@ -1,18 +1,49 @@
 ---
 import Head from "./Head.astro";
 import Body from "./Body.astro";
-
-
-const {cabecera}=Astro.props
-
-const arraBody=[]
+import Table from "../../../../../components/atomos/Table.astro";
+import { db } from "astro:db";
+import { Prestamo } from "astro:db";
+import { eq } from "astro:db";
+import { Cliente } from "astro:db";
+let prestamos=[]
+let arrayBody=[]
+const userId = "123456";
+const cabecera = [
+  "nombre",
+  "apellido",
+  "monto cuota",
+  "N° cuotas",
+  "total",
+  "fecha inicio",
+  "tasa interes",
+];
+try {
+   prestamos = await db
+    .select()
+    .from(Prestamo)
+    .where(eq(Prestamo.usuarioId, userId))
+    .innerJoin(Cliente,eq(Prestamo.clienteId,Cliente.id))
+  
+arrayBody=prestamos.map(element=>{
+  return{
+ nombre:element?.Cliente.nombre,
+ apellido:element?.Cliente.apellido,
+ montoCuota:element?.Prestamo?.montoCuota.toLocaleString(),
+ nCuotas:element?.Prestamo.nCuotas,
+ montoTotal:element?.Prestamo.montoTotal.toLocaleString(),
+ fechaInicio:element?.Prestamo.fechaInicio.toLocaleString(),
+ tasaInteres:`${element?.Prestamo.tasaInteres}%`,
+  }
+})
+} catch (error) {
+  console.log(error)
+}
 ---
 
 <div class="w-full overflow-x-auto">
-  <table
-    class="items-center bg-transparent w-full border-collapse rounded-md overflow-hidden"
-  >
+<Table>
     <Head cabecera={cabecera} />
-   <slot />
-  </table>
+ <Body  arrayBody={arrayBody}/>
+  </Table>
 </div>

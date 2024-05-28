@@ -11,6 +11,7 @@ const prestamoSimulado=atom({
     clienteId:'',
     montoCuota:0,
     montoTotal:0,
+    modalidad:'',
     interesGenerado:0,
     tasaInteres:0,
     nCuotas:0,

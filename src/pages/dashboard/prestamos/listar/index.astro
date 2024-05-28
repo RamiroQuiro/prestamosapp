@@ -5,15 +5,7 @@ import Layoutdash from "../../layouts/Layoutdash.astro";
 import Body from "./tablas/Body.astro";
 import Tabla from "./tablas/Tabla.astro";
 
-const cabecera = [
-  "nombre",
-  "apellido",
-  "monto cuota",
-  "N° cuotas",
-  "total",
-  "fecha inicio",
-  "tasa interes",
-];
+
 ---
 
 <Layoutdash title="Prestamos">
@@ -23,7 +15,7 @@ const cabecera = [
     >
       <Titulo1> Prestamos </Titulo1>
       <div class="py-5 w-full px-5">
-        <Tabla cabecera={cabecera} >
+        <Tabla  >
           <Body/>
         </Tabla>
       </div>

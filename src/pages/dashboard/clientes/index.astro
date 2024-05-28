@@ -2,41 +2,40 @@
 import Layoutdash from "../layouts/Layoutdash.astro";
 import MainDash from "../../../components/organismos/MainDash.astro";
 import Titulo1 from "../../../components/atomos/Titulo1.astro";
-import ContenedorInputForm from "../../../components/moleculas/ContenedorInputForm.astro";
-import Button1 from "../../../components/atomos/Button1.astro";
-import Modal from "../../../components/moleculas/Modal.astro";
 import Tabla from "./tablas/Tabla.astro";
 import FormularioCliente from "./FormularioCliente.astro";
 import ContenedeorModal from "../../../components/organismos/ContenedeorModal.astro";
+import FormularioDeBusqueda from "../../../components/organismos/FormularioDeBusqueda";
+import { db } from "astro:db";
+import { Cliente } from "astro:db";
+import { eq } from "astro:db";
 
 const onClick = () => {
   window.location.href = "/dashboard";
 };
+const userId = "123456";
+const clientes = await db
+  .select()
+  .from(Cliente)
+  .where(eq(Cliente.usuarioId, userId));
 ---
 
 <Layoutdash title="Clientes">
   <MainDash>
-    <div
-      class="flex flex-col items-start justify-normal w-full px-5 py-2 relative"
-    >
-      <Titulo1> Clientes </Titulo1>
-      <div class="md:w-1/6 m-auto absolute top-2 right-0">
+    <div class="flex w-full p-5 flex-col items-start justify-start relative ">
+      <div class="flex mb-2 items-center justify-between w-10/12 gap-5">
+        <Titulo1>Clientes</Titulo1>
+        <FormularioDeBusqueda clientes={clientes} client:load />
+      </div>
+      <div class="md:w-1/6 m-auto absolute top-5 right-0">
         <ContenedeorModal open="Crear Cliente">
           <FormularioCliente />
         </ContenedeorModal>
       </div>
-      <div
-        class="w-full p-5 border-y gap-x-5 my-2 flex items-center justify-center"
-      >
-        <ContenedorInputForm
-          label="Buscar clientes"
-          name="cleintesBusqueda"
-          type="search"
-          styleContenedor="w-8/12"
-        />
-      </div>
 
-      <div class="w-full"><Tabla /></div>
+      <div class="w-full">
+        <Tabla />
+      </div>
     </div>
   </MainDash>
 </Layoutdash>
