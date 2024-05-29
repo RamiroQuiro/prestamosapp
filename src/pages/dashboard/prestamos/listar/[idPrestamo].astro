@@ -6,6 +6,8 @@ import ContenedorStats from "../../../../components/organismos/ContenedorStats.a
 import Tabla from "./tablas/Tabla.astro";
 import Button2 from "../../../../components/atomos/Button2.astro";
 import Body from "./BodyTabkaPresatmo.astro";
+import TablaIdPrestamo from "./tablas/TablaIdPrestamo.astro";
+import BotoneraOpcionesLista from "./BotoneraOpcionesLista.astro";
 
 const { idPrestamo } = Astro.params;
 let prestamo = {};
@@ -37,33 +39,24 @@ try {
 } catch (error) {
   console.log(error);
 }
-
-const cabecera = ["N° Cuota", "F Vencimiento", "importe", "estado", "accion"];
 ---
 
 <Layoutdash title={cliente?.nombre + " " + cliente?.apellido + " prestamo"}>
   <MainDash>
     <div
-      class="flex flex-col items-start bg-0 justify-normal w-full px-5 py-2 relative"
+      class="flex flex-col items-start bg-0 justify-normal w-full  px-5 py-2 relative"
     >
-    
-        <ContenedorStats
-          prestamo={prestamo}
-          cliente={cliente}
-          fechaFormateada={formatHora(prestamo?.fechaInicio)}
-        />
-        <div class="w-full flex flex-col mt-4 items-center justify-normal ">
-          <div class="flex items-center w- text-xs justify-evenly gap-5 py-3">
-            <Button2>email</Button2>
-            <Button2>whatsapp</Button2>
-            <Button2>pdf</Button2>
-          </div>
-          <div class="w-2/3">
-            <Tabla cabecera={cabecera}>
-              <Body arrayBody={cuotas} />
-            </Tabla>
-          </div>
+      <ContenedorStats
+        prestamo={prestamo}
+        cliente={cliente}
+        fechaFormateada={formatHora(prestamo?.fechaInicio)}
+      />
+      <div class="w-full bg- flex flex-col mt-4 items-center justify-normal">
+        <BotoneraOpcionesLista />
+        <div class="w-2/3 mb-5">
+          <TablaIdPrestamo />
         </div>
+      </div>
     </div>
   </MainDash>
 </Layoutdash>

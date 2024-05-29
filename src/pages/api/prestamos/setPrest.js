@@ -3,7 +3,7 @@ import { generateUid } from "../clientes/route";
 
 
 export async function POST({ request }) {
-  const { contextoPrestamo: {montoCuota,modalidad, fechaInicio,clienteId, usuarioId, montoTotal, tasaInteres, nCuotas } } = await request.json()
+  const { contextoPrestamo: {montoCuota,modalidad, capital,fechaInicio,clienteId, usuarioId, montoTotal, tasaInteres, nCuotas } } = await request.json()
   // console.log('email:',email, ' nombre',nombre, ' apellido',apellido,' dni',dni, ' direccion',direccion,' cel',cel,' userId',userId )
 
   try {
@@ -18,6 +18,7 @@ export async function POST({ request }) {
       usuarioId,
       montoTotal,
       modalidad,
+      capital,
       tasaInteres,
       nCuotas,
       fechaInicio:now,

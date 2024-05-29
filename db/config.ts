@@ -48,6 +48,7 @@ export const Prestamo = defineTable({
     usuarioId: column.text({ references: () => User.columns.id }),
     montoTotal: column.number(),
     montoCuota:column.number(),
+    capital:column.number(),
     tasaInteres: column.number(),
     modalidad:column.text({default:'mensual'}),
     nCuotas: column.number(), // en días

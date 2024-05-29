@@ -1,0 +1,73 @@
+---
+import { db } from "astro:db";
+import { Prestamo } from "astro:db";
+import { eq } from "astro:db";
+import { Cliente } from "astro:db";
+import Table from "../../../../../components/tablaComponentes/Table";
+import { Cuota } from "astro:db";
+import { formatHora } from "../[idPrestamo].astro";
+let cuotas = [];
+let arrayBody = [];
+
+const { idPrestamo } = Astro.params;
+const userId = "123456";
+const columnas = [
+  {
+    label: "cuota",
+    id: 1,
+    selector: (row) => row.cuota,
+  },
+
+  {
+    label: "F. Vencimiento",
+    id: 3,
+    selector: (row) => row.fechaVencimiento,
+  },
+  {
+    label: "importe de cuota",
+    id: 4,
+    selector: (row) => row.monto,
+  },
+  {
+    label: "estado",
+    id: 5,
+    selector: (row) => row.pagada,
+  },
+  {
+    label: "accion",
+    id: 6,
+    selector: "",
+  },
+];
+
+try {
+  cuotas = await db
+    .select()
+    .from(Cuota)
+    .where(eq(Cuota.prestamoId, idPrestamo));
+
+  arrayBody = cuotas.map((element) => {
+    const horaFormateada = formatHora(element.fechaVencimiento);
+    return {
+      cuota: element.numeroCuota,
+      fechaVencimiento: horaFormateada,
+      importeCuota: `$ ${element.monto.toLocaleString()}`,
+      estado: true ,
+      accion: "cerrar Cuota",
+    };
+  });
+} catch (error) {
+  console.log(error);
+}
+
+// enlace de la tabla al que me redirige con el id
+---
+
+<div class="flex items-center justify-center overflow-x-auto">
+  <Table
+    columnas={columnas}
+    arrayBody={arrayBody}
+   
+    client:load
+  />
+</div>

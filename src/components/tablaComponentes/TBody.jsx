@@ -11,10 +11,10 @@ export default function TBody({ arrayBody ,onClickFila}) {
     return (
         <tbody>
             {
-                arrayBody.map((client) => {
+                arrayBody.map((client,i) => {
                    
                     return (
-                        <Tr data={client} onClick={()=>onClick(client)} id={client.id} key={client.id} styleTr="hover:bg-primary-200/20 duration-300 cursor-pointer border-b odd:bg-primary-200/10 " />
+                        <Tr data={client} onClick={()=>onClick(client)} id={client.id} key={i} styleTr="hover:bg-primary-200/20 duration-300 cursor-pointer border-b odd:bg-primary-200/10 " />
                     );
                 })
             }

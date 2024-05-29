@@ -139,8 +139,9 @@ let userId=''
         montoCuota: cuota,
         nCuotas: nCuotas,
         modalidad,
+        capital:importe,
         tasaInteres: tasaInteres,
-        interesGenerado:ganancia,
+        interesGenerado:ganancia.toLocaleString(),
         montoTotal: cuota*nCuotas,
         fechaInicio:dateNow
       });

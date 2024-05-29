@@ -9,15 +9,11 @@ let arrayBody = [];
 const userId = "123456";
 const columnas = [
   {
-    label: "nombre",
+    label: "cliente",
     id: 1,
     selector: row => row.nombre,
   },
-  {
-    label: "apellido",
-    id: 2,
-    selector: row => row.apellido,
-  },
+
   {
     label: "monto cuota",
     id: 3,
@@ -54,11 +50,10 @@ try {
   arrayBody = prestamos.map((element) => {
     return {
       id:element?.Prestamo.id,
-      nombre: element?.Cliente.nombre,
-      apellido: element?.Cliente.apellido,
-      montoCuota: element?.Prestamo?.montoCuota.toLocaleString(),
+      cliente: element?.Cliente.nombre + ' '+ element?.Cliente.apellido,
+      montoCuota: `$ ${element?.Prestamo?.montoCuota.toLocaleString()}`,
       nCuotas: element?.Prestamo.nCuotas,
-      montoTotal: element?.Prestamo.montoTotal.toLocaleString(),
+      montoTotal:`$ ${ element?.Prestamo.montoTotal.toLocaleString()}`,
       fechaInicio: element?.Prestamo.fechaInicio.toLocaleString(),
       tasaInteres: `${element?.Prestamo.tasaInteres}%`,
     };
