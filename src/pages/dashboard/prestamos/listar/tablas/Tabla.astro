@@ -1,49 +1,76 @@
 ---
-import Head from "./Head.astro";
-import Body from "./Body.astro";
-import Table from "../../../../../components/atomos/Table.astro";
 import { db } from "astro:db";
 import { Prestamo } from "astro:db";
 import { eq } from "astro:db";
 import { Cliente } from "astro:db";
-let prestamos=[]
-let arrayBody=[]
+import Table from "../../../../../components/tablaComponentes/Table";
+let prestamos = [];
+let arrayBody = [];
 const userId = "123456";
-const cabecera = [
-  "nombre",
-  "apellido",
-  "monto cuota",
-  "N° cuotas",
-  "total",
-  "fecha inicio",
-  "tasa interes",
+const columnas = [
+  {
+    label: "nombre",
+    id: 1,
+    selector: row => row.nombre,
+  },
+  {
+    label: "apellido",
+    id: 2,
+    selector: row => row.apellido,
+  },
+  {
+    label: "monto cuota",
+    id: 3,
+    selector: row => row.montoCuota,
+  },
+  {
+    label: "N° cuotas",
+    id: 4,
+    selector: row => row.nCuotas,
+  },
+  {
+    label: "total",
+    id: 5,
+    selector: row => row.total,
+  },
+  {
+    label: "fecha inicio",
+    id: 6,
+    selector: row => row.fechaInicio,
+  },
+  {
+    label: "tasa interes",
+    id: 7,
+    selector: row => row.tasaInteres,
+  },
 ];
 try {
-   prestamos = await db
+  prestamos = await db
     .select()
     .from(Prestamo)
     .where(eq(Prestamo.usuarioId, userId))
-    .innerJoin(Cliente,eq(Prestamo.clienteId,Cliente.id))
-  
-arrayBody=prestamos.map(element=>{
-  return{
- nombre:element?.Cliente.nombre,
- apellido:element?.Cliente.apellido,
- montoCuota:element?.Prestamo?.montoCuota.toLocaleString(),
- nCuotas:element?.Prestamo.nCuotas,
- montoTotal:element?.Prestamo.montoTotal.toLocaleString(),
- fechaInicio:element?.Prestamo.fechaInicio.toLocaleString(),
- tasaInteres:`${element?.Prestamo.tasaInteres}%`,
-  }
-})
+    .innerJoin(Cliente, eq(Prestamo.clienteId, Cliente.id));
+
+  arrayBody = prestamos.map((element) => {
+    return {
+      id:element?.Prestamo.id,
+      nombre: element?.Cliente.nombre,
+      apellido: element?.Cliente.apellido,
+      montoCuota: element?.Prestamo?.montoCuota.toLocaleString(),
+      nCuotas: element?.Prestamo.nCuotas,
+      montoTotal: element?.Prestamo.montoTotal.toLocaleString(),
+      fechaInicio: element?.Prestamo.fechaInicio.toLocaleString(),
+      tasaInteres: `${element?.Prestamo.tasaInteres}%`,
+    };
+  });
 } catch (error) {
-  console.log(error)
+  console.log(error);
 }
+
+// enlace de la tabla al que me redirige con el id
+const enlaceFila=`/dashboard/prestamos/listar/`
 ---
 
 <div class="w-full overflow-x-auto">
-<Table>
-    <Head cabecera={cabecera} />
- <Body  arrayBody={arrayBody}/>
-  </Table>
+  <Table columnas={columnas} arrayBody={arrayBody} enlaceFila={enlaceFila} client:load/>
 </div>

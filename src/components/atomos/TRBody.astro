@@ -1,12 +1,13 @@
 ---
-const {data,styleTr}=Astro.props
+const { data, styleTr } = Astro.props;
 ---
 
-
 <tr id={data.id} class={`${styleTr}`}>
-    {Object.values(data).map((value) => (
+  {
+    Object.values(data).map((value) => (
       <td class="border-t-0 px-4 align-middle capitalize py-3 border-l-0 border-r-0 text-xs whitespace-nowrap  ">
         {value}
       </td>
-    ))}
-  </tr>
+    ))
+  }
+</tr>

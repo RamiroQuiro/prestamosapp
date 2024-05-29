@@ -1,0 +1,68 @@
+---
+import Head from "./Head.astro";
+import Body from "./Body.astro";
+import Table from "../../../../components/tablaComponentes/Table";
+import { db } from "astro:db";
+import { Cliente } from "astro:db";
+import { eq } from "astro:db";
+const userId = "123456";
+const columnas = [
+  {
+    label: "nombre",
+    id: 1,
+    selector: (row) => row.nombre,
+  },
+  {
+    label: "apellido",
+    id: 2,
+    selector: (row) => row.apellido,
+  },
+  {
+    label: "DNI",
+    id: 3,
+    selector: (row) => row.dni,
+  },
+  {
+    label: "email",
+    id: 4,
+    selector: (row) => row.email,
+  },
+  {
+    label: "celular",
+    id: 5,
+    selector: (row) => row.celular,
+  },
+  {
+    label: "N° Prestamos",
+    id: 6,
+    selector: (row) => row.prestamos,
+  },
+  
+];
+let arrayBody = [];
+
+try {
+  const clientes = await db
+    .select()
+    .from(Cliente)
+    .where(eq(Cliente.usuarioId, userId));
+  // .innerJoin(Cliente, eq(Prestamo.clienteId, Cliente.id));
+
+  arrayBody = clientes.map((element) => {
+    return {
+      nombre: element?.nombre,
+      apellido: element?.apellido,
+      dni: element?.dni,
+      email: element?.email,
+      celular: element?.celular,
+      prestamos: "N° prestamos",
+    };
+  });
+} catch (error) {
+  console.log(error);
+}
+---
+
+<div class="w-full overflow-x-auto my-5">
+  <Table  columnas={columnas} arrayBody={arrayBody} client:load/>
+</div>

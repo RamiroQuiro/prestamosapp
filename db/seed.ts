@@ -18,6 +18,7 @@ export default async function seed() {
       nombre:'Ramiro',
       apellido:'quiroga',
       dni:33888224,
+      celular:3855815662,
       usuarioId:'123456'
     },
   ])
