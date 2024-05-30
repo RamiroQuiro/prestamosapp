@@ -1,0 +1,43 @@
+---
+import Titulo1 from "../../../../components/atomos/Titulo1.astro";
+import MainDash from "../../../../components/organismos/MainDash.astro";
+import Layoutdash from "../../layouts/Layoutdash.astro";
+
+const { idCuota } = Astro.params;
+---
+
+<Layoutdash>
+  <MainDash>
+    <div
+      class="flex flex-col items-start bg-0 justify-normal w-full px-5 py-2 relative"
+    >
+      <Titulo1>Cuota</Titulo1>
+      <div class="py-5 w-full px-5">
+        <div
+          class="flex flex-col items-center justify-normal p-3 w-1/2 rounded border shadow-md"
+        >
+          <div class="flex items-center py-2 justify-between w-full border-b">
+            <h2 class="text-xl font-bold">RamiroQ</h2>
+            <span class="text-sm font-thin">30/05/2024, 20:55</span>
+          </div>
+          <div class="flex items-center justify-between w-full border-b">
+            <div class="flex flex-col items-start py-2 justify-normal">
+              <p class="text-lg font-semibold">Ramiro Quiorga</p>
+              <p class="text-sm  italic">Barrio el Rincon mza 14 lote 24</p>
+              <p class="text-sm italic">La Banda - Santiago del eEstero</p>
+            </div>
+          </div>
+          <div class="flex items-center py-5 justify-between w-full border-b">
+            <p class="text-lg font-semibold w-1/2 capitalize">pago a cuenta de prestamos N°3215</p>
+            <p class="text-lg font-semibold">Cuota n°2 de 12</p>
+            
+          </div>
+          <div class="flex items-center justify-between w-full py-4 border-b">
+            <p class="text-lg font-semibold w-1/2 capitalize border-r-2  ">pago </p>
+            <p class="text-lg font-black  capitalize">$135000</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </MainDash>
+</Layoutdash>

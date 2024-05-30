@@ -6,6 +6,12 @@ const busqueda=atom({
     }
 })
 
+
+const columnSelectTable=atom({
+    seleccion:'',
+    asc:true
+})
+
 const prestamoSimulado=atom({
     usuarioId:'',
     clienteId:'',
@@ -20,4 +26,4 @@ const prestamoSimulado=atom({
 
 })
 
-export {busqueda , prestamoSimulado}
+export {busqueda , prestamoSimulado,columnSelectTable}

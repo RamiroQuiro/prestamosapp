@@ -13,7 +13,7 @@ export default function Table({ columnas,arrayBody, styleTable,enlaceFila }) {
         <table
             className={`${styleTable} items-center bg-transparent w-full border-collapse rounded-md overflow-hidden`}
         >
-           <THead columnas={columnas}/>
+           <THead columnas={columnas} arrayBody={arrayBody}/>
            <TBody onClickFila={onClick} arrayBody={arrayBody}/>
         </table>
     )

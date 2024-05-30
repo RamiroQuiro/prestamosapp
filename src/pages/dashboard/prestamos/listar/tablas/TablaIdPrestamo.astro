@@ -49,11 +49,12 @@ try {
   arrayBody = cuotas.map((element) => {
     const horaFormateada = formatHora(element.fechaVencimiento);
     return {
+      id:element.id,
       cuota: element.numeroCuota,
       fechaVencimiento: horaFormateada,
       importeCuota: `$ ${element.monto.toLocaleString()}`,
-      estado: true ,
-      accion: "cerrar Cuota",
+      estado: element.pagada ,
+      accion: 'onClickFunction',
     };
   });
 } catch (error) {
@@ -61,13 +62,14 @@ try {
 }
 
 // enlace de la tabla al que me redirige con el id
+const enlaceFila=`/dashboard/prestamos/cuota/`
 ---
 
 <div class="flex items-center justify-center overflow-x-auto">
   <Table
     columnas={columnas}
     arrayBody={arrayBody}
-   
+    enlaceFila={enlaceFila}
     client:load
   />
 </div>

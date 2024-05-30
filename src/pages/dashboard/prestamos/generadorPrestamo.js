@@ -17,7 +17,7 @@ import { prestamoSimulado } from "../../../context/store";
   });
 
   const unsubscribe = prestamoSimulado.subscribe((prestamoSimulado) => {
-    console.log("estamos en la parte presamos", prestamoSimulado);
+    // console.log("estamos en la parte presamos", prestamoSimulado);
     const fecha = prestamoSimulado.fechaInicio;
     const año = fecha.getFullYear();
     const mes = fecha.getMonth() + 1; // getMonth() devuelve un índice basado en 0, por lo que se suma 1
@@ -29,9 +29,9 @@ import { prestamoSimulado } from "../../../context/store";
       "-" +
       (dia < 10 ? "0" + dia : dia);
 
-    document.getElementById("montoCuota").value = prestamoSimulado.montoCuota;
-    document.getElementById("montoTotal").value = prestamoSimulado.montoTotal;
-    document.getElementById("interesGenerado").value =prestamoSimulado.interesGenerado;
+    document.getElementById("montoCuota").value = `$ ${prestamoSimulado.montoCuota.toLocaleString()}`;
+    document.getElementById("montoTotal").value = `$ ${prestamoSimulado.montoTotal.toLocaleString()}`;
+    document.getElementById("interesGenerado").value = `$ ${prestamoSimulado.interesGenerado.toLocaleString()}`;
     document.getElementById("fechaInicio").value = fechaFormateada;
 
     // Concatenamos los valores de 'nombre', 'apellido' y 'dni'
