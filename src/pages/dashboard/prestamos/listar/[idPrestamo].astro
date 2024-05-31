@@ -39,12 +39,14 @@ try {
 } catch (error) {
   console.log(error);
 }
+
+
 ---
 
 <Layoutdash title={cliente?.nombre + " " + cliente?.apellido + " prestamo"}>
   <MainDash>
     <div
-      class="flex flex-col items-start bg-0 justify-normal w-full  px-5 py-2 relative"
+      class="flex flex-col items-start bg-0 justify-normal w-full px-5 py-2 relative"
     >
       <ContenedorStats
         prestamo={prestamo}

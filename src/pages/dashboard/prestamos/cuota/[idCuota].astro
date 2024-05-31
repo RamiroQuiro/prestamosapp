@@ -1,9 +1,28 @@
 ---
+import { db } from "astro:db";
 import Titulo1 from "../../../../components/atomos/Titulo1.astro";
 import MainDash from "../../../../components/organismos/MainDash.astro";
 import Layoutdash from "../../layouts/Layoutdash.astro";
+import { Cuota } from "astro:db";
+import { eq } from "astro:db";
+import { Cliente } from "astro:db";
+import { Prestamo } from "astro:db";
 
 const { idCuota } = Astro.params;
+let resultadoBase = {};
+try {
+  const resBase = await db
+    .select()
+    .from(Cuota)
+    .where(eq(Cuota.id, idCuota))
+    .innerJoin(Prestamo, eq(Prestamo.id, Cuota.prestamoId))
+    .innerJoin(Cliente, eq(Prestamo.clienteId, Cliente.id));
+
+    resultadoBase=resBase[0]
+  } catch (error) {
+    console.log(error);
+  }
+const fechaActual=new Date()
 ---
 
 <Layoutdash>
@@ -14,27 +33,30 @@ const { idCuota } = Astro.params;
       <Titulo1>Cuota</Titulo1>
       <div class="py-5 w-full px-5">
         <div
-          class="flex flex-col items-center justify-normal p-3 w-1/2 rounded border shadow-md"
+          class="flex flex-col items-center justify-normal py-3 px-5 w-1/2 rounded border shadow-md"
         >
           <div class="flex items-center py-2 justify-between w-full border-b">
             <h2 class="text-xl font-bold">RamiroQ</h2>
-            <span class="text-sm font-thin">30/05/2024, 20:55</span>
+            <span class="text- font-">{fechaActual.toDateString()}</span>
           </div>
           <div class="flex items-center justify-between w-full border-b">
             <div class="flex flex-col items-start py-2 justify-normal">
-              <p class="text-lg font-semibold">Ramiro Quiorga</p>
-              <p class="text-sm  italic">Barrio el Rincon mza 14 lote 24</p>
-              <p class="text-sm italic">La Banda - Santiago del eEstero</p>
+              <p class="text-lg font-semibold capitalize">{resultadoBase.Cliente.nombre+' '+ resultadoBase.Cliente.apellido}</p>
+              <p class="text-sm italic">{resultadoBase.Cliente.direccion}</p>
+              <p class="text-sm italic">{resultadoBase.Cliente.ciudad+' | '+ resultadoBase.Cliente.departamento}</p>
             </div>
           </div>
           <div class="flex items-center py-5 justify-between w-full border-b">
-            <p class="text-lg font-semibold w-1/2 capitalize">pago a cuenta de prestamos N°3215</p>
-            <p class="text-lg font-semibold">Cuota n°2 de 12</p>
-            
+            <p class="text-sm font-semibold w-1/2 capitalize">
+              pago a cuenta de prestamos id <span class="text-xs font-thin">{resultadoBase?.Prestamo?.id}</span>
+            </p>
+          <p class="text- font-">Cuota <span class="font-bold text-lg">{resultadoBase?.Cuota?.numeroCuota}</span> de <span class="font-bold text-lg">{resultadoBase?.Prestamo?.nCuotas}</span></p>
           </div>
           <div class="flex items-center justify-between w-full py-4 border-b">
-            <p class="text-lg font-semibold w-1/2 capitalize border-r-2  ">pago </p>
-            <p class="text-lg font-black  capitalize">$135000</p>
+            <p class="text-lg font-semibold w-1/2 capitalize border-r-2">
+              pago
+            </p>
+            <p class="text-lg font-black capitalize">${resultadoBase?.Cuota?.monto.toLocaleString()}</p>
           </div>
         </div>
       </div>
