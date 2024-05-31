@@ -7,6 +7,10 @@ import { Cuota } from "astro:db";
 import { eq } from "astro:db";
 import { Cliente } from "astro:db";
 import { Prestamo } from "astro:db";
+import Stats from "../../../../components/moleculas/Stats.astro";
+import Button1 from "../../../../components/atomos/Button1.astro";
+import Button2 from "../../../../components/atomos/Button2.astro";
+import ReciboPrint from "./ReciboPrint.astro";
 
 const { idCuota } = Astro.params;
 let resultadoBase = {};
@@ -18,48 +22,41 @@ try {
     .innerJoin(Prestamo, eq(Prestamo.id, Cuota.prestamoId))
     .innerJoin(Cliente, eq(Prestamo.clienteId, Cliente.id));
 
-    resultadoBase=resBase[0]
-  } catch (error) {
-    console.log(error);
-  }
-const fechaActual=new Date()
+  resultadoBase = resBase[0];
+} catch (error) {
+  console.log(error);
+}
 ---
 
-<Layoutdash>
+<Layoutdash title="Recibo Cuota">
   <MainDash>
     <div
-      class="flex flex-col items-start bg-0 justify-normal w-full px-5 py-2 relative"
+      class="flex flex-col items-start bg-0 print:hidden justify-normal w-full px-5 py-2 relative"
     >
       <Titulo1>Cuota</Titulo1>
-      <div class="py-5 w-full px-5">
+      <div class="w-full flex items-starts justify-normal gap-3">
         <div
-          class="flex flex-col items-center justify-normal py-3 px-5 w-1/2 rounded border shadow-md"
+          id="reciboPrint"
+          class="py-5 flex-grow w-full px-5 font-mono print:w-screen"
         >
-          <div class="flex items-center py-2 justify-between w-full border-b">
-            <h2 class="text-xl font-bold">RamiroQ</h2>
-            <span class="text- font-">{fechaActual.toDateString()}</span>
-          </div>
-          <div class="flex items-center justify-between w-full border-b">
-            <div class="flex flex-col items-start py-2 justify-normal">
-              <p class="text-lg font-semibold capitalize">{resultadoBase.Cliente.nombre+' '+ resultadoBase.Cliente.apellido}</p>
-              <p class="text-sm italic">{resultadoBase.Cliente.direccion}</p>
-              <p class="text-sm italic">{resultadoBase.Cliente.ciudad+' | '+ resultadoBase.Cliente.departamento}</p>
-            </div>
-          </div>
-          <div class="flex items-center py-5 justify-between w-full border-b">
-            <p class="text-sm font-semibold w-1/2 capitalize">
-              pago a cuenta de prestamos id <span class="text-xs font-thin">{resultadoBase?.Prestamo?.id}</span>
-            </p>
-          <p class="text- font-">Cuota <span class="font-bold text-lg">{resultadoBase?.Cuota?.numeroCuota}</span> de <span class="font-bold text-lg">{resultadoBase?.Prestamo?.nCuotas}</span></p>
-          </div>
-          <div class="flex items-center justify-between w-full py-4 border-b">
-            <p class="text-lg font-semibold w-1/2 capitalize border-r-2">
-              pago
-            </p>
-            <p class="text-lg font-black capitalize">${resultadoBase?.Cuota?.monto.toLocaleString()}</p>
-          </div>
+          <ReciboPrint data={resultadoBase} />
+        </div>
+        <div class="flex flex- h-full flex-wrap gap-4 items-start w-full p-5">
+          <Button2  id="imprimir">imprimir</Button2>
+          <Button2  id="imprimir">cerrar cuota</Button2>
         </div>
       </div>
     </div>
   </MainDash>
+
+  <div class="screen:hidden">
+    <ReciboPrint data={resultadoBase} />
+  </div>
 </Layoutdash>
+<script>
+  const recibo = document.getElementById("reciboPrint");
+  const btnPrinter = document.getElementById("imprimir").addEventListener('click',()=>{
+    print()
+  })
+
+</script>
