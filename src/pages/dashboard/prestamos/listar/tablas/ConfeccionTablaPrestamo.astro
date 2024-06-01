@@ -6,39 +6,13 @@ import { Cliente } from "astro:db";
 import Table from "../../../../../components/tablaComponentes/Table";
 import { Cuota } from "astro:db";
 import { formatHora } from "../[idPrestamo].astro";
+import TablaPrestamo from "./TablaPrestamo";
 let cuotas = [];
 let arrayBody = [];
 
 const { idPrestamo } = Astro.params;
 const userId = "123456";
-const columnas = [
-  {
-    label: "cuota",
-    id: 1,
-    selector: (row) => row.cuota,
-  },
 
-  {
-    label: "F. Vencimiento",
-    id: 3,
-    selector: (row) => row.fechaVencimiento,
-  },
-  {
-    label: "importe de cuota",
-    id: 4,
-    selector: (row) => row.monto,
-  },
-  {
-    label: "estado",
-    id: 5,
-    selector: (row) => row.pagada,
-  },
-  {
-    label: "accion",
-    id: 6,
-    selector: "",
-  },
-];
 
 try {
   cuotas = await db
@@ -54,7 +28,6 @@ try {
       fechaVencimiento: horaFormateada,
       importeCuota: `$ ${element.monto.toLocaleString()}`,
       estado: element.pagada ,
-      accion: 'onClickFunction',
     };
   });
 } catch (error) {
@@ -65,11 +38,4 @@ try {
 const enlaceFila=`/dashboard/prestamos/cuota/`
 ---
 
-<div class="flex items-center justify-center overflow-x-auto">
-  <Table
-    columnas={columnas}
-    arrayBody={arrayBody}
-    enlaceFila={enlaceFila}
-    client:load
-  />
-</div>
+<TablaPrestamo enlaceFila={enlaceFila} arrayBody={arrayBody} client:load/ >

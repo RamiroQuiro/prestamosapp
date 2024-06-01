@@ -6,7 +6,7 @@ import ContenedorStats from "../../../../components/organismos/ContenedorStats.a
 import Tabla from "./tablas/Tabla.astro";
 import Button2 from "../../../../components/atomos/Button2.astro";
 import Body from "./BodyTabkaPresatmo.astro";
-import TablaIdPrestamo from "./tablas/TablaIdPrestamo.astro";
+import TablaIdPrestamo from "./tablas/ConfeccionTablaPrestamo.astro";
 import BotoneraOpcionesLista from "./BotoneraOpcionesLista.astro";
 
 const { idPrestamo } = Astro.params;
@@ -21,11 +21,11 @@ export const formatHora = (date) => {
   const mes = fecha.getMonth() + 1; // getMonth() devuelve un índice basado en 0, por lo que se suma 1
   const dia = fecha.getDate();
   return (
-    año +
-    "-" +
+    (dia < 10 ? "0" + dia : dia)
+    +"-" +
     (mes < 10 ? "0" + mes : mes) +
     "-" +
-    (dia < 10 ? "0" + dia : dia)
+    año 
   );
 };
 
