@@ -42,8 +42,8 @@ try {
           <ReciboPrint data={resultadoBase} />
         </div>
         <div class="flex flex- h-full flex-wrap gap-4 items-start w-1/3 p-5">
-          <Button2  id="imprimir">imprimir</Button2>
-          <Button2  id="cerrarCuota">cerrar cuota</Button2>
+          <Button2 id="imprimir">imprimir</Button2>
+          <Button2 id="cerrarCuota">cerrar cuota</Button2>
         </div>
       </div>
     </div>
@@ -53,21 +53,22 @@ try {
     <ReciboPrint data={resultadoBase} />
   </div>
 </Layoutdash>
-<script define:vars={{idCuota}}>
- document.getElementById("imprimir").addEventListener('click',()=>{
-   print()
-  })
-  
-  document.getElementById("cerrarCuota").addEventListener('click',async()=>{
-    try {
-      const res=await fetch(`/api/prestamos/cuota/${idCuota}`,{
-        method:'PUT',
-      })
-      const respuesta=await res.json()
-   if(respuesta.status==200){ print()}
-    } catch (error) {
-      console.log(error)
-    }
+<script define:vars={{ idCuota }}>
+  document.getElementById("imprimir").addEventListener("click", () => {
+    print();
+  });
 
-  })
+  document.getElementById("cerrarCuota").addEventListener("click", async () => {
+    try {
+      const res = await fetch(`/api/prestamos/cuota/${idCuota}`, {
+        method: "PUT",
+      });
+      const respuesta = await res.json();
+      if (respuesta.status == 200) {
+        print();
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  });
 </script>

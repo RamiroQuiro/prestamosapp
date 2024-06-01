@@ -39,6 +39,11 @@ const columnas = [
     id: 7,
     selector: 'tasaInteres',
   },
+  {
+    label: "estado",
+    id:8 ,
+    selector: 'estado'
+  },
 ];
 try {
   prestamos = await db
@@ -56,6 +61,7 @@ try {
       montoTotal:`$ ${ element?.Prestamo.montoTotal.toLocaleString()}`,
       fechaInicio: element?.Prestamo.fechaInicio.toLocaleString(),
       tasaInteres: `${element?.Prestamo.tasaInteres}%`,
+      estado:element?.Prestamo.estado
     };
   });
 } catch (error) {

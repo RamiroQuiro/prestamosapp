@@ -5,7 +5,6 @@ import { formatHora } from "../listar/[idPrestamo].astro"
 const {data}=Astro.props
 
 const fechaActual=new Date()
-
 const fechaFormateada=formatHora(fechaActual)
 const fechaVencimiento=formatHora(data?.Cuota?.fechaVencimiento)
 ---
@@ -31,9 +30,9 @@ const fechaVencimiento=formatHora(data?.Cuota?.fechaVencimiento)
           <p class="text- font-">Cuota <span class="font-bold text-lg">{data?.Cuota?.numeroCuota}</span> de <span class="font-bold text-lg">{data?.Prestamo?.nCuotas}</span></p>
           </div></div>
           <div class="flex items-center justify-between w-full py-4 border-b">
-            <p class="text-lg font-semibold w-1/2 capitalize border-r-2">
-              pago
+            <p class={`${data?.Cuota.pagada?'text-green-600':'text-red-500'} text-xl font-semibold w-1/2 capitalize border-r-2`}>
+              {data?.Cuota.pagada?'Pagado':'Inpago'}
             </p>
-            <p class="text-lg font-black capitalize">${data?.Cuota?.monto.toLocaleString()}</p>
+            <p class="text-lg font-black capitalize">Monto ${data?.Cuota?.monto.toLocaleString()}</p>
           </div>
         </div>
