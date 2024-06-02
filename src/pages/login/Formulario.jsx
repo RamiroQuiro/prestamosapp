@@ -4,10 +4,13 @@ import { loader } from '../../components/loader/showLoader';
 import { useState } from 'react'
 
 export default function FormularioLogin() {
+    const [isRegister, setIsRegister] = useState(false)
     const [formulario, setFormulario] = useState({
         email: '',
         password: '',
+        rePassword:'',
     })
+
     const [errors, setErrors] = useState({
         name: '',
         email: ''
@@ -23,8 +26,6 @@ export default function FormularioLogin() {
 
     const handleLogin = async (e) => {
         e.preventDefault()
-
-
         try {
             loader(true)
             const fetiiching = await fetch(`/api/authe/signin`, {
@@ -61,18 +62,21 @@ export default function FormularioLogin() {
             loader(false)
 
         }
+    }
 
+    const handleRegister=()=>{
+setIsRegister(!isRegister)
     }
     return (
         <form
             onSubmit={handleLogin}
             id='registerClient'
-            className="bg-white md:w-96 w-full md:h-96  shadow-xl rounded-lg text-xs  flex flex-col gap-4 items-center justify-between p-5"
+            className="bg-white md:w-96 w-full  duration-300 shadow-xl rounded-lg text-xs  flex flex-col gap-4 items-center justify-between p-5"
         >
             <div className="flex w-full items-center justify-evenly">
 
-                <h2 className="text-xl my-3 text-primary-200 font-semibold">
-                    Login
+                <h2 className="text-xl my-3 duration-200 text-primary-200 font-semibold">
+                {!isRegister?'Ingresar':'Registrar' }
                 </h2>
             </div>
             <div
@@ -101,15 +105,27 @@ export default function FormularioLogin() {
                     className="w-full text-sm bg-primary-200/10  rounded-md group-hover:ring-2  border-gray-300  ring-primary-200/60 focus:ring-2  outline-none transition-colors duration-200 ease-in-out px-2 py-2"
                 />
             </div>
+
+            {/* si esta isRegister en true */}
+           {isRegister&& <div className="animate-apDeArriba w-full flex items flex-col items-start gap-3 ">
+                <label htmlFor="rePassword" className="text-primary-100 capitalize">volver a colocar contraseña</label>
+                <input
+                    onChange={handleChagne}
+                    type="password"
+                    name="rePassword"
+                    id="rePassword"
+                    className="w-full text-sm bg-primary-200/10  rounded-md group-hover:ring-2  border-gray-300  ring-primary-200/60 focus:ring-2  outline-none transition-colors duration-200 ease-in-out px-2 py-2"
+                />
+            </div>}
             <button
                 type='submit'
-                className="bg-blue-400 text-base rounded-md text-white px-2 py-1 w-1/3 mb-5 mx-auto"
+                className="bg-blue-400 text-base duration-200 rounded-md text-white px-2 py-1 w-1/3 mb-5 mx-auto"
             >
-                Inciar Sesion
+               {!isRegister? 'Inciar Sesion':'Registrar'}
             </button>
-            <div class="text-sm w-full pb-2 my-4 flex items-center justify-evenly">
-                <p>No estas registrado?</p>
-                <a href="/register" class="font-semibold">REGISTRAR</a>
+            <div className="text-sm w-full pb-2 capitalize my-4 flex items-center justify-evenly">
+               { !isRegister? <p className='animate-aparecer'>¿No estas registrado?</p>:<p className='animate-aparecer'>¿ya estas registrado?</p>}
+                <button type='button' onClick={handleRegister}  className="font-semibold"> {!isRegister? 'REGISTRAR':'INGRESAR'}</button>
             </div>
             {errors.password && <p>{errors.username}</p>}
             {/* <ResetearContrasenia email={formulario.email} /> */}
