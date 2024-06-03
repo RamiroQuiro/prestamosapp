@@ -31,6 +31,8 @@ try {
 <Layoutdash title="Recibo Cuota">
   <MainDash>
     <div
+    data-idCuota
+    id={idCuota}
       class="flex flex-col items-start bg-0 print:hidden justify-normal w-full px-5 py-2 relative"
     >
       <Titulo1>Cuota</Titulo1>
@@ -53,7 +55,10 @@ try {
     <ReciboPrint data={resultadoBase} />
   </div>
 </Layoutdash>
-<script define:vars={{ idCuota }}>
+<script >
+import { showToast } from "../../../../components/Toast/toastShow";
+
+  const idCuota=document.querySelector('[data-idCuota]').id
   document.getElementById("imprimir").addEventListener("click", () => {
     print();
   });
@@ -65,7 +70,11 @@ try {
       });
       const respuesta = await res.json();
       if (respuesta.status == 200) {
-        print();
+        showToast('cuota cerrada',{background:'bg-green-500',time:2000})
+        setTimeout(()=>{
+          window.location.reload()
+       
+        },2000)
       }
     } catch (error) {
       console.log(error);

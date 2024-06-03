@@ -1,7 +1,11 @@
 ---
-
-const {action, id}=Astro.props
+const { action, id } = Astro.props;
 ---
-<form id={id} action={action} class="flex flex-col items-start gap-2 border-y p-5 w-full">
-<slot/>
+
+<form
+  id={id}
+  action={action}
+  class="flex flex-col items-start gap-2 border-y p-5 w-full"
+>
+  <slot />
 </form>

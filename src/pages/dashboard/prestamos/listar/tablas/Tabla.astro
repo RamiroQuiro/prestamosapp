@@ -6,7 +6,7 @@ import { Cliente } from "astro:db";
 import Table from "../../../../../components/tablaComponentes/Table";
 let prestamos = [];
 let arrayBody = [];
-const userId = "123456";
+const user=Astro.locals.user
 const columnas = [
   {
     label: "cliente",
@@ -49,7 +49,7 @@ try {
   prestamos = await db
     .select()
     .from(Prestamo)
-    .where(eq(Prestamo.usuarioId, userId))
+    .where(eq(Prestamo.usuarioId, user.id))
     .innerJoin(Cliente, eq(Prestamo.clienteId, Cliente.id));
 
   arrayBody = prestamos.map((element) => {

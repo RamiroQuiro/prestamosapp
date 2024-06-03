@@ -4,7 +4,14 @@ import Table from "../../../../components/tablaComponentes/Table";
 import { db } from "astro:db";
 import { Cliente } from "astro:db";
 import { eq } from "astro:db";
-const userId = "123456";
+
+const {user}=Astro.locals
+const clientes = await db
+.select()
+.from(Cliente)
+.where(eq(Cliente.usuarioId, user.id));
+
+
 const columnas = [
   {
     label: "nombre",
@@ -44,7 +51,7 @@ try {
   const clientes = await db
     .select()
     .from(Cliente)
-    .where(eq(Cliente.usuarioId, userId));
+    .where(eq(Cliente.usuarioId, user.id));
   // .innerJoin(Cliente, eq(Prestamo.clienteId, Cliente.id));
 
   arrayBody = clientes.map((element) => {

@@ -10,11 +10,11 @@ import FormularioPrestamo from "./FormularioPrestamo.astro";
 import PrestamoGenerado from "./PrestamoGenerado.astro";
 
 import { eq, User, db, Cliente } from "astro:db";
-const userId = "123456";
+const user=Astro.locals.user
 const clientes = await db
   .select()
   .from(Cliente)
-  .where(eq(Cliente.usuarioId, userId));
+  .where(eq(Cliente.usuarioId, user.id));
 ---
 
 <Layoutdash title="Prestamos">

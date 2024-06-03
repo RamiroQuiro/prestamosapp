@@ -13,14 +13,22 @@ export async function POST({
 
   
   const { email, password, userName } = await formData;
-
+console.log(email,password)
   if (!email || !password || !userName) {
-    return new Response("email y contraseña requerida", { status: 400 });
+    return new Response(
+      JSON.stringify({
+        data: "faltan campos requeridos",
+        status: 400,
+      })
+    );
   }
-  if (password.length < 4) {
-    return new Response("contraseña requerida mayor a  caracteres", {
-      status: 400,
-    });
+  if (password.length < 6) {
+    return new Response(
+      JSON.stringify({
+        data: "contraseña mayor a 6 caracteres",
+        status: 400,
+      })
+    );
   }
 
 //   verificar si el usuario existe

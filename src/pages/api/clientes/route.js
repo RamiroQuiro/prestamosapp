@@ -20,14 +20,15 @@ export async function GET({ params }) {
 export async function POST({ request }) {
   const { email, nombre, apellido, dni, direccion, cel ,userId} = await request.json();
 // console.log('email:',email, ' nombre',nombre, ' apellido',apellido,' dni',dni, ' direccion',direccion,' cel',cel,' userId',userId )
-  try {
+try {
    
-    const clientExist = await db.select().from(Cliente).where(eq(Cliente.email, email))
-    if (clientExist.length!==0) {
+    const clientExist = await db.select().from(Cliente).where(eq(Cliente.usuarioId, userId))
+
+    
+    if (clientExist.includes(element=>element.email==email)) {
       console.log(`cliente ya registrado con el email ${email}.`);
       return new Response(
         JSON.stringify({
-          data: "error, user does not exist",
           status: 400,
         }))
     }

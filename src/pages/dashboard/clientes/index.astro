@@ -10,14 +10,13 @@ import { db } from "astro:db";
 import { Cliente } from "astro:db";
 import { eq } from "astro:db";
 
-const onClick = () => {
-  window.location.href = "/dashboard";
-};
-const userId = "123456";
+
+const {user}=Astro.locals
 const clientes = await db
-  .select()
-  .from(Cliente)
-  .where(eq(Cliente.usuarioId, userId));
+.select()
+.from(Cliente)
+.where(eq(Cliente.usuarioId, user.id));
+
 ---
 
 <Layoutdash title="Clientes">
@@ -25,11 +24,11 @@ const clientes = await db
     <div class="flex w-full p-5 flex-col items-start justify-start relative ">
       <div class="flex mb-2 items-center justify-between w-10/12 gap-5">
         <Titulo1>Clientes</Titulo1>
-        <FormularioDeBusqueda clientes={clientes} client:load />
+        <FormularioDeBusqueda  clientes={clientes} client:load />
       </div>
       <div class="md:w-1/6 m-auto absolute top-5 right-0">
         <ContenedeorModal open="Crear Cliente">
-          <FormularioCliente />
+          <FormularioCliente user={user} />
         </ContenedeorModal>
       </div>
 

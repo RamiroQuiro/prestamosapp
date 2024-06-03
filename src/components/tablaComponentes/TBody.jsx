@@ -6,7 +6,7 @@ export default function TBody({ arrayBody, onClickFila }) {
 
     const $columnSelectTable = useStore(columnSelectTable)
     const [sortSelect, setSortSelect] = useState($columnSelectTable.seleccion)
-    console.log(sortSelect)
+    // console.log(sortSelect)
     const onClick = (e) => {
 
         onClickFila(e)

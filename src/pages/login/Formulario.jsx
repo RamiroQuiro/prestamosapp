@@ -29,7 +29,7 @@ export default function FormularioLogin() {
         e.preventDefault()
         try {
             loader(true)
-            const fetiiching = await fetch(`/api/authe/signin`, {
+            const fetiiching = await fetch(`/api/auth/signin`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
