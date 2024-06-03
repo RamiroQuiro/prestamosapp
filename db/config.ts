@@ -124,7 +124,7 @@ import { NOW, column, defineDb, defineTable } from "astro:db";
   columns:{
     id:column.text({optional:false,unique:true}),
     userId:column.text({optional:false,references:()=>User.columns.id}),
-    exporesAt:column.number({optional:false})
+    expiresAt:column.number({optional:false})
   }
 })
 // https://astro.build/db/config

@@ -5,10 +5,14 @@ import Layout from "../../layouts/Layout.astro";
 import Layoutdash from "./layouts/Layoutdash.astro";
 
 import {db,User,Cliente} from 'astro:db'
+import { Session } from "astro:db";
 
+const local=Astro.locals
+console.log('variable locales ->',local)
 const users=await db.select().from(User)
 const prestamos=await db.select().from(Prestamo)
-console.log('prestamos ->',prestamos)
+const sesiones=await db.select().from(Session)
+console.log('prestamos ->',sesiones)
 console.log(users)
 // console.log(clientes)
 ---

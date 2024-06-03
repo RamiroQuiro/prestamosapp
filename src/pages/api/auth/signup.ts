@@ -3,6 +3,7 @@ import { User, db, eq } from "astro:db";
 import { generateId } from "lucia";
 import bcrypt from "bcryptjs";
 import { lucia } from "../../../lib/auth";
+
 export async function POST({
   request,
   redirect,
@@ -22,12 +23,15 @@ export async function POST({
     });
   }
 
+//   verificar si el usuario existe
   const existingUser = await db
     .select()
     .from(User)
     .where(eq(User.email, email));
     console.log(existingUser)
-  if (existingUser) {
+
+
+  if (existingUser.length>0) {
     return new Response(
       JSON.stringify({
         data: "email ya registrado",
@@ -51,7 +55,7 @@ export async function POST({
     },
   ]);
 
-  const session = await lucia.createSession(userId, {});
+  const session = await lucia.createSession(userId, { });
   const sessionCookie = lucia.createSessionCookie(session.id);
   cookies.set(
     sessionCookie.name,
@@ -59,5 +63,10 @@ export async function POST({
     sessionCookie.attributes
   );
 
-  return redirect("/");
+  return new Response(
+    JSON.stringify({
+      data: "usuario creado con exito",
+      status: 200,
+    })
+  );
 }

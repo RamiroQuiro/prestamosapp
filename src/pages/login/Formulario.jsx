@@ -66,6 +66,11 @@ export default function FormularioLogin() {
     }
     const handleRegister = async (e) => {
         e.preventDefault()
+        if (!formulario.password || !formulario.rePassword || !formulario.email || !formulario.userName) {
+            return showToast('Faltan campos por completar', {
+                background: 'bg-red-500'
+            })
+        }
         if (formulario.password !== formulario.rePassword) {
             return showToast('las contraseñas no coinciden', {
                 background: 'bg-red-500'
@@ -86,7 +91,9 @@ export default function FormularioLogin() {
                 }), // Reemplazar 'nuevoEstado' con el nuevo estado deseado
             });
             const dataRes = await fetiiching.json();
-            if (dataRes.status == 200) {
+            if (dataRes.status == 200) { 
+                showToast(dataRes.data,
+                { background: 'bg-blue-600' })
                 window.location.href = '/dashboard'
                 loader(false)
             }
