@@ -1,10 +1,10 @@
 import { NOW, column, defineDb, defineTable } from "astro:db";
 
-export const User = defineTable({
+ const User = defineTable({
   columns: {
     id: column.text({ primaryKey: true }),
     email: column.text({ unique: true }),
-    userName: column.text({ unique: true }),
+    userName: column.text({ }),
     nombre: column.text({optional:true}),
     apellido: column.text({optional:true}),
     password:column.text({optional:true}),
@@ -21,7 +21,7 @@ export const User = defineTable({
   },
 });
 
-export const Cliente = defineTable({
+ const Cliente = defineTable({
   columns: {
     id: column.text({ primaryKey: true }),
     usuarioId: column.text({ references: () => User.columns.id }),
@@ -41,7 +41,7 @@ export const Cliente = defineTable({
   },
 });
 
-export const Prestamo = defineTable({
+ const Prestamo = defineTable({
   columns: {
     id: column.text({ primaryKey: true }),
     clienteId: column.text({ references: () => Cliente.columns.id }),
@@ -61,7 +61,7 @@ export const Prestamo = defineTable({
   },
 });
 
-export const Cuota = defineTable({
+ const Cuota = defineTable({
   columns: {
     id: column.text({ primaryKey: true }),
     prestamoId: column.text({ references: () => Prestamo.columns.id }),
@@ -74,7 +74,7 @@ export const Cuota = defineTable({
 });
 
 
-export const Pago = defineTable({
+ const Pago = defineTable({
   columns: {
     id: column.text({ primaryKey: true }),
     prestamoId: column.text({ references: () => Prestamo.columns.id }),
@@ -88,7 +88,7 @@ export const Pago = defineTable({
   },
 });
 
-export const Configuracion = defineTable({
+ const Configuracion = defineTable({
   columns: {
     id: column.text({ primaryKey: true }),
     usuarioId: column.text({ references: () => User.columns.id }),
@@ -99,7 +99,7 @@ export const Configuracion = defineTable({
 });
 
 //  Historial de Configuraciones
-export const HistorialConfiguracion = defineTable({
+ const HistorialConfiguracion = defineTable({
   columns: {
     id: column.text({ primaryKey: true }),
     usuarioId: column.text({ references: () => User.columns.id }),
@@ -111,7 +111,7 @@ export const HistorialConfiguracion = defineTable({
 });
 
 // Registro de Actividades
-export const RegistroActividades = defineTable({
+ const RegistroActividades = defineTable({
   columns: {
     id: column.text({ primaryKey: true }),
     usuarioId: column.text({ references: () => User.columns.id }),
@@ -119,7 +119,15 @@ export const RegistroActividades = defineTable({
     fecha: column.date(),
   },
 });
+
+ const Session = defineTable({
+  columns:{
+    id:column.text({optional:false,unique:true}),
+    userId:column.text({optional:false,references:()=>User.columns.id}),
+    exporesAt:column.number({optional:false})
+  }
+})
 // https://astro.build/db/config
 export default defineDb({
-  tables: {User,Prestamo,Cliente,Pago,Configuracion,HistorialConfiguracion,Cuota,RegistroActividades},
+  tables: {User,Prestamo,Cliente,Pago,Configuracion,HistorialConfiguracion,Cuota,RegistroActividades,Session},
 });

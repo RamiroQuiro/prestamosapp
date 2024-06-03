@@ -1,4 +1,4 @@
-import DataTable from "react-data-table-component";
+
 
 
 export default function ContenededorTable() {
@@ -29,10 +29,7 @@ export default function ContenededorTable() {
 
     return (
         <div>
-            <DataTable
-                columns={columns}
-                data={data}
-            />
+            
         </div>
     )
 }
