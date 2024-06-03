@@ -26,8 +26,10 @@ class="fixed border-l-2 print:hidden  border-primary-100/80 bg-primary-bg-compon
     }</span>
   </div>
   <div <div class="flex items-start  justify-end gap-5 px-5 w-full flex-shrink">
-    <button>simulador</button>
-    <div>cerrar sesion</div>
+    <button  >simulador</button>
+    <form method="post" action="/api/auth/signout">
+      <button>Sign out</button>
+    </form>
   </div>
 </div>
 <div class="w-full  flex items-center px-3 py-2">
@@ -39,3 +41,4 @@ class="fixed border-l-2 print:hidden  border-primary-100/80 bg-primary-bg-compon
 
 </div>
 </nav>
+

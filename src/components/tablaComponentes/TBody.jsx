@@ -34,7 +34,7 @@ export default function TBody({ arrayBody, onClickFila }) {
                     return a[sortSelect] - b[sortSelect];il
                     
                 }).map((client, i) => {
-                    console.log(client)
+                    // console.log(client)
                     return (
                         <Tr data={client} onClick={() => onClick(client)} id={client.id} key={i} styleTr="hover:bg-primary-200/20 duration-300 cursor-pointer border-b odd:bg-primary-200/10 " />
                     );
