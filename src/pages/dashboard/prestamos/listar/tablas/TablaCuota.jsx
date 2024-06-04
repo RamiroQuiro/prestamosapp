@@ -1,7 +1,7 @@
 import React from 'react'
 import Table from '../../../../../components/tablaComponentes/Table'
 
-export default function TablaPrestamo({arrayBody,enlaceFila}) {
+export default function TablaCuota({arrayBody,enlaceFila}) {
 
     const columnas = [
         {

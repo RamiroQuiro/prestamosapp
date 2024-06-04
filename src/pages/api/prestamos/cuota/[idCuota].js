@@ -1,41 +1,55 @@
-import { Cuota, Prestamo, db, eq } from "astro:db";
+import { Cuota, Pago, Prestamo, db, eq } from "astro:db";
+import { generateId } from "lucia";
 
 export async function PUT({ params }) {
   const { idCuota } = params;
   try {
+
     const cuotaFind = await db
       .update(Cuota)
-      .set({ pagada: true })
+      .set({ pagada: true, fechaPago: new Date() })
       .where(eq(Cuota.id, idCuota));
-    if (cuotaFind.length == 0) {
-      return new Response(
-        JSON.stringify({
-          status: 400,
-          msg: "cuota no encontrado",
-        }),
-        { status: 400 }
-      );
-    }
+
+
 
     // queriendo cerrar el prestamo
     // Obtén el id del préstamo asociado a la cuota
     const cuotaFindex = (
-      await db.select().from(Cuota).where(eq(Cuota.id, idCuota))
+      await db.select().from(Cuota).where(eq(Cuota.id, idCuota)).innerJoin(Prestamo, eq(Prestamo.id, Cuota.prestamoId))
     ).at(0);
-    //         // Cuenta cuántas cuotas no están pagadas para este préstamo
-    const cuotasNoPagadas = await db
+
+    const pagoId=generateId(20)
+    // crear dato en tabla de PAGO
+
+    await db.insert(Pago).values({
+      id: pagoId,
+      clienteId: cuotaFindex.Prestamo.clienteId,
+      prestamoId: cuotaFindex.Prestamo.id,
+      usuarioId: cuotaFindex.Prestamo.usuarioId,
+      cuotaId:cuotaFindex.Cuota.id,
+      monto: cuotaFindex.Cuota.monto,
+      estado: cuotaFindex.Prestamo.estado,
+      fechaPago: new Date(),
+      lugarPago:'fisico',
+      metodoPago:'efectivo'
+    })
+
+
+
+    // Cuenta cuántas cuotas no están pagadas para este préstamo
+    const cuotasPrestamo = await db
       .select()
       .from(Cuota)
-      .where(eq(Cuota.prestamoId, cuotaFindex.prestamoId));
+      .where(eq(Cuota.prestamoId, cuotaFindex.Prestamo.id));
     //         // Si no hay cuotas no pagadas, actualiza el estado del préstamo a 'cerrado'
-    const isPrestamoTerminado = cuotasNoPagadas.some(
+    const isPrestamoTerminado = cuotasPrestamo.some(
       (element) => element.pagada == false
     );
     if (!isPrestamoTerminado) {
       await db
         .update(Prestamo)
         .set({ estado: "cerrado" })
-        .where(eq(Prestamo.id, cuotaFindex.prestamoId));
+        .where(eq(Prestamo.id, cuotaFindex.Prestamo.id));
     }
     return new Response(
       JSON.stringify({

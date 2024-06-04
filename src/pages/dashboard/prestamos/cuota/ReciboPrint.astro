@@ -1,38 +1,83 @@
 ---
-import { formatHora } from "../listar/[idPrestamo].astro"
+import { formatHora } from "../listar/[idPrestamo].astro";
 
+const { data } = Astro.props;
 
-const {data}=Astro.props
-
-const fechaActual=new Date()
-const fechaFormateada=formatHora(fechaActual)
-const fechaVencimiento=formatHora(data?.Cuota?.fechaVencimiento)
+const fechaActual = new Date();
+const fechaFormateada = formatHora(fechaActual);
+const options = {
+  weekday: "long",
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+};
+const fechaVencimiento = formatHora(data?.Cuota?.fechaVencimiento);
 ---
 
 <div
-          class="flex flex-col items-center justify-normal py-3 px-5 w-full rounded border shadow-md"
+  class="flex flex-col items-center justify-normal py-3 px-5 w-full rounded border shadow-md"
+>
+  <div class="flex items-center py-5 justify-between w-full border-b">
+    <h2 class="text-xl font-bold">RamiroQ</h2>
+    <span class="text- font-">{fechaFormateada}</span>
+  </div>
+  <div class="flex items-center py-3 justify-between w-full border-b">
+    <div>
+      <p class="text-lg font-semibold capitalize">
+        {data?.Cliente?.nombre + " " + data.Cliente.apellido}
+      </p>
+      <p class="text-lg font-semibold capitalize">DNI: {data.Cliente.dni}</p>
+    </div>
+    <p class="text-sm italic">{data.Cliente.direccion}</p>
+    <p class="text-sm italic">
+      {data.Cliente.ciudad + " | " + data.Cliente.departamento}
+    </p>
+  </div>
+  <div class="flex items-center py-5 justify-between w-full border-b">
+    <p class="text-sm font-semibold w-1/2 capitalize">
+      pago a cuenta de prestamos id <span class="text-xs font-thin"
+        >{data?.Prestamo?.id}</span
+      >
+    </p>
+    <div class="flex flex-col items-end w-1/2 border-l-2 px-2">
+      <p class="text-sm font- text-end">
+        F. Vencimiento <span class="font-bold text-sm tracking-tighter"
+          >{fechaVencimiento}</span
         >
-          <div class="flex items-center py-5 justify-between w-full border-b">
-            <h2 class="text-xl font-bold">RamiroQ</h2>
-            <span class="text- font-">{fechaFormateada}</span>
-          </div>
-          <div class="flex items-center py-3 justify-between w-full border-b">
-    <p class="text-lg font-semibold capitalize">{data.Cliente.nombre+' '+ data.Cliente.apellido}</p>
-              <p class="text-sm italic">{data.Cliente.direccion}</p>
-              <p class="text-sm italic">{data.Cliente.ciudad+' | '+ data.Cliente.departamento}</p>
-          </div>
-          <div class="flex items-center py-5 justify-between w-full border-b">
-            <p class="text-sm font-semibold w-1/2 capitalize">
-              pago a cuenta de prestamos id <span class="text-xs font-thin">{data?.Prestamo?.id}</span>
-            </p>
-            <div class="flex flex-col items-end  w-1/2  border-l-2 px-2">
-          <p class="text-sm font- text-end">F. Vencimiento <span class="font-bold text-sm tracking-tighter">{fechaVencimiento}</p>
-          <p class="text- font-">Cuota <span class="font-bold text-lg">{data?.Cuota?.numeroCuota}</span> de <span class="font-bold text-lg">{data?.Prestamo?.nCuotas}</span></p>
-          </div></div>
-          <div class="flex items-center justify-between w-full py-4 border-b">
-            <p class={`${data?.Cuota.pagada?'text-green-600':'text-red-500'} text-xl font-semibold w-1/2 capitalize border-r-2`}>
-              {data?.Cuota.pagada?'Pagado':'Inpago'}
-            </p>
-            <p class="text-lg font-black capitalize">Monto ${data?.Cuota?.monto.toLocaleString()}</p>
-          </div>
-        </div>
+        <p class="text- font-">
+          Cuota <span class="font-bold text-lg">{data?.Cuota?.numeroCuota}</span
+          > de <span class="font-bold text-lg">{data?.Prestamo?.nCuotas}</span>
+        </p>
+      </p>
+    </div>
+   
+  </div>
+  <div class="flex items-center justify-between w-full py-4 border-b">
+    <p
+      class={`${data?.Cuota.pagada ? "text-green-600" : "text-red-500"} text-xl font-semibold w-1/2 capitalize border-r-2`}
+    >
+      {data?.Cuota.pagada ? "Pagado" : "Inpago"}
+    </p>
+    <div class="text-end">
+      {
+        data?.Cuota?.fechaPago && (
+          <p class="text-sm">
+            Fecha de pago:{" "}
+            <span class="text-base font-medium">
+              {data?.Cuota?.fechaPago.toLocaleDateString()}
+            </span>
+          </p>
+        )
+      }
+
+      <p class="text-lg font-black capitalize">
+        Monto ${data?.Cuota?.monto.toLocaleString()}
+      </p>
+    </div>
+  </div>
+  <div class="flex items-center justify-between w-full py-4 border-b">
+   <p class="text-xs font-medium uppercase">id del pago {
+    data?.Pago?.id && (
+<span class="text-sm font-black">{data.Pago.id}
+    </span>)}</p></div>
+</div>

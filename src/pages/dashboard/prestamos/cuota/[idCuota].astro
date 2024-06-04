@@ -11,6 +11,7 @@ import Stats from "../../../../components/moleculas/Stats.astro";
 import Button1 from "../../../../components/atomos/Button1.astro";
 import Button2 from "../../../../components/atomos/Button2.astro";
 import ReciboPrint from "./ReciboPrint.astro";
+import { Pago } from "astro:db";
 
 const { idCuota } = Astro.params;
 let resultadoBase = {};
@@ -20,7 +21,8 @@ try {
     .from(Cuota)
     .where(eq(Cuota.id, idCuota))
     .innerJoin(Prestamo, eq(Prestamo.id, Cuota.prestamoId))
-    .innerJoin(Cliente, eq(Prestamo.clienteId, Cliente.id));
+    .innerJoin(Cliente, eq(Prestamo.clienteId, Cliente.id))
+    .leftJoin(Pago,eq(Pago.cuotaId,idCuota))
 
   resultadoBase = resBase[0];
 } catch (error) {

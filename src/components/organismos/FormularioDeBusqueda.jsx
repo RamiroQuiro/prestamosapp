@@ -40,7 +40,7 @@ export default function FormularioDeBusqueda({ value, clientes, id }) {
                             </div>
                         ))
                     ) : (
-                        <span>No se encontro registros</span>
+                        <span className='text-sm py-2 px-3'>No se encontro registros</span>
                     )}
                 </div>
             )}

@@ -6,6 +6,7 @@ import Layoutdash from "./layouts/Layoutdash.astro";
 
 import {db,User,Cliente} from 'astro:db'
 import { Session } from "astro:db";
+import { Pago } from "astro:db";
 
 const local=Astro.locals
 // console.log('variable locales ->',local)
@@ -13,10 +14,11 @@ const users=await db.select().from(User)
 const clientes=await db.select().from(Cliente)
 const prestamos=await db.select().from(Prestamo)
 const sesiones=await db.select().from(Session)
+const pagos=await db.select().from(Pago)
 // console.log('prestamos ->',sesiones)
 // console.log(users)
 console.log(local)
-console.log(clientes)
+console.log(pagos)
 ---
 
 <Layoutdash title="Biendevnido men">

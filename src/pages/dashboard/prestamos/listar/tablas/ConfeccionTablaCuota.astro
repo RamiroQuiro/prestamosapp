@@ -3,10 +3,9 @@ import { db } from "astro:db";
 import { Prestamo } from "astro:db";
 import { eq } from "astro:db";
 import { Cliente } from "astro:db";
-import Table from "../../../../../components/tablaComponentes/Table";
 import { Cuota } from "astro:db";
 import { formatHora } from "../[idPrestamo].astro";
-import TablaPrestamo from "./TablaPrestamo";
+import TablaPrestamo from "./TablaCuota"
 let cuotas = [];
 let arrayBody = [];
 

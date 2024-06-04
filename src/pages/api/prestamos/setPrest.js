@@ -1,5 +1,6 @@
 import { Prestamo, db, Cuota } from "astro:db";
 import { generateUid } from "../clientes/route";
+import { generateId } from "lucia";
 
 
 export async function POST({ request }) {
@@ -7,7 +8,7 @@ export async function POST({ request }) {
   // console.log('email:',email, ' nombre',nombre, ' apellido',apellido,' dni',dni, ' direccion',direccion,' cel',cel,' userId',userId )
 
   try {
-    const id = generateUid()
+    const id = generateId(20)
     const now = new Date(fechaInicio) // Crea un nuevo objeto Date 
 
 //crear el prestamo primero
@@ -29,7 +30,7 @@ export async function POST({ request }) {
 
 // Crear las cuotas
 for(let i = 0; i < nCuotas; i++){
-  const cuotaId = generateUid();
+  const cuotaId = generateId(15);
   const fechaVencimiento = new Date(now);
   fechaVencimiento.setDate(now.getDate() + (i * modalidadDias)); // Asume que cada cuota es mensual
 

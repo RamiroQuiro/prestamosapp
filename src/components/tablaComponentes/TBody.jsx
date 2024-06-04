@@ -14,7 +14,8 @@ export default function TBody({ arrayBody, onClickFila }) {
     return (
         <tbody>
             {
-                arrayBody?.sort((a, b) => {
+                arrayBody
+                ?.sort((a, b) => {
                     // Para campos numéricos, elimina los signos de dólar y las comas, y convierte a un número
                     if (typeof a[sortSelect] === 'string' && a[sortSelect].includes('$')) {
                         return parseFloat(a[sortSelect].replace(/[$,]/g, '')) - parseFloat(b[sortSelect].replace(/[$,]/g, ''));
@@ -33,7 +34,8 @@ export default function TBody({ arrayBody, onClickFila }) {
                     // Para campos numéricos, simplemente resta los valores
                     return a[sortSelect] - b[sortSelect];il
                     
-                }).map((client, i) => {
+                })
+                .map((client, i) => {
                     // console.log(client)
                     return (
                         <Tr data={client} onClick={() => onClick(client)} id={client.id} key={i} styleTr="hover:bg-primary-200/20 duration-300 cursor-pointer border-b odd:bg-primary-200/10 " />

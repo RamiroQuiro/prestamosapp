@@ -3,48 +3,11 @@ import { db } from "astro:db";
 import { Prestamo } from "astro:db";
 import { eq } from "astro:db";
 import { Cliente } from "astro:db";
-import Table from "../../../../../components/tablaComponentes/Table";
+import TablaPrestamos from "./TablaPrestamos";
 let prestamos = [];
 let arrayBody = [];
 const user=Astro.locals.user
-const columnas = [
-  {
-    label: "cliente",
-    id: 1,
-    selector:'cliente',
-  },
 
-  {
-    label: "monto cuota",
-    id: 3,
-    selector: 'montoCuota',
-  },
-  {
-    label: "N° cuotas",
-    id: 4,
-    selector: 'nCuotas',
-  },
-  {
-    label: "total",
-    id: 5,
-    selector: 'total',
-  },
-  {
-    label: "fecha inicio",
-    id: 6,
-    selector: 'fechaInicio',
-  },
-  {
-    label: "tasa interes",
-    id: 7,
-    selector: 'tasaInteres',
-  },
-  {
-    label: "estado",
-    id:8 ,
-    selector: 'estado'
-  },
-];
 try {
   prestamos = await db
     .select()
@@ -72,6 +35,5 @@ try {
 const enlaceFila=`/dashboard/prestamos/listar/`
 ---
 
-<div class="w-full overflow-x-auto">
-  <Table columnas={columnas} arrayBody={arrayBody} enlaceFila={enlaceFila} client:load/>
-</div>
+<TablaPrestamos arrayBody={arrayBody} enlaceFila={enlaceFila} client:load/>
+ 

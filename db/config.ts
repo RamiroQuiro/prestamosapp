@@ -80,11 +80,12 @@ import { NOW, column, defineDb, defineTable } from "astro:db";
     prestamoId: column.text({ references: () => Prestamo.columns.id }),
     clienteId: column.text({ references: () => Cliente.columns.id }),
     usuarioId: column.text({ references: () => User.columns.id }),
+    cuotaId:column.text({references:()=>Cuota.columns.id}),
     monto: column.number(),
     estado:column.text(),
     fechaPago: column.date(),
-    metodoPago: column.text(),
-    lugarPago: column.text(),
+    metodoPago: column.text({optional:true}),
+    lugarPago: column.text({optional:true}),
   },
 });
 
