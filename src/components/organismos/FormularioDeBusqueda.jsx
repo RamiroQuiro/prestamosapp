@@ -10,7 +10,7 @@ export default function FormularioDeBusqueda({ value, clientes, id }) {
     const $clienteSelect = useStore(busqueda)
 
     // console.log($clienteSelect)
-    const { encontrado, handleSearch, search, setSearch } = useBusquedaFiltros(clientes)
+    const { encontrado, handleSearch, search, setSearch } = useBusquedaFiltros(clientes,['nombre','apellido','dni'])
 
     const handleClick = (leg) => {
         busqueda.set({

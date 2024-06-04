@@ -1,10 +1,9 @@
 ---
-import Button1 from "../../../../components/atomos/Button1.astro";
-import Button2 from "../../../../components/atomos/Button2.astro";
 import Titulo1 from "../../../../components/atomos/Titulo1.astro";
 import MainDash from "../../../../components/organismos/MainDash.astro";
 import Layoutdash from "../../layouts/Layoutdash.astro";
-import Tabla from "./tablas/ConfeccionTablaPrestamos.astro";
+import BotoneraFiltros from "./BotoneraFiltros.astro";
+import ConfeccionTablaPrestamos from "./tablas/ConfeccionTablaPrestamos.astro";
 ---
 
 <Layoutdash title="Prestamos">
@@ -12,15 +11,10 @@ import Tabla from "./tablas/ConfeccionTablaPrestamos.astro";
     <div
       class="flex flex-col items-start justify-normal w-full px-5 py-2 relative"
     >
-    <Titulo1> Prestamos </Titulo1>
-      <div class="w-full flex items-center justify-start gap-5 py-5 px-3">
-        <Button2>todos</Button2>
-        <Button2>activos</Button2>
-        <Button2>Cercanos</Button2>
-        <Button2>pdf</Button2>
-      </div>
+      <Titulo1> Prestamos </Titulo1>
+      <BotoneraFiltros />
       <div class="py-5 w-full px-5">
-        <Tabla />
+        <ConfeccionTablaPrestamos />
       </div>
     </div>
   </MainDash>

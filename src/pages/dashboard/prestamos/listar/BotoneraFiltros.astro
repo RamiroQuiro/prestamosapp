@@ -1,0 +1,38 @@
+---
+import Button3 from "../../../../components/atomos/Button3";
+import InputDate from "../../../../components/atomos/InputDate";
+---
+
+<div class="w-full flex items-center justify-end gap-5 mt-3 px-3">
+  <Button3 id="todos" client:load>todos</Button3>
+  <Button3 id="activo" client:load>activos</Button3>
+  <InputDate name={"vencimientos"} id="vencimientos" client:load
+    >Vencimientos</InputDate
+  >
+  <Button3 client:load>pdf</Button3>
+</div>
+
+<script>
+  import { filtrosBusquedaPrestamos } from "../../../../context/store";
+  document
+    .getElementById("todos")
+    .addEventListener("click", (e) =>
+      filtrosBusquedaPrestamos.set({ filtro: "todos", fecha: "" })
+    );
+  document
+    .getElementById("activo")
+    .addEventListener("click", (e) =>
+      filtrosBusquedaPrestamos.set({ filtro: "activo", fecha: "" })
+    );
+  document
+    .getElementById("vencimientos")
+    .addEventListener("change", (e) => {
+      // Obtener la fecha como una cadena
+      let fechaFiltro = e.target.value;
+
+      // Crear un objeto Date en la zona horaria local porque me daba el dia anterior nose porque
+      let fechaObj = new Date(fechaFiltro + "T00:00");
+
+      filtrosBusquedaPrestamos.set({ fecha: fechaObj, filtro: "vencimientos" });
+    });
+</script>

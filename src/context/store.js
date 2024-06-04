@@ -26,4 +26,9 @@ const prestamoSimulado=atom({
 
 })
 
-export {busqueda , prestamoSimulado,columnSelectTable}
+const filtrosBusquedaPrestamos=atom({
+    filtro:'todos',
+    fecha:''
+})
+
+export {busqueda , filtrosBusquedaPrestamos,prestamoSimulado,columnSelectTable}

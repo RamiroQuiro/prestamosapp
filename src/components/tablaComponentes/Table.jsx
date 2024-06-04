@@ -9,6 +9,8 @@ export default function Table({ columnas,arrayBody, styleTable,enlaceFila }) {
             document.location.href=`${enlaceFila}${e.id}`
         }
     }
+
+    
     return (
         <table
             className={`${styleTable} items-center bg-transparent w-full border-collapse rounded-md overflow-hidden`}

@@ -25,13 +25,14 @@ export async function POST({ request }) {
       fechaInicio:now,
     });
 
-    // verificar modalidad
-    let modalidadDias=modalidad=='mensual'?30:modalidad=='quincenal'?15:7
-
+// verificar modalidad
+let modalidadDias = modalidad == 'mensual' ? 30 : modalidad == 'quincenal' ? 15 : 7;
+let fechaPrimerVencimiento = new Date(now);
+fechaPrimerVencimiento.setDate(now.getDate() + modalidadDias);
 // Crear las cuotas
 for(let i = 0; i < nCuotas; i++){
   const cuotaId = generateId(15);
-  const fechaVencimiento = new Date(now);
+  const fechaVencimiento =fechaPrimerVencimiento;
   fechaVencimiento.setDate(now.getDate() + (i * modalidadDias)); // Asume que cada cuota es mensual
 
   const createCuota = await db.insert(Cuota).values({

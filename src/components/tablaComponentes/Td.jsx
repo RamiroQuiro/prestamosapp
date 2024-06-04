@@ -6,6 +6,8 @@ export default function Td({children,estado}) {
    {typeof children === 'boolean' ?
       <span className={`${estado?' bg-green-600':' bg-red-400'}  text-[10px] font-thin text-white px-2 p-1 rounded-full`}> {estado?'✓':'✕'}</span>
       :
+      children instanceof Date ?
+      <> {children.toLocaleDateString()}</>:
      <> {children}</>
       }
       </td>
