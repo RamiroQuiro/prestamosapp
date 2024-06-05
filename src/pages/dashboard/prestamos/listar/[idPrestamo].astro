@@ -32,7 +32,6 @@ try {
   prestamo = await data?.data.prestamo.Prestamo;
   cliente = await data?.data.prestamo.Cliente;
   cuotas = await data?.data.cuotas;
-  // console.log(cuotas)
 } catch (error) {
   console.log(error);
 }
@@ -48,7 +47,8 @@ try {
       <ContenedorStats
         prestamo={prestamo}
         cliente={cliente}
-        fechaFormateada={formatHora(prestamo?.fechaInicio)}
+        fechaInicio={formatHora(prestamo?.fechaInicio)}
+        fechaFin={formatHora(prestamo?.fechaFin)}
       />
       <div class="w-full bg- flex flex-col mt-4 items-center justify-normal">
         <BotoneraOpcionesLista />

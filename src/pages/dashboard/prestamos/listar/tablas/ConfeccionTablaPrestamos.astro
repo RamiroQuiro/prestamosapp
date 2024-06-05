@@ -4,6 +4,8 @@ import { Prestamo } from "astro:db";
 import { eq } from "astro:db";
 import { Cliente } from "astro:db";
 import TablaPrestamos from "./TablaPrestamos";
+import { asc } from "astro:db";
+import { desc } from "astro:db";
 let prestamos = [];
 let arrayBody = [];
 const user=Astro.locals.user
@@ -13,7 +15,7 @@ try {
     .select()
     .from(Prestamo)
     .where(eq(Prestamo.usuarioId, user.id))
-    .innerJoin(Cliente, eq(Prestamo.clienteId, Cliente.id));
+    .innerJoin(Cliente, eq(Prestamo.clienteId, Cliente.id)).orderBy(desc(Prestamo.fechaCreacion));
 
   arrayBody = prestamos.map((element) => {
     return {

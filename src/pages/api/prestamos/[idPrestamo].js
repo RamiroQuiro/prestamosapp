@@ -7,7 +7,7 @@ export async function GET({params}) {
         .from(Prestamo)
         .where(eq(Prestamo.id, idPrestamo))
         .innerJoin(Cliente,eq(Cliente.id,Prestamo.clienteId))
-       console.log('prestamo encontrado ->',prestamosFind)
+    //    console.log('prestamo encontrado ->',prestamosFind)
         if (prestamosFind.length == 0) {
             return new Response(JSON.stringify({
                 status: 400,

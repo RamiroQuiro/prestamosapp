@@ -1,60 +1,80 @@
-import { Prestamo, db, Cuota } from "astro:db";
-import { generateUid } from "../clientes/route";
+import { Prestamo, db, Cuota, eq } from "astro:db";
 import { generateId } from "lucia";
 
-
 export async function POST({ request }) {
-  const { contextoPrestamo: {montoCuota,modalidad, capital,fechaInicio,clienteId, usuarioId, montoTotal, tasaInteres, nCuotas } } = await request.json()
-  // console.log('email:',email, ' nombre',nombre, ' apellido',apellido,' dni',dni, ' direccion',direccion,' cel',cel,' userId',userId )
-
+  const {
+    contextoPrestamo: {
+      montoCuota,
+      modalidad,
+      capital,
+      fechaInicio,
+      clienteId,
+      usuarioId,
+      montoTotal,
+      tasaInteres,
+      nCuotas,
+    },
+  } = await request.json();
+  
   try {
-    const id = generateId(20)
-    const now = new Date(fechaInicio) // Crea un nuevo objeto Date 
+    const id = generateId(20);
+    const now = new Date(fechaInicio); // Crea un nuevo objeto Date
 
-//crear el prestamo primero
+    
+    // Crear el préstamo primero
     const createPrest = await db.insert(Prestamo).values({
       id,
       montoCuota,
       clienteId,
       usuarioId,
       montoTotal,
-      modalidad,
+      modalidad:modalidad==30?'mensual':modalidad==15?'quincenal':'semanal',
       capital,
       tasaInteres,
       nCuotas,
-      fechaInicio:now,
+      fechaInicio: now,
     });
 
-// verificar modalidad
-let modalidadDias = modalidad == 'mensual' ? 30 : modalidad == 'quincenal' ? 15 : 7;
-let fechaPrimerVencimiento = new Date(now);
-fechaPrimerVencimiento.setDate(now.getDate() + modalidadDias);
-// Crear las cuotas
-for(let i = 0; i < nCuotas; i++){
-  const cuotaId = generateId(15);
-  const fechaVencimiento =fechaPrimerVencimiento;
-  fechaVencimiento.setDate(now.getDate() + (i * modalidadDias)); // Asume que cada cuota es mensual
+    // Verificar modalidad y calcular días
+    const modalidadDias = modalidad
+    let fechaPrimerVencimiento = new Date(now);
 
-  const createCuota = await db.insert(Cuota).values({
-    id: cuotaId,
-    prestamoId: id,
-    numeroCuota: i + 1,
-    fechaVencimiento,
-    monto: montoCuota,
-    pagada: false,
-  });
-}
+    let fechaFin;
+    fechaPrimerVencimiento.setDate(Number(fechaPrimerVencimiento.getDate()) + Number(modalidadDias));
     
-    return new Response(JSON.stringify({status:200,id:id}))
+    // Crear las cuotas y calcular FechaFin
+    for (let i = 0; i < nCuotas; i++) {
+      const cuotaId = generateId(15);
+      let fechaVencimiento = fechaPrimerVencimiento
+      fechaVencimiento.setDate(Number(fechaVencimiento.getDate()) + (i * Number(modalidadDias)));
+      // Guardar la fecha de vencimiento de la última cuota
+      if (i === nCuotas - 1) {
+        fechaFin = new Date(fechaVencimiento);
+      }
+      
+      const createCuota = await db.insert(Cuota).values({
+        id: cuotaId,
+        prestamoId: id,
+        numeroCuota: i + 1,
+        fechaVencimiento,
+        monto: montoCuota,
+        pagada: false,
+      });
+    }
+
+    // Actualizar el préstamo con la FechaFin calculada
+    const integrarFechaFin = await db.update(Prestamo).set({
+      fechaFin
+    }).where(eq(Prestamo.id, id));
+
+    return new Response(JSON.stringify({ status: 200, id: id }));
   } catch (error) {
-    console.log(error)
+    console.log(error);
     return new Response(
       JSON.stringify({
         data: "error, no andando",
         status: 400,
-      }))
-
+      })
+    );
   }
-
-
 }
