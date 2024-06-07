@@ -76,7 +76,7 @@ export default function TablaPrestamos({
     setEncontrado(busquedaFiltros(arrayBody, e.target.value));
   }
   return (
-    <div className="w-full overflow-x-auto">
+    <div className="w-full ">
    {/* filtros */}
    
       <input

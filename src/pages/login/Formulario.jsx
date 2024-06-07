@@ -46,12 +46,12 @@ export default function FormularioLogin() {
                 loader(false)
             }
             if (dataRes.status == 401) {
-                showToast('email incorrecto',
+                showToast(dataRes.data,
                     { background: 'bg-red-600' })
                 loader(false)
             }
             if (dataRes.status == 402) {
-                showToast('contraseña incorrecta', {
+                showToast(dataRes.data, {
                     background: 'bg-red-600'
                 })
                 loader(false)

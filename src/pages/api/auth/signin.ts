@@ -13,7 +13,7 @@ export async function POST({
   const { email, password, userName } = await formData;
 
   if (!email || !password ) {
-    return new Response("email y contraseña requerida", { status: 400 });
+    return new Response(JSON.stringify({ data: 'email y contraseña requerida', status: 400 }))
   }
   
 
@@ -24,7 +24,7 @@ export async function POST({
     .where(eq(User.email, email))).at(0);
 
     if (!findUser) {
-        return new Response('email o contraseña incorrecta',{status:400})
+        return new Response(JSON.stringify({ data: 'email o contraseña incorrecta',status:401}))
     }
 
   // crear usuario en DB
