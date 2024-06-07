@@ -27,7 +27,7 @@ export default function TBody({ arrayBody, onClickFila }) {
                             return element
                         }
                         if ($filtros.filtro == 'vencimientos') {
-                            let f1 = new Date(element.fechaInicio); //31 de diciembre de 2015
+                            let f1 = new Date(element.fechaVencimiento); //31 de diciembre de 2015
                             let f2 = new Date($filtros.fecha);
                             // colcoar las horas en cero
                             f1.setHours(0, 0, 0, 0);
