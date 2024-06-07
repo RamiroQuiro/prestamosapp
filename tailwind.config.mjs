@@ -7,8 +7,10 @@ export default {
         primary: {
           100: "#5B2CE4",
           200: "#5F48A3",
-          300: "#8E884A",
+          300: "#E2F397",
           400: "#4C4563",
+          500: "#9BE32B",
+          600: "#2B60E3",
           "bg-claro": "#E9E9F1",
           "bg-componentes": "#FFFFFF",
           resaltado: "#E3D32B",
