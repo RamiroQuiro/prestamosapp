@@ -14,7 +14,9 @@ console.log($filtros)
         <button
         id={id}
             onClick={handleClick}
-            className={`${$filtros.filtro==id ? 'bg-primary-100/60 text-white' : 'bg-transparent'} px-3 py-1 rounded-lg font-semibold capitalize border-primary-100 duration-300 text-xs border-dashed border bg-transparent hover:bg-primary-100/80 hover:text-white hover:border-primary-resaltado`}>
+
+            className={`${$filtros.filtro==id ? 'bg-primary-100/90 text-white' : ' bg-transparent  text-primary-texto'} px-3 py-1 rounded-lg font-semibold capitalize border-primary-100 duration-300 text-xs border-dashed border bg-transparent hover:bg-primary-100/80 hover:text-white hover:border-primary-resaltado`}>
+
             {children}
         </button>
     )

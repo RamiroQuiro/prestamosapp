@@ -1,7 +1,9 @@
 ---
 
-const props=Astro.props
+const {style}=Astro.props
 ---
 
 
-<div {...props} class="flex w-full p-5 flex-col items-start justify-start relative "><slot/></div>
+<div class={`${style} flex w-full p-5 space-y-5 flex-col items-start justify-start relative`}>
+    <slot/>
+</div>
