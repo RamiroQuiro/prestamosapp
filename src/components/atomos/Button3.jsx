@@ -9,7 +9,6 @@ export default function Button3({ children, isActive,id }) {
         e.preventDefault()
     }
 
-console.log($filtros)
     return (
         <button
         id={id}
