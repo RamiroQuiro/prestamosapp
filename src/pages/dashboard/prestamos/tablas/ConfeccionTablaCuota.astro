@@ -4,8 +4,8 @@ import { Prestamo } from "astro:db";
 import { eq } from "astro:db";
 import { Cliente } from "astro:db";
 import { Cuota } from "astro:db";
-import { formatHora } from "../[idPrestamo].astro";
 import TablaPrestamo from "./TablaCuota"
+import { formatHora } from "../[idPrestamo]/index.astro";
 let cuotas = [];
 let arrayBody = [];
 
@@ -34,7 +34,7 @@ try {
 }
 
 // enlace de la tabla al que me redirige con el id
-const enlaceFila=`/dashboard/prestamos/cuota/`
+const enlaceFila=`/dashboard/prestamos/${idPrestamo}/cuota/`
 ---
 
 <TablaPrestamo enlaceFila={enlaceFila} arrayBody={arrayBody} client:load/ >

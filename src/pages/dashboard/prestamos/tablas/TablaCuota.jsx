@@ -1,5 +1,5 @@
 import React from 'react'
-import Table from '../../../../../components/tablaComponentes/Table'
+import Table from '../../../../components/tablaComponentes/Table'
 
 export default function TablaCuota({arrayBody,enlaceFila}) {
 

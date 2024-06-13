@@ -1,0 +1,61 @@
+---
+import ContenedorStats from "../../../../components/organismos/ContenedorStats.astro";
+import MainDash from "../../../../components/organismos/MainDash.astro";
+import Layoutdash from "../../layouts/Layoutdash.astro";
+import BotoneraOpcionesLista from "../listar/BotoneraOpcionesLista.astro";
+import ConfeccionTablaCuota from "../tablas/ConfeccionTablaCuota.astro";
+
+
+const { idPrestamo } = Astro.params;
+let prestamo = {};
+let cliente = {};
+let fechaFormateada = "";
+let cuotas = [];
+
+export const formatHora = (date) => {
+  const fecha = new Date(date);
+  const año = fecha.getFullYear();
+  const mes = fecha.getMonth() + 1; // getMonth() devuelve un índice basado en 0, por lo que se suma 1
+  const dia = fecha.getDate();
+  return (
+    (dia < 10 ? "0" + dia : dia)
+    +"-" +
+    (mes < 10 ? "0" + mes : mes) +
+    "-" +
+    año 
+  );
+};
+
+try {
+  const res = await fetch(`${Astro.url.origin}/api/prestamos/${idPrestamo}`);
+  const data = await res.json();
+  prestamo = await data?.data.prestamo.Prestamo;
+  cliente = await data?.data.prestamo.Cliente;
+  cuotas = await data?.data.cuotas;
+} catch (error) {
+  console.log(error);
+}
+
+
+---
+
+<Layoutdash title={cliente?.nombre + " " + cliente?.apellido + " prestamo"}>
+  <MainDash>
+    <div
+      class="flex flex-col items-start bg-0 justify-normal w-full px-5 py-2 relative"
+    >
+      <ContenedorStats
+        prestamo={prestamo}
+        cliente={cliente}
+        fechaInicio={formatHora(prestamo?.fechaInicio)}
+        fechaFin={formatHora(prestamo?.fechaFin)}
+      />
+      <div class="w-full bg- flex flex-col mt-4 items-center justify-normal">
+        <BotoneraOpcionesLista />
+        <div class="w-2/3 mb-5">
+          <ConfeccionTablaCuota />
+        </div>
+      </div>
+    </div>
+  </MainDash>
+</Layoutdash>

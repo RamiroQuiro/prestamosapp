@@ -1,17 +1,16 @@
 ---
 import { db } from "astro:db";
-import Titulo1 from "../../../../components/atomos/Titulo1.astro";
-import MainDash from "../../../../components/organismos/MainDash.astro";
-import Layoutdash from "../../layouts/Layoutdash.astro";
 import { Cuota } from "astro:db";
 import { eq } from "astro:db";
 import { Cliente } from "astro:db";
 import { Prestamo } from "astro:db";
-import Stats from "../../../../components/moleculas/Stats.astro";
-import Button1 from "../../../../components/atomos/Button1.astro";
-import Button2 from "../../../../components/atomos/Button2.astro";
+
 import ReciboPrint from "./ReciboPrint.astro";
 import { Pago } from "astro:db";
+import Layoutdash from "../../../layouts/Layoutdash.astro";
+import MainDash from "../../../../../components/organismos/MainDash.astro";
+import Titulo1 from "../../../../../components/atomos/Titulo1.astro";
+import Button2 from "../../../../../components/atomos/Button2.astro";
 
 const { idCuota } = Astro.params;
 let resultadoBase = {};
@@ -58,7 +57,7 @@ try {
   </div>
 </Layoutdash>
 <script >
-import { showToast } from "../../../../components/Toast/toastShow";
+import { showToast } from "../../../../../components/Toast/toastShow";
 
   const idCuota=document.querySelector('[data-idCuota]').id
   document.getElementById("imprimir").addEventListener("click", () => {

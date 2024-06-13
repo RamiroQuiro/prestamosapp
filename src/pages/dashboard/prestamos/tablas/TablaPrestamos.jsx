@@ -1,8 +1,5 @@
 import React, { useState } from 'react'
-import Table from '../../../../../components/tablaComponentes/Table'
-import FormularioDeBusqueda from '../../../../../components/organismos/FormularioDeBusqueda';
-import useBusquedaFiltros from '../../../../../hook/useBusquedaFiltro';
-
+import Table from '../../../../components/tablaComponentes/Table'
 export default function TablaPrestamos({
   arrayBody, enlaceFila
 }) {

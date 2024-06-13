@@ -1,12 +1,12 @@
 import React from 'react'
 import SubNavPrestamo from '../moleculas/SubNavPrestamo'
 
-export default function SubNavDash({ pathname }) {
+export default function SubNavDash({ pathname,idPrestamo }) {
 
 
     if (pathname.includes('prestamos')) {
         return (
-            <SubNavPrestamo />
+            <SubNavPrestamo  idPrestamo={idPrestamo}/>
         )
     } else if (pathname.includes('clientes')) {
         return (

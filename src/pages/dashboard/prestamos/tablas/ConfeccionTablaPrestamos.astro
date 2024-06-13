@@ -9,7 +9,7 @@ import { desc } from "astro:db";
 let prestamos = [];
 let arrayBody = [];
 const user=Astro.locals.user
-
+const {idPrestamo}=Astro.params
 try {
   prestamos = await db
     .select()
@@ -34,7 +34,7 @@ try {
 }
 
 // enlace de la tabla al que me redirige con el id
-const enlaceFila=`/dashboard/prestamos/listar/`
+const enlaceFila=`/dashboard/prestamos/`
 ---
 
 <TablaPrestamos arrayBody={arrayBody} enlaceFila={enlaceFila} client:load/>
