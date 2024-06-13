@@ -55,6 +55,8 @@ export async function POST({ request }) {
       const createCuota = await db.insert(Cuota).values({
         id: cuotaId,
         prestamoId: id,
+        usuarioId,
+        clienteId,
         numeroCuota: i + 1,
         fechaVencimiento,
         monto: montoCuota,

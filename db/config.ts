@@ -65,8 +65,11 @@ import { NOW, column, defineDb, defineTable } from "astro:db";
   columns: {
     id: column.text({ primaryKey: true }),
     prestamoId: column.text({ references: () => Prestamo.columns.id }),
+    clienteId: column.text({ references: () => Cliente.columns.id }),
+    usuarioId: column.text({ references: () => User.columns.id }),
     numeroCuota: column.number(),
     fechaVencimiento: column.date(),
+    mora: column.boolean({default:false}),
     monto: column.number(),
     pagada: column.boolean({default:false}),
     fechaPago: column.date({optional:true}),

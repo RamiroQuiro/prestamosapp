@@ -72,11 +72,11 @@ import { showToast } from "../../../../components/Toast/toastShow";
       });
       const respuesta = await res.json();
       if (respuesta.status == 200) {
-        showToast('cuota cerrada',{background:'bg-green-500',time:2000})
+        showToast('cuota cerrada',{background:'bg-green-500',time:1500})
         setTimeout(()=>{
           window.location.reload()
        
-        },1800)
+        },1500)
       }
     } catch (error) {
       console.log(error);

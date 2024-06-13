@@ -1,24 +1,36 @@
 ---
 import ArticleDash from "../../../components/atomos/ArticleDash.astro";
 import Stat from "../../../components/atomos/Stat.astro";
+import StatsDePrestamos from "../../../components/organismos/StatsDePrestamos.astro";
+import StatsDeMontos from "../../../components/organismos/StatsDeMontos.astro";
 import InputDate from "../../../components/atomos/InputDate";
 import { db } from "astro:db";
 import { Prestamo } from "astro:db";
 import { eq } from "astro:db";
+import { Pago } from "astro:db";
+import { Cuota } from "astro:db";
 
 const todayValue = new Date().toLocaleDateString();
 
-const {id}=Astro.locals.user  
-let prestamos,activos
+const { id } = Astro.locals.user;
+let prestamos, activos, capital, pagosCobrados,cuotasInpagas,totalConIntereses;
 try {
-  const prestamosDB=await db.select().from(Prestamo).where(eq(Prestamo.usuarioId,id))
-  // console.log('dashboard ->',prestamosDB)
-prestamos=prestamosDB
-activos=prestamos.filter(element=>element.estado=='activo')
+  const prestamosDB = await db
+    .select()
+    .from(Prestamo)
+    .where(eq(Prestamo.usuarioId, id));
+  const pagosDB = await db.select().from(Pago).where(eq(Pago.usuarioId, id))
+  const cuotasDB = await db.select().from(Cuota).where(eq(Cuota.usuarioId, id))
+cuotasInpagas=cuotasDB.filter(element=>element.pagada==false).reduce((acc,currrent)=>acc+currrent.monto,0)
+ totalConIntereses=prestamosDB.reduce((acc,curent)=>acc+curent.montoTotal,0)
+// console.log("pagos ->", prestamosDB);
+  pagosCobrados = pagosDB.reduce((acc, current) => acc + current.monto, 0);
+  capital = prestamosDB.reduce((acc, current) => acc + current.capital, 0);
+  prestamos = prestamosDB;
+  activos = prestamos.filter((element) => element.estado == "activo");
 } catch (error) {
-  console.log(error)
+  console.log(error);
 }
-
 ---
 
 <ArticleDash bg="bg-primary-300">
@@ -84,35 +96,7 @@ activos=prestamos.filter(element=>element.estado=='activo')
       </h3>
     </div>
 
-    <div class="flex items-center justify-normal gap-2">
-      <!-- activos  -->
-
-      <div
-        class="bg-white p-3 rounded-lg font-semibold flex text-center text-xs shadow-lg"
-      >
-        <div class="border-r px-2">
-          <p>Activos</p>
-          <p class="text-base">{activos.length}</p>
-        </div>
-        <div class="px-2 border-r">
-          <p>Caidos</p>
-          <p class="text-base">0</p>
-        </div>
-        <div class="px-2">
-          <p>Totales</p>
-          <p class="text-base">{prestamos.length}</p>
-        </div>
-      </div>
-      <!-- prestmaos en mora -->
-      <div
-        class="bg-white p-3 rounded-lg font-semibold flex text-center text-xs shadow-lg"
-      >
-        <div class="px-1">
-          <p class="capitalize text-red-600 font-bold">en mora</p>
-          <p class="text-base">0</p>
-        </div>
-      </div>
-    </div>
+    <StatsDePrestamos activos={activos} prestamos={prestamos} />
   </div>
   <div class="flex flex-col items-center gap-3">
     <Stat>
@@ -123,7 +107,6 @@ activos=prestamos.filter(element=>element.estado=='activo')
       <span class="font-black text-lg">20</span>
     </Stat>
   </div>
-
 </ArticleDash>
 
 <!--  -->
@@ -232,33 +215,9 @@ activos=prestamos.filter(element=>element.estado=='activo')
         Caja
       </h3>
     </div>
-    <div class="flex items-center justify-normal gap-2">
-      <!-- activos  -->
-
-      <div
-        class="bg-white p-3 rounded-lg text-primary-texto font-semibold flex text-center text-xs shadow-lg"
-      >
-        <div class="border-r px-3 capitalize">
-          <p>en circulación</p>
-          <p class="text-base">$150000</p>
-        </div>
-        <div class="px-3">
-          <p>Cobrados</p>
-          <p class="text-base">$250000</p>
-        </div>
-      </div>
-      <!-- prestmaos en mora -->
-      <div
-        class="bg-white p-3 rounded-lg text-primary-texto font-semibold flex text-center text-xs shadow-lg"
-      >
-        <div class="px-3">
-          <p class="capitalize text-red-600 font-bold">total</p>
-          <p class="text-base">{"$100540"}</p>
-        </div>
-      </div>
-    </div>
+    <StatsDeMontos capital={capital} pagosCobrados={pagosCobrados} cuotasInpagas={cuotasInpagas} totalConIntereses={totalConIntereses} />
   </div>
-  <div class="flex flex-col items-center gap-3">
+  <div class="flex flex-col h-full items-center gap-3">
     <Stat>
       <h3 class="font-medium">Pagos</h3>
       <label for="inputDate">

@@ -1,0 +1,36 @@
+---
+const {activos,prestamos}=Astro.props
+
+
+
+---
+
+<div class="flex items-center justify-normal gap-2">
+    <!-- activos  -->
+
+    <div
+      class="bg-white p-3 rounded-lg font-semibold flex text-center text-xs shadow-lg"
+    >
+      <div class="border-r px-2">
+        <p>Activos</p>
+        <p class="text-base">{activos?.length}</p>
+      </div>
+      <div class="px-2 border-r">
+        <p>Caidos</p>
+        <p class="text-base">0</p>
+      </div>
+      <div class="px-2">
+        <p>Totales</p>
+        <p class="text-base">{prestamos?.length}</p>
+      </div>
+    </div>
+    <!-- prestmaos en mora -->
+    <div
+      class="bg-white p-3 rounded-lg font-semibold flex text-center text-xs shadow-lg"
+    >
+      <div class="px-1">
+        <p class="capitalize text-red-600 font-bold">en mora</p>
+        <p class="text-base">0</p>
+      </div>
+    </div>
+  </div>
