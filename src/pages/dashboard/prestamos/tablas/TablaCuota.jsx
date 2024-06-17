@@ -1,5 +1,6 @@
 import React from 'react'
 import Table from '../../../../components/tablaComponentes/Table'
+import { pdfPrint } from '../../../../context/store';
 
 export default function TablaCuota({arrayBody,enlaceFila}) {
 
@@ -28,7 +29,9 @@ export default function TablaCuota({arrayBody,enlaceFila}) {
        
       ];
 
-
+pdfPrint.set({
+  headers:columnas.map(element=>element.label)
+})
   return (
    
 <div class="flex items-center justify-center overflow-x-auto">

@@ -6,6 +6,10 @@ const busqueda=atom({
     }
 })
 
+const pdfPrint=atom({
+    headers:[],
+    rows:[]
+})
 
 const columnSelectTable=atom({
     seleccion:'',
@@ -31,4 +35,4 @@ const filtrosBusquedaPrestamos=atom({
     fecha:''
 })
 
-export {busqueda , filtrosBusquedaPrestamos,prestamoSimulado,columnSelectTable}
+export {busqueda, pdfPrint, filtrosBusquedaPrestamos,prestamoSimulado,columnSelectTable}

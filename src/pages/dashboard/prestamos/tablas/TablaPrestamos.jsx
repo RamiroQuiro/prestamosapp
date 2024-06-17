@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import Table from '../../../../components/tablaComponentes/Table'
+import { pdfPrint } from '../../../../context/store';
 export default function TablaPrestamos({
   arrayBody, enlaceFila
 }) {
@@ -26,9 +27,9 @@ export default function TablaPrestamos({
       selector: 'total',
     },
     {
-      label: "fecha inicio",
+      label: "F. vencimiento",
       id: 6,
-      selector: 'fechaInicio',
+      selector: 'fechaVencimiento',
     },
     {
       label: "tasa interes",
@@ -41,6 +42,20 @@ export default function TablaPrestamos({
       selector: 'estado'
     },
   ];
+  pdfPrint.set({
+    headers:columnas.map(element=>element.label),
+    rows: arrayBody.map(obj => {
+
+      let date= new Date(obj.fechaVencimiento).toLocaleDateString();
+      let { id,  ...rest } = obj; // Excluye el campo 'id'
+      obj.fechaVencimiento =date
+      return Object.values({ ...rest});  // Devuelve solo los valores del objeto
+    })
+  })
+
+
+
+
   const [search, setSearch] = useState('')
   const [encontrado, setEncontrado] = useState(arrayBody)
 
