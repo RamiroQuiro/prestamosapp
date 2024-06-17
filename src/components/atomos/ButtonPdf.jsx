@@ -1,25 +1,26 @@
 import { useStore } from "@nanostores/react";
 import { pdfPrint } from "../../context/store";
 
-export default function ButtonPdf({ handleClick, children, id }) {
+export default function ButtonPdf({ handleClick, title, subtitle, children, id }) {
 
-const $dataTable=useStore(pdfPrint)
+    const $dataTable = useStore(pdfPrint)
 
     const handlePdfGenerate = async () => {
-        console.log('first')
         try {
             const res = await fetch('/api/report/prestamosReport', {
                 method: 'POST',
-                body: JSON.stringify($dataTable)
+                body: JSON.stringify({
+                    dataPDF: $dataTable,
+                })
             })
-            .then(response => response.blob())
-            .then(blob => {
-              const url = window.URL.createObjectURL(blob);
-              const a = document.createElement('a');
-              a.href = url;
-              a.download = 'document.pdf';
-              a.click();
-            });
+                .then(response => response.blob())
+                .then(blob => {
+                    const url = window.URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = 'document.pdf';
+                    a.click();
+                });
         } catch (error) {
             console.log(error)
         }

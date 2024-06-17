@@ -1,9 +1,15 @@
 ---
-import Button2 from "../../../../components/atomos/Button2.astro";
+import Button3 from "../../../../components/atomos/Button3";
+import ButtonPdf from "../../../../components/atomos/ButtonPdf";
 
+
+const {idPrestamo}=Astro.props
+
+const title= `Cliente Rama Quiroga - Detalle de Prestamo`
+const subtitle= `ID del prestamos : ${idPrestamo}`
 ---
 <div class="flex items-center w- text-xs justify-evenly gap-5 py-3">
-    <Button2>email</Button2>
-    <Button2>whatsapp</Button2>
-    <Button2>pdf</Button2>
+    <Button3>email</Button3>
+    <Button3>whatsapp</Button3>
+    <ButtonPdf idPrestamo={idPrestamo} title={title} subtitle={subtitle} client:load>pdf</ButtonPdf>
   </div>

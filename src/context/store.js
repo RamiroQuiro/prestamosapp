@@ -8,7 +8,9 @@ const busqueda=atom({
 
 const pdfPrint=atom({
     headers:[],
-    rows:[]
+    rows:[],
+    title:'',
+    subtitle:''
 })
 
 const columnSelectTable=atom({

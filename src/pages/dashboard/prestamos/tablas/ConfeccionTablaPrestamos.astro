@@ -24,7 +24,7 @@ try {
       montoCuota: `$ ${element?.Prestamo?.montoCuota.toLocaleString()}`,
       nCuotas: element?.Prestamo.nCuotas,
       montoTotal:`$ ${ element?.Prestamo.montoTotal.toLocaleString()}`,
-      fechaVencimiento: element?.Prestamo.fechaFin,
+      fechaVencimiento: element?.Prestamo.fechaFin.toLocaleDateString(),
       tasaInteres: `${element?.Prestamo.tasaInteres}%`,
       estado:element?.Prestamo.estado
     };

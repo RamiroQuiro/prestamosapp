@@ -4,7 +4,7 @@ import { Prestamo } from "astro:db";
 import { eq } from "astro:db";
 import { Cliente } from "astro:db";
 import { Cuota } from "astro:db";
-import TablaPrestamo from "./TablaCuota"
+import TablaCuota from "./TablaCuota"
 import { formatHora } from "../[idPrestamo]/index.astro";
 let cuotas = [];
 let arrayBody = [];
@@ -20,21 +20,24 @@ try {
     .where(eq(Cuota.prestamoId, idPrestamo));
 
   arrayBody = cuotas.map((element) => {
-    const horaFormateada = formatHora(element.fechaVencimiento);
+    console.log('este es el array de cotas ->',element)
+
     return {
       id:element.id,
       cuota: element.numeroCuota,
-      fechaVencimiento: horaFormateada,
+      fechaVencimiento: element.fechaVencimiento.toLocaleDateString(),
       importeCuota: `$ ${element.monto.toLocaleString()}`,
       estado: element.pagada ,
     };
   });
+
+  console.log('confeccion de tabla cuota ->',arrayBody)
+
 } catch (error) {
   console.log(error);
 }
-
 // enlace de la tabla al que me redirige con el id
 const enlaceFila=`/dashboard/prestamos/${idPrestamo}/cuota/`
 ---
 
-<TablaPrestamo enlaceFila={enlaceFila} arrayBody={arrayBody} client:load/ >
+<TablaCuota enlaceFila={enlaceFila} arrayBody={arrayBody} idPrestamo={idPrestamo} client:load/ >

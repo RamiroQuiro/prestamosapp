@@ -3,7 +3,7 @@ import { buildPDF } from "../../../lib/pdfkit-table";
 
 export async function POST({ request, params }) {
 
-const dataPDF=await request.json()
+const {dataPDF}=await request.json()
 
     try {
 

@@ -46,9 +46,9 @@ export default function TablaPrestamos({
     headers:columnas.map(element=>element.label),
     rows: arrayBody.map(obj => {
 
-      let date= new Date(obj.fechaVencimiento).toLocaleDateString();
+
       let { id,  ...rest } = obj; // Excluye el campo 'id'
-      obj.fechaVencimiento =date
+
       return Object.values({ ...rest});  // Devuelve solo los valores del objeto
     })
   })

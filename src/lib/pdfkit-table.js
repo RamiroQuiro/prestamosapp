@@ -1,25 +1,47 @@
 import PDFDocument from 'pdfkit-table'
 
-export const buildPDF = async ({headers, rows}) => {
+export const buildPDF = async ({ headers, rows,title, subtitle}  ) => {
 
 
     const pdfBuffer = await new Promise(resolve => {
 
         const doc = new PDFDocument({ margin: 30, size: 'A4', bufferPages: true, })
         let pageNumber = 0;
-
-
-
-        doc.text('hola meeen')
-
+        doc.text('RamaCode')
+        // datos de la tabla
         const tableArray = {
-            title: "Title",
-            subtitle: "Subtitle",
-      
+            title,
+            subtitle,
             headers: headers,
             rows: rows,
         };
-        doc.table(tableArray, { width: doc.page.width - 100, }); // A4 595.28 x 841.89 (portrait) (about width sizes)
+
+        // opciones y estilos de la talba
+        const tableOptions = {
+            width: doc.page.width - 100,
+            padding: 5,
+            borderWidth: 1,
+            borderColor: 'black',
+            backgroundColor: 'gray',
+            textOptions: {
+                font: 'Helvetica',
+                size: 10,
+                color: 'blue',
+                align: 'center',
+                valign: 'center'
+            },
+            headerOptions: {
+                font: 'Helvetica-Bold',
+                size: 12,
+                color: 'red',
+                align: 'center',
+                valign: 'center'
+            }
+        };
+
+
+        //   constructor de la tabla
+        doc.table(tableArray, tableOptions);
         doc.moveDown()
 
         doc.text('andano pdf')
