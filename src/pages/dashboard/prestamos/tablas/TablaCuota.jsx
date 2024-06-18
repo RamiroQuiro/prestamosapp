@@ -4,7 +4,6 @@ import { pdfPrint } from '../../../../context/store';
 
 export default function TablaCuota({ arrayBody, enlaceFila, idPrestamo }) {
 
-  console.log('array de tabla cuta react island ->', arrayBody)
   let arrayPdf = [...arrayBody]
   const columnas = [
     {
