@@ -4,15 +4,15 @@ import { Prestamo } from "astro:db";
 import { eq } from "astro:db";
 import { Cliente } from "astro:db";
 import { Cuota } from "astro:db";
-import TablaCuota from "./TablaCuota"
+import TablaCuota from "./TablaCuota";
 import { formatHora } from "../[idPrestamo]/index.astro";
 let cuotas = [];
 let arrayBody = [];
 
 const { idPrestamo } = Astro.params;
-const userId = "123456";
+const {cliente,prestamo}=Astro.props
 
-
+// console.log(prestamo)
 try {
   cuotas = await db
     .select()
@@ -20,24 +20,28 @@ try {
     .where(eq(Cuota.prestamoId, idPrestamo));
 
   arrayBody = cuotas.map((element) => {
-    console.log('este es el array de cotas ->',element)
+    // console.log('este es el array de cotas ->',element)
 
     return {
-      id:element.id,
+      id: element.id,
       cuota: element.numeroCuota,
       fechaVencimiento: element.fechaVencimiento.toLocaleDateString(),
       importeCuota: `$ ${element.monto.toLocaleString()}`,
-      estado: element.pagada ,
+      estado: element.pagada,
     };
   });
-
-  console.log('confeccion de tabla cuota ->',arrayBody)
-
 } catch (error) {
   console.log(error);
 }
 // enlace de la tabla al que me redirige con el id
-const enlaceFila=`/dashboard/prestamos/${idPrestamo}/cuota/`
+const enlaceFila = `/dashboard/prestamos/${idPrestamo}/cuota/`;
 ---
 
-<TablaCuota enlaceFila={enlaceFila} arrayBody={arrayBody} idPrestamo={idPrestamo} client:load/ >
+<TablaCuota
+cliente={cliente}
+prestamo={prestamo}
+  enlaceFila={enlaceFila}
+  arrayBody={arrayBody}
+  idPrestamo={idPrestamo}
+  client:load
+/>

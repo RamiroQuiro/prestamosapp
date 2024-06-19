@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import Table from '../../../../components/tablaComponentes/Table'
 import { pdfPrint } from '../../../../context/store';
 export default function TablaPrestamos({
-  arrayBody, enlaceFila
+  arrayBody, enlaceFila,usuario
 }) {
   const columnas = [
     {
@@ -42,19 +42,19 @@ export default function TablaPrestamos({
       selector: 'estado'
     },
   ];
-  pdfPrint.set({
+  pdfPrint.set({...pdfPrint.get(),
+    lorem:`Usuario : ${usuario.userName} | ${usuario.nombre} ${usuario.apellido} \n Email : ${usuario.email} \n ID usuario : ${usuario.id}`,
+    subtitle:'Tus Prestamos',
     headers:columnas.map(element=>element.label),
-    rows: arrayBody.map(obj => {
-
-
+    rows:arrayBody? arrayBody.map(obj => {
       let { id,  ...rest } = obj; // Excluye el campo 'id'
-
       return Object.values({ ...rest});  // Devuelve solo los valores del objeto
-    })
+    }):[],
+    fontSizeTable:8
   })
 
 
-
+console.log('props prestramos',usuario)
 
   const [search, setSearch] = useState('')
   const [encontrado, setEncontrado] = useState(arrayBody)

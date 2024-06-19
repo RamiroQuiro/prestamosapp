@@ -13,17 +13,27 @@ import { Cuota } from "astro:db";
 const todayValue = new Date().toLocaleDateString();
 
 const { id } = Astro.locals.user;
-let prestamos, activos, capital, pagosCobrados,cuotasInpagas,totalConIntereses;
+let prestamos,
+  activos,
+  capital,
+  pagosCobrados,
+  cuotasInpagas,
+  totalConIntereses;
 try {
   const prestamosDB = await db
     .select()
     .from(Prestamo)
     .where(eq(Prestamo.usuarioId, id));
-  const pagosDB = await db.select().from(Pago).where(eq(Pago.usuarioId, id))
-  const cuotasDB = await db.select().from(Cuota).where(eq(Cuota.usuarioId, id))
-cuotasInpagas=cuotasDB.filter(element=>element.pagada==false).reduce((acc,currrent)=>acc+currrent.monto,0)
- totalConIntereses=prestamosDB.reduce((acc,curent)=>acc+curent.montoTotal,0)
-// console.log("pagos ->", prestamosDB);
+  const pagosDB = await db.select().from(Pago).where(eq(Pago.usuarioId, id));
+  const cuotasDB = await db.select().from(Cuota).where(eq(Cuota.usuarioId, id));
+  cuotasInpagas = cuotasDB
+    .filter((element) => element.pagada == false)
+    .reduce((acc, currrent) => acc + currrent.monto, 0);
+  totalConIntereses = prestamosDB.reduce(
+    (acc, curent) => acc + curent.montoTotal,
+    0
+  );
+  // console.log("pagos ->", prestamosDB);
   pagosCobrados = pagosDB.reduce((acc, current) => acc + current.monto, 0);
   capital = prestamosDB.reduce((acc, current) => acc + current.capital, 0);
   prestamos = prestamosDB;
@@ -215,7 +225,12 @@ cuotasInpagas=cuotasDB.filter(element=>element.pagada==false).reduce((acc,currre
         Caja
       </h3>
     </div>
-    <StatsDeMontos capital={capital} pagosCobrados={pagosCobrados} cuotasInpagas={cuotasInpagas} totalConIntereses={totalConIntereses} />
+    <StatsDeMontos
+      capital={capital}
+      pagosCobrados={pagosCobrados}
+      cuotasInpagas={cuotasInpagas}
+      totalConIntereses={totalConIntereses}
+    />
   </div>
   <div class="flex flex-col h-full items-center gap-3">
     <Stat>

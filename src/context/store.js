@@ -10,7 +10,11 @@ const pdfPrint=atom({
     headers:[],
     rows:[],
     title:'',
-    subtitle:''
+    subtitle:'',
+    lorem:'',
+    positionPage:'A4',
+    fontSize:10,
+    fontSizeTable:10
 })
 
 const columnSelectTable=atom({

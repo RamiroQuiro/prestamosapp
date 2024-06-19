@@ -9,7 +9,7 @@ import Cabecera from './Cabecera';
 const tw = createTw({
     theme: {
         fontFamily: {
-            sans: ["Comic Sans"],
+            
         },
         extend: {
             colors: {

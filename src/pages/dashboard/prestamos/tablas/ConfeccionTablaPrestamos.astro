@@ -6,15 +6,19 @@ import { Cliente } from "astro:db";
 import TablaPrestamos from "./TablaPrestamos";
 import { asc } from "astro:db";
 import { desc } from "astro:db";
+import { User } from "astro:db";
 let prestamos = [];
 let arrayBody = [];
-const user=Astro.locals.user
+let usuario=[]
+const {id}=Astro.locals.user
 const {idPrestamo}=Astro.params
+
 try {
+usuario=await db.select().from(User).where(eq(User.id,id))
   prestamos = await db
     .select()
     .from(Prestamo)
-    .where(eq(Prestamo.usuarioId, user.id))
+    .where(eq(Prestamo.usuarioId, id))
     .innerJoin(Cliente, eq(Prestamo.clienteId, Cliente.id)).orderBy(desc(Prestamo.fechaCreacion));
 
   arrayBody = prestamos.map((element) => {
@@ -37,5 +41,5 @@ try {
 const enlaceFila=`/dashboard/prestamos/`
 ---
 
-<TablaPrestamos arrayBody={arrayBody} enlaceFila={enlaceFila} client:load/>
+<TablaPrestamos arrayBody={arrayBody} enlaceFila={enlaceFila} usuario={usuario[0]} client:load/>
  

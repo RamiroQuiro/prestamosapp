@@ -21,6 +21,12 @@ export default function ButtonPdf({ handleClick, title, subtitle, children, id }
                     a.download = 'document.pdf';
                     a.click();
                 });
+
+
+                // const res = await fetch('/api/report/renderPDF', {
+                //     method: 'GET',
+                    
+                // })
         } catch (error) {
             console.log(error)
         }
