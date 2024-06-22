@@ -1,0 +1,31 @@
+---
+import { db } from "astro:db";
+import MainDash from "../../../../components/organismos/MainDash.astro";
+import Layoutdash from "../../layouts/Layoutdash.astro";
+import { Cliente } from "astro:db";
+import { eq } from "astro:db";
+import ContenedorDiv1 from "../../../../components/atomos/ContenedorDiv1.astro";
+import Titulo1 from "../../../../components/atomos/Titulo1.astro";
+import DatosPersonales from "./DatosPersonales";
+
+const { idCliente } = Astro.params;
+
+let clienteDB;
+try {
+  clienteDB = (
+    await db.select().from(Cliente).where(eq(Cliente.id, idCliente))
+  ).at(0);
+  console.log(clienteDB);
+} catch (error) {
+  console.log(error);
+}
+---
+
+<Layoutdash title="Cliente ">
+  <MainDash>
+    <ContenedorDiv1>
+      <Titulo1>Datos de Cliente</Titulo1>
+     <DatosPersonales client:load/>
+    </ContenedorDiv1>
+  </MainDash>
+</Layoutdash>

@@ -56,6 +56,7 @@ try {
 
   arrayBody = clientes.map((element) => {
     return {
+      id:element.id,
       nombre: element?.nombre,
       apellido: element?.apellido,
       dni: element?.dni,
@@ -67,8 +68,10 @@ try {
 } catch (error) {
   console.log(error);
 }
+// enlace de la tabla al que me redirige con el id
+const enlaceFila = `/dashboard/clientes/`;
 ---
 
 <div class="w-full overflow-x-auto my-5">
-  <Table  columnas={columnas} arrayBody={arrayBody} client:load/>
+  <Table  columnas={columnas} arrayBody={arrayBody} enlaceFila={enlaceFila} client:load/>
 </div>
