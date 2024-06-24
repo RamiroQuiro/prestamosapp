@@ -21,20 +21,21 @@ try {
 }
 ---
 
-<Layoutdash title="Cliente ">
+<Layoutdash title=`Cliente ${clienteDB?.nombre}` dataCliente={clienteDB}>
+  <div id={'idCliente'} data-idClient={JSON.stringify(clienteDB)} hidden></div>
   <MainDash>
     <ContenedorDiv1>
-      <Titulo1>Datos de Cliente</Titulo1>
-     <DatosPersonales cliente={clienteDB} client:load/>
+      <Titulo1>Cliente - {clienteDB?.nombre+' '+clienteDB?.apellido}</Titulo1>
+      <slot/>
+  
     </ContenedorDiv1>
   </MainDash>
 </Layoutdash>
-<script >
+<script>
+const dataSet = document.getElementById('idCliente').getAttribute('data-idClient')
+
+
 import { clienteSelect } from "../../../../context/store";
 
-
-  clienteSelect.subscribe((cliente)=>{
-console.log('cdliente selecto suscrbi',cliente)
-clienteSelect.set(cliente)
-  })
+  clienteSelect.set(JSON.parse(dataSet))
 </script>

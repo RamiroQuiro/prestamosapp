@@ -1,0 +1,22 @@
+---
+import { db } from 'astro:db';
+import WraperCliente from './index.astro'
+import { Cliente } from 'astro:db';
+import { eq } from 'astro:db';
+import DatosPersonales from './DatosPersonales'
+const { idCliente } = Astro.params;
+
+let clienteDB;
+try {
+  clienteDB = (
+    await db.select().from(Cliente).where(eq(Cliente.id, idCliente))
+  ).at(0);
+  console.log(clienteDB);
+} catch (error) {
+  console.log(error);
+}
+---
+
+<WraperCliente>
+    <DatosPersonales cliente={clienteDB} client:load />
+</WraperCliente>

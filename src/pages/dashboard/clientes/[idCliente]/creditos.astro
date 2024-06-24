@@ -1,9 +1,6 @@
 ---
 import { db } from "astro:db";
-import ContenedorDiv1 from "../../../../components/atomos/ContenedorDiv1.astro";
-import Titulo1 from "../../../../components/atomos/Titulo1.astro";
-import MainDash from "../../../../components/organismos/MainDash.astro";
-import Layoutdash from "../../layouts/Layoutdash.astro";
+import WrapperCliente from './index.astro'
 import { Prestamo } from "astro:db";
 import { eq } from "astro:db";
 import ConfeccionTabla from "./tabla/ConfeccionTabla.astro";
@@ -23,15 +20,9 @@ try {
   console.log(error);
 }
 ---
-
-<Layoutdash title="Cliente ">
-  <MainDash>
-    <ContenedorDiv1 style="">
-      <Titulo1>Creditos de NombreCliente</Titulo1>
+<WrapperCliente>
       <div class="w-full flex flex-col items-center gap-3">
         <BotoneraFiltros />
         <ConfeccionTabla />
       </div>
-    </ContenedorDiv1>
-  </MainDash>
-</Layoutdash>
+</WrapperCliente>

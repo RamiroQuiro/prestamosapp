@@ -4,9 +4,10 @@ import Sidebar from "../../../components/organismos/Sidebar.astro";
 
 interface Props {
   title: string;
+  dataCliente:string
 }
 
-const { title } = Astro.props;
+const { title,dataCliente } = Astro.props;
 
 const url=Astro.url
 
@@ -27,7 +28,7 @@ const url=Astro.url
   >
     <!-- <LoaderGral/> -->
 
-    <NavDash/>
+    <NavDash dataCliente={dataCliente}/>
 
     <Sidebar />
     <slot />

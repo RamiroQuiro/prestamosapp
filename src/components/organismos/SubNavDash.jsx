@@ -2,7 +2,7 @@ import React from 'react'
 import SubNavPrestamo from '../moleculas/SubNavPrestamo'
 import SubNavClientes from '../moleculas/SubNavClientes'
 
-export default function SubNavDash({ pathname,idPrestamo,idCliente }) {
+export default function SubNavDash({ pathname,idPrestamo,idCliente,dataCliente }) {
 
 
     if (pathname.includes('prestamos')) {
@@ -11,7 +11,7 @@ export default function SubNavDash({ pathname,idPrestamo,idCliente }) {
         )
     } else if (pathname.includes('clientes')) {
         return (
-         <SubNavClientes idClients={idCliente}/>
+         <SubNavClientes idClients={idCliente} dataCliente={dataCliente}/>
         )
     } else if (pathname.startsWith('/dashboard')) {
         return (
