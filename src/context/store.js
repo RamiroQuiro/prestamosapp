@@ -17,6 +17,8 @@ const pdfPrint=atom({
     fontSizeTable:10
 })
 
+
+const clienteSelect=atom({})
 const columnSelectTable=atom({
     seleccion:'',
     asc:true
@@ -41,4 +43,4 @@ const filtrosBusquedaPrestamos=atom({
     fecha:''
 })
 
-export {busqueda, pdfPrint, filtrosBusquedaPrestamos,prestamoSimulado,columnSelectTable}
+export {busqueda, pdfPrint, filtrosBusquedaPrestamos,prestamoSimulado,clienteSelect,columnSelectTable}

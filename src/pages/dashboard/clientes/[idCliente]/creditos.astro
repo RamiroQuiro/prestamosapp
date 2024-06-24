@@ -1,0 +1,37 @@
+---
+import { db } from "astro:db";
+import ContenedorDiv1 from "../../../../components/atomos/ContenedorDiv1.astro";
+import Titulo1 from "../../../../components/atomos/Titulo1.astro";
+import MainDash from "../../../../components/organismos/MainDash.astro";
+import Layoutdash from "../../layouts/Layoutdash.astro";
+import { Prestamo } from "astro:db";
+import { eq } from "astro:db";
+import ConfeccionTabla from "./tabla/ConfeccionTabla.astro";
+import BotoneraFiltros from "../../prestamos/listar/BotoneraFiltros.astro";
+
+const { idCliente } = Astro.params;
+let prestamos;
+
+try {
+  prestamos = await db
+    .select()
+    .from(Prestamo)
+    .where(eq(Prestamo.clienteId, idCliente));
+
+  console.log(prestamos);
+} catch (error) {
+  console.log(error);
+}
+---
+
+<Layoutdash title="Cliente ">
+  <MainDash>
+    <ContenedorDiv1 style="">
+      <Titulo1>Creditos de NombreCliente</Titulo1>
+      <div class="w-full flex flex-col items-center gap-3">
+        <BotoneraFiltros />
+        <ConfeccionTabla />
+      </div>
+    </ContenedorDiv1>
+  </MainDash>
+</Layoutdash>

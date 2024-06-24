@@ -54,7 +54,7 @@ export default function TablaPrestamos({
   })
 
 
-console.log('props prestramos',usuario)
+
 
   const [search, setSearch] = useState('')
   const [encontrado, setEncontrado] = useState(arrayBody)

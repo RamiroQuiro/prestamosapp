@@ -25,7 +25,16 @@ try {
   <MainDash>
     <ContenedorDiv1>
       <Titulo1>Datos de Cliente</Titulo1>
-     <DatosPersonales client:load/>
+     <DatosPersonales cliente={clienteDB} client:load/>
     </ContenedorDiv1>
   </MainDash>
 </Layoutdash>
+<script >
+import { clienteSelect } from "../../../../context/store";
+
+
+  clienteSelect.subscribe((cliente)=>{
+console.log('cdliente selecto suscrbi',cliente)
+clienteSelect.set(cliente)
+  })
+</script>

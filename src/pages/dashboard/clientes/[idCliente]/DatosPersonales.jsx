@@ -1,10 +1,13 @@
 import React from 'react'
 import InputsDatos from '../../../../components/organismos/InputsDatos'
 import Button3 from '../../../../components/atomos/Button3'
-import Button1 from '../../../../components/atomos/Button1.astro'
-import Button2 from '../../../../components/atomos/Button2.astro'
+import { clienteSelect } from '../../../../context/store'
 
-export default function DatosPersonales({data}) {
+export default function DatosPersonales({cliente}) {
+
+    clienteSelect.set(cliente)
+
+
     return (
         <div className=" border-y bg-white p-5 w-full">
             <form className='flex w-full gap-4 flex-row text-sm'>
@@ -17,31 +20,31 @@ export default function DatosPersonales({data}) {
                 <div className='flex flex-wrap w-full items-start justify-start gap-3'>
 
                     <InputsDatos
-                        label={'Nombre y Apellido :'} valueInput={'Ramiro Quiroga'}
+                        label={'Nombre y Apellido :'} valueInput={`${cliente.nombre} ${cliente.apellido}`}
                     />
                     <InputsDatos
-                        label={'DNI :'} valueInput={'33882244'}
+                        label={'DNI :'} valueInput={cliente.dni}
                     />
                     <InputsDatos
-                        label={'email :'} valueInput={'rama.exe.13@gmail.com'}
+                        label={'email :'} valueInput={cliente.email}
                     />
                     <InputsDatos
-                        label={'Dirección :'} valueInput={'Barrio el Rincon'}
+                        label={'Dirección :'} valueInput={cliente.direccion}
                     />
                     <InputsDatos
-                        label={'Localidad :'} valueInput={'Banda'}
+                        label={'Localidad :'} valueInput={cliente.localidad}
                     />
                     <InputsDatos
-                        label={'Departamento:'} valueInput={'Ramiro Quiroga'}
+                        label={'Departamento:'} valueInput={cliente.departamento}
                     />
                     <InputsDatos
-                        label={'Ciudad:'} valueInput={'Ramiro Quiroga'}
+                        label={'Ciudad:'} valueInput={cliente.ciudad}
                     />
                     <InputsDatos
-                        label={'Pais:'} valueInput={'Ramiro Quiroga'}
+                        label={'Pais:'} valueInput={cliente.pais}
                     />
                     <InputsDatos
-                        label={'Fecha Creación:'} valueInput={'Ramiro Quiroga'}
+                        label={'Fecha Creación:'} valueInput={cliente.fechaCreacion.toLocaleString()}
                     />
                 
                
