@@ -20,9 +20,10 @@ usuario=await db.select().from(User).where(eq(User.id,id))
     .from(Prestamo)
     .where(eq(Prestamo.usuarioId, id))
     .innerJoin(Cliente, eq(Prestamo.clienteId, Cliente.id)).orderBy(desc(Prestamo.fechaCreacion));
-
+// console.log(prestamos)
   arrayBody = prestamos.map((element) => {
     return {
+      href:`/dashboard/prestamos/${element.Prestamo.id}`,
       id:element?.Prestamo.id,
       cliente: element?.Cliente.nombre + ' '+ element?.Cliente.apellido,
       montoCuota: `$ ${element?.Prestamo?.montoCuota.toLocaleString()}`,
@@ -37,9 +38,7 @@ usuario=await db.select().from(User).where(eq(User.id,id))
   console.log(error);
 }
 
-// enlace de la tabla al que me redirige con el id
-const enlaceFila=`/dashboard/prestamos/`
 ---
 
-<TablaPrestamos arrayBody={arrayBody} enlaceFila={enlaceFila} usuario={usuario[0]} client:load/>
+<TablaPrestamos arrayBody={arrayBody} usuario={usuario[0]} client:load/>
  

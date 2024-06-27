@@ -23,6 +23,7 @@ try {
     // console.log('este es el array de cotas ->',element)
 
     return {
+      href:`/dashboard/prestamos/${element.prestamoId}/cuota/${element.id}`,
       id: element.id,
       cuota: element.numeroCuota,
       fechaVencimiento: element.fechaVencimiento.toLocaleDateString(),
@@ -33,14 +34,13 @@ try {
 } catch (error) {
   console.log(error);
 }
-// enlace de la tabla al que me redirige con el id
-const enlaceFila = `/dashboard/prestamos/${idPrestamo}/cuota/`;
+
 ---
 
 <TablaCuota
 cliente={cliente}
 prestamo={prestamo}
-  enlaceFila={enlaceFila}
+
   arrayBody={arrayBody}
   idPrestamo={idPrestamo}
   client:load

@@ -8,9 +8,8 @@ export default function TBody({ arrayBody, onClickFila }) {
     const $filtros = useStore(filtrosBusquedaPrestamos)
     const [sortSelect, setSortSelect] = useState($columnSelectTable.seleccion)
     // console.log(sortSelect)
-    const onClick = (e) => {
-
-        onClickFila(e)
+    const onClick = (href) => {
+            document.location.href=href
     }
     return (
         <tbody>
@@ -40,7 +39,7 @@ export default function TBody({ arrayBody, onClickFila }) {
                     .map((client, i) => {
                         // console.log(client)
                         return (
-                            <Tr data={client} onClick={() => onClick(client)} id={client.id} key={i} styleTr="hover:bg-primary-200/20 duration-300 cursor-pointer border-b odd:bg-primary-200/10 " />
+                            <Tr data={client} onClick={() => onClick(client.href)} id={client.id} key={i} styleTr="hover:bg-primary-200/20 duration-300 cursor-pointer border-b odd:bg-primary-200/10 " />
                         );
                     })
             }

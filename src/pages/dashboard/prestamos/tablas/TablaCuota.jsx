@@ -32,7 +32,7 @@ export default function TablaCuota({ arrayBody, enlaceFila, idPrestamo ,cliente,
 
   pdfPrint.set({
     ...pdfPrint.get(),
-    lorem: `  Cliente : ${cliente.nombre.toUpperCase()} ${cliente.apellido.toUpperCase()} - DNI: ${cliente.dni} \n  Fecha de Inicio : ${prestamo.fechaInicio} - Fecha Vencimiento : ${prestamo.fechaFin} \n N° de Cuotas : ${prestamo.nCuotas} - Modalidad : ${prestamo.modalidad} \n Capital : $${prestamo.capital} , Monto Total : $${prestamo.montoTotal}, \n ID del prestamos : ${idPrestamo}`,
+    lorem: `  Cliente : ${cliente?.nombre?.toUpperCase()} ${cliente?.apellido.toUpperCase()} - DNI: ${cliente?.dni} \n  Fecha de Inicio : ${prestamo?.fechaInicio} - Fecha Vencimiento : ${prestamo?.fechaFin} \n N° de Cuotas : ${prestamo?.nCuotas} - Modalidad : ${prestamo?.modalidad} \n Capital : $${prestamo?.capital} , Monto Total : $${prestamo?.montoTotal}, \n ID del prestamos : ${idPrestamo}`,
     headers: columnas.map(element => element.label),
     rows: arrayPdf.map(obj => {
 

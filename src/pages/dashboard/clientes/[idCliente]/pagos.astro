@@ -1,7 +1,20 @@
 ---
+import { db } from "astro:db";
 import WrapperCliente from "./index.astro";
+import { eq } from "astro:db";
+import { Pago } from "astro:db";
+import BotoneraFiltros from "../../prestamos/listar/BotoneraFiltros.astro";
+import ConfeccionTablaPagos from "./tabla/ConfeccionTablaPagos.astro";
+
+const {idCliente}=Astro.params
+
 ---
 
 <WrapperCliente>
-  <div class="w-full flex flex-col items-center gap-3"></div>
+  
+  <h2>pagos realizados</h2>
+  <div class="w-full flex flex-col items-center gap-3">
+    <BotoneraFiltros />
+    <ConfeccionTablaPagos />
+  </div>
 </WrapperCliente>

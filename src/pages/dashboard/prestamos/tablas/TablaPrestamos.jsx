@@ -98,7 +98,7 @@ export default function TablaPrestamos({
         type="search" name="busquedaCliente" id="busquedaCliente" className=' w-full text-sm bg-primary-200/10  rounded-md group-hover:ring-2  border-gray-300  ring-primary-200/60 my-3 focus:ring-2  outline-none transition-colors duration-200 ease-in-out px-2 py-2' />
 
         {/* tabla */}
-      <Table columnas={columnas} arrayBody={encontrado} enlaceFila={enlaceFila} client:load />
+      <Table columnas={columnas} arrayBody={encontrado} client:load />
     </div>
 
   )

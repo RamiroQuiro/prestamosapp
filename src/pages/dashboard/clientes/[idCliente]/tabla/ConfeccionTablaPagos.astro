@@ -1,0 +1,39 @@
+---
+import { db } from "astro:db";
+import TablaPagoCliente from "./TablaPagoCliente";
+import { Prestamo } from "astro:db";
+import { eq } from "astro:db";
+import { Pago } from "astro:db";
+
+const { id } = Astro.locals.user;
+const { idCliente } = Astro.params;
+let pagos = [];
+let arrayBody = [];
+let usuario = [];
+let columnas = [];
+try {
+pagos = await db.select().from(Pago).where(eq(Pago.clienteId, idCliente));
+// console.log(pagos)
+  arrayBody = pagos.map((element, i) => {
+    return {
+      href:`/dashboard/prestamos/${element.prestamoId}/cuota/${element.cuotaId}`,
+      numero: i + 1,
+      id: element?.id,
+      prestamo:element.prestamoId,
+      fechaPago: element?.fechaPago.toLocaleDateString(),
+
+      montoCuota: element?.metodoPago,
+
+      montoTotal: `$ ${element?.monto.toLocaleString()}`,
+    };
+  });
+} catch (error) {
+  console.log(error);
+}
+
+// enlace de la tabla al que me redirige con el id
+---
+
+<div class="w-full overflow-x-auto my-5">
+  <TablaPagoCliente arrayBody={arrayBody}  client:load />
+</div>
