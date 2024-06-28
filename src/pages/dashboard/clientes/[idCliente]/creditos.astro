@@ -1,10 +1,10 @@
 ---
 import { db } from "astro:db";
-import WrapperCliente from './index.astro'
 import { Prestamo } from "astro:db";
 import { eq } from "astro:db";
 import ConfeccionTabla from "./tabla/ConfeccionTabla.astro";
 import BotoneraFiltros from "../../prestamos/prestamos/BotoneraFiltros.astro";
+import LayoutClient from "./LayoutClient.astro";
 
 const { idCliente } = Astro.params;
 let prestamos;
@@ -20,9 +20,9 @@ try {
   console.log(error);
 }
 ---
-<WrapperCliente>
+<LayoutClient>
       <div class="w-full flex flex-col items-center gap-3">
         <BotoneraFiltros />
         <ConfeccionTabla />
       </div>
-</WrapperCliente>
+</LayoutClient>

@@ -35,7 +35,7 @@ export default function SubNavClientes({ idClients, pathname, dataCliente }) {
         {links[0].children}
       </LinkSubMenu>
       {idClients &&
-        links?.slice(1,-1)?.map((elemtne, i) => {
+        links?.slice(1)?.map((elemtne, i) => {
 
           return (
             <LinkSubMenu
