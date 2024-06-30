@@ -53,13 +53,9 @@ try {
   console.log(consulta);
   arrayBody = clientes.map((element) => {
     return {
-<<<<<<< HEAD:src/pages/dashboard/clientes/tabla/Tabla.astro
-      href:`/dashboard/clientes/${element.id}`,
-      id:element.id,
-=======
+
       href: `/dashboard/clientes/${element.id}`,
       id: element.id,
->>>>>>> ba0f1ba1c22d11aaa40839fb0468301312826649:src/pages/dashboard/clientes/tabla/TablaClientes.astro
       nombre: element?.nombre,
       apellido: element?.apellido,
       dni: element?.dni,
@@ -75,14 +71,7 @@ try {
 ---
 
 <div class="w-full overflow-x-auto my-5">
-<<<<<<< HEAD:src/pages/dashboard/clientes/tabla/Tabla.astro
+
   <Table  columnas={columnas} arrayBody={arrayBody} client:load/>
-=======
-  <Table
-    columnas={columnas}
-    arrayBody={arrayBody}
-    enlaceFila={enlaceFila}
-    client:load
-  />
->>>>>>> ba0f1ba1c22d11aaa40839fb0468301312826649:src/pages/dashboard/clientes/tabla/TablaClientes.astro
+
 </div>

@@ -5,10 +5,15 @@ import LayoutClient from "./LayoutClient.astro";
 ---
 
 <LayoutClient>
+<div >
 
+  <canvas id="modelsCarts">
+</div>
 
-  asdfd
+</canvas>
+
 </LayoutClient>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js/dist/chart.umd.min.js"></script>
 <script>
 const dataSet = document.getElementById('idCliente').getAttribute('data-idClient')
 
@@ -16,5 +21,53 @@ const dataSet = document.getElementById('idCliente').getAttribute('data-idClient
 import { clienteSelect } from "../../../../context/store";
 
   clienteSelect.set(JSON.parse(dataSet))
+</script>
+
+<script>
+
+         // Datos del gráfico
+        const data = {
+            labels: ['Lun', 'Mar', 'Mié',],
+            datasets: [{
+                label: 'Ventas Semanales',
+                data: [18, 12, 6,],
+                backgroundColor: ['#2B60E350',"#E2F39750", "#4C456350"],
+                borderColor:  ['#2B60E350',"#E2F397", "#4C456350"],
+                borderWidth: 1
+            }]
+        };
+
+        // Configuración del gráfico
+        const config = {
+            type: 'doughnut',
+            data,
+            options: {
+              plugins:{
+                legend:{position:'top'}
+              },
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        };
+    
+    
+    // funciones de arranue de chartjs
+
+    const printChars=()=>{
+
+      renderModelsChart()
+    }
+    
+    const renderModelsChart=()=>{
+
+      const myChart = new Chart('modelsCarts', config);
+
+    }
+        // Inicialización del gráfico
+printChars()
+
 </script>
 
