@@ -8,7 +8,6 @@ export default function TablaPrestamosCliente({
   }) {
 
 const $cliente=useStore(clienteSelect)
-console.log('tabla prestam client -->',$cliente)
     const columnas = [
         {
           label: "f. Inicio",

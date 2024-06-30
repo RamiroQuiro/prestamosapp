@@ -1,4 +1,4 @@
-import { NOW, column, defineDb, defineTable } from "astro:db";
+import { NOW, column, count, defineDb, defineTable } from "astro:db";
 
  const User = defineTable({
   columns: {
@@ -38,6 +38,7 @@ import { NOW, column, defineDb, defineTable } from "astro:db";
     pais: column.text({optional:true}),
     fechaCreacion: column.date({default:NOW}),
     fechaActualizacion: column.date({optional:true}),
+    prestamosCount: column.number({ default: 0 })
   },
 });
 

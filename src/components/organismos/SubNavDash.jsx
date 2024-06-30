@@ -7,11 +7,11 @@ export default function SubNavDash({ pathname,idPrestamo,idCliente,dataCliente }
 
     if (pathname.includes('prestamos')) {
         return (
-            <SubNavPrestamo  idPrestamo={idPrestamo}/>
+            <SubNavPrestamo  pathname={pathname}  idPrestamo={idPrestamo}/>
         )
     } else if (pathname.includes('clientes')) {
         return (
-         <SubNavClientes idClients={idCliente} dataCliente={dataCliente}/>
+         <SubNavClientes pathname={pathname} idClients={idCliente} dataCliente={dataCliente}/>
         )
     } else if (pathname.startsWith('/dashboard')) {
         return (

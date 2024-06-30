@@ -1,4 +1,4 @@
-import { Prestamo, db, Cuota, eq } from "astro:db";
+import { Prestamo, db, Cuota, eq, Cliente } from "astro:db";
 import { generateId } from "lucia";
 
 export async function POST({ request }) {
@@ -35,6 +35,13 @@ export async function POST({ request }) {
       fechaInicio: now,
     });
 
+// actualizar campo de prestamos en el usuario
+
+// const updateUser= await db.update(Cliente).set({
+//   prestamosCount
+// })
+    
+    
     // Verificar modalidad y calcular días
     const modalidadDias = modalidad
     let fechaPrimerVencimiento = new Date(now);
