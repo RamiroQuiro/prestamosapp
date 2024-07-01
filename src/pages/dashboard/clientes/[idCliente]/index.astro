@@ -1,73 +1,123 @@
 ---
 import LayoutClient from "./LayoutClient.astro";
-
-
 ---
 
 <LayoutClient>
-<div >
+  <div
+    class="h- flex w-full items-center justify-center border p-5 rounded-lg shadow-md bg-gray-50"
+  >
+    <canvas id="modelsCarts"> </canvas>
+  
+  </div>
+  <div
+    class="h- flex w-full items-center justify-center border p-5 rounded-lg shadow-md bg-gray-50"
+  >
 
-  <canvas id="modelsCarts">
+  <canvas id="totalCuotasChart"> </canvas>
 </div>
-
-</canvas>
-
 </LayoutClient>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js/dist/chart.umd.min.js"></script>
+<script
+  type="text/javascript"
+  src="https://cdn.jsdelivr.net/npm/chart.js/dist/chart.umd.min.js"></script>
 <script>
-const dataSet = document.getElementById('idCliente').getAttribute('data-idClient')
+  const dataSet = document
+    .getElementById("idCliente")
+    .getAttribute("data-idClient");
 
+  import { clienteSelect } from "../../../../context/store";
 
-import { clienteSelect } from "../../../../context/store";
-
-  clienteSelect.set(JSON.parse(dataSet))
+  clienteSelect.set(JSON.parse(dataSet));
 </script>
 
 <script>
+  // Datos del gráfico
+  const data = {
+    labels: ["Prestamo 1", "Prestamo 2", "Prestamo 3"],
+    datasets: [
+      {
+        label: "Cuotas pagadas",
+        data: [8, 10, 6],
+        backgroundColor: ["#2B60E350"],
+        borderRadius:5,
+        borderWidth: 1,
+        stack: 0,
+      },
+      {
+        label: "Prestamo total",
+        data: [12, 12, 6],
+        backgroundColor: ["#CC6A6080"],
+        borderRadius:5,
+        borderWidth: 1,
+        stack:0,
+      },
+    ],
+  };
 
-         // Datos del gráfico
-        const data = {
-            labels: ['Lun', 'Mar', 'Mié',],
-            datasets: [{
-                label: 'Ventas Semanales',
-                data: [18, 12, 6,],
-                backgroundColor: ['#2B60E350',"#E2F39750", "#4C456350"],
-                borderColor:  ['#2B60E350',"#E2F397", "#4C456350"],
-                borderWidth: 1
-            }]
-        };
-
-        // Configuración del gráfico
-        const config = {
-            type: 'doughnut',
-            data,
-            options: {
-              plugins:{
-                legend:{position:'top'}
-              },
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                }
-            }
-        };
+  // Configuración del gráfico
+  const config = {
+    type: "bar",
+    data,
+    options: {
+      plugins: {
+        legend: { position: "top" },
+      },
+      responsive: true,
     
-    
-    // funciones de arranue de chartjs
+    },
+  };
 
-    const printChars=()=>{
 
-      renderModelsChart()
+
+// data grafico de cuotas
+
+const dataCuotas = {
+    labels: ["Prestamo 1", "Prestamo 2", "Prestamo 3"],
+    datasets: [
+      {
+        label: "Cuotas pagadas",
+        data: [12,10],
+        backgroundColor: ["#2B60E350",'#2B60E3'],
+        borderRadius:5,
+        borderWidth: 1,
+        stack: 0,
+      },
+      
+    ],
+  };
+
+    // configuraciones de chatsrjs de cuotas
+
+    const configCuotas = {
+  type: 'polarArea',
+  data: data,
+  options: {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: 'top',
+      },
+      title: {
+        display: true,
+        text: 'Chart.js Polar Area Chart'
+      }
     }
-    
-    const renderModelsChart=()=>{
+  },
+};
 
-      const myChart = new Chart('modelsCarts', config);
+  
+  // funciones de arranue de chartjs
 
-    }
-        // Inicialización del gráfico
-printChars()
+  const printChars = () => {
+    renderModelsChart();
+  };
 
+  const renderModelsChart = () => {
+    const myChart = new Chart("modelsCarts", config);
+  };
+
+  const renderModelsCuotas=()=>{
+    const myChart= new Chart('totalCuotasChart',configCuotas)
+  }
+  // Inicialización del gráfico
+  printChars();
 </script>
-
