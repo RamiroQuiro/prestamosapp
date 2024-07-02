@@ -1,0 +1,143 @@
+---
+import FormCont from "../../../../../components/atomos/FormCont.astro";
+import InputDate from "../../../../../components/atomos/InputDate";
+import SelectedFormulario from "../../../../../components/atomos/SelectedFormulario.astro";
+import Titulo1 from "../../../../../components/atomos/Titulo1.astro";
+import ContenedorInputForm from "../../../../../components/moleculas/ContenedorInputForm.astro";
+
+const {
+  data: { Cuota, Cliente, Prestamo },
+} = Astro.props;
+
+const metodoPagos = [
+  {
+    value: "efectivo",
+    id: 1,
+    name: "efectivo",
+  },
+  {
+    value: "trasnferecia",
+    id: 2,
+    name: "transferencia",
+  },
+  {
+    value: "deposito",
+    id: 3,
+    name: "deposito",
+  },
+];
+---
+
+<FormCont title="Nuevo Pago">
+  <div
+    id={"user.id"}
+    data-user-id
+    class="flex md:flex-row text-sm font-semibold items-center gap-2 w-full justify-normal"
+  >
+    <span>Id de Cuota : </span><p>{Cuota.id}</p>
+  </div>
+  <div
+    id={"user.id"}
+    data-user-id
+    class="flex md:flex-row items-center gap-2 w-full justify-normal"
+  >
+    <ContenedorInputForm
+      label="nombre"
+      type="text"
+      name="nombre"
+      styleInput=""
+      value={Cliente.nombre}
+      disabled={true}
+    />
+    <ContenedorInputForm
+      label="apellido"
+      type="text"
+      name="apellido"
+      value={Cliente.apellido}
+      disabled={true}
+    />
+  </div>
+  <div
+    id={"user.id"}
+    data-user-id
+    class="flex md:flex-row items-center gap-2 w-full justify-normal"
+  >
+    <ContenedorInputForm
+      label="DNI"
+      type="text"
+      name="dni"
+      value={Cliente.dni}
+      disabled={true}
+    />
+    <ContenedorInputForm
+      label="Id Prestamo"
+      type="text"
+      name="dni"
+      value={Prestamo.id}
+      disabled={true}
+    />
+  </div>
+  <div
+    id={"user.id"}
+    data-user-id
+    class="flex md:flex-row items-center gap-2 w-full justify-normal"
+  >
+    <ContenedorInputForm
+      label="monto cuota"
+      type="text"
+      name="montoCuota"
+      value={`$ ${Cuota.monto.toLocaleString()}`}
+      disabled={true}
+    />
+    <ContenedorInputForm
+      label="Fecha de vencimiento"
+      type="text"
+      name="montoAPagar"
+      value={Cuota.fechaVencimiento.toLocaleDateString()}
+      disabled={true}
+    />
+  </div>
+
+  <div
+    id={"user.id"}
+    data-user-id
+    class="flex md:flex-row items-center gap-2 w-full justify-center"
+  >
+    <ContenedorInputForm
+      label="monto a pagar"
+      type="number"
+      placeholder=" si no ingresa, sera la cuota total"
+      name="montoAPagar"
+    />
+    <div
+      id={"user.id"}
+      data-user-id
+      class="flex md:flex-row items-center gap-2 w-full justify-normal"
+    >
+      <label for="metodoPago" class="text-xs w-">Metodo de pago</label>
+      <SelectedFormulario options={metodoPagos} name="metodoPago" />
+    </div>
+  </div>
+  <div
+    id={"user.id"}
+    data-user-id
+    class="flex md:flex-row items-center gap-2 w-full justify-center"
+  >
+    <ContenedorInputForm label="Monto de Mora" type="number" name="montoMora" />
+    <div
+      id={"user.id"}
+      data-user-id
+      class="flex md:flex-row items-center gap-2 w-full justify-normal"
+    >
+      <label for="fechaPago" class="text-xs w-">Fecha de Pago</label>
+      <ContenedorInputForm type="date" disabled={true} name="fechaPago" />
+    </div>
+  </div>
+</FormCont>
+
+<script>
+import { calcularMora } from "../../../../../lib/formulas/calculoMora";
+
+calcularMora()
+
+</script>

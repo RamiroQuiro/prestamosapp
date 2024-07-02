@@ -50,7 +50,7 @@ try {
   // .innerJoin(Cliente, eq(Prestamo.clienteId, Cliente.id));
 
   const consulta = await db.select({ value: count(Cliente.id) }).from(Prestamo);
-  console.log(consulta);
+  // console.log(consulta);
   arrayBody = clientes.map((element) => {
     return {
 

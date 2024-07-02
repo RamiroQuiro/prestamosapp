@@ -8,8 +8,8 @@ const { user } = Astro.props;
 
 ---
 
-<FormCont id="formularioCliente">
-  <Titulo1>Nuevo Cliente</Titulo1>
+<FormCont id="formularioCliente" title="Nuevo Cliente">
+
   <div id={user.id} data-user-id class="flex md:flex-row items-center gap-2 w-full justify-normal">
     <ContenedorInputForm
       label="nombre"
