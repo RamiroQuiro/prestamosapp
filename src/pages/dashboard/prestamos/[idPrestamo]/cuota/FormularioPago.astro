@@ -1,4 +1,5 @@
 ---
+import Button1 from "../../../../../components/atomos/Button1.astro";
 import FormCont from "../../../../../components/atomos/FormCont.astro";
 import InputDate from "../../../../../components/atomos/InputDate";
 import SelectedFormulario from "../../../../../components/atomos/SelectedFormulario.astro";
@@ -28,116 +29,129 @@ const metodoPagos = [
 ];
 ---
 
-<FormCont title="Nuevo Pago">
+<FormCont title="Nuevo Pago" id="nuevoPago">
   <div
-    id={"user.id"}
-    data-user-id
     class="flex md:flex-row text-sm font-semibold items-center gap-2 w-full justify-normal"
   >
     <span>Id de Cuota : </span><p>{Cuota.id}</p>
   </div>
-  <div
-    id={"user.id"}
-    data-user-id
-    class="flex md:flex-row items-center gap-2 w-full justify-normal"
-  >
+  <div class="flex md:flex-row items-center gap-2 w-full justify-normal">
     <ContenedorInputForm
       label="nombre"
       type="text"
       name="nombre"
       styleInput=""
       value={Cliente.nombre}
-      disabled={true}
     />
     <ContenedorInputForm
       label="apellido"
       type="text"
       name="apellido"
       value={Cliente.apellido}
-      disabled={true}
     />
   </div>
-  <div
-    id={"user.id"}
-    data-user-id
-    class="flex md:flex-row items-center gap-2 w-full justify-normal"
-  >
+  <div class="flex md:flex-row items-center gap-2 w-full justify-normal">
     <ContenedorInputForm
       label="DNI"
       type="text"
       name="dni"
       value={Cliente.dni}
-      disabled={true}
     />
     <ContenedorInputForm
       label="Id Prestamo"
       type="text"
       name="dni"
       value={Prestamo.id}
-      disabled={true}
     />
   </div>
-  <div
-    id={"user.id"}
-    data-user-id
-    class="flex md:flex-row items-center gap-2 w-full justify-normal"
-  >
+  <div data-fechaVencimiento={Cuota.fechaVencimiento} data-montoCuota={Cuota.monto} id="fechaVencimiento" class="flex md:flex-row items-center gap-2 w-full justify-normal">
     <ContenedorInputForm
       label="monto cuota"
       type="text"
       name="montoCuota"
       value={`$ ${Cuota.monto.toLocaleString()}`}
-      disabled={true}
     />
     <ContenedorInputForm
       label="Fecha de vencimiento"
       type="text"
-      name="montoAPagar"
+      name="fechaVencimiento"
       value={Cuota.fechaVencimiento.toLocaleDateString()}
-      disabled={true}
     />
   </div>
 
-  <div
-    id={"user.id"}
-    data-user-id
-    class="flex md:flex-row items-center gap-2 w-full justify-center"
-  >
+ 
+  <div class="flex md:flex-row items-center gap-2 w-full justify-center">
+    <ContenedorInputForm label="Monto de Mora" type="text" name="montoMora" />
+    <ContenedorInputForm
+    label="Fecha de Pago"
+    type="date"
+    name="fechaPago"
+    
+  />
+  </div>
+  <div class="flex md:flex-row items-center gap-2 w-full justify-center">
     <ContenedorInputForm
       label="monto a pagar"
-      type="number"
+      type="text"
       placeholder=" si no ingresa, sera la cuota total"
-      name="montoAPagar"
+      name="montoTotal"
     />
-    <div
-      id={"user.id"}
-      data-user-id
-      class="flex md:flex-row items-center gap-2 w-full justify-normal"
-    >
+    <div class="flex md:flex-row items-center gap-2 w-full justify-normal">
       <label for="metodoPago" class="text-xs w-">Metodo de pago</label>
       <SelectedFormulario options={metodoPagos} name="metodoPago" />
     </div>
   </div>
-  <div
-    id={"user.id"}
-    data-user-id
-    class="flex md:flex-row items-center gap-2 w-full justify-center"
-  >
-    <ContenedorInputForm label="Monto de Mora" type="number" name="montoMora" />
-    <div
-      id={"user.id"}
-      data-user-id
-      class="flex md:flex-row items-center gap-2 w-full justify-normal"
-    >
-      <label for="fechaPago" class="text-xs w-">Fecha de Pago</label>
-      <ContenedorInputForm type="date" disabled={true} name="fechaPago" />
-    </div>
-  </div>
+<div class="my-2 w-full items-center justify-end flex">
+  <Button1>Pagar</Button1>
+</div>
 </FormCont>
 
-<script>
-import { calcularMora } from "../../../../../lib/formulas/calculoMora";
+<script >
+  import { calcularMora } from "../../../../../lib/formulas/calculoMora";
+  const formulario = document.getElementById(
+    "nuevoPago"
+  ) as HTMLFormElement;
+  let mora=0
+const fechaVencimientoId=document.getElementById('fechaVencimiento')
+// const fechaVencimiento=fechaVencimientoId.getAttribute('data-fechaVencimiento')
+const fechaVencimiento='07-01-2024'
+const tasaInteresMora=0.6432
+const montoCuota=fechaVencimientoId.getAttribute('data-montoCuota')
 
-calcularMora()
+
+const formData = new FormData(formulario);
+  const data = {};
+  // crear  'data' a un objeto con los datos del formulario
+  formData.forEach((value, key) => {
+    data[key] = value;
+  });
+
+    // console.log(data);
+
+  // Convertir las fechas de string a objetos Date
+  const fechaPago = new Date(data.fechaPago);
+
+  // Calcular la diferencia en milisegundos y convertir a días
+  const diferenciaMilisegundos = fechaPago- new Date(fechaVencimiento);
+  const atrasoDias = Math.ceil(diferenciaMilisegundos / (1000 * 60 * 60 * 24));
+
+
+      // Asegurarse de que los días de atraso no sean negativos
+      const diasDeAtraso = Math.max(0, atrasoDias);
+
+  // console.log('Días de atraso: ', diasDeAtraso);
+
+
+if (diasDeAtraso>0) {
+    // Llamar a la función calcularMora con los días de atraso y cualquier otro dato necesario
+     mora = calcularMora(montoCuota, tasaInteresMora,atrasoDias); // Pasa los demás parámetros necesarios
+    // console.log('Mora calculada: ', mora);
+    document.getElementById('montoMora').style.color='red'
+    document.getElementById('montoMora').value=`$ ${mora.toFixed(2)}`
+}
+
+document.getElementById('montoTotal').value=`$ ${(Number(montoCuota)+Number(mora)).toFixed(2)}`
+
+
 
 </script>
