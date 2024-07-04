@@ -12,4 +12,28 @@ function calcularMora(principal, tasaMora, diasRetraso) {
   
 //   const moraCalculada = calcularMora(principal, tasaMora, diasRetraso);
 // console.log(moraCalculada)
-export {calcularMora}
+
+ function convertirAFecha(fechaStr) {
+    // Convierte una fecha en formato DD-MM-YYYY a un objeto Date
+    const [dia, mes, año] = fechaStr.split('-').map(Number);
+    return new Date(año, mes - 1, dia);
+  }
+  
+   function calcularDiasDeAtraso(fechaPago, fechaVencimiento) {
+    const diferenciaMilisegundos = fechaPago - fechaVencimiento;
+    const atrasoDias = Math.ceil(diferenciaMilisegundos / (1000 * 60 * 60 * 24));
+    return Math.max(0, atrasoDias);
+  }
+  
+   function actualizarInputValue(inputId, value) {
+    const inputElement = document.getElementById(inputId);
+    if (inputElement) {
+      inputElement.value = value.toFixed(2);
+    } else {
+      console.error(`El elemento con id "${inputId}" no se encontró.`);
+    }
+  }
+  
+
+
+export {calcularMora,convertirAFecha,calcularDiasDeAtraso,actualizarInputValue}

@@ -1,9 +1,7 @@
 ---
 import Button1 from "../../../../../components/atomos/Button1.astro";
 import FormCont from "../../../../../components/atomos/FormCont.astro";
-import InputDate from "../../../../../components/atomos/InputDate";
 import SelectedFormulario from "../../../../../components/atomos/SelectedFormulario.astro";
-import Titulo1 from "../../../../../components/atomos/Titulo1.astro";
 import ContenedorInputForm from "../../../../../components/moleculas/ContenedorInputForm.astro";
 
 const {
@@ -27,6 +25,8 @@ const metodoPagos = [
     name: "deposito",
   },
 ];
+
+
 ---
 
 <FormCont title="Nuevo Pago" id="nuevoPago">
@@ -64,7 +64,12 @@ const metodoPagos = [
       value={Prestamo.id}
     />
   </div>
-  <div data-fechaVencimiento={Cuota.fechaVencimiento} data-montoCuota={Cuota.monto} id="fechaVencimiento" class="flex md:flex-row items-center gap-2 w-full justify-normal">
+  <div
+    data-fechaVencimiento={Cuota.fechaVencimiento}
+    data-montoCuota={Cuota.monto}
+    id="fechaVencimiento"
+    class="flex md:flex-row items-center gap-2 w-full justify-normal"
+  >
     <ContenedorInputForm
       label="monto cuota"
       type="text"
@@ -79,15 +84,19 @@ const metodoPagos = [
     />
   </div>
 
- 
   <div class="flex md:flex-row items-center gap-2 w-full justify-center">
     <ContenedorInputForm label="Monto de Mora" type="text" name="montoMora" />
-    <ContenedorInputForm
-    label="Fecha de Pago"
-    type="date"
-    name="fechaPago"
-    
-  />
+    <label
+      for="sinMora"
+      class="w-1/6 text-xs flex flex-col items-center gap-2 justify-center"
+      >¿Mora?<input
+        type="checkbox"
+        name="sinMora"
+        class=""
+        id="sinMora"
+      /></label
+    >
+    <ContenedorInputForm label="Fecha de Pago" type="date" name="fechaPago" />
   </div>
   <div class="flex md:flex-row items-center gap-2 w-full justify-center">
     <ContenedorInputForm
@@ -101,57 +110,67 @@ const metodoPagos = [
       <SelectedFormulario options={metodoPagos} name="metodoPago" />
     </div>
   </div>
-<div class="my-2 w-full items-center justify-end flex">
-  <Button1>Pagar</Button1>
-</div>
+  <div class="my-2 w-full items-center justify-end flex">
+    <Button1>Pagar</Button1>
+  </div>
 </FormCont>
 
-<script >
+<script>
   import { calcularMora } from "../../../../../lib/formulas/calculoMora";
-  const formulario = document.getElementById(
-    "nuevoPago"
-  ) as HTMLFormElement;
-  let mora=0
-const fechaVencimientoId=document.getElementById('fechaVencimiento')
-// const fechaVencimiento=fechaVencimientoId.getAttribute('data-fechaVencimiento')
-const fechaVencimiento='07-01-2024'
-const tasaInteresMora=0.6432
-const montoCuota=fechaVencimientoId.getAttribute('data-montoCuota')
+  const formulario = document.getElementById("nuevoPago") as HTMLFormElement;
+  let mora = 0;
+  const montoTotal = document.getElementById("montoTotal");
+  const montoMora = document.getElementById("montoMora");
+  const sinMora = document.getElementById("sinMora");
+  const fechaVencimientoId = document.getElementById("fechaVencimiento");
+  // const fechaVencimiento=fechaVencimientoId.getAttribute('data-fechaVencimiento')
+  const fechaVencimiento = "07-01-2024";
+  const tasaInteresMora = 0.6432;
+  const montoCuota = fechaVencimientoId.getAttribute("data-montoCuota");
 
-
-const formData = new FormData(formulario);
+  const formData = new FormData(formulario);
   const data = {};
   // crear  'data' a un objeto con los datos del formulario
   formData.forEach((value, key) => {
     data[key] = value;
   });
 
-    // console.log(data);
+  // console.log(data);
 
   // Convertir las fechas de string a objetos Date
   const fechaPago = new Date(data.fechaPago);
 
   // Calcular la diferencia en milisegundos y convertir a días
-  const diferenciaMilisegundos = fechaPago- new Date(fechaVencimiento);
+  const diferenciaMilisegundos = fechaPago - new Date(fechaVencimiento);
   const atrasoDias = Math.ceil(diferenciaMilisegundos / (1000 * 60 * 60 * 24));
 
-
-      // Asegurarse de que los días de atraso no sean negativos
-      const diasDeAtraso = Math.max(0, atrasoDias);
+  // Asegurarse de que los días de atraso no sean negativos
+  const diasDeAtraso = Math.max(0, atrasoDias);
 
   // console.log('Días de atraso: ', diasDeAtraso);
 
-
-if (diasDeAtraso>0) {
+  if (diasDeAtraso > 0) {
+    sinMora.checked = true;
     // Llamar a la función calcularMora con los días de atraso y cualquier otro dato necesario
-     mora = calcularMora(montoCuota, tasaInteresMora,atrasoDias); // Pasa los demás parámetros necesarios
+    mora = calcularMora(montoCuota, tasaInteresMora, atrasoDias); // Pasa los demás parámetros necesarios
     // console.log('Mora calculada: ', mora);
-    document.getElementById('montoMora').style.color='red'
-    document.getElementById('montoMora').value=`$ ${mora.toFixed(2)}`
-}
+    montoMora.style.color = "red";
+    montoMora.value = `$ ${mora.toFixed(2)}`;
+  }else{
+    
+  }
 
-document.getElementById('montoTotal').value=`$ ${(Number(montoCuota)+Number(mora)).toFixed(2)}`
+  sinMora.addEventListener("change", (e) => {
+    let isChecked = e.target.checked;
+    
+    if (!isChecked) {
+      montoTotal.value = `$ ${(Number(montoCuota)).toFixed(2)}`
+    }else{
 
-
+      montoTotal.value = `$ ${(Number(montoCuota) + Number(mora)).toFixed(2)}`;
+    }
+    
+  });
+  montoTotal.value = `$ ${(Number(montoCuota) + Number(mora)).toFixed(2)}`;
 
 </script>

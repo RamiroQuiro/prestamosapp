@@ -71,9 +71,22 @@ import { NOW, column, count, defineDb, defineTable } from "astro:db";
     numeroCuota: column.number(),
     fechaVencimiento: column.date(),
     mora: column.boolean({default:false}),
+    montoMora: column.number({ default: 0 }), 
     monto: column.number(),
+    montoPagado: column.number({ default: 0 }),
     pagada: column.boolean({default:false}),
     fechaPago: column.date({optional:true}),
+  },
+});
+
+const PagoParcial = defineTable({
+  columns: {
+    id: column.text({ primaryKey: true }),
+    cuotaId: column.text({ references: () => Cuota.columns.id }),
+    monto: column.number(),
+    fechaPago: column.date(),
+    metodoPago: column.text({ optional: true }),
+    lugarPago: column.text({ optional: true }),
   },
 });
 
@@ -134,5 +147,5 @@ import { NOW, column, count, defineDb, defineTable } from "astro:db";
 })
 // https://astro.build/db/config
 export default defineDb({
-  tables: {User,Prestamo,Cliente,Pago,Configuracion,HistorialConfiguracion,Cuota,RegistroActividades,Session},
+  tables: {User,Prestamo,Cliente,Pago,Configuracion,PagoParcial,HistorialConfiguracion,Cuota,RegistroActividades,Session},
 });

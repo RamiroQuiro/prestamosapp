@@ -5,6 +5,7 @@ export async function PUT({ params }) {
   const { idCuota } = params;
   try {
 
+    
     const cuotaFind = await db
       .update(Cuota)
       .set({ pagada: true, fechaPago: new Date() })
