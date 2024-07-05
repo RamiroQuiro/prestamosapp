@@ -4,6 +4,7 @@ import TablaPagoCliente from "./TablaPagoCliente";
 import { Prestamo } from "astro:db";
 import { eq } from "astro:db";
 import { Pago } from "astro:db";
+import { PagoParcial } from "astro:db";
 
 const { id } = Astro.locals.user;
 const { idCliente } = Astro.params;
@@ -13,7 +14,7 @@ let usuario = [];
 let columnas = [];
 try {
 pagos = await db.select().from(Pago).where(eq(Pago.clienteId, idCliente));
-// console.log(pagos)
+console.log(pagos)
   arrayBody = pagos.map((element, i) => {
     return {
       href:`/dashboard/prestamos/${element.prestamoId}/cuota/${element.cuotaId}`,

@@ -8,7 +8,7 @@ export default function TablaPagoCliente({
   }) {
 
 const $cliente=useStore(clienteSelect)
-console.log('tabla prestam client -->',$cliente)
+// console.log('tabla prestam client -->',$cliente)
     const columnas = [
         {
           label: "N°",

@@ -6,6 +6,7 @@ import { Cliente } from "astro:db";
 import { Cuota } from "astro:db";
 import TablaCuota from "./TablaCuota";
 import { formatHora } from "../[idPrestamo]/index.astro";
+import { PagoParcial } from "astro:db";
 let cuotas = [];
 let arrayBody = [];
 
@@ -17,8 +18,8 @@ try {
   cuotas = await db
     .select()
     .from(Cuota)
-    .where(eq(Cuota.prestamoId, idPrestamo));
-
+    .where(eq(Cuota.prestamoId, idPrestamo))
+console.log(cuotas)
   arrayBody = cuotas.map((element) => {
     // console.log('este es el array de cotas ->',element)
 

@@ -83,6 +83,9 @@ const PagoParcial = defineTable({
   columns: {
     id: column.text({ primaryKey: true }),
     cuotaId: column.text({ references: () => Cuota.columns.id }),
+    prestamoId: column.text({ references: () => Prestamo.columns.id }),
+    clienteId: column.text({ references: () => Cliente.columns.id }),
+    usuarioId: column.text({ references: () => User.columns.id }),
     monto: column.number(),
     fechaPago: column.date(),
     metodoPago: column.text({ optional: true }),
