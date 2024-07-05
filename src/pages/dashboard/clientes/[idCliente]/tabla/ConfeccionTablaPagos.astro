@@ -13,9 +13,11 @@ let arrayBody = [];
 let usuario = [];
 let columnas = [];
 try {
-pagos = await db.select().from(Pago).where(eq(Pago.clienteId, idCliente));
-console.log(pagos)
-  arrayBody = pagos.map((element, i) => {
+pagos = await db.select().from(Pago).where(eq(Pago.clienteId, idCliente)).innerJoin(PagoParcial,eq(PagoParcial.clienteId,idCliente));
+// console.log(pagos)
+ arrayBody=pagos.map(element=>[element.Pago,element.PagoParcial]).flat()
+ arrayBody.map((element, i) => {
+    console.log(element)
     return {
       href:`/dashboard/prestamos/${element.prestamoId}/cuota/${element.cuotaId}`,
       numero: i + 1,
