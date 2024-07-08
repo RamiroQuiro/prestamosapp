@@ -5,7 +5,7 @@ import SelectedFormulario from "../../../../../components/atomos/SelectedFormula
 import ContenedorInputForm from "../../../../../components/moleculas/ContenedorInputForm.astro";
 
 const {
-  data: { Cuota, Cliente, Prestamo },
+  data: { Cuota, Cliente, Prestamo },montoRestanteCuota
 } = Astro.props;
 
 const metodoPagos = [
@@ -25,6 +25,8 @@ const metodoPagos = [
     name: "deposito",
   },
 ];
+
+
 ---
 
 <FormCont title="Nuevo Pago" id="nuevoPago">
@@ -66,7 +68,7 @@ const metodoPagos = [
   </div>
   <div
     data-fechaVencimiento={Cuota.fechaVencimiento}
-    data-montoCuota={Cuota.monto}
+    data-montoCuota={montoRestanteCuota==0?Cuota.monto:montoRestanteCuota}
     id="fechaVencimiento"
     class="flex md:flex-row items-center gap-2 w-full justify-normal"
   >
@@ -74,7 +76,7 @@ const metodoPagos = [
       label="monto cuota"
       type="text"
       name="montoCuota"
-      value={`$ ${Cuota.monto.toLocaleString()}`}
+      value={`$ ${montoRestanteCuota==0?Cuota.monto.toLocaleString():montoRestanteCuota.toLocaleString()}`}
     />
     <ContenedorInputForm
       label="Fecha de vencimiento"
@@ -116,6 +118,7 @@ const metodoPagos = [
 </FormCont>
 
 <script>
+  import { showToast } from "../../../../../components/Toast/toastShow";
   import { calcularMora } from "../../../../../lib/formulas/calculoMora";
 
   const formulario = document.getElementById("nuevoPago") as HTMLFormElement;
@@ -135,31 +138,21 @@ const metodoPagos = [
   formData.forEach((value, key) => {
     data[key] = value;
   });
-
-  console.log("formulario data ->", data);
-
-
-// funcion parar obtener del select metodo de pago
-
-const obtenerMetodoPago=(e)=>{
-  data['metodoPago']=e.target.value
-}
-
-metodoPago.addEventListener('change',obtenerMetodoPago)
-
+  // console.log("formulario data ->", data);
+  // funcion parar obtener del select metodo de pago
+  const obtenerMetodoPago = (e) => {
+    data["metodoPago"] = e.target.value;
+  };
+  metodoPago.addEventListener("change", obtenerMetodoPago);
   // Convertir las fechas de string a objetos Date
   const fechaPago = new Date(data.fechaPago);
-
   // Calcular la diferencia en milisegundos y convertir a días
   const diferenciaMilisegundos = fechaPago - new Date(fechaVencimiento);
   const atrasoDias = Math.ceil(diferenciaMilisegundos / (1000 * 60 * 60 * 24));
-
   // Asegurarse de que los días de atraso no sean negativos
   const diasDeAtraso = Math.max(0, atrasoDias);
-
   // console.log('Días de atraso: ', diasDeAtraso);
   data.montoCuota = Number(montoCuota);
-
   if (diasDeAtraso > 0) {
     sinMora.checked = true;
     // Llamar a la función calcularMora con los días de atraso y cualquier otro dato necesario
@@ -180,11 +173,8 @@ metodoPago.addEventListener('change',obtenerMetodoPago)
       montoTotal.value = `$ ${(Number(montoCuota) + Number(mora)).toFixed(2)}`;
     }
   });
-
   montoTotal.value = `$ ${(Number(montoCuota) + Number(mora)).toFixed(2)}`;
-
   //  boton para pagar
-
   const btnPagar = document.getElementById("pagarCuota");
   const idCuota = document
     .getElementById("idCuota")
@@ -194,6 +184,7 @@ metodoPago.addEventListener('change',obtenerMetodoPago)
     // separar el valuje de monto Total
     const valor = montoTotal.value.split(" ")[1];
     data.montoTotal = Number(valor);
+    data.montoMora=Number(mora.toFixed(2))
     try {
       const res = await fetch(`/api/pagos/${idCuota}`, {
         method: "POST",
@@ -203,6 +194,12 @@ metodoPago.addEventListener('change',obtenerMetodoPago)
       });
       const respuesta = await res.json();
       console.log(respuesta);
+      if (respuesta.satatus == 405) {
+        showToast("cuota ya pagada");
+      }
+      if (res.ok) {
+        // document.location.reload();
+      }
     } catch (error) {
       console.log(error);
     }

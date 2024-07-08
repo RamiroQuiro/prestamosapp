@@ -4,7 +4,7 @@ import { formatHora } from "../index.astro";
 
 
 
-const { data } = Astro.props;
+const { data ,montoRestanteCuota} = Astro.props;
 
 const fechaActual = new Date();
 const fechaFormateada = formatHora(fechaActual);
@@ -27,7 +27,7 @@ const fechaVencimiento = formatHora(data?.Cuota?.fechaVencimiento);
   <div class="flex items-center py-3 justify-between w-full border-b">
     <div>
       <p class="text-lg font-semibold capitalize">
-        {data?.Cliente?.nombre + " " + data.Cliente.apellido}
+        {data?.Cliente?.nombre + " " + data?.Cliente.apellido}
       </p>
       <p class="text-lg font-semibold capitalize">DNI: {data.Cliente.dni}</p>
     </div>
@@ -73,7 +73,7 @@ const fechaVencimiento = formatHora(data?.Cuota?.fechaVencimiento);
       }
 
       <p class="text-lg font-black capitalize">
-        Monto ${data?.Cuota?.monto.toLocaleString()}
+        Monto ${montoRestanteCuota==0? data?.Cuota?.monto.toLocaleString():montoRestanteCuota}
       </p>
     </div>
   </div>

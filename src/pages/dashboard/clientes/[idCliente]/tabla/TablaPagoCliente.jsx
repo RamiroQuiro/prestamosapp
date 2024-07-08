@@ -31,9 +31,9 @@ const $cliente=useStore(clienteSelect)
           selector: 'montoCuota',
         },
         {
-          label: "total",
+          label: "monto Abonado",
           id: 5,
-          selector: 'total',
+          selector: 'monto Abonado',
         },
         {
           label: "acciones",
@@ -53,7 +53,7 @@ const $cliente=useStore(clienteSelect)
 
       const [search, setSearch] = useState('')
       const [encontrado, setEncontrado] = useState(arrayBody)
-    
+     
       const busquedaFiltros = (arr, search) => {
         // Filtramos el array basándonos en la búsqueda
         const encontrado = arr?.filter((leg) => {

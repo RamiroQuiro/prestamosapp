@@ -1,22 +1,18 @@
 ---
-import { db } from "astro:db";
-import { Cuota } from "astro:db";
-import { eq } from "astro:db";
-import { Cliente } from "astro:db";
-import { Prestamo } from "astro:db";
+import { db, eq, Cuota, Pago, Cliente, Prestamo, PagoParcial } from "astro:db";
 
 import ReciboPrint from "./ReciboPrint.astro";
-import { Pago } from "astro:db";
 import Layoutdash from "../../../layouts/Layoutdash.astro";
 import MainDash from "../../../../../components/organismos/MainDash.astro";
 import Titulo1 from "../../../../../components/atomos/Titulo1.astro";
-import Button2 from "../../../../../components/atomos/Button2.astro";
 import ContenedeorModal from "../../../../../components/organismos/ContenedeorModal.astro";
 import FormularioPago from "./FormularioPago.astro";
 import Button1 from "../../../../../components/atomos/Button1.astro";
+import { elements } from "chart.js";
 
 const { idCuota } = Astro.params;
 let resultadoBase = {};
+let pagoParciales = [];
 try {
   const resBase = await db
     .select()
@@ -24,21 +20,31 @@ try {
     .where(eq(Cuota.id, idCuota))
     .innerJoin(Prestamo, eq(Prestamo.id, Cuota.prestamoId))
     .innerJoin(Cliente, eq(Prestamo.clienteId, Cliente.id))
-    .leftJoin(Pago,eq(Pago.cuotaId,idCuota))
+    .leftJoin(Pago, eq(Pago.cuotaId, idCuota));
 
+  pagoParciales = await db
+    .select()
+    .from(PagoParcial)
+    .where(eq(PagoParcial.cuotaId, idCuota));
   resultadoBase = resBase[0];
 } catch (error) {
   console.log(error);
 }
+const montoPagoParcial=pagoParciales?.reduce((acc,currentValor)=>(acc+currentValor.monto),0)
+const montoRestanteCuota=resultadoBase.Cuota.monto-montoPagoParcial
+ console.log('montoRestante de la cuota ,',montoRestanteCuota)
 
-// console.log(resultadoBase)
+
+//  cambiar objeto de la cuota si hay pagos parciales
+
+
 ---
 
 <Layoutdash title="Recibo Cuota">
   <MainDash>
     <div
-    data-idCuota
-    id={idCuota}
+      data-idCuota
+      id={idCuota}
       class="flex flex-col items-start bg-0 print:hidden justify-normal w-full px-5 py-2 relative"
     >
       <Titulo1>Cuota</Titulo1>
@@ -47,14 +53,45 @@ try {
           id="reciboPrint"
           class="py-5 flex-grow w-full px-5 font-mono print:w-screen"
         >
-          <ReciboPrint data={resultadoBase} />
+          <ReciboPrint data={resultadoBase} montoRestanteCuota={montoRestanteCuota} />
         </div>
-        <div class="flex flex- h-full flex-  gap-4 items-start w-1/3 p-5">
-          <Button1 id="imprimir">imprimir</Button2>
-          <div class=" m-auto  top-5 right-0">
-            <ContenedeorModal open="Pagar">
-              <FormularioPago data={resultadoBase}  />
-            </ContenedeorModal>
+        <div class="flex flex-col h-full flex- gap-4 items-start w-1/3 p-5">
+          <!-- botonera -->
+          <div class="flex gap-2 items-center justify-start">
+            <Button1 id="imprimir">imprimir</Button1>
+            <div class="m-auto top-5 right-0">
+              <ContenedeorModal open="Pagar">
+                <FormularioPago
+                  data={resultadoBase}
+                  montoRestanteCuota={montoRestanteCuota}
+                />
+              </ContenedeorModal>
+            </div>
+          </div>
+          <!-- pagos parciales -->
+          <div
+            class="w-full text-sm bg-primary-200 rounded py-2 px-1 text-white"
+          >
+            <h3 class="font-semibold w-full mb-2 border-b">Pagos Parciales</h3>
+
+            {
+              pagoParciales.length>0 ? (
+                <div class=" w-full overflow-hidden pb-3  flex-col text-sm  text-neutral-800 font-semibold  mr-3  h-full flex items-stretch">
+                  {pagoParciales?.map((element, i) => (
+                    <div class="bg-gray-100 hover:bg-gray-50/50 cursor-pointer text- w-full flex justify-start gap-4 items-center border-b  border-primary-400 px-3 py-1">
+                      {" "}
+                      <p>{element.fechaPago.toLocaleDateString()}</p>
+                      <p>${" "}{element.monto.toLocaleString()}</p>
+                    </div>
+                  ))}
+                  <div class="text-white mt-2 font-bold">
+                    <span>Total: $ {montoPagoParcial?.toLocaleString()}</span>
+                  </div>
+                </div>
+              ) : (
+              <div class="text-white mt-2 font-bold">No Hay Pagos Parciales</div>
+              )
+            }
           </div>
         </div>
       </div>
@@ -65,13 +102,9 @@ try {
     <ReciboPrint data={resultadoBase} />
   </div>
 </Layoutdash>
-<script >
-
-
-  const idCuota=document.querySelector('[data-idCuota]').id
+<script>
+  const idCuota = document.querySelector("[data-idCuota]").id;
   document.getElementById("imprimir").addEventListener("click", () => {
     print();
   });
-
-
 </script>

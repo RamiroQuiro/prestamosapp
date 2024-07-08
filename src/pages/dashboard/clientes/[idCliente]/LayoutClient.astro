@@ -15,7 +15,7 @@ try {
   clienteDB = (
     await db.select().from(Cliente).where(eq(Cliente.id, idCliente))
   ).at(0);
-  console.log(clienteDB);
+  // console.log(clienteDB);
 } catch (error) {
   console.log(error);
 }
