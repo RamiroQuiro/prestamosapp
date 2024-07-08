@@ -31,9 +31,9 @@ const $cliente=useStore(clienteSelect)
           selector: 'montoCuota',
         },
         {
-          label: "total",
+          label: "monto Abonado",
           id: 5,
-          selector: 'total',
+          selector: 'monto Abonado',
         },
         {
           label: "acciones",

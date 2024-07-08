@@ -5,28 +5,31 @@ import { Prestamo } from "astro:db";
 import { eq } from "astro:db";
 import { Pago } from "astro:db";
 import { PagoParcial } from "astro:db";
+import { Cuota } from "astro:db";
 
 const { id } = Astro.locals.user;
 const { idCliente } = Astro.params;
+
+// console.log('page confeccion tabla pagos',idCliente)
 let pagos = [];
 let arrayBody = [];
-let usuario = [];
+let cuotas = [];
 let columnas = [];
 try {
-pagos = await db.select().from(Pago).where(eq(Pago.clienteId, idCliente)).innerJoin(PagoParcial,eq(PagoParcial.clienteId,idCliente));
-// console.log(pagos)
- arrayBody=pagos.map(element=>[element.Pago,element.PagoParcial]).flat()
- arrayBody.map((element, i) => {
-    console.log(element)
+pagos = await db.select().from(Pago).where(eq(Pago.clienteId, idCliente))
+cuotas= await db.select().from(Cuota).where(eq(Cuota.clienteId,idCliente))
+console.log('cuotasa ->',cuotas)
+let pagosParciales= await db.select().from(PagoParcial).where(eq(PagoParcial.clienteId,idCliente))
+pagos =[...pagos,...pagosParciales]
+ arrayBody=pagos.map((element, i) => {
+    console.log('confeccion de pagos tabla',element)
     return {
       href:`/dashboard/prestamos/${element.prestamoId}/cuota/${element.cuotaId}`,
       numero: i + 1,
       id: element?.id,
       prestamo:element.prestamoId,
       fechaPago: element?.fechaPago.toLocaleDateString(),
-
-      montoCuota: element?.metodoPago,
-
+      montoCuota: element?.montoCuota,
       montoTotal: `$ ${element?.monto.toLocaleString()}`,
     };
   });
