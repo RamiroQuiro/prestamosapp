@@ -4,7 +4,7 @@ import { generateId } from "lucia";
 export async function POST({ params, request }) {
   const { idCuota } = params;
   const { data } = await request.json();
-console.log(data)
+// console.log(data)
   try {
     // Buscar la cuota en la base de datos
     const cuotaFind = (
@@ -112,7 +112,7 @@ console.log(data)
         });
 
         await db.update(Cuota).set({
-          montoPagado: cuotaFind.monto,
+          montoPagado: data.montoTotal,
           pagada: true,
           fechaPago: new Date(),
           montoMora: data.montoMora || 0,

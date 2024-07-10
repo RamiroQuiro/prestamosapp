@@ -22,11 +22,12 @@ const { idCliente } = Astro.params;
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
+import { clienteSelect } from "../../../../context/store";
+
   // Obtener el dataset desde el atributo 'data-idClient' del elemento con id 'idCliente'
 const dataSet = document.getElementById("idCliente").getAttribute("data-idClient");
 
 // Importar el contexto del store
-import { clienteSelect } from "../../../../context/store";
 
 // Asignar el dataset al contexto del cliente
 clienteSelect.set(JSON.parse(dataSet));
@@ -43,7 +44,7 @@ try {
 
   // Función para calcular las cuotas impagas
   const calcularCuotasImpagas = (prestamos, cuotas) => {
-    const cuotasPrestamos = prestamos.map((prestamo, i) => {
+    const cuotasPrestamos = prestamos.filter(prestamo=>!prestamo.terminado).map((prestamo, i) => {
       // Filtrar las cuotas impagas para cada préstamo
       const cuotasImpagas = cuotas.filter(
         (cuota) => cuota.prestamoId === prestamo.id && !cuota.pagada
@@ -53,9 +54,6 @@ try {
       // Calcular el porcentaje de cuotas pagadas e impagas
       const porcentajePagas = ((cuotasPagadas / totalCuotas) * 100).toFixed(2);
       const porcentajeInpagas = ((cuotasImpagas.length / totalCuotas) * 100).toFixed(2);
-
-      console.log("estos son los porcentajes: ", porcentajePagas, porcentajeInpagas);
-
       // Retornar las etiquetas y porcentajes
       return {
         labels: [
@@ -75,6 +73,15 @@ try {
 
     return { labels, porcentajes };
   };
+// obtener datos paara el grafico de conducta
+
+const conductaCliente=(pagos,pagoParciales,cuotas)=>{
+    const cuotasConMora=cuotas.filter((cuota)=>cuota.mora)
+    console.log(cuotasConMora)
+}
+
+conductaCliente(respuestaData.data.pagos,respuestaData.data.pagosParciales,respuestaData.data.cuotas)
+
 
   // Calcular las cuotas impagas usando los datos de la respuesta
   labelsPrestamos = calcularCuotasImpagas(
@@ -87,6 +94,9 @@ try {
 
 // Definir los colores para los datasets
 const colors = [
+  { backgroundColor: ["#2B60E390", "#2B60E360"] },
+  { backgroundColor: ["#FF333390", "#FF333350"] },
+  { backgroundColor: ["#E3D32B90", "#E3D32B50"] },
   { backgroundColor: ["#2B60E390", "#2B60E360"] },
   { backgroundColor: ["#FF333390", "#FF333350"] },
   { backgroundColor: ["#E3D32B90", "#E3D32B50"] },
@@ -161,6 +171,10 @@ const config = {
     },
   },
 };
+
+
+
+
 
 // Datos del gráfico de conducta del cliente
 const dataConductaCliente = {
