@@ -22,207 +22,222 @@ const { idCliente } = Astro.params;
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-import { clienteSelect } from "../../../../context/store";
+  import { clienteSelect } from "../../../../context/store";
 
   // Obtener el dataset desde el atributo 'data-idClient' del elemento con id 'idCliente'
-const dataSet = document.getElementById("idCliente").getAttribute("data-idClient");
+  const dataSet = document
+    .getElementById("idCliente")
+    .getAttribute("data-idClient");
 
-// Importar el contexto del store
+  // Importar el contexto del store
 
-// Asignar el dataset al contexto del cliente
-clienteSelect.set(JSON.parse(dataSet));
-const idCliente = JSON.parse(dataSet).id; // Obtener el id del cliente
+  // Asignar el dataset al contexto del cliente
+  clienteSelect.set(JSON.parse(dataSet));
+  const idCliente = JSON.parse(dataSet).id; // Obtener el id del cliente
 
-// Declarar la variable para las etiquetas de los préstamos
-let labelsPrestamos = [];
+  // Declarar la variable para las etiquetas de los préstamos
+  let labelsPrestamos = [];
+let dataChartPolar={}
+  try {
+    // Realizar una petición para obtener los datos del cliente
+    const fetching = await fetch(`/api/clientes/${idCliente}`);
+    const respuestaData = await fetching.json(); // Parsear la respuesta a JSON
+    console.log("esta es la petición ->", respuestaData);
 
-try {
-  // Realizar una petición para obtener los datos del cliente
-  const fetching = await fetch(`/api/clientes/${idCliente}`);
-  const respuestaData = await fetching.json(); // Parsear la respuesta a JSON
-  console.log("esta es la petición ->", respuestaData);
+    // Función para calcular las cuotas impagas
+    const calcularCuotasImpagas = (prestamos, cuotas) => {
+      const cuotasPrestamos = prestamos
+        .filter((prestamo) => !prestamo.terminado)
+        .map((prestamo, i) => {
+          // Filtrar las cuotas impagas para cada préstamo
+          const cuotasImpagas = cuotas.filter(
+            (cuota) => cuota.prestamoId === prestamo.id && !cuota.pagada
+          );
+          const cuotasPagadas = prestamo.nCuotas - cuotasImpagas.length; // Calcular las cuotas pagadas
+          const totalCuotas = prestamo.nCuotas; // Obtener el total de cuotas
+          // Calcular el porcentaje de cuotas pagadas e impagas
+          const porcentajePagas = ((cuotasPagadas / totalCuotas) * 100).toFixed(
+            2
+          );
+          const porcentajeInpagas = (
+            (cuotasImpagas.length / totalCuotas) *
+            100
+          ).toFixed(2);
+          // Retornar las etiquetas y porcentajes
+          return {
+            labels: [
+              `Prestamo ${i + 1} | Cuotas Pagas ${cuotasPagadas}`,
+              `Cuotas Inpagas ${cuotasImpagas.length}`,
+            ],
+            porcentajes: {
+              pagas: parseFloat(porcentajePagas),
+              impagas: parseFloat(porcentajeInpagas),
+            },
+          };
+        });
 
-  // Función para calcular las cuotas impagas
-  const calcularCuotasImpagas = (prestamos, cuotas) => {
-    const cuotasPrestamos = prestamos.filter(prestamo=>!prestamo.terminado).map((prestamo, i) => {
-      // Filtrar las cuotas impagas para cada préstamo
-      const cuotasImpagas = cuotas.filter(
-        (cuota) => cuota.prestamoId === prestamo.id && !cuota.pagada
+      // Extraer las etiquetas y los porcentajes en un formato adecuado
+      const labels = cuotasPrestamos.flatMap((item) => item.labels);
+      const porcentajes = cuotasPrestamos.map((item) => item.porcentajes);
+
+      return { labels, porcentajes };
+    };
+    // obtener datos paara el grafico de conducta
+
+    const conductaCliente = (pagos, pagoParciales, cuotas) => {
+      const cuotasConMora = cuotas.filter((cuota) => cuota.mora);
+      const cuotasSinMora = cuotas.filter(
+        (cuota) => !cuota.mora && cuota.pagada
       );
-      const cuotasPagadas = prestamo.nCuotas - cuotasImpagas.length; // Calcular las cuotas pagadas
-      const totalCuotas = prestamo.nCuotas; // Obtener el total de cuotas
-      // Calcular el porcentaje de cuotas pagadas e impagas
-      const porcentajePagas = ((cuotasPagadas / totalCuotas) * 100).toFixed(2);
-      const porcentajeInpagas = ((cuotasImpagas.length / totalCuotas) * 100).toFixed(2);
-      // Retornar las etiquetas y porcentajes
+
       return {
-        labels: [
-          `Prestamo ${i + 1} | Cuotas Pagas ${cuotasPagadas}`,
-          `Cuotas Inpagas ${cuotasImpagas.length}`,
-        ],
-        porcentajes: {
-          pagas: parseFloat(porcentajePagas),
-          impagas: parseFloat(porcentajeInpagas),
-        },
+        cuotasConMora: cuotasConMora.length,
+        cuotasSinMora: cuotasSinMora.length,
+        pagosParciales:pagoParciales.length
       };
-    });
+    };
 
-    // Extraer las etiquetas y los porcentajes en un formato adecuado
-    const labels = cuotasPrestamos.flatMap((item) => item.labels);
-    const porcentajes = cuotasPrestamos.map((item) => item.porcentajes);
+    dataChartPolar = conductaCliente(
+      respuestaData.data.pagos,
+      respuestaData.data.pagosParciales,
+      respuestaData.data.cuotas
+    );
 
-    return { labels, porcentajes };
+    // Calcular las cuotas impagas usando los datos de la respuesta
+    labelsPrestamos = calcularCuotasImpagas(
+      respuestaData.data.prestamos,
+      respuestaData.data.cuotas
+    );
+  } catch (error) {
+    console.log(error); // Manejar errores
+  }
+
+  // Definir los colores para los datasets
+  const colors = [
+    { backgroundColor: ["#2B60E390", "#2B60E360"] },
+    { backgroundColor: ["#FF333390", "#FF333350"] },
+    { backgroundColor: ["#E3D32B90", "#E3D32B50"] },
+    { backgroundColor: ["#2B60E390", "#2B60E360"] },
+    { backgroundColor: ["#FF333390", "#FF333350"] },
+    { backgroundColor: ["#E3D32B90", "#E3D32B50"] },
+  ];
+
+  // Crear los datos del gráfico
+  const data = {
+    labels: labelsPrestamos.labels, // Asignar etiquetas
+    datasets: labelsPrestamos.porcentajes.map((porcentajes, i) => ({
+      backgroundColor: colors[i].backgroundColor, // Asignar colores
+      data: [porcentajes.pagas, porcentajes.impagas], // Asignar datos
+      borderColor: "#cecece50", // Asignar color de borde
+    })),
   };
-// obtener datos paara el grafico de conducta
 
-const conductaCliente=(pagos,pagoParciales,cuotas)=>{
-    const cuotasConMora=cuotas.filter((cuota)=>cuota.mora)
-    console.log(cuotasConMora)
-}
+  // Configuración del gráfico
+  const config = {
+    type: "pie", // Tipo de gráfico
+    data: data, // Datos del gráfico
+    options: {
+      responsive: true, // Hacer el gráfico responsive
+      plugins: {
+        legend: {
+          labels: {
+            generateLabels: function (chart) {
+              const original =
+                Chart.overrides.pie.plugins.legend.labels.generateLabels;
+              const labelsOriginal = original.call(this, chart);
 
-conductaCliente(respuestaData.data.pagos,respuestaData.data.pagosParciales,respuestaData.data.cuotas)
+              let datasetColors = chart.data.datasets
+                .map((e) => e.backgroundColor)
+                .flat();
 
+              labelsOriginal.forEach((label) => {
+                label.datasetIndex = Math.floor(label.index / 2);
+                label.hidden = !chart.isDatasetVisible(label.datasetIndex);
+                label.fillStyle = datasetColors[label.index];
+              });
 
-  // Calcular las cuotas impagas usando los datos de la respuesta
-  labelsPrestamos = calcularCuotasImpagas(
-    respuestaData.data.prestamos,
-    respuestaData.data.cuotas
-  );
-} catch (error) {
-  console.log(error); // Manejar errores
-}
+              return labelsOriginal;
+            },
+          },
+          onClick: function (mouseEvent, legendItem, legend) {
+            const chart = legend.chart;
+            const datasetIndex = legendItem.datasetIndex;
+            const meta = chart.getDatasetMeta(datasetIndex);
 
-// Definir los colores para los datasets
-const colors = [
-  { backgroundColor: ["#2B60E390", "#2B60E360"] },
-  { backgroundColor: ["#FF333390", "#FF333350"] },
-  { backgroundColor: ["#E3D32B90", "#E3D32B50"] },
-  { backgroundColor: ["#2B60E390", "#2B60E360"] },
-  { backgroundColor: ["#FF333390", "#FF333350"] },
-  { backgroundColor: ["#E3D32B90", "#E3D32B50"] },
-];
-
-// Crear los datos del gráfico
-const data = {
-  labels: labelsPrestamos.labels, // Asignar etiquetas
-  datasets: labelsPrestamos.porcentajes.map((porcentajes, i) => ({
-    backgroundColor: colors[i].backgroundColor, // Asignar colores
-    data: [porcentajes.pagas, porcentajes.impagas], // Asignar datos
-    borderColor: "#cecece50", // Asignar color de borde
-  })),
-};
-
-// Configuración del gráfico
-const config = {
-  type: "pie", // Tipo de gráfico
-  data: data, // Datos del gráfico
-  options: {
-    responsive: true, // Hacer el gráfico responsive
-    plugins: {
-      legend: {
-        labels: {
-          generateLabels: function (chart) {
-            const original = Chart.overrides.pie.plugins.legend.labels.generateLabels;
-            const labelsOriginal = original.call(this, chart);
-
-            let datasetColors = chart.data.datasets
-              .map((e) => e.backgroundColor)
-              .flat();
-
-            labelsOriginal.forEach((label) => {
-              label.datasetIndex = Math.floor(label.index / 2);
-              label.hidden = !chart.isDatasetVisible(label.datasetIndex);
-              label.fillStyle = datasetColors[label.index];
-            });
-
-            return labelsOriginal;
+            // Alternar la visibilidad
+            meta.hidden =
+              meta.hidden === null
+                ? !chart.data.datasets[datasetIndex].hidden
+                : null;
+            chart.update();
           },
         },
-        onClick: function (mouseEvent, legendItem, legend) {
-          const chart = legend.chart;
-          const datasetIndex = legendItem.datasetIndex;
-          const meta = chart.getDatasetMeta(datasetIndex);
-
-          // Alternar la visibilidad
-          meta.hidden =
-            meta.hidden === null
-              ? !chart.data.datasets[datasetIndex].hidden
-              : null;
-          chart.update();
-        },
-      },
-      tooltip: {
-        callbacks: {
-          label: function (context) {
-            const labelIndex = context.datasetIndex * 2 + context.dataIndex;
-            return (
-              context.chart.data.labels[labelIndex] +
-              ": " +
-              context.formattedValue +
-              "%"
-            );
+        tooltip: {
+          callbacks: {
+            label: function (context) {
+              const labelIndex = context.datasetIndex * 2 + context.dataIndex;
+              return (
+                context.chart.data.labels[labelIndex] +
+                ": " +
+                context.formattedValue +
+                "%"
+              );
+            },
           },
         },
-      },
-      title: {
-        display: true,
-        text: "Prestamos Vigentes",
-      },
-    },
-  },
-};
-
-
-
-
-
-// Datos del gráfico de conducta del cliente
-const dataConductaCliente = {
-  labels: ["Puntualidad en pagos", "Pago con mora", "Pagos adelantados"],
-  datasets: [
-    {
-      label: "Clientes Grupo A",
-      data: [85, 70, 10],
-      backgroundColor: ["#2B60E390", "#FF333390", "#E3D32B90"],
-    },
-  ],
-};
-
-// Configuración del gráfico de conducta del cliente
-const configConductaCliente = {
-  type: "polarArea",
-  data: dataConductaCliente,
-  options: {
-    responsive: true,
-    plugins: {
-      legend: {
-        position: "top",
-      },
-      title: {
-        display: true,
-        text: "Conducta de pago",
+        title: {
+          display: true,
+          text: "Prestamos Vigentes",
+        },
       },
     },
-  },
-};
+  };
 
-// Funciones para inicializar los gráficos
-const printChars = () => {
-  renderModelsChart();
-  renderModelsCuotas();
-};
+  // Datos del gráfico de conducta del cliente
+  const dataConductaCliente = {
+    labels: ["Puntualidad en pagos", "Pago con mora", "Pagos parciales"],
+    datasets: [
+      {
+        data: [dataChartPolar.cuotasSinMora, dataChartPolar.cuotasConMora, dataChartPolar.pagosParciales],
+        backgroundColor: ["#2B60E390", "#FF333390", "#E3D32B90"],
+      },
+    ],
+  };
 
-// Inicializar el gráfico de modelos
-const renderModelsChart = () => {
-  const myChart = new Chart("modelsCarts", config);
-};
+  // Configuración del gráfico de conducta del cliente
+  const configConductaCliente = {
+    type: "polarArea",
+    data: dataConductaCliente,
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          position: "top",
+        },
+        title: {
+          display: true,
+          text: "Conducta de pago",
+        },
+      },
+    },
+  };
 
-// Inicializar el gráfico de cuotas
-const renderModelsCuotas = () => {
-  const myChart = new Chart("conductaCliente", configConductaCliente);
-};
+  // Funciones para inicializar los gráficos
+  const printChars = () => {
+    renderModelsChart();
+    renderModelsCuotas();
+  };
 
-// Inicializar los gráficos
-printChars();
+  // Inicializar el gráfico de modelos
+  const renderModelsChart = () => {
+    const myChart = new Chart("modelsCarts", config);
+  };
 
+  // Inicializar el gráfico de cuotas
+  const renderModelsCuotas = () => {
+    const myChart = new Chart("conductaCliente", configConductaCliente);
+  };
+
+  // Inicializar los gráficos
+  printChars();
 </script>
