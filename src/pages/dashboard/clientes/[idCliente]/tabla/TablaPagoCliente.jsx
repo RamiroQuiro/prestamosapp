@@ -16,28 +16,28 @@ const $cliente=useStore(clienteSelect)
           selector: 'numero',
         },
         {
-          label: "ID Prestamo",
+          label: "IDPrestamo",
           id: 1,
           selector: 'idPrestamo',
         },
         {
-          label: "f. Pago",
-          id: 1,
-          selector: 'fechaPago',
-        },
-        {
-          label: "monto cuota",
+          label: "IdCuota",
           id: 2,
           selector: 'montoCuota',
         },
         {
+          label: "f. Pago",
+          id: 3,
+          selector: 'fechaPago',
+        },
+        {
           label: "monto Abonado",
-          id: 5,
+          id: 4,
           selector: 'monto Abonado',
         },
         {
           label: "acciones",
-          id: 8,
+          id: 5,
           selector: 'acciones'
         },
       ];

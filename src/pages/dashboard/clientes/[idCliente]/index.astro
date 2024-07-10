@@ -1,12 +1,14 @@
 ---
 import LayoutClient from "./LayoutClient.astro";
+
+const { idCliente } = Astro.params;
 ---
 
 <LayoutClient>
   <div
-    class="h- flex  items-center justify-center border p-5 rounded-lg shadow-md bg-gray-50"
+    class="h- flex items-center justify-center border p-5 rounded-lg shadow-md bg-gray-50"
   >
-    <canvas id="modelsCarts"  class="p-5"> </canvas>
+    <canvas id="modelsCarts" class="p-5"> </canvas>
   </div>
   <div
     class="h- flex w- items-center justify-center border p-5 rounded-lg shadow-md bg-gray-50"
@@ -27,35 +29,78 @@ import LayoutClient from "./LayoutClient.astro";
   import { clienteSelect } from "../../../../context/store";
 
   clienteSelect.set(JSON.parse(dataSet));
-</script>
+  const idCliente = JSON.parse(dataSet).id;
+  // obener el id del cliente
+  // console.log(idCliente)
+  let labelsPrestamos = [];
+  try {
+    const fetching = await fetch(`/api/clientes/${idCliente}`);
+    const respuestaData = await fetching.json();
+    console.log("este es la peticion ->", respuestaData);
 
-<script>
+    // obtener ls prestamos
+    const calcularCuotasImpagas = (prestamos, cuotas) => {
+      const cuotasPrestamos = prestamos.map((prestamo, i) => {
+        const cuotasImpagas = cuotas.filter(
+          (cuota) => cuota.prestamoId === prestamo.id && !cuota.pagada
+        );
+        const cuotasPagadas = prestamo.nCuotas - cuotasImpagas.length;
+        const totalCuotas = prestamo.nCuotas;
+        const porcentajePagas = ((cuotasPagadas / totalCuotas) * 100).toFixed(
+          2
+        );
+        const porcentajeInpagas = (
+          (cuotasImpagas.length / totalCuotas) *
+          100
+        ).toFixed(2);
+
+        console.log(
+          "estos son los porcentajes: ",
+          porcentajePagas,
+          porcentajeInpagas
+        );
+
+        return {
+          labels: [
+            `Prestamo ${i + 1} | Cuotas Pagas ${cuotasPagadas}`,
+            `Cuotas Inpagas ${cuotasImpagas.length}`,
+          ],
+          porcentajes: {
+            pagas: parseFloat(porcentajePagas),
+            impagas: parseFloat(porcentajeInpagas),
+          },
+        };
+      });
+
+      // Extraer las etiquetas y los porcentajes en un formato adecuado
+      const labels = cuotasPrestamos.flatMap((item) => item.labels);
+      const porcentajes = cuotasPrestamos.map((item) => item.porcentajes);
+
+      return { labels, porcentajes };
+    };
+
+    labelsPrestamos = calcularCuotasImpagas(
+      respuestaData.data.prestamos,
+      respuestaData.data.cuotas
+    );
+  } catch (error) {
+    console.log(error);
+  }
+
+  // Colores para los datasets
+  const colors = [
+    { backgroundColor: ["#2B60E390", "#2B60E360"] },
+    { backgroundColor: ["#FF333390", "#FF333350"] },
+    { backgroundColor: ["#E3D32B90", "#E3D32B50"] },
+  ];
   // Datos del gráfico
   const data = {
-    labels: [
-      "Cuota Pagas 1",
-      "Cuota Inpagas 1",
-      "Cuota Prestamo 2",
-      "Prestamo 2",
-      "Cuota Prestamo 3",
-      "Prestamo 3",
-    ],
-    datasets: [
-      {
-        backgroundColor: ["#2B60E390", "#2B60E360"],
-        data: [15, 85],
-      borderColor:'#cecece50'
-      },
-
-      {
-        backgroundColor: ["#FF333390", "#FF333350"],
-        data: [ 67,33],
-      },
-      {
-        backgroundColor: ["#E3D32B90", "#E3D32B50"],
-        data: [80,20],
-      },
-    ],
+    labels: labelsPrestamos.labels,
+    datasets: labelsPrestamos.porcentajes.map((porcentajes, i) => ({
+      backgroundColor: colors[i].backgroundColor,
+      data: [porcentajes.pagas, porcentajes.impagas],
+      borderColor: "#cecece50",
+    })),
   };
 
   // Configuración del gráfico
@@ -105,61 +150,56 @@ import LayoutClient from "./LayoutClient.astro";
               return (
                 context.chart.data.labels[labelIndex] +
                 ": " +
-                context.formattedValue +'%'
+                context.formattedValue +
+                "%"
               );
             },
           },
         },
         title: {
-        display: true,
-        text: 'Prestamos Vigentes'
-      }
+          display: true,
+          text: "Prestamos Vigentes",
+        },
       },
-    
     },
   };
 
   // data grafico de conductaCliente
 
   const dataConductaCliente = {
-  labels: [
-    'Puntualidad en pagos',
-    'Pago con mora',
-    'Pagos adelantados'
-  ],
-  datasets: [
-    {
-      label: 'Clientes Grupo A',
-      data: [85, 70, 10,],
-      backgroundColor: ["#2B60E390","#FF333390","#E3D32B90"]
-    },
- 
-  ]
-}
+    labels: ["Puntualidad en pagos", "Pago con mora", "Pagos adelantados"],
+    datasets: [
+      {
+        label: "Clientes Grupo A",
+        data: [85, 70, 10],
+        backgroundColor: ["#2B60E390", "#FF333390", "#E3D32B90"],
+      },
+    ],
+  };
 
   // configuraciones de chatsrjs de cuotas
 
   const configConductaCliente = {
-  type: 'polarArea',
-  data: dataConductaCliente,
-  options: {
-    responsive: true,
-    plugins: {
-      legend: {
-        position: 'top',
+    type: "polarArea",
+    data: dataConductaCliente,
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          position: "top",
+        },
+        title: {
+          display: true,
+          text: "Conducta de pago",
+        },
       },
-      title: {
-        display: true,
-        text: 'Conducta de pago'
-      }
-    }
-  },
-};
+    },
+  };
   // funciones de arranue de chartjs
 
   const printChars = () => {
     renderModelsChart();
-    renderModelsCuotas()
+    renderModelsCuotas();
   };
 
   const renderModelsChart = () => {

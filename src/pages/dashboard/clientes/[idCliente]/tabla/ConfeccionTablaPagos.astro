@@ -28,8 +28,8 @@ pagos =[...pagos,...pagosParciales]
       numero: i + 1,
       id: element?.id,
       prestamo:element.prestamoId,
+      montoCuota: element?.cuotaId,
       fechaPago: element?.fechaPago.toLocaleDateString(),
-      montoCuota: element?.montoCuota,
       montoTotal: `$ ${element?.monto.toLocaleString()}`,
     };
   });

@@ -9,12 +9,23 @@ export const generateUid = () => {
   return randomBytes(16).toString('hex');
 };
 export async function GET({ params }) {
-  console.log("andando");
+try {
+  
   return new Response(
     JSON.stringify({
       data: "hello andando men",
     })
   );
+} catch (error) {
+  
+  return new Response(
+    JSON.stringify({
+      data: "error",
+    },{
+      code:404
+    })
+  );
+}
 }
 
 export async function POST({ request }) {
