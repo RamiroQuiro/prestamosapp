@@ -108,13 +108,21 @@ try {
 
     <StatsDePrestamos activos={activos} prestamos={prestamos} />
   </div>
-  <div class="flex flex-col items-center gap-3">
+  <div data-user-id={id} class="flex flex-col items-center gap-3">
     <Stat>
-      <h3 class="font-medium">Cuotas a vencer</h3>
+      <!-- <h3 class="font-medium">Cuotas a vencer</h3>
       <label for="inputDate">
         <InputDate client:load />
       </label>
-      <span class="font-black text-lg">20</span>
+      <span class="font-black text-lg">20</span> -->
+      <label for="startDate">Fecha de inicio:</label>
+      <input type="date" id="startDate" name="startDate">
+      <label for="endDate">Fecha de fin:</label>
+      <input type="date" id="endDate" name="endDate">
+      <button onclick="calcularCuotas()">Calcular Cuotas</button>
+      
+      <div id="result"></div>
+    
     </Stat>
   </div>
 </ArticleDash>
@@ -242,3 +250,6 @@ try {
     </Stat>
   </div>
 </ArticleDash>
+
+
+<script src="../../../lib/formulas/calcularCuotasPeriodo.js"></script>
