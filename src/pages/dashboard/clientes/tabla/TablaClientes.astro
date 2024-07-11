@@ -48,12 +48,14 @@ try {
     .from(Cliente)
     .where(eq(Cliente.usuarioId, user.id));
   // .innerJoin(Cliente, eq(Prestamo.clienteId, Cliente.id));
-
-  const consulta = await db.select({ value: count(Cliente.id) }).from(Prestamo);
-  // console.log(consulta);
+  const nPrestamo = await db.select().from(Prestamo);
+  // console.log(nPrestamo);
   arrayBody = clientes.map((element) => {
-    return {
+    let prestamosNumero = nPrestamo.filter(
+      (prestamo) => prestamo.clienteId == element.id
+    ).length;
 
+    return {
       href: `/dashboard/clientes/${element.id}`,
       id: element.id,
       nombre: element?.nombre,
@@ -61,7 +63,7 @@ try {
       dni: element?.dni,
       email: element?.email,
       celular: element?.celular,
-      prestamos: "N° prestamos",
+      prestamos: prestamosNumero,
     };
   });
 } catch (error) {
@@ -71,7 +73,5 @@ try {
 ---
 
 <div class="w-full overflow-x-auto my-5">
-
-  <Table  columnas={columnas} arrayBody={arrayBody} client:load/>
-
+  <Table columnas={columnas} arrayBody={arrayBody} client:load />
 </div>
