@@ -18,7 +18,13 @@ async function calcularCuotas() {
   
     // Obtener las cuotas (aquí deberías usar tu método para obtener las cuotas)
 try {
-    const res=await fetch(`/api/cuotas/${userId}`)
+    const res=await fetch(`/api/cuotas/${userId}`,{
+        method:'GET',
+        headers: {
+            'startDate': startDate,
+            'endDate': endDate
+          }
+    })
     const data=await res.json()
     console.log(data)
 } catch (error) {
