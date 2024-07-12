@@ -41,6 +41,7 @@ export async function POST({ request }) {
     let fechaFin;
     fechaPrimerVencimiento.setDate(fechaPrimerVencimiento.getDate() + modalidadDias);
     
+    console.log('fechas ->',fechaInicio,fechaFin)
     // Crear las cuotas y calcular FechaFin
     for (let i = 0; i < nCuotas; i++) {
       const cuotaId = generateId(15);

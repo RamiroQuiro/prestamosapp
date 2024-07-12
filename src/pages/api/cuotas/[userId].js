@@ -1,21 +1,28 @@
-import { between, Cuota, db, eq } from "astro:db";
+import { and, between, Cuota, db, eq, gte, lte } from "astro:db";
 
 export async function GET({ params, props, request }) {
   const { userId } = await params;
   const startDate = request.headers.get("startDate");
   const endDate = request.headers.get("endDate");
 
-  console.log("Endpoint de las cuotas", userId, startDate, endDate);
+    // Convertir las fechas a UTC
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+  
+  // console.log("Endpoint de las cuotas", userId, end, start);
   try {
     const cuotasBD = await db
       .select()
       .from(Cuota)
       .where(
-        eq(Cuota.usuarioId, userId),
-        between(Cuota.fecha, new Date(startDate), new Date(endDate))
-      );
+        and(
+          eq(Cuota.usuarioId, userId),
+          gte(Cuota.fechaVencimiento, start),
+          lte(Cuota.fechaVencimiento, end)
+        )
+      )
 
-    console.log(cuotasBD);
+    // console.log(cuotasBD);
 
     return new Response(
       JSON.stringify({

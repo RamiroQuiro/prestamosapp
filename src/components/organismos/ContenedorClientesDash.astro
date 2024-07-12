@@ -12,7 +12,7 @@ try {
     .select()
     .from(Cliente)
     .where(eq(Cliente.usuarioId, user.id));
-  console.log("culsont ->", consultaClientes);
+//   console.log("culsont ->", consultaClientes);
   nClientes = consultaClientes.length;
 } catch (error) {
   console.log(error);
