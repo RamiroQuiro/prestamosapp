@@ -2,6 +2,7 @@
 interface Props {
 	title: string;
 }
+import "react-datepicker/dist/react-datepicker.css";
 
 const { title } = Astro.props;
 ---
@@ -22,6 +23,7 @@ const { title } = Astro.props;
 </html>
 
 <style is:global>
+	
 	:root {
 		--accent: 136, 58, 234;
 		--accent-light: 224, 204, 250;

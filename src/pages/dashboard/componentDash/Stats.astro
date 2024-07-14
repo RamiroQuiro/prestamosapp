@@ -9,6 +9,7 @@ import { Prestamo } from "astro:db";
 import { eq } from "astro:db";
 import { Pago } from "astro:db";
 import { Cuota } from "astro:db";
+import RangoFechaCuotas from "../../../components/organismos/RangoFechaCuotas";
 
 const todayValue = new Date().toLocaleDateString();
 
@@ -109,12 +110,12 @@ try {
     <StatsDePrestamos activos={activos} prestamos={prestamos} />
   </div>
   <div data-user-id={id} class="flex flex-col items-center gap-3">
-    <Stat>
+    <RangoFechaCuotas client:load>
       <!-- <h3 class="font-medium">Cuotas a vencer</h3>
       <label for="inputDate">
         <InputDate client:load />
       </label>
-      <span class="font-black text-lg">20</span> -->
+      <span class="font-black text-lg">20</span> 
       <label for="startDate">Fecha de inicio:</label>
       <input type="date" id="startDate" name="startDate">
       <label for="endDate">Fecha de fin:</label>
@@ -122,8 +123,8 @@ try {
       <button id="calularCuota">Calcular Cuotas</button>
       
       <div id="result"></div>
-    
-    </Stat>
+    -->
+    </RangoFechaCuotas>
   </div>
 </ArticleDash>
 
