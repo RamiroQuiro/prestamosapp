@@ -20,7 +20,7 @@ if (!prestamoSimulado.get().fechaInicio) {
   });
 }
 
-console.log('prestamo obeto',prestamoSimulado)
+// console.log('prestamo obeto',prestamoSimulado)
   fInicio.addEventListener("change", (e) => {
 const dateChang=new Date(e.target.vale).toISOString()
     prestamoSimulado.set({

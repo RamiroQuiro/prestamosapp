@@ -1,4 +1,4 @@
-import { Prestamo, db, Cuota, eq, Cliente } from "astro:db";
+import { Prestamo, db, Cuota, eq } from "astro:db";
 import { generateId } from "lucia";
 
 export async function POST({ request }) {
@@ -18,8 +18,8 @@ export async function POST({ request }) {
   
   try {
     const id = generateId(20);
-    const now = new Date(fechaInicio); // Crea un nuevo objeto Date
-    
+    const now = new Date(fechaInicio);
+
     // Crear el préstamo primero
     const createPrest = await db.insert(Prestamo).values({
       id,
@@ -27,7 +27,7 @@ export async function POST({ request }) {
       clienteId,
       usuarioId,
       montoTotal,
-      modalidad: modalidad == 30 ? 'mensual' : modalidad == 15 ? 'quincenal' : 'semanal',
+      modalidad: modalidad === 30 ? 'mensual' : modalidad === 15 ? 'quincenal' : 'semanal',
       capital,
       tasaInteres,
       nCuotas,
@@ -35,24 +35,23 @@ export async function POST({ request }) {
     });
 
     // Verificar modalidad y calcular días
-    const modalidadDias = modalidad;
+    const modalidadDias = Number(modalidad);
     let fechaPrimerVencimiento = new Date(now);
-
-    let fechaFin;
+    // console.log('fecha priomerVencimiento ->',fechaPrimerVencimiento)
     fechaPrimerVencimiento.setDate(fechaPrimerVencimiento.getDate() + modalidadDias);
     
-    console.log('fechas ->',fechaInicio,fechaFin)
-    // Crear las cuotas y calcular FechaFin
+    let fechaFin;
+    let fechaVencimiento = new Date(fechaPrimerVencimiento);
+    // console.log('fecha vencmiento ->',fechaVencimiento)
     for (let i = 0; i < nCuotas; i++) {
       const cuotaId = generateId(15);
-      let fechaVencimiento = new Date(fechaPrimerVencimiento); // Crear una nueva instancia de Date para cada cuota
       fechaVencimiento.setDate(fechaVencimiento.getDate() + (i * modalidadDias));
       
       // Guardar la fecha de vencimiento de la última cuota
       if (i === nCuotas - 1) {
         fechaFin = new Date(fechaVencimiento);
       }
-      
+
       const createCuota = await db.insert(Cuota).values({
         id: cuotaId,
         prestamoId: id,
