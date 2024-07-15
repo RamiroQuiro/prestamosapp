@@ -72,3 +72,14 @@ const url=Astro.url
       monospace;
   }
 </style>
+
+<script>
+import { rangoCuotasSelect } from "../../../context/store";
+
+
+const cuotas=rangoCuotasSelect.get()
+
+rangoCuotasSelect.subscribe((state)=>{
+  console.log(state.cuotas)
+})
+</script>
