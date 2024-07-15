@@ -1,9 +1,12 @@
 import React, { useState, useEffect, useRef } from "react";
 import flatpickr from "flatpickr";
 import "flatpickr/dist/flatpickr.min.css";
+import { useStore } from "@nanostores/react";
+import { rangoCuotasSelect } from "../../context/store";
 
 export default function RangoFechaCuota({userId}) {
   let hoy = new Date().toISOString().split('T')[0];
+  const $rangoCuotas=useStore(rangoCuotasSelect)
   const [startDate, setStartDate] = useState(hoy);
   const [endDate, setEndDate] = useState(hoy);
   const [dataResult, setDataResult] = useState(null)
@@ -32,6 +35,9 @@ export default function RangoFechaCuota({userId}) {
         const data=await res.json()
         console.log(data)
         setDataResult(data)
+        rangoCuotasSelect.set({
+          cuotas:[...data.data]
+        })
     } catch (error) {
         console.log(error)
     }
@@ -40,6 +46,10 @@ export default function RangoFechaCuota({userId}) {
   }, [endDate]);
 
 
+
+  const redirectCuotas=()=>{
+    document.location.href='/dashboard/cuotasSelect'
+  }
   return (
     <div className="flex flex-col gap-3 shadow-lg items-center justify-evenly h-full bg-white w-full rounded text-primary-texto p-4 rounded-b-3xl">
      
@@ -47,7 +57,7 @@ export default function RangoFechaCuota({userId}) {
       <input ref={flatpickrRef} type="text" defaultValue={hoy} className="flatpickr-input px-3 py-1 rounded-lg font-semibold capitalize border-primary-100 duration-300 text-xs border-dashed border bg-transparent hover:bg-primary-100/80 hover:text-white cursor-pointer hover:border-primary-resaltado" />
       <div id="result">
         
-       <span className="font-black text-lg"> {
+       <span onClick={redirectCuotas} className="font-black text-lg"> {
         dataResult&&
         
         dataResult?.data?.length

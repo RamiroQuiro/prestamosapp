@@ -43,4 +43,8 @@ const filtrosBusquedaPrestamos=atom({
     fecha:''
 })
 
-export {busqueda, pdfPrint, filtrosBusquedaPrestamos,prestamoSimulado,clienteSelect,columnSelectTable}
+const rangoCuotasSelect=atom({
+    cuotas:[]
+})
+
+export {busqueda,rangoCuotasSelect, pdfPrint, filtrosBusquedaPrestamos,prestamoSimulado,clienteSelect,columnSelectTable}
