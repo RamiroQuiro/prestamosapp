@@ -53,4 +53,4 @@ try {
   // Escuchar el evento de cambio en los campos de fecha
   document.getElementById("startDate").addEventListener("change", calcularCuotas);
   document.getElementById("endDate").addEventListener("change", calcularCuotas);
-  document.getElementById('calcularCuota').addEventListener('click',calcularCuotas)
+  document.getElementById('calularCuota').addEventListener('click',calcularCuotas)

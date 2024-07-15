@@ -2,9 +2,11 @@ import React, { useState, useEffect, useRef } from "react";
 import flatpickr from "flatpickr";
 import "flatpickr/dist/flatpickr.min.css";
 
-export default function RangoFechaCuota() {
-  const [startDate, setStartDate] = useState(null);
-  const [endDate, setEndDate] = useState(null);
+export default function RangoFechaCuota({userId}) {
+  let hoy = new Date().toISOString().split('T')[0];
+  const [startDate, setStartDate] = useState(hoy);
+  const [endDate, setEndDate] = useState(hoy);
+  const [dataResult, setDataResult] = useState(null)
   const flatpickrRef = useRef(null);
 
   useEffect(() => {
@@ -18,13 +20,40 @@ export default function RangoFechaCuota() {
         }
       });
     }
-  }, []);
+    const fetching=async ()=>{
+      try {
+        const res=await fetch(`/api/cuotas/${userId}`,{
+            method:'GET',
+            headers: {
+                'startDate':startDate,
+                'endDate': endDate
+              }
+        })
+        const data=await res.json()
+        console.log(data)
+        setDataResult(data)
+    } catch (error) {
+        console.log(error)
+    }
+    }
+    fetching()
+  }, [endDate]);
+
 
   return (
     <div className="flex flex-col gap-3 shadow-lg items-center justify-evenly h-full bg-white w-full rounded text-primary-texto p-4 rounded-b-3xl">
-      <input ref={flatpickrRef} type="text" className="flatpickr-input" />
-      <p>Fecha de inicio: {startDate && startDate.toLocaleDateString()}</p>
-      <p>Fecha de fin: {endDate && endDate.toLocaleDateString()}</p>
+     
+     <h3 className="font-medium">Cuotas a vencer</h3>
+      <input ref={flatpickrRef} type="text" defaultValue={hoy} className="flatpickr-input px-3 py-1 rounded-lg font-semibold capitalize border-primary-100 duration-300 text-xs border-dashed border bg-transparent hover:bg-primary-100/80 hover:text-white cursor-pointer hover:border-primary-resaltado" />
+      <div id="result">
+        
+       <span className="font-black text-lg"> {
+        dataResult&&
+        
+        dataResult?.data?.length
+        }
+        </span>
+        </div> 
     </div>
   );
 }

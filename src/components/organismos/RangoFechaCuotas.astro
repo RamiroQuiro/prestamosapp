@@ -1,0 +1,40 @@
+---
+
+---
+
+<div
+  class="flex flex-col gap-3 shadow-lg items-center justify-evenly h-full bg-white w-full rounded text-primary-texto p-4 rounded-b-3xl"
+>
+  <input id={"flatpickerRef"} type="text" class="flatpickr-input" />
+  <p id="startDate">
+    Fecha de inicio: /p>
+    <p id="endDate">Fecha de fin: {}</p>
+  </p>
+</div>
+<script>
+  import flatpickr from "flatpickr";
+  import "flatpickr/dist/flatpickr.min.css";
+
+  const inputDate = document.getElementById("flatpickerRef");
+  const startDate = document.getElementById("startDate");
+  const endDate = document.getElementById("endDate");
+
+    flatpickr(inputDate, {
+      mode: "range",
+      dateFormat: "Y-m-d",
+      onChange: function (selectedDates) {
+        if (selectedDates.length > 0) {
+          startDate.textContent = `Fecha de inicio: ${selectedDates[0].toLocaleDateString()}`;
+          if (selectedDates.length > 1) {
+            endDate.textContent = `Fecha de fin: ${selectedDates[1].toLocaleDateString()}`;
+          } else {
+            endDate.textContent = "Fecha de fin: ";
+          }
+        } else {
+          startDate.textContent = "Fecha de inicio: ";
+          endDate.textContent = "Fecha de fin: ";
+        }
+      },
+    })
+
+</script>
