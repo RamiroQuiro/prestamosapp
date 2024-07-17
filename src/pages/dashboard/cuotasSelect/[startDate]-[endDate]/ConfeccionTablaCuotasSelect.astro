@@ -1,0 +1,48 @@
+---
+import { db } from "astro:db";
+import { Prestamo } from "astro:db";
+import { eq } from "astro:db";
+import TablaCuotaSelect from "./TablaCuotaSelect";
+import { Cuota } from "astro:db";
+import { Cliente } from "astro:db";
+
+const {cuotasSeleccionadas}=Astro.props
+const {id}=Astro.locals.user
+let prestamos = [];
+let arrayBody = [];
+let usuario=[]
+let columnas=[]
+try {
+
+    const clientesDB=await db
+      .select({id:Cliente.id,nombre:Cliente.nombre,apellido:Cliente.apellido})
+      .from(Cliente).where(Cliente.usuarioId,id)
+    console.log('cleinte db ->',clientesDB)
+
+  arrayBody = cuotasSeleccionadas.map((element,i) => {
+
+    const clienteName=clientesDB.find(cliente=>cliente.id==element.clienteId)
+const fecha= new Date(element?.fechaVencimiento)
+
+
+    return {
+      href:`/dashboard/prestamos/${element.id}`,
+      numero: i + 1,
+      cliente:`${clienteName.nombre} ${clienteName.apellido}`,
+      id:element?.id,
+      monto: `$ ${element?.monto.toLocaleString()}`,
+      numeroCuota: element?.numeroCuota,
+      prestamoId:element.prestamoId,
+      fechaVencimiento:fecha
+
+    };
+  });
+} catch (error) {
+  console.log(error);
+}
+
+---
+
+<div class="w-full overflow-x-auto my-5">
+    <TablaCuotaSelect  arrayBody={arrayBody}  client:load/>
+  </div>

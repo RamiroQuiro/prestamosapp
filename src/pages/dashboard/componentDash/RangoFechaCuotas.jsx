@@ -1,12 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
 import flatpickr from "flatpickr";
 import "flatpickr/dist/flatpickr.min.css";
-import { useStore } from "@nanostores/react";
-import { rangoCuotasSelect } from "../../context/store";
+import { rangoCuotasSelect } from "../../../context/store";
 
 export default function RangoFechaCuota({userId}) {
   let hoy = new Date().toISOString().split('T')[0];
-  const $rangoCuotas=useStore(rangoCuotasSelect)
   const [startDate, setStartDate] = useState(hoy);
   const [endDate, setEndDate] = useState(hoy);
   const [dataResult, setDataResult] = useState(null)
@@ -33,11 +31,9 @@ export default function RangoFechaCuota({userId}) {
               }
         })
         const data=await res.json()
-        console.log(data)
+        // console.log(data)
         setDataResult(data)
-        rangoCuotasSelect.set({
-          cuotas:[...data.data]
-        })
+      
     } catch (error) {
         console.log(error)
     }
@@ -48,7 +44,7 @@ export default function RangoFechaCuota({userId}) {
 
 
   const redirectCuotas=()=>{
-    document.location.href='/dashboard/cuotasSelect'
+    document.location.href=`/dashboard/cuotasSelect/${startDate.getTime()}-${endDate.getTime()}`
   }
   return (
     <div className="flex flex-col gap-3 shadow-lg items-center justify-evenly h-full bg-white w-full rounded text-primary-texto p-4 rounded-b-3xl">

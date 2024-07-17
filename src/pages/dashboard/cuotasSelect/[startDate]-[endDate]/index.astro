@@ -1,0 +1,45 @@
+---
+import ContenedorDiv1 from "../../../../components/atomos/ContenedorDiv1.astro";
+import ContenedeorModal from "../../../../components/organismos/ContenedeorModal.astro";
+import MainDash from "../../../../components/organismos/MainDash.astro";
+import Layoutdash from "../../layouts/Layoutdash.astro";
+import ConfeccionTablaCuotasSelect from "./ConfeccionTablaCuotasSelect.astro";
+
+import Cuotas from './Cuotas'
+
+const {user}=Astro.locals
+
+
+const {startDate,endDate}=Astro.params
+const dateStartDate=new Date(Number(startDate))
+const dateEndDate=new Date(Number(endDate))
+let cuotasSelectedDB=[]
+if (!startDate || !endDate) {
+  throw new Error('startDate and endDate must be provided');
+}
+try {
+        const res=await fetch(`http://${Astro.url.host}/api/cuotas/${user.id}`,{
+            method:'GET',
+            headers: {
+                'startDate':dateStartDate,
+                'endDate': dateEndDate
+              }
+        })
+        const data=await res.json()
+        // console.log(data)
+        cuotasSelectedDB=data.data
+    } catch (error) {
+        console.log(error)
+    }
+---
+<Layoutdash title="Biendevnido men">
+    <MainDash>
+        <ContenedorDiv1>
+
+
+            <ConfeccionTablaCuotasSelect cuotasSeleccionadas={cuotasSelectedDB}/>
+        </ContenedorDiv1>
+    
+    </MainDash>
+
+</Layoutdash>

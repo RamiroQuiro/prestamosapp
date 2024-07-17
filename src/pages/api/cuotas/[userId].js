@@ -22,7 +22,7 @@ export async function GET({ params, props, request }) {
         )
       )
 
-    console.log('cuotas encontradas ->',cuotasBD);
+    // console.log('cuotas encontradas ->',cuotasBD);
 
     return new Response(
       JSON.stringify({
