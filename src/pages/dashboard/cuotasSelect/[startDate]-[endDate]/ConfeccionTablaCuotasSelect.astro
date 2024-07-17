@@ -17,7 +17,6 @@ try {
     const clientesDB=await db
       .select({id:Cliente.id,nombre:Cliente.nombre,apellido:Cliente.apellido})
       .from(Cliente).where(Cliente.usuarioId,id)
-    console.log('cleinte db ->',clientesDB)
 
   arrayBody = cuotasSeleccionadas.map((element,i) => {
 
