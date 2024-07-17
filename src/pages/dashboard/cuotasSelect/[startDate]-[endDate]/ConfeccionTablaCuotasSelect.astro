@@ -18,7 +18,7 @@ const clientesss=await db.select().from(Cliente)
     );
     const fecha = new Date(element?.fechaVencimiento);
     return {
-      href: `/dashboard/prestamos/${element.id}`,
+      href: `/dashboard/prestamos/${element.prestamoId}/cuota/${element.id}`,
       numero: i + 1,
       cliente: `${clienteName.nombre} ${clienteName.apellido}`,
       id: element?.id,
