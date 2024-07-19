@@ -53,10 +53,10 @@ export default function RangoFechaCuota({userId}) {
       <input ref={flatpickrRef} type="text" defaultValue={hoy} className="flatpickr-input px-3 py-1 rounded-lg font-semibold capitalize border-primary-100 duration-300 text-xs border-dashed border bg-transparent hover:bg-primary-100/80 hover:text-white cursor-pointer hover:border-primary-resaltado" />
       <div id="result">
         
-       <span onClick={redirectCuotas} className="font-black text-lg"> {
+       <span onClick={redirectCuotas} className="cursor-pointer font-black text-lg"> {
         dataResult&&
         
-        dataResult?.data?.length
+        dataResult?.data?.filter(cuota=>!cuota.pagada).length
         }
         </span>
         </div> 

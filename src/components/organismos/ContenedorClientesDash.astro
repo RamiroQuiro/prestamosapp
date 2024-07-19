@@ -28,7 +28,7 @@ try {
 
   {
     consultaClientes?.map((cliente) => (
-      <a href={`dashboard/clientes/${cliente.id}`} class=" cursor-pointer bg-primary-bg-claro border-b border-primary-400 px-3 py-1">
+      <a href={`dashboard/clientes/${cliente.id}`} class=" cursor-pointer hover:bg-gray-50/30 hover:text-white bg-primary-bg-claro border-b border-primary-400 px-3 py-1">
         <h3 class="text-primary-texto w-full  capitalize">{cliente.nombre}{' '}{cliente.apellido}</h3>
       </a>
     ))
