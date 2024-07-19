@@ -32,7 +32,7 @@ export default function RangoFechaCuota({userId}) {
         })
         const data=await res.json()
         // console.log(data)
-        setDataResult(data)
+        setDataResult(data.filter(cuota=>!cuota.pagada))
       
     } catch (error) {
         console.log(error)
@@ -56,7 +56,7 @@ export default function RangoFechaCuota({userId}) {
        <span onClick={redirectCuotas} className="cursor-pointer font-black text-lg"> {
         dataResult&&
         
-        dataResult?.data?.filter(cuota=>!cuota.pagada).length
+        dataResult?.data?.length
         }
         </span>
         </div> 
