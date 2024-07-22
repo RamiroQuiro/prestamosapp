@@ -37,7 +37,7 @@ export default function DatosPersonales({ cliente }) {
         <div className=" border-y bg-white p-5 w-full">
             <form className='flex w-full gap-4 flex-row text-sm'>
 
-              <FormularioDni clienteId={cliente.id} usuarioId={cliente.usuarioId}/>
+              <FormularioDni cliente={cliente}/>
                 <div className='flex flex-wrap w-full items-start justify-start gap-3'>
 
                     <InputsDatos

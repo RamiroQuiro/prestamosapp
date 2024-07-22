@@ -36,10 +36,9 @@ export async function PUT({params,request}){
 const data=await request.json()
 const {idCliente}=params
     // console.log(data)
-    const fecheModifcacion=new Date()
     delete data.fechaCreacion
 
-    data.fecheModifcacion=fecheModifcacion
+    data.fechaActualizacion=new Date()
     
     try {
 
