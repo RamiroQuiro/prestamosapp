@@ -1,8 +1,8 @@
-import { Cliente, Cuota, db, eq, Pago, PagoParcial, Prestamo } from "astro:db";
+import { Cliente, Cuota, db, eq, Pago, PagoParcial, Prestamo, User } from "astro:db";
 
 export async function GET({ params }) {
     const { idCliente } = await params
-    console.log(idCliente)
+    // console.log(idCliente)
 
     try {
 
@@ -18,6 +18,38 @@ export async function GET({ params }) {
         return new Response(
             JSON.stringify({
                 data: dataTotal,
+            })
+        );
+    } catch (error) {
+        console.log(error)
+        return new Response(
+            JSON.stringify({
+                data: "error",
+            }, {
+                code: 404
+            })
+        );
+    }
+}
+
+export async function PUT({params,request}){
+const data=await request.json()
+const {idCliente}=params
+    // console.log(data)
+    const fecheModifcacion=new Date()
+    delete data.fechaCreacion
+
+    data.fecheModifcacion=fecheModifcacion
+    
+    try {
+
+        const updateUser=await db.update(Cliente).set(data)
+        .where(eq(Cliente.id, idCliente));
+
+        
+        return new Response(
+            JSON.stringify({
+                msg:'cambios efectuados',
             })
         );
     } catch (error) {

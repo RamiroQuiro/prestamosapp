@@ -22,7 +22,7 @@ const { idCliente } = Astro.params;
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-  import { clienteSelect } from "../../../../context/store";
+  import { clienteSelect } from "@/context/store";
 
   // Obtener el dataset desde el atributo 'data-idClient' del elemento con id 'idCliente'
   const dataSet = document
@@ -42,7 +42,7 @@ let dataChartPolar={}
     // Realizar una petición para obtener los datos del cliente
     const fetching = await fetch(`/api/clientes/${idCliente}`);
     const respuestaData = await fetching.json(); // Parsear la respuesta a JSON
-    console.log("esta es la petición ->", respuestaData);
+    // console.log("esta es la petición ->", respuestaData);
 
     // Función para calcular las cuotas impagas
     const calcularCuotasImpagas = (prestamos, cuotas) => {

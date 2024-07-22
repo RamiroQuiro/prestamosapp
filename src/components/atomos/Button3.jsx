@@ -1,11 +1,12 @@
 import { useStore } from '@nanostores/react'
 import React from 'react'
-import { filtrosBusquedaPrestamos } from '../../context/store'
+import { filtrosBusquedaPrestamos } from '@/context/store'
 
-export default function Button3({ children, isActive,id }) {
+export default function Button3({ children, isActive,id ,onClick}) {
 
     const $filtros = useStore(filtrosBusquedaPrestamos)
     const handleClick = (e) => {
+        onClick()
         e.preventDefault()
     }
 

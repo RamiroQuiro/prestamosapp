@@ -1,11 +1,35 @@
-import React from 'react'
+import React, { useState } from 'react'
 import InputsDatos from '../../../../components/organismos/InputsDatos'
 import Button3 from '../../../../components/atomos/Button3'
 import { clienteSelect } from '../../../../context/store'
 
-export default function DatosPersonales({cliente}) {
+export default function DatosPersonales({ cliente }) {
+    console.log(cliente)
 
     clienteSelect.set(cliente)
+    const [formulario, setFormulario] = useState(cliente)
+
+    const onChangeForm = (e) => {
+        const { value, name } = e.target
+        setFormulario((state) => ({ ...state, [name]: value }))
+    }
+
+
+    const handleActualizarData = async () => {
+        try {
+            const resFetch = await fetch(`/api/clientes/${cliente.id}`, {
+                method: 'PUT',
+                body: JSON.stringify(formulario)
+            })
+
+            const respuesta = await resFetch.json()
+            console.log(respuesta)
+        } catch (error) {
+            console.log(error)
+        }
+
+    }
+
 
 
     return (
@@ -20,37 +44,60 @@ export default function DatosPersonales({cliente}) {
                 <div className='flex flex-wrap w-full items-start justify-start gap-3'>
 
                     <InputsDatos
-                        label={'Nombre y Apellido :'} valueInput={`${cliente.nombre} ${cliente.apellido}`}
+                        onChange={onChangeForm}
+                        name={'nombre'}
+                        label={'nombre'} valueInput={formulario.nombre}
                     />
                     <InputsDatos
-                        label={'DNI :'} valueInput={cliente.dni}
+                        onChange={onChangeForm}
+                        name={'apellido'}
+                        label={'apellido'} valueInput={formulario.apellido}
                     />
                     <InputsDatos
-                        label={'email :'} valueInput={cliente.email}
+                        onChange={onChangeForm}
+                        name={'dni'}
+                        label={'DNI :'} valueInput={formulario.dni}
                     />
                     <InputsDatos
-                        label={'Dirección :'} valueInput={cliente.direccion}
+                        onChange={onChangeForm}
+                        name={'email'}
+                        label={'email :'} valueInput={formulario.email}
                     />
                     <InputsDatos
-                        label={'Localidad :'} valueInput={cliente.localidad}
+                        onChange={onChangeForm}
+                        name={'direccion'}
+                        label={'Dirección :'} valueInput={formulario.direccion}
                     />
                     <InputsDatos
-                        label={'Departamento:'} valueInput={cliente.departamento}
+                        onChange={onChangeForm}
+                        name={'localidad'}
+                        label={'Localidad :'} valueInput={formulario.localidad}
                     />
                     <InputsDatos
-                        label={'Ciudad:'} valueInput={cliente.ciudad}
+                        onChange={onChangeForm}
+                        name={'departamento'}
+                        label={'Departamento:'} valueInput={formulario.departamento}
                     />
                     <InputsDatos
-                        label={'Pais:'} valueInput={cliente.pais}
+                        onChange={onChangeForm}
+                        name={'ciudad'}
+                        label={'Ciudad:'} valueInput={formulario.ciudad}
                     />
                     <InputsDatos
-                        label={'Fecha Creación:'} valueInput={cliente.fechaCreacion.toLocaleString()}
+                        onChange={onChangeForm}
+                        name={'pais'}
+                        label={'Pais:'} valueInput={formulario.pais}
                     />
-                
-               
-                <div className='w-full items-center flex justify-end'>
-                    <Button3>editar</Button3>
-                </div> </div>
+                    <InputsDatos
+                        label={'Fecha Creación:'} valueInput={formulario.fechaCreacion.toLocaleString()}
+                    />
+
+
+                    <div className='w-full items-center flex justify-end'>
+                        <Button3 onClick={handleActualizarData}>actualizar datos</Button3>
+                    </div>
+
+                </div>
             </form>
         </div>
     )

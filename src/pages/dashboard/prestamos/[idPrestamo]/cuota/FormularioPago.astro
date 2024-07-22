@@ -1,8 +1,8 @@
 ---
-import Button1 from "../../../../../components/atomos/Button1.astro";
-import FormCont from "../../../../../components/atomos/FormCont.astro";
-import SelectedFormulario from "../../../../../components/atomos/SelectedFormulario.astro";
-import ContenedorInputForm from "../../../../../components/moleculas/ContenedorInputForm.astro";
+import Button1 from "@/components/atomos/Button1.astro";
+import FormCont from "@/components/atomos/FormCont.astro";
+import SelectedFormulario from "@/components/atomos/SelectedFormulario.astro";
+import ContenedorInputForm from "@/components/moleculas/ContenedorInputForm.astro";
 
 const {
   data: { Cuota, Cliente, Prestamo },montoRestanteCuota
@@ -118,8 +118,8 @@ const metodoPagos = [
 </FormCont>
 
 <script>
-  import { showToast } from "../../../../../components/Toast/toastShow";
-  import { calcularMora } from "../../../../../lib/formulas/calculoMora";
+  import { showToast } from "@/components/Toast/toastShow";
+  import { calcularMora } from "@/lib/formulas/calculoMora";
 
   const formulario = document.getElementById("nuevoPago") as HTMLFormElement;
   let mora = 0;

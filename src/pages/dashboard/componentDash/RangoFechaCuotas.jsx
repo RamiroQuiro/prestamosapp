@@ -31,8 +31,8 @@ export default function RangoFechaCuota({userId}) {
               }
         })
         const data=await res.json()
-        // console.log(data)
-        setDataResult(data.filter(cuota=>!cuota.pagada))
+        console.log(data)
+        setDataResult(data)
       
     } catch (error) {
         console.log(error)
