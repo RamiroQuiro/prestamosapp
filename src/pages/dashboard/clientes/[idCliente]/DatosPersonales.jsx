@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import InputsDatos from '../../../../components/organismos/InputsDatos'
 import Button3 from '../../../../components/atomos/Button3'
 import { clienteSelect } from '../../../../context/store'
+import FormularioDni from '@/components/organismos/FormularioDni'
 
 export default function DatosPersonales({ cliente }) {
     console.log(cliente)
@@ -36,11 +37,7 @@ export default function DatosPersonales({ cliente }) {
         <div className=" border-y bg-white p-5 w-full">
             <form className='flex w-full gap-4 flex-row text-sm'>
 
-                <div className="w-1/3 flex items-center border-r flex-col gap-3">
-                    <img src="/frente.png" alt="frente" width={'200px'} height={'150px'} />
-                    <img src="/atras.png" alt="atras" width={'200px'} height={'150px'} />
-                    <Button3>cargar</Button3>
-                </div>
+              <FormularioDni clienteId={cliente.id} usuarioId={cliente.usuarioId}/>
                 <div className='flex flex-wrap w-full items-start justify-start gap-3'>
 
                     <InputsDatos

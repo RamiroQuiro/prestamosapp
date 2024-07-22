@@ -38,7 +38,9 @@ import { NOW, column, count, defineDb, defineTable } from "astro:db";
     pais: column.text({optional:true}),
     fechaCreacion: column.date({default:NOW}),
     fechaActualizacion: column.date({optional:true}),
-    prestamosCount: column.number({ default: 0 })
+    prestamosCount: column.number({ default: 0 }),
+    srcDniFrente:column.text({optional:true}),
+    srcDniReverso:column.text({optional:true})
   },
 });
 
