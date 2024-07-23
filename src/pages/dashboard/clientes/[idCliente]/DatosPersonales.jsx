@@ -3,9 +3,11 @@ import InputsDatos from '../../../../components/organismos/InputsDatos'
 import Button3 from '../../../../components/atomos/Button3'
 import { clienteSelect } from '../../../../context/store'
 import FormularioDni from '@/components/organismos/FormularioDni'
+import { showToast } from '@/components/Toast/toastShow'
+import { loader } from '../../../../components/loader/showLoader'
 
 export default function DatosPersonales({ cliente }) {
-    console.log(cliente)
+    // console.log(cliente)
 
     clienteSelect.set(cliente)
     const [formulario, setFormulario] = useState(cliente)
@@ -17,15 +19,22 @@ export default function DatosPersonales({ cliente }) {
 
 
     const handleActualizarData = async () => {
-        try {
-            const resFetch = await fetch(`/api/clientes/${cliente.id}`, {
-                method: 'PUT',
-                body: JSON.stringify(formulario)
-            })
-
-            const respuesta = await resFetch.json()
-            console.log(respuesta)
+    loader(true)
+    try {
+        const resFetch = await fetch(`/api/clientes/${cliente.id}`, {
+            method: 'PUT',
+            body: JSON.stringify(formulario)
+        })
+        
+        const respuesta = await resFetch.json()
+        if (resFetch.ok) {
+                loader(false)
+                showToast('Cambios guardados',{
+                    background:'bg-green-600'
+                })
+            }
         } catch (error) {
+            loader(false)
             console.log(error)
         }
 

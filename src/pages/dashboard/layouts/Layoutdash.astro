@@ -1,4 +1,5 @@
 ---
+import Loader from "@/components/loader/Loader.astro";
 import NavDash from "../../../components/organismos/NavDash.astro";
 import Sidebar from "../../../components/organismos/Sidebar.astro";
 
@@ -29,7 +30,7 @@ const url=Astro.url
     <!-- <LoaderGral/> -->
 
     <NavDash dataCliente={dataCliente}/>
-
+    <Loader/>
     <Sidebar />
     <slot />
   </body>
@@ -80,6 +81,6 @@ import { rangoCuotasSelect } from "../../../context/store";
 const cuotas=rangoCuotasSelect.get()
 
 rangoCuotasSelect.subscribe((state)=>{
-  console.log(state.cuotas)
+  // console.log(state.cuotas)
 })
 </script>
