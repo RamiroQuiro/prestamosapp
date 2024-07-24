@@ -29,6 +29,7 @@ export default function FormularioDni({ cliente }) {
             showToast('No se seleccionó imagen para el frente o reverso', {
                 background: 'bg-red-600'
             });
+            loader(false)
             console.error('No se seleccionó ninguna imagen para el frente o reverso');
             return;
         }
@@ -71,7 +72,7 @@ export default function FormularioDni({ cliente }) {
             }
             console.log(response);
         } catch (error) {
-            loader(true)
+            loader(false)
             console.error('Error al subir la imagen', error);
         }
     }
