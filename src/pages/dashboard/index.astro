@@ -26,11 +26,13 @@ const {user} = Astro.locals;
 
 <Layoutdash title="Biendevnido men">
   <MainDash>
+    <ContenedorDiv1>
     <div class="flex w-full min-h-[60vh] items-stretch py-5 justify-start">
       <div class={`$ flex w-full px-5 space-y-5 flex-col items-start justify-start relative`}>
       <Stats />
     </div>
     <ContenedorClientesDash user={user}/>
   </div>
+</ContenedorDiv1>
   </MainDash>
 </Layoutdash>

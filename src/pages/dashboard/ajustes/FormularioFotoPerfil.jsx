@@ -1,6 +1,8 @@
 import Button3 from '@/components/atomos/Button3';
 import { loader } from '@/components/loader/showLoader';
 import { showToast } from '@/components/Toast/toastShow';
+import { storage } from '@/firebase/client';
+import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import React, { useState } from 'react'
 
 export default function FormularioFotoPerfil({user}) { 

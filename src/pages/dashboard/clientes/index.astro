@@ -9,6 +9,7 @@ import FormularioDeBusqueda from "@/components/organismos/FormularioDeBusqueda";
 import { db } from "astro:db";
 import { Cliente } from "astro:db";
 import { eq } from "astro:db";
+import ContenedorDiv1 from "@/components/atomos/ContenedorDiv1.astro";
 
 
 const {user}=Astro.locals
@@ -21,7 +22,7 @@ const clientes = await db
 
 <Layoutdash title="Clientes">
   <MainDash>
-    <div class="flex w-full p-5 flex-col items-start justify-start relative ">
+    <ContenedorDiv1 class="flex w-full p-5 flex-col items-start justify-start relative ">
       <div class="flex mb-2 items-center justify-between w-10/12 gap-5">
         <Titulo1>Clientes</Titulo1>
         <FormularioDeBusqueda  clientes={clientes} client:load />
@@ -35,6 +36,6 @@ const clientes = await db
       <div class="w-full">
         <Tabla />
       </div>
-    </div>
+    </ContenedorDiv1>
   </MainDash>
 </Layoutdash>
