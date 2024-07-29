@@ -22,24 +22,29 @@ const fechaVencimiento = formatHora(data?.Cuota?.fechaVencimiento);
     <h2 class="text-xl font-bold">RamiroQ</h2>
     <span class="text- font-">{fechaFormateada}</span>
   </div>
-  <div class="flex items-center py-3 justify-between w-full border-b">
-    <div>
+  <div class="flex flex-col items-start py-3 justify-between gap-2 w-full border-b">
+    <div class="flex items-start justify-normal gap-5">
       <p class="text-lg font-semibold capitalize">
         {data?.Cliente?.nombre + " " + data?.Cliente.apellido}
       </p>
       <p class="text-lg font-semibold capitalize">DNI: {data.Cliente.dni}</p>
     </div>
+    <div>
     <p class="text-sm italic">{data.Cliente.direccion}</p>
     <p class="text-sm italic">
       {data.Cliente.ciudad + " | " + data.Cliente.departamento}
     </p>
   </div>
+  </div>
   <div class="flex items-center py-5 justify-between w-full border-b">
-    <p class="text-sm font-thin w-1/2 capitalize">
-      pago a cuenta de prestamos id <span class="text-xs font-semibold"
-        >{data?.Prestamo?.id}</span
-      >
+    <div class="flex flex-col  items-start gap-2">
+    <p class="text-xs font-thin w-1/2 capitalize">
+      Id del Prestamo <span class="text-sm font-semibold">{data?.Prestamo?.id}</span>
     </p>
+    <p class="text-xs font-thin w-1/2 capitalize">
+      Id de la Cuota <span class="text-sm font-semibold">{data?.Cuota?.id}</span>
+    </p>
+  </div>
     <div class="flex flex-col items-end w-1/2 border-l-2 px-2">
       <p class="text-sm font- text-end">
         F. Vencimiento <span class="font-bold text-sm tracking-tighter"
@@ -61,11 +66,11 @@ const fechaVencimiento = formatHora(data?.Cuota?.fechaVencimiento);
     <div class="text-end">
       <div class="flex items-center justify-end gap-2">
         {
+          pagosTodos?.length>0&&
           pagosTodos?.map((pago, i) => (
             <div class="flex px-1 border-x flex-col w-full items-center justify-end">
               <div class="text-sm w-full">
                 <span class=" font-medium">Fecha de pago:{" "}
-                
                   {data?.Cuota?.fechaPago?.toLocaleDateString()}
                 </span>
               </div>

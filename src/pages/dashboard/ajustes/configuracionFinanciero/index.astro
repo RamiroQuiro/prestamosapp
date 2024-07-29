@@ -1,0 +1,14 @@
+---
+import ContenedorDiv1 from "@/components/atomos/ContenedorDiv1.astro";
+import LayoutAjustes from "../LayoutAjustes.astro";
+import FormularioConfiguracionFinanzas from './FormularioConfiguracionFinanzas'
+
+---
+
+<LayoutAjustes>
+    <span slot="tituloAjustes">Datos Financieros</span>
+    <ContenedorDiv1>
+   <FormularioConfiguracionFinanzas client:load />
+    </ContenedorDiv1>
+
+</LayoutAjustes>

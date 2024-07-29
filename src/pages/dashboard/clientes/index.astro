@@ -23,14 +23,14 @@ const clientes = await db
 <Layoutdash title="Clientes">
   <MainDash>
     <ContenedorDiv1 class="flex w-full p-5 flex-col items-start justify-start relative ">
-      <div class="flex mb-2 items-center justify-between w-10/12 gap-5">
+      <div class="flex mb-2 items-center justify-between w-full gap-5">
         <Titulo1>Clientes</Titulo1>
         <FormularioDeBusqueda  clientes={clientes} client:load />
-      </div>
-      <div class="md:w-1/6 m-auto absolute top-5 right-0">
-        <ContenedeorModal open="Crear Cliente">
-          <FormularioCliente user={user} />
-        </ContenedeorModal>
+        <div class="md:w-1/6 m-auto  top-0 -right-5">
+          <ContenedeorModal open="Crear Cliente">
+            <FormularioCliente user={user} />
+          </ContenedeorModal>
+        </div>
       </div>
 
       <div class="w-full">

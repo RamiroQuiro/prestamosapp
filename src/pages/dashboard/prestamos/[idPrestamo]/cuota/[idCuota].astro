@@ -32,12 +32,12 @@ try {
 }
 const montoPagoParcial=pagoParciales?.reduce((acc,currentValor)=>(acc+currentValor.monto),0)
 const montoRestanteCuota=resultadoBase.Cuota.monto-montoPagoParcial
- console.log('montoRestante de la cuota ,',montoRestanteCuota)
+//  console.log('montoRestante de la cuota ,',montoRestanteCuota)
 
 
  //  cambiar objeto de la cuota si hay pagos parciales
  const pagosTodos=[...pagoParciales,resultadoBase.Pago]
-console.log('pagos todos ->',pagosTodos)
+// console.log('pagos todos ->',pagosTodos)
 
 ---
 

@@ -13,7 +13,7 @@ const { idCliente } = Astro.params;
   <!-- <div id={'idCliente'} data-idClient={JSON.stringify(clienteDB)} hidden></div> -->
   <MainDash>
     <ContenedorDiv1>
-      <Titulo1>Ajustes - Datos Personales</Titulo1>
+      <Titulo1 >Ajustes - <slot name="tituloAjustes"/></Titulo1>
       <div class="flex w-full justify-normal items-center gap-5">
 
         <slot/>

@@ -63,8 +63,8 @@ const clientes = await db
   });
 </script>
 <script>
-  import { prestamoSimulado } from "../../../context/store";
-
+  import { prestamoSimulado } from "@/context/store";
+import {loader} from '@/components/loader/showLoader'
   const formulario = document.getElementById(
     "prestamoGenerado"
   ) as HTMLFormElement;
@@ -73,6 +73,7 @@ const clientes = await db
   document
     .getElementById("cargarPrestamo")
     .addEventListener("click", async (e) => {
+      loader(true)
       e.preventDefault()
       const contextoPrestamo = prestamoSimulado.get();
 
@@ -86,9 +87,12 @@ const clientes = await db
         const data=await res.json()
         console.log(data)
         if (res.ok) {
+          loader(false)
+          
         document.location.href= `/dashboard/prestamos/${data.id}`
         }
       } catch (error) {
+        loader(false)
         console.log(error);
       }
     });
