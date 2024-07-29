@@ -1,0 +1,24 @@
+---
+import MainDash from "@/components/organismos/MainDash.astro";
+import Layoutdash from "../layouts/Layoutdash.astro";
+import ContenedorDiv1 from "@/components/atomos/ContenedorDiv1.astro";
+import Titulo1 from "@/components/atomos/Titulo1.astro";
+
+const { idCliente } = Astro.params;
+
+
+---
+
+<Layoutdash title=`Ajustes`>
+  <!-- <div id={'idCliente'} data-idClient={JSON.stringify(clienteDB)} hidden></div> -->
+  <MainDash>
+    <ContenedorDiv1>
+      <Titulo1>Ajustes - Datos Personales</Titulo1>
+      <div class="flex w-full justify-normal items-center gap-5">
+
+        <slot/>
+      </div>
+  
+    </ContenedorDiv1>
+  </MainDash>
+</Layoutdash>

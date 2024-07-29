@@ -3,25 +3,21 @@ import MainDash from "@/components/organismos/MainDash.astro";
 import Layoutdash from "../layouts/Layoutdash.astro";
 import Titulo1 from "@/components/atomos/Titulo1.astro";
 import ContenedorDiv1 from "@/components/atomos/ContenedorDiv1.astro";
-import FormularioDatos from './FormularioDatos'
-import { db ,User,eq} from "astro:db";
+import FormularioDatos from "./FormularioDatos";
+import { db, User, eq } from "astro:db";
+import LayoutAjustes from "./LayoutAjustes.astro";
 
-const {id}=Astro.locals.user
-let userData={}
+const { id } = Astro.locals.user;
+let userData = {};
 try {
-    const userDB=(await (db.select().from(User).where(eq(User.id,id)))).at(0)
-    userData=userDB
+  const userDB = (await db.select().from(User).where(eq(User.id, id))).at(0);
+  userData = userDB;
 } catch (error) {
-    console.log(error)
+  console.log(error);
 }
 ---
-
-<Layoutdash title="Ajustes">
-  <MainDash>
-    <ContenedorDiv1 class="flex  p-5 flex-col items-start justify-start relative">
-        <Titulo1>Perfil de Usuario</Titulo1>
-            <FormularioDatos client:load user={userData}/>
-    
+<LayoutAjustes>
+  <ContenedorDiv1>
+      <FormularioDatos client:load user={userData} />
     </ContenedorDiv1>
-  </MainDash></Layoutdash
->
+  </LayoutAjustes>
