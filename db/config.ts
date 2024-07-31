@@ -117,6 +117,7 @@ const PagoParcial = defineTable({
     usuarioId: column.text({ references: () => User.columns.id }),
     tasaInteres: column.number(),
     periodos: column.number(),
+    numeroCuotas:column.number(),
     fechaCreacion: column.date(),
   },
 });
