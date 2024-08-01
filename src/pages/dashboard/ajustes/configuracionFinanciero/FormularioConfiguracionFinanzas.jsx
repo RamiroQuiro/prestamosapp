@@ -106,14 +106,7 @@ export default function FormularioConfiguracionFinanzas({ user }) {
                         </span>
                         <div  className='flex items-center text-xs justify-start gap-2'>
                            
-                           <div className='border-primary-100/50 mr-3 bg-gray-100 border w-7 flex rounded p-1.5 m-auto relative '>
-                             <span  className='w-full text-center'> 3</span>
-                             <ButtonCancelar/>
-                            </div>
-                           <div className='border-primary-100/50 mr-3 bg-gray-100 border w-7 flex rounded p-1.5 m-auto relative'>
-                             <span className='w-full text-center'> 6</span>
-                             <ButtonCancelar/>
-                            </div>
+                        
                            <div className='border-primary-100/50 mr-3 bg-gray-100 border w-7 flex rounded p-1.5 m-auto relative'>
                              <span className='w-full text-center'> 9</span>
                              <ButtonCancelar/>

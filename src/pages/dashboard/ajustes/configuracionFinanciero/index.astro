@@ -2,6 +2,16 @@
 import ContenedorDiv1 from "@/components/atomos/ContenedorDiv1.astro";
 import LayoutAjustes from "../LayoutAjustes.astro";
 import FormularioConfiguracionFinanzas from './FormularioConfiguracionFinanzas'
+import { db ,} from "astro:db";
+import { User,Intereses } from "astro:db";
+
+try {
+    const interesesDB=await db.select().from(Intereses)
+
+    console.log(interesesDB)
+} catch (error) {
+    console.log(error)
+}
 
 ---
 

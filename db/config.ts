@@ -121,6 +121,20 @@ const PagoParcial = defineTable({
     fechaCreacion: column.date(),
   },
 });
+ const Intereses = defineTable({
+  columns: {
+    id: column.text({ primaryKey: true }),
+    usuarioId: column.text({ references: () => User.columns.id }),
+    interes:column.number(),
+  },
+});
+ const nCuotas = defineTable({
+  columns: {
+    id: column.text({ primaryKey: true }),
+    usuarioId: column.text({ references: () => User.columns.id }),
+    nCuota:column.number()
+  },
+});
 
 //  Historial de Configuraciones
  const HistorialConfiguracion = defineTable({
@@ -153,5 +167,5 @@ const PagoParcial = defineTable({
 })
 // https://astro.build/db/config
 export default defineDb({
-  tables: {User,Prestamo,Cliente,Pago,Configuracion,PagoParcial,HistorialConfiguracion,Cuota,RegistroActividades,Session},
+  tables: {User,Prestamo,Cliente,Pago,Configuracion,PagoParcial,HistorialConfiguracion,Cuota,RegistroActividades,Session,Intereses,nCuotas},
 });
