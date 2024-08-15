@@ -4,6 +4,8 @@ import LayoutAjustes from "../LayoutAjustes.astro";
 import FormularioConfiguracionFinanzas from './FormularioConfiguracionFinanzas'
 import { db ,} from "astro:db";
 import { User,Intereses } from "astro:db";
+import { Cliente } from "astro:db";
+import { nCuotas } from "astro:db";
 
 try {
     const interesesDB=await db.select().from(Intereses)

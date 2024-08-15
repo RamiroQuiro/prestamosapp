@@ -121,6 +121,7 @@ const PagoParcial = defineTable({
     fechaCreacion: column.date(),
   },
 });
+
  const Intereses = defineTable({
   columns: {
     id: column.text({ primaryKey: true }),
