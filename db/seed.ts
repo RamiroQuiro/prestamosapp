@@ -1,4 +1,4 @@
-import { Cliente, db, User, Intereses, nCuotas } from "astro:db";
+import { Cliente, db, User, Intereses, nCuotas, moraCuota} from "astro:db";
 
 // https://astro.build/db/seed
 export default async function seed() {
@@ -10,15 +10,11 @@ export default async function seed() {
     },
   ]);
 
-  await db.insert(Cliente).values([
+  await db.insert(moraCuota).values([
     {
-      id: "qwert",
-      email: "rama.exe.13@gmail.com",
-      nombre: "Ramiro",
-      apellido: "Quiroga",
-      dni: 33888224,
-      celular: 3855815662,
+      id: "1",
       usuarioId: "1",
+      mora:0,
     },
   ]);
 

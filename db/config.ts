@@ -129,6 +129,14 @@ const PagoParcial = defineTable({
     interes:column.number(),
   },
 });
+
+ const moraCuota = defineTable({
+  columns: {
+    id: column.text({ primaryKey: true }),
+    usuarioId: column.text({ references: () => User.columns.id }),
+    mora:column.number(),
+  },
+});
  const nCuotas = defineTable({
   columns: {
     id: column.text({ primaryKey: true }),
@@ -168,5 +176,5 @@ const PagoParcial = defineTable({
 })
 // https://astro.build/db/config
 export default defineDb({
-  tables: {User,Prestamo,Cliente,Pago,Configuracion,PagoParcial,HistorialConfiguracion,Cuota,RegistroActividades,Session,Intereses,nCuotas},
+  tables: {User,Prestamo,Cliente,Pago,Configuracion,PagoParcial,HistorialConfiguracion,Cuota,RegistroActividades,Session,Intereses,nCuotas,moraCuota},
 });
