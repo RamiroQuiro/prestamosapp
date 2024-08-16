@@ -9,13 +9,15 @@ import { nCuotas } from "astro:db";
 import { moraCuota } from "astro:db";
 import { eq } from "astro:db";
 
-const {user}=Astro.locals
-console.log(user)
+const {id}=Astro.locals.user
+
+let datosUsuario={intereses:[],nCuotas:[],moraCuota:[]}
 try {
-    const datosUsuario=await db.select().from(Intereses).where(eq(Intereses.usuarioId,user.id)).innerJoin(moraCuota,eq(Intereses.usuarioId,user.id)).innerJoin(nCuotas,eq(Intereses.usuarioId,user.id))
-    const datosDefault=await db.select().from(Intereses).where(eq(Intereses.usuarioId,"1")).innerJoin(moraCuota,eq(Intereses.usuarioId,"1")).innerJoin(nCuotas,eq(Intereses.usuarioId,"1"))
-   
-    console.log(datosDefault)
+     datosUsuario.intereses = await db.select().from(Intereses).where(eq(Intereses.usuarioId,id))
+     datosUsuario.nCuotas = await db.select().from(nCuotas).where(eq(nCuotas.usuarioId,id))
+     datosUsuario.moraCuota = await db.select().from(moraCuota).where(eq(moraCuota.usuarioId,id))
+
+    console.log('data',datosUsuario)
 } catch (error) {
     console.log(error)
 }
@@ -25,7 +27,7 @@ try {
 <LayoutAjustes>
     <span slot="tituloAjustes">Datos Financieros</span>
     <ContenedorDiv1>
-   <FormularioConfiguracionFinanzas client:load />
+   <FormularioConfiguracionFinanzas dataUser={datosUsuario} usuarioId={id} client:load />
     </ContenedorDiv1>
 
 </LayoutAjustes>

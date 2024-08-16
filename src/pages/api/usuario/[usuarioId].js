@@ -7,7 +7,6 @@ export async function GET({ params }) {
     try {
 
        const usuarioDB=(await db.select().from(User).where(eq(User.id,usuarioId))).at(0)
-console.log(usuarioDB)
        if (!usuarioDB) {
         return new Response(
             JSON.stringify({
