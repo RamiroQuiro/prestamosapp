@@ -35,27 +35,47 @@ import { generateId } from "lucia";
 //     }
 // }
 
-export async function POST({params,request}){
-const data=await request.json()
-const {usuarioId}=params
-    console.log(data)
+export async function POST({ params, request }) {
+    const data = await request.json()
+    const { usuarioId } = params
 
-    data.fechaActualizacion=new Date()
-    
+
+    data.fechaActualizacion = new Date()
+
+
     try {
-        const id = generateId(15);
-        console.log(id)
-        const updateUser=await db.insert(Intereses).values({
-            id,
-            interes:data.interes,
-            usuarioId
-        })
-       
 
-        
+        if (data.interes) {
+            const id = generateId(15);
+            const updateUser = await db.insert(Intereses).values({
+                id,
+                interes: data.interes,
+                usuarioId
+            })
+        }
+        if (data.mora) {
+            const id = generateId(15);
+            const updateUser = await db.insert(moraCuota).values({
+                id,
+                mora: data.mora,
+                usuarioId
+            })
+        }
+        if (data.nCuotas) {
+            const id = generateId(15);
+            const updateUser = await db.insert(nCuotas).values({
+                id,
+                nCuota: data.nCuotas,
+                usuarioId
+            })
+        }
+
+
+
+
         return new Response(
             JSON.stringify({
-                msg:'cambios efectuados',
+                msg: 'cambios efectuados',
             })
         );
     } catch (error) {
@@ -69,3 +89,41 @@ const {usuarioId}=params
         );
     }
 }
+
+export async function DELETE({ request, params }) {
+    const {data} = await request.json()
+    const { usuarioId } = params
+
+console.log(data)
+
+    try {
+
+        if (data.interes) {
+            const id = generateId(15);
+            const updateUser = await db.delete(Intereses).where(eq(Intereses.id,data.id))
+        }
+        if (data.mora) {
+            const id = generateId(15);
+            const updateUser = await db.delete(moraCuota).where(eq(moraCuota.id,data.id))
+        }
+        if (data.nCuota) {
+            const id = generateId(15);
+            const updateUser = await db.delete(nCuotas).where(eq(nCuotas.id,data.id))
+        }
+
+
+        return new Response(
+            JSON.stringify({
+                msg: 'cambios efectuados',
+            })
+        )
+    } catch (error) {
+        return new Response(
+            JSON.stringify({
+                msg: 'cambios efectuados',
+            })
+        )
+    }
+
+
+} 
