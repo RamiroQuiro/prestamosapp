@@ -117,18 +117,21 @@ export default function FormularioConfiguracionFinanzas({ dataUser: { intereses,
                         {/* verificar si hay datos */}
                         {
                             intereses &&
-                            intereses.map((interes, i) => (
-                                <div key={interes.id} className='border-primary-100/50 mr-2 bg-gray-100 border rounded p-1.5 m-auto relative'>
-                                    <span >{interes.value}%</span>
-                                    <ButtonCancelar onclick={() => eliminarDato(interes)} />
-                                </div>
-                            ))
+                            intereses.map((interes, i) => {
+                                interes.interes=true
+                                return (
+                                    <div key={interes.id} className='border-primary-100/50 mr-2 bg-gray-100 border rounded p-1.5 m-auto relative'>
+                                        <span >{interes.value}%</span>
+                                        <ButtonCancelar onclick={() => eliminarDato(interes)} />
+                                    </div>
+                                )
+                            })
                         }
 
                         <label htmlFor="interes" className=''>
                             <input type="number" name="interes" onChange={onChangeForm} id="interes" className=' border-primary-100 border w-10 rounded p-1.5 m-auto' />
                         </label>
-                       <BotonMas onclick={handleAgregarData}/>
+                        <BotonMas onclick={handleAgregarData} />
                     </div>
                 </div>
 
@@ -155,19 +158,22 @@ export default function FormularioConfiguracionFinanzas({ dataUser: { intereses,
                         {/* verificar si hay datos */}
                         {
                             nCuotas &&
-                            nCuotas.map((nCuota, i) => (
-                                <div key={nCuota.id} className='border-primary-100/50 mr-2  text-center bg-gray-100 border w-8 rounded p-1.5 m-auto relative'>
-                                    <span >{nCuota.value}</span>
-                                    <ButtonCancelar onclick={() => eliminarDato(nCuota)} />
-                                </div>
-                            ))
+                            nCuotas.map((nCuota, i) => {
+                                nCuota.nCuota = true
+                                return (
+                                    <div key={nCuota.id} className='border-primary-100/50 mr-2  text-center bg-gray-100 border w-8 rounded p-1.5 m-auto relative'>
+                                        <span >{nCuota.value}</span>
+                                        <ButtonCancelar onclick={() => eliminarDato(nCuota)} />
+                                    </div>
+                                )
+                            })
                         }
                         <label htmlFor="nCuotas" className=''>
                             <input type="number" name="nCuotas" onChange={onChangeForm} id="nCuotas" className=' border-primary-100 border w-10 rounded p-1.5 m-auto' />
                         </label>
-                       
-                        <BotonMas onclick={handleAgregarData}/>
-                    
+
+                        <BotonMas onclick={handleAgregarData} />
+
                     </div>
                 </div>
                 <div className='flex items-center justify-start gap-3 my-3'>
@@ -184,7 +190,7 @@ export default function FormularioConfiguracionFinanzas({ dataUser: { intereses,
                         {
                             moraCuota &&
                             moraCuota.map((mora, i) => (
-                                <div key={mora.id} className='border-primary-100/50 mr-2 text-center bg-gray-100 border w-10 rounded p-1.5 m-auto relative'>
+                                <div key={mora.id} className='border-primary-100/50 mr-2 text-center bg-gray-100 border w-12 rounded p-1.5 m-auto relative'>
                                     <span >{mora.value}%</span>
                                     <ButtonCancelar onclick={() => eliminarDato(mora)} />
                                 </div>
@@ -193,7 +199,7 @@ export default function FormularioConfiguracionFinanzas({ dataUser: { intereses,
                         <label htmlFor="mora" className=''>
                             <input type="number" name="mora" id="mora" onChange={onChangeForm} className=' border-primary-100 border w-8 rounded p-1.5 m-auto' />
                         </label>
-                        <BotonMas onclick={handleActualizarData}/>
+                        <BotonMas onclick={handleActualizarData} />
 
                     </div>
                 </div>

@@ -3,10 +3,22 @@ import Button1 from "@/components/atomos/Button1.astro";
 import FormCont from "@/components/atomos/FormCont.astro";
 import SelectedFormulario from "@/components/atomos/SelectedFormulario.astro";
 import ContenedorInputForm from "@/components/moleculas/ContenedorInputForm.astro";
+import { eq } from "astro:db";
+import { db,moraCuota } from "astro:db";
 
 const {
   data: { Cuota, Cliente, Prestamo },montoRestanteCuota
 } = Astro.props;
+const {id}=Astro.locals.user
+
+let tasaInteresMora=0
+try {
+  const dataDb=await db.select().from(moraCuota).where(eq(moraCuota.usuarioId,id))
+  tasaInteresMora=dataDb[0].value
+
+} catch (error) {
+  console.log(error)
+}
 
 const metodoPagos = [
   {
@@ -37,7 +49,7 @@ const metodoPagos = [
   >
     <span>Id de Cuota : </span><p>{Cuota.id}</p>
   </div>
-  <div class="flex md:flex-row items-center gap-2 w-full justify-normal">
+  <div id="moraId" data-moraInteres={tasaInteresMora} class="flex md:flex-row items-center gap-2 w-full justify-normal">
     <ContenedorInputForm
       label="nombre"
       type="text"
@@ -127,9 +139,12 @@ const metodoPagos = [
   const montoMora = document.getElementById("montoMora");
   const sinMora = document.getElementById("sinMora");
   const fechaVencimientoId = document.getElementById("fechaVencimiento");
-  const fechaVencimiento=fechaVencimientoId.getAttribute('data-fechaVencimiento')
+  const nodoMora = document.getElementById("moraId");
+  const tasaInteresMora=nodoMora.getAttribute('data-moraInteres')
+  // const fechaVencimiento=fechaVencimientoId.getAttribute('data-fechaVencimiento')
   // const fechaVencimiento = "07-01-2024";
-  const tasaInteresMora = 0.6432;
+  // const tasaInteresMora = 0.6432;
+// console.log(tasaInteresMora)
   const montoCuota = fechaVencimientoId.getAttribute("data-montoCuota");
   const metodoPago = document.getElementById("metodoPago");
   const formData = new FormData(formulario);

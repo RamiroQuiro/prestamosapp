@@ -29,7 +29,7 @@ usuario=await db.select().from(User).where(eq(User.id,id))
       montoCuota: `$ ${element?.Prestamo?.montoCuota.toLocaleString()}`,
       nCuotas: element?.Prestamo.nCuotas,
       montoTotal:`$ ${ element?.Prestamo.montoTotal.toLocaleString()}`,
-      fechaVencimiento: element?.Prestamo.fechaFin.toLocaleDateString(),
+      fechaVencimiento: element?.Prestamo.fechaFin,
       tasaInteres: `${element?.Prestamo.tasaInteres}%`,
       estado:element?.Prestamo.estado
     };

@@ -126,7 +126,7 @@ export async function DELETE({ request, params }) {
     const {data} = await request.json()
     const { usuarioId } = params
 
-// console.log(data)
+console.log(data)
 
     try {
 

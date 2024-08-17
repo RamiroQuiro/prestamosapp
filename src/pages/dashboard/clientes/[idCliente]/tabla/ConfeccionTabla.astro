@@ -21,7 +21,7 @@ try {
       href:`/dashboard/prestamos/${element.id}`,
       id:element?.id,
       fechaInicio: element?.fechaInicio.toLocaleDateString(),
-      fechaVencimiento: element?.fechaFin.toLocaleDateString(),
+      fechaVencimiento: element?.fechaFin,
       montoCuota: `$ ${element?.montoCuota.toLocaleString()}`,
       tasaInteres: `${element?.tasaInteres}%`,
       nCuotas: element?.nCuotas,
