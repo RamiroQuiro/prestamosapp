@@ -35,12 +35,44 @@ import { generateId } from "lucia";
 //     }
 // }
 
-export async function POST({ params, request }) {
+export async function PUT({ params, request }) {
     const data = await request.json()
     const { usuarioId } = params
 
+// console.log(data)
+    try {
 
-    data.fechaActualizacion = new Date()
+    
+        if (data.mora) {
+            const id = generateId(15);
+            const updateUser = await db.update(moraCuota).set({
+                value:data.mora
+            })
+        }
+     
+
+
+
+
+        return new Response(
+            JSON.stringify({
+                msg: 'cambios efectuados',
+            })
+        );
+    } catch (error) {
+        console.log(error)
+        return new Response(
+            JSON.stringify({
+                data: "error",
+            }, {
+                code: 404
+            })
+        );
+    }
+}
+export async function POST({ params, request }) {
+    const data = await request.json()
+    const { usuarioId } = params
 
 
     try {
@@ -49,7 +81,7 @@ export async function POST({ params, request }) {
             const id = generateId(15);
             const updateUser = await db.insert(Intereses).values({
                 id,
-                interes: data.interes,
+                value: data.interes,
                 usuarioId
             })
         }
@@ -57,7 +89,7 @@ export async function POST({ params, request }) {
             const id = generateId(15);
             const updateUser = await db.insert(moraCuota).values({
                 id,
-                mora: data.mora,
+                value: data.mora,
                 usuarioId
             })
         }
@@ -65,7 +97,7 @@ export async function POST({ params, request }) {
             const id = generateId(15);
             const updateUser = await db.insert(nCuotas).values({
                 id,
-                nCuota: data.nCuotas,
+                value: data.nCuotas,
                 usuarioId
             })
         }
@@ -94,7 +126,7 @@ export async function DELETE({ request, params }) {
     const {data} = await request.json()
     const { usuarioId } = params
 
-console.log(data)
+// console.log(data)
 
     try {
 

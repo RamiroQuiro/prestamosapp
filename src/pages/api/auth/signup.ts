@@ -1,5 +1,5 @@
 import type { APIContext } from "astro";
-import { User, db, eq } from "astro:db";
+import { User, db, eq, moraCuota } from "astro:db";
 import { generateId } from "lucia";
 import bcrypt from "bcryptjs";
 import { lucia } from "../../../lib/auth";
@@ -11,9 +11,8 @@ export async function POST({
 }: APIContext): Promise<Response> {
   const formData = await request.json();
 
-  
   const { email, password, userName } = await formData;
-console.log(email,password)
+  // console.log(email, password);
   if (!email || !password || !userName) {
     return new Response(
       JSON.stringify({
@@ -31,15 +30,14 @@ console.log(email,password)
     );
   }
 
-//   verificar si el usuario existe
+  //   verificar si el usuario existe
   const existingUser = await db
     .select()
     .from(User)
     .where(eq(User.email, email));
-    console.log(existingUser)
+  console.log(existingUser);
 
-
-  if (existingUser.length>0) {
+  if (existingUser.length > 0) {
     return new Response(
       JSON.stringify({
         data: "email ya registrado",
@@ -63,7 +61,12 @@ console.log(email,password)
     },
   ]);
 
-  const session = await lucia.createSession(userId, { });
+  await db.insert(moraCuota).values({
+    id:generateId(15),
+    value:0,
+    usuarioId:userId
+  })
+  const session = await lucia.createSession(userId, {});
   const sessionCookie = lucia.createSessionCookie(session.id);
   cookies.set(
     sessionCookie.name,

@@ -126,7 +126,7 @@ const PagoParcial = defineTable({
   columns: {
     id: column.text({ primaryKey: true }),
     usuarioId: column.text({ references: () => User.columns.id }),
-    interes:column.number(),
+    value:column.number(),
   },
 });
 
@@ -134,14 +134,14 @@ const PagoParcial = defineTable({
   columns: {
     id: column.text({ primaryKey: true }),
     usuarioId: column.text({ references: () => User.columns.id }),
-    mora:column.number(),
+    value:column.number({default:0}),
   },
 });
  const nCuotas = defineTable({
   columns: {
     id: column.text({ primaryKey: true }),
     usuarioId: column.text({ references: () => User.columns.id }),
-    nCuota:column.number()
+    value:column.number()
   },
 });
 

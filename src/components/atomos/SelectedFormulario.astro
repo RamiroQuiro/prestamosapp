@@ -1,6 +1,6 @@
 ---
 
-const {options,name}=Astro.props
+const {options,name,labelOption}=Astro.props
 ---
 
 <select name={name} id={name} class={`${"style"} w-full text-sm bg-primary-200/10 group-hover:ring-2 rounded-lg  border-gray-300  ring-primary-200/60 focus:ring-2  outline-none transition-colors duration-200 ease-in-out px-2 py-2`}>
@@ -9,7 +9,7 @@ const {options,name}=Astro.props
     options.map((opcion)=>{
 
         return(
-        <option value={opcion.value} id={opcion.id} class="">{opcion.name}</option>
+        <option value={opcion.value} id={opcion.id} class="">{opcion.name || opcion.value} {labelOption&&labelOption}</option>
         )
     })
    }
