@@ -53,6 +53,12 @@ import { showToast } from "@/components/Toast/toastShow";
     formData.append("userId", userId.id);
     const data = Object.fromEntries(formData.entries());
 
+console.log(data)
+if (!data.nombre || !data.apellido || !data.dni || !data.cel || !data.direccion) {
+  showToast('complete todo los datos',{background:'bg-red-600'})
+  btnCerrrarModal.click()
+  return
+}
     try {
       const response = await fetch("/api/clientes/route", {
         method: "POST",
@@ -69,7 +75,7 @@ import { showToast } from "@/components/Toast/toastShow";
       }
       if (dataJson.status == 400) {
           btnCerrrarModal.click()
-        showToast(dataJson.msg)
+        showToast(dataJson.msg,{background:'bg-red-600'})
       }
       // console.log(response)
     } catch (error) {
