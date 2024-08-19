@@ -32,16 +32,19 @@ const { user } = Astro.props;
   </div>
   <ContenedorInputForm label="direccion" type="text" name="direccion" />
   <ContenedorBoton>
+    
     <Button1 type="submit">agregar</Button1>
-    <Button1 span="close">cancelar</Button1>
   </ContenedorBoton>
 </FormCont>
 
 <script >
+import { showToast } from "@/components/Toast/toastShow";
+
 
 
   const formulario = document.getElementById("formularioCliente");
   const userId=document.querySelector('[data-user-id]')
+  const btnCerrrarModal=document.getElementById('cerrarModal')
   // console.log("usuario en el scrtipt", user);
   formulario.addEventListener("submit", async (e) => {
     e.preventDefault();
@@ -56,17 +59,17 @@ const { user } = Astro.props;
         headers: {
           "Content-Type": "application/json",
         },
-
         body: JSON.stringify(data),
       });
       const dataJson = await response.json();
-      console.log(response);
+      // console.log(dataJson);
+      
       if (dataJson.status == 200) {
         window.location.reload();
       }
       if (dataJson.status == 400) {
-     
-        window.location.reload()
+          btnCerrrarModal.click()
+        showToast(dataJson.msg)
       }
       // console.log(response)
     } catch (error) {
