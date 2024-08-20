@@ -1,0 +1,38 @@
+---
+import { db,eq,Cliente,Cuota } from "astro:db";
+import TablaPagoSelect from "./TablaPagoSelect";
+
+const { cuotasSeleccionadas } = Astro.props;
+const { id } = Astro.locals.user;
+console.log(id)
+let prestamos = [];
+let arrayBody = [];
+let usuario = [];
+let columnas = [];
+try {
+  const clientesDB = await db.select({id: Cliente.id,nombre: Cliente?.nombre,apellido: Cliente?.apellido,}).from(Cliente).where(eq(Cliente.usuarioId, id))
+const clientesss=await db.select().from(Cliente)
+  arrayBody = cuotasSeleccionadas.map((element, i) => {
+    const clienteName = clientesDB.find(
+      (cliente) => cliente.id == element.clienteId
+    );
+    const fecha = new Date(element?.fechaPago);
+    return {
+      href: `/dashboard/prestamos/${element.prestamoId}/cuota/${element.id}`,
+      numero: i + 1,
+      cliente: `${clienteName.nombre} ${clienteName.apellido}`,
+      id: element?.id,
+      monto: `$ ${element?.monto.toLocaleString()}`,
+      numeroCuota: element?.cuotaId,
+      prestamoId: element.prestamoId,
+      fechaVencimiento: fecha,
+    };
+  });
+} catch (error) {
+  console.log(error);
+}
+---
+
+<div class="w-full overflow-x-auto my-5">
+  <TablaPagoSelect arrayBody={arrayBody} client:load />
+</div>

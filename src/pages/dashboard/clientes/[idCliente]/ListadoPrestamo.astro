@@ -1,0 +1,135 @@
+---
+import { db } from "astro:db";
+import { Cliente } from "astro:db";
+import { Prestamo } from "astro:db";
+import { Pago } from "astro:db";
+import { PagoParcial } from "astro:db";
+import { Cuota } from "astro:db";
+import { eq } from "astro:db";
+const { idCliente } = Astro.props;
+
+let totalPrestado, totalPagado, prestamosMensuales, pagosMensuales;
+
+try {
+  const clienteFind = await db
+    .select({ nombre: Cliente.nombre, email: Cliente.email })
+    .from(Cliente)
+    .where(eq(Cliente.id, idCliente));
+  const prestamosCliente = await db
+    .select({
+      id: Prestamo.id,
+      fechaCreacion: Prestamo.fechaCreacion,
+      montoTotal: Prestamo.montoTotal,
+      capital: Prestamo.capital,
+      cuota: Prestamo.montoCuota,
+    })
+    .from(Prestamo)
+    .where(eq(Prestamo.clienteId, idCliente));
+  const pagosDelCliente = await db
+    .select({
+      prestamoId: Pago.prestamoId,
+      cuotaId: Pago.cuotaId,
+      fechaPago: Pago.fechaPago,
+      montoPago: Pago.monto,
+    })
+    .from(Pago)
+    .where(eq(Pago.clienteId, idCliente));
+  const pagosParciales = await db
+    .select({
+      prestamoId: PagoParcial.prestamoId,
+      cuotaId: PagoParcial.cuotaId,
+      fechaPago: PagoParcial.fechaPago,
+      montoPago: PagoParcial.monto,
+    })
+    .from(PagoParcial)
+    .where(eq(PagoParcial.clienteId, idCliente));
+  const dataTotal = {
+    cliente: clienteFind[0],
+    prestamos: prestamosCliente,
+    pagos: pagosDelCliente,
+    pagosParciales: pagosParciales,
+  };
+  //   console.log("este es el cliente encontrado", dataTotal);
+
+  function calcularTotalPrestado(prestamos) {
+    return prestamos.reduce((total, prestamo) => total + prestamo.capital, 0);
+  }
+  function calcularTotalPagado(pagos, pagosParciales) {
+    const totalPagos = pagos.reduce((total, pago) => total + pago.montoPago, 0);
+    const totalPagosParciales = pagosParciales.reduce(
+      (total, pago) => total + pago.montoPago,
+      0
+    );
+
+    return totalPagos + totalPagosParciales;
+  }
+  function pagosPorMes(pagos, pagosParciales) {
+    const todosLosPagos = [...pagos, ...pagosParciales];
+    return todosLosPagos.reduce((acc, pago) => {
+      const mes = pago.fechaPago.getMonth() + 1; // Enero es 0
+      const año = pago.fechaPago.getFullYear();
+      const clave = `${mes}-${año}`;
+
+      if (!acc[clave]) {
+        acc[clave] = 0;
+      }
+      acc[clave] += pago.montoPago;
+
+      return acc;
+    }, {});
+  }
+
+  function prestamosFecha(prestamos) {
+    const newArray = prestamos.reduce((acc, prestamo) => {
+      const mes = prestamo.fechaCreacion.getMonth() + 1; // Enero es 0
+      const año = prestamo.fechaCreacion.getFullYear();
+      const date = prestamo.fechaCreacion;
+      const clave = `${mes}-${año}`;
+      if (!acc[clave]) {
+        acc[clave] = 0;
+      }
+      acc[clave] += prestamo.capital;
+
+      return acc;
+    }, {});
+    return newArray;
+  }
+
+  totalPrestado = calcularTotalPrestado(dataTotal.prestamos);
+  //   console.log("Total Prestado:", totalPrestado);
+
+  totalPagado = calcularTotalPagado(dataTotal.pagos, dataTotal.pagosParciales);
+  //   console.log("Total Pagado:", totalPagado);
+
+  prestamosMensuales = Object.entries(prestamosFecha(dataTotal.prestamos));
+  pagosMensuales = pagosPorMes(dataTotal.pagos, dataTotal.pagosParciales);
+
+  console.log("Pagos por Mes", prestamosMensuales);
+} catch (error) {
+  console.log(error);
+}
+---
+
+<div class="my-3 flex flex-col w-full items-start justify-normal">
+  <div class="flex text-sm gap-2 mb-3">
+    <h3 class="text-sm">Plata Prestada</h3>
+    <span class="font-semibold">
+      ${totalPrestado.toLocaleString()}
+    </span>
+  </div>
+
+  <div class="w-full ">
+    {
+      prestamosMensuales?.map((prestamo, i) => {
+        // const date = new Date(prestamo[0]);
+
+        return (
+          <div class=" w-full bg-primary-300/30 px-1 border-y py-0.5 font- text-sm ">
+            → {`${prestamo[0]}`} -{" "}
+            {`$${prestamo[1].toLocaleString()}`}
+          </div>
+        );
+      })
+    }
+  </div>
+</div>

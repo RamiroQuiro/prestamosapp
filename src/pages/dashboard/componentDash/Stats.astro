@@ -10,6 +10,7 @@ import { eq } from "astro:db";
 import { Pago } from "astro:db";
 import { Cuota } from "astro:db";
 import RangoFechaCuotas from './RangoFechaCuotas'
+import RangoFechaPagos from "./RangoFechaPagos";
 
 const todayValue = new Date().toLocaleDateString();
 
@@ -230,13 +231,7 @@ try {
     />
   </div>
   <div class="flex flex-col h-full items-center gap-3">
-    <Stat>
-      <h3 class="font-medium">Pagos</h3>
-      <label for="inputDate">
-        <InputDate client:load />
-      </label>
-      <span class="font-black text-lg">$2200</span>
-    </Stat>
+  <RangoFechaPagos client:load userId={id}/>
   </div>
 </ArticleDash>
 

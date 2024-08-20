@@ -17,7 +17,7 @@ try {
      datosUsuario.nCuotas = await db.select().from(nCuotas).where(eq(nCuotas.usuarioId,id))
      datosUsuario.moraCuota = await db.select().from(moraCuota).where(eq(moraCuota.usuarioId,id))
 
-    console.log('data',datosUsuario)
+    // console.log('data',datosUsuario)
 } catch (error) {
     console.log(error)
 }

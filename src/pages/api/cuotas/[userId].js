@@ -22,11 +22,11 @@ export async function GET({ params, props, request }) {
         )
       )
 
+const cuotasSinPagar=cuotasBD.filter(cuota=>cuota.pagada==false)
     // console.log('cuotas encontradas ->',cuotasBD);
-
     return new Response(
       JSON.stringify({
-        data: cuotasBD,
+        data: cuotasSinPagar,
       }),
       { status: 200 }
     );

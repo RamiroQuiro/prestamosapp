@@ -1,7 +1,9 @@
 ---
-import LayoutClient from "./LayoutClient.astro";
 
+import LayoutClient from "./LayoutClient.astro";
+import ListadoPrestamo from './ListadoPrestamo.astro'
 const { idCliente } = Astro.params;
+
 ---
 
 <LayoutClient>
@@ -15,7 +17,15 @@ const { idCliente } = Astro.params;
   >
     <canvas id="conductaCliente" class="p-5"> </canvas>
   </div>
+<!-- detallos de prestmos a este cliente -->
+  <div
+    class="h- flex w- items-center justify-center border p-5 rounded-lg shadow-md bg-gray-50 flex-col"
+  >
+    <h2 class="text-sm">Montos Prestados a este usuario</h2>
+  <ListadoPrestamo idCliente={idCliente}/>
+  </div>
 </LayoutClient>
+
 <script
   type="text/javascript"
   src="https://cdn.jsdelivr.net/npm/chart.js/dist/chart.umd.min.js"></script>
@@ -37,7 +47,7 @@ const { idCliente } = Astro.params;
 
   // Declarar la variable para las etiquetas de los préstamos
   let labelsPrestamos = [];
-let dataChartPolar={}
+  let dataChartPolar = {};
   try {
     // Realizar una petición para obtener los datos del cliente
     const fetching = await fetch(`/api/clientes/${idCliente}`);
@@ -93,7 +103,7 @@ let dataChartPolar={}
       return {
         cuotasConMora: cuotasConMora.length,
         cuotasSinMora: cuotasSinMora.length,
-        pagosParciales:pagoParciales.length
+        pagosParciales: pagoParciales.length,
       };
     };
 
@@ -198,7 +208,11 @@ let dataChartPolar={}
     labels: ["Puntualidad en pagos", "Pago con mora", "Pagos parciales"],
     datasets: [
       {
-        data: [dataChartPolar.cuotasSinMora, dataChartPolar.cuotasConMora, dataChartPolar.pagosParciales],
+        data: [
+          dataChartPolar.cuotasSinMora,
+          dataChartPolar.cuotasConMora,
+          dataChartPolar.pagosParciales,
+        ],
         backgroundColor: ["#2B60E390", "#FF333390", "#E3D32B90"],
       },
     ],
