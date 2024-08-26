@@ -10,7 +10,7 @@ const { idCliente } = Astro.params;
   <div
     class="h- flex items-center justify-center border p-5 rounded-lg shadow-md bg-gray-50"
   >
-    <canvas id="modelsCarts" class="p-5"> </canvas>
+    <canvas id="modelsCarts"  class="p-5"> </canvas>
   </div>
   <div
     class="h- flex w- items-center justify-center border p-5 rounded-lg shadow-md bg-gray-50"
@@ -21,7 +21,7 @@ const { idCliente } = Astro.params;
   <div
     class="h- flex w- items-center justify-center border p-5 rounded-lg shadow-md bg-gray-50 flex-col"
   >
-    <h2 class="text-sm">Montos Prestados a este usuario</h2>
+    <h2 class="text-sm font-semibold text-primary-text">Fondos Prestados a Cliente</h2>
   <ListadoPrestamo idCliente={idCliente}/>
   </div>
 </LayoutClient>

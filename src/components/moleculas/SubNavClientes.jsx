@@ -17,8 +17,8 @@ export default function SubNavClientes({ idClients, pathname, dataCliente }) {
       children: 'Datos personales'
     },
     {
-      href: `/dashboard/clientes/${idClients}/creditos`,
-      children: 'creditos'
+      href: `/dashboard/clientes/${idClients}/prestamos`,
+      children: 'prestamos'
     },
     {
       href: `/dashboard/clientes/${idClients}/pagos`,

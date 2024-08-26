@@ -6,7 +6,7 @@ import SubNavAjustes from '../moleculas/SubNavAjustes'
 export default function SubNavDash({ pathname,idPrestamo,idCliente,dataCliente }) {
 
 
-    if (pathname.includes('prestamos')) {
+    if (pathname.startsWith('/dashboard/prestamos')) {
         return (
             <SubNavPrestamo  pathname={pathname}  idPrestamo={idPrestamo}/>
         )

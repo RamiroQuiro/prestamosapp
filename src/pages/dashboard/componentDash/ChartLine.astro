@@ -1,0 +1,87 @@
+<div
+  class="flex h-auto w-full items-center justify-center border p-5 rounded-lg shadow-md bg-gray-50"
+>
+  <canvas id="movimientoMensual" style="width: 200px height: 200px;" class="p-5 "></canvas>
+</div>
+
+<script
+  type="text/javascript"
+  src="https://cdn.jsdelivr.net/npm/chart.js/dist/chart.umd.min.js"
+></script>
+
+<script>
+  // Datos de muestra
+  const movimientoData = {
+    meses: ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio"],
+    capitalPrestado: [
+      100000, 150000, 130000, 120000, 140000, 160000, 180000
+    ],
+    ganancias: [200000, 70000, 65000, 60000, 75000, 80000, 85000],
+  };
+
+  // Extraer etiquetas y datos para el gráfico
+  const labels = movimientoData.meses; // Meses
+  const capitalData = movimientoData.capitalPrestado; // Capital prestado
+  const gananciaData = movimientoData.ganancias; // Ganancias/Cobros
+
+  // Crear los datos del gráfico
+  const data = {
+    labels: labels,
+    datasets: [
+      {
+        label: "Capital Prestado",
+        data: capitalData,
+        borderColor: "#2B60E3",
+        backgroundColor: "rgba(43, 96, 227, 0.5)",
+        borderWidth: 2, 
+        borderRadius: 5,
+      },
+      {
+        label: "Ganancias/Cobros",
+        data: gananciaData,
+        borderColor: "#FF3333",
+        backgroundColor: "rgba(255, 51, 51, 0.5)",
+        borderWidth: 2, 
+        borderRadius: 5,
+      },
+    ],
+  };
+
+  // Configuración del gráfico
+  const config = {
+    type: "bar",
+    data: data,
+    options: {
+        
+      responsive: true,
+      plugins: {
+        legend: {
+          position: "top",
+        },
+        title: {
+          display: true,
+          text: "Capital Prestado y Ganancias Mensuales",
+        },
+      },
+      scales: {
+        y: {
+          beginAtZero: true,
+          ticks: {
+            callback: function (value) {
+              return new Intl.NumberFormat("es-AR", {
+                style: "currency",
+                currency: "ARS",
+              }).format(value);
+            },
+          },
+        },
+      },
+    },
+  };
+
+  // Inicializar el gráfico
+  const movimientoMensualChart = new Chart(
+    document.getElementById("movimientoMensual"),
+    config
+  );
+</script>

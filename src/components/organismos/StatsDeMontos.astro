@@ -1,6 +1,8 @@
 ---
 
 const {capital,pagosCobrados,cuotasInpagas,totalConIntereses}=Astro.props
+import currency from '@/lib/formulas/convertidorMoneda'
+
 ---
 <div class="flex items-center justify-normal gap-2">
     <!-- en circulacion  -->
@@ -9,7 +11,7 @@ const {capital,pagosCobrados,cuotasInpagas,totalConIntereses}=Astro.props
       class="bg-white p-3 rounded-lg text-primary-texto font-semibold flex text-center text-xs shadow-lg"
     >
       <div class="border-r px-3 capitalize">
-        <p>en circulación</p>
+        <p> circulación</p>
         <p class="text-base">$ {cuotasInpagas?.toLocaleString()}</p>
       </div>
       <div class="px-3">
@@ -22,12 +24,12 @@ const {capital,pagosCobrados,cuotasInpagas,totalConIntereses}=Astro.props
       class="bg-white p-3 rounded-lg text-primary-texto font-semibold flex text-center text-xs shadow-lg"
     >
       <div class="px-3 border-r">
-        <p class="capitalize text-red-600 font-bold">Capital total</p>
-        <p class="text-base">$ {capital?.toLocaleString()}</p>
+        <p class="capitalize text-red-600 font-bold">Capital</p>
+        <p class="text-base">{currency(capital)}</p>
       </div>
       <div class="px-3">
-        <p class="capitalize text-red-600 font-bold">total c/intereses </p>
-        <p class="text-base">$ {totalConIntereses?.toLocaleString()}</p>
+        <p class="capitalize text-red-600 font-bold">ganancia </p>
+        <p class="text-base"> {currency(totalConIntereses-capital)}</p>
       </div>
     </div>
   </div>
