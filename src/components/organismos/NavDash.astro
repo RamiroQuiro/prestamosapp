@@ -1,49 +1,62 @@
 ---
+import Button1 from "../atomos/Button1.astro";
+import Button2 from "../atomos/Button2.astro";
 import Titulo1 from "../atomos/Titulo1.astro";
-import SubNavDash from "./SubNavDash"
+import SubNavDash from "./SubNavDash";
 
-
-
-const {pathname}=Astro.url
+const { pathname } = Astro.url;
 const fecha = Date();
-const {idPrestamo,idCliente}=Astro.params
-const {dataCliente}=Astro.props
-let id=null
-if (pathname?.includes('cuota')) {
-  id=idPrestamo
+const { idPrestamo, idCliente } = Astro.params;
+const { dataCliente } = Astro.props;
+let id = null;
+if (pathname?.includes("cuota")) {
+  id = idPrestamo;
 }
+
+// const user=Astro.locals
+
+// console.log(user)
 ---
 
-
 <nav
-class="fixed border-l-2 print:hidden  border-primary-100/80 bg-primary-bg-componentes md:w-[88vw] w-full right-0 rounded-bl-3xl text-sm text-primary-texto shadow-md md:h-32 flex flex-col z-30 items-center justify-start"
+  class="fixed border-l-2 print:hidden border-primary-100/80 bg-primary-bg-componentes md:w-[88vw] w-full right-0 rounded-bl-3xl text-sm text-primary-texto shadow-md md:h-28 flex flex-col z-30 items-center justify-start"
 >
-<div class="w-full flex  h-full items-center justify-normal border-b pb-2">
-  <div class="px-5 md:hidden">RamiroCode</div>
-  <div class="flex flex-col items-start px-5 md:w-1/4 flex-shrink">
-    <Titulo1>Bienvenido {}!</Titulo1>
-    <span class="text-sm font-semibold fonme">  {
-      new Date().toLocaleDateString("es-AR", {
-        day: "2-digit",
-        month: "short",
-        year: "numeric",
-      })
-    }</span>
+  <div class="w-full flex h-full items-center justify-center border-b pb-2">
+    <div class="px-5 md:hidden">RamiroCode</div>
+    <div class="flex items-center justify-start gap-3 px-5 w-1/2">
+      <Titulo1>Bienvenido {}!</Titulo1>
+      <span class="text-sm font-semibold fonme">
+        {
+          new Date().toLocaleDateString("es-AR", {
+            day: "2-digit",
+            month: "short",
+            year: "numeric",
+          })
+        }</span
+      >
+    </div>
+    <div class="flex items-center justify-end gap-2 px-5 w-full flex-shrink">
+      <Button2  id="btnConfeccion">confeccion</Button2>
+      <form method="post" action="/api/auth/signout">
+        <Button2>Sign out</Button2>
+      </form>
+    </div>
   </div>
-  <div <div class="flex items-start  justify-end gap-5 px-5 w-full flex-shrink">
-    <button  >simulador</button>
-    <form method="post" action="/api/auth/signout">
-      <button>Sign out</button>
-    </form>
-  </div>
-</div>
-<div class="w-full  flex items-center px-3 py-2">
-  <!-- <button onclick="window.history.back();" class="bg-primary-200/20 rounded-full px-1.5 hover:bg-primary-200/50 duration-300 active:scale-95">🔙</button> -->
- <SubNavDash pathname={pathname} idPrestamo={idPrestamo} idCliente={idCliente} dataCliente={dataCliente} client:load/>
-  <!-- <slot name="subNash" >
+  <div class="w-full flex items-center px-3 py-2">
+    <!-- <button onclick="window.history.back();" class="bg-primary-200/20 rounded-full px-1.5 hover:bg-primary-200/50 duration-300 active:scale-95">🔙</button> -->
+    <SubNavDash
+      pathname={pathname}
+      idPrestamo={idPrestamo}
+      idCliente={idCliente}
+      dataCliente={dataCliente}
+      client:load
+    />
+    <!-- <slot name="subNash" >
       
   </slot> -->
-
-</div>
+  </div>
 </nav>
 
+<script>
+  document.getElementById('btnConfeccion').addEventListener('click',()=>document.location.href='/dashboard/prestamos/')
+</script>

@@ -11,22 +11,25 @@ import ContenedorDiv1 from "../../components/atomos/ContenedorDiv1.astro";
 import Stats from "./componentDash/Stats.astro";
 import ContenedorClientesDash from "../../components/organismos/ContenedorClientesDash.astro";
 import { Intereses } from "astro:db";
+import { eq } from "astro:db";
 
 const { user } = Astro.locals;
 
-//  console.log('variable locales ->',user)
-// const users = await db.select().from(User);
-// const clientes = await db.select().from(Cliente);
+ console.log('variable locales ->',user)
+ const userInfo = (await db.select({nombre: User.nombre, apellido: User.apellido,userName:User.userName}).from(User).where(eq(User.id, user.id))).at(0)
+
+
+ // const clientes = await db.select().from(Cliente);
 // const prestamos = await db.select().from(Prestamo);
 // const sesiones = await db.select().from(Session);
 // const pagos = await db.select().from(Pago);
 // console.log("prestamos ->", prestamos);
-// console.log(users)
+// console.log(userInfo)
 // console.log(local)
 // console.log(pagos)
 ---
 
-<Layoutdash title="Biendevnido men">
+<Layoutdash title="Bienvenidos a PrestamosAPP">
   <MainDash>
     <ContenedorDiv1>
       <div

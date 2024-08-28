@@ -35,7 +35,7 @@ export async function POST({
     .select()
     .from(User)
     .where(eq(User.email, email));
-  console.log(existingUser);
+  // console.log(existingUser);
 
   if (existingUser.length > 0) {
     return new Response(

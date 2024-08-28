@@ -11,7 +11,6 @@ export default function PrevisualizacionPrestamo() {
 
     const prestamosEnContexto = useStore(prestamoSimulado)
     const clienteSelect = useStore(busqueda)
-    console.log(clienteSelect)
     const [cuotasSimuladas, setCuotasSimuladas] = useState([])
     useEffect(() => {
         if(!prestamosEnContexto) return
@@ -51,8 +50,8 @@ export default function PrevisualizacionPrestamo() {
     ];
       let arrayBody = [];
       
-      console.log(cuotasSimuladas)
-      console.log(prestamosEnContexto)
+    //   console.log(cuotasSimuladas)
+    //   console.log(prestamosEnContexto)
     return (
         <div className='p-2 flex relative flex-col items-start justify-normal'>
             <div className='flex items-start w-full mt-6 my-3 justify-between'>

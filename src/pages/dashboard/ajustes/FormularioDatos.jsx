@@ -6,7 +6,6 @@ import { loader } from '@/components/loader/showLoader'
 import { showToast } from '@/components/Toast/toastShow'
 
 export default function FormularioDatos({user}) {
-console.log(user)
     const [formulario, setFormulario] = useState(user)
 
     

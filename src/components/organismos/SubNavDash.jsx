@@ -5,7 +5,6 @@ import SubNavAjustes from '../moleculas/SubNavAjustes'
 
 export default function SubNavDash({ pathname,idPrestamo,idCliente,dataCliente }) {
 
-
     if (pathname.startsWith('/dashboard/prestamos')) {
         return (
             <SubNavPrestamo  pathname={pathname}  idPrestamo={idPrestamo}/>
@@ -20,7 +19,10 @@ export default function SubNavDash({ pathname,idPrestamo,idCliente,dataCliente }
         )
     } else if (pathname.startsWith('/dashboard')) {
         return (
-            <div>inicio dashboard</div>
+            <div className='flex items-center justify-start gap-4  w-full px-5'>
+ramiro.quiroga
+
+            </div>
         )
     }
 
