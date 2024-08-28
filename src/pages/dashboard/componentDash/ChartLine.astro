@@ -1,4 +1,12 @@
+---
+
+const {userId}=Astro.props
+console.log(userId)
+---
+
 <div
+id="userId"
+data-userId={userId}
   class="flex h-auto w-full items-center justify-center border p-5 rounded-lg shadow-md bg-gray-50"
 >
   <canvas id="movimientoMensual" style="width: 200px height: 200px;" class="p-5 "></canvas>
@@ -11,77 +19,97 @@
 
 <script>
   // Datos de muestra
-  const movimientoData = {
-    meses: ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio"],
-    capitalPrestado: [
-      100000, 150000, 130000, 120000, 140000, 160000, 180000
-    ],
-    ganancias: [200000, 70000, 65000, 60000, 75000, 80000, 85000],
-  };
+  // Obtener el dataset desde el atributo 'data-idClient' del elemento con id 'idCliente'
+  const userId = document
+    .getElementById("userId")
+    .getAttribute("data-userId");
 
-  // Extraer etiquetas y datos para el gráfico
-  const labels = movimientoData.meses; // Meses
-  const capitalData = movimientoData.capitalPrestado; // Capital prestado
-  const gananciaData = movimientoData.ganancias; // Ganancias/Cobros
 
-  // Crear los datos del gráfico
-  const data = {
-    labels: labels,
-    datasets: [
-      {
-        label: "Capital Prestado",
-        data: capitalData,
-        borderColor: "#2B60E3",
-        backgroundColor: "rgba(43, 96, 227, 0.5)",
-        borderWidth: 2, 
-        borderRadius: 5,
-      },
-      {
-        label: "Ganancias/Cobros",
-        data: gananciaData,
-        borderColor: "#FF3333",
-        backgroundColor: "rgba(255, 51, 51, 0.5)",
-        borderWidth: 2, 
-        borderRadius: 5,
-      },
-    ],
-  };
+  // Asignar el dataset al contexto del cliente
 
-  // Configuración del gráfico
-  const config = {
-    type: "bar",
-    data: data,
-    options: {
-        
-      responsive: true,
-      plugins: {
-        legend: {
-          position: "top",
+//   console.log('id usuario',userId)
+
+  async function fetchMovimientoMensualData() {
+    try {
+      const response = await fetch(`/api/usuario/prestamos/${userId}`);
+      const data = await response.json();
+      console.log(data)
+      if (data.status !== 200) {
+        console.error('Error al obtener los datos:', data.msg);
+        return null;
+      }
+      return data.data;
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      return null;
+    }
+  }
+  async function initChart() {
+    const movimientoData = await fetchMovimientoMensualData();
+
+    if (!movimientoData) return;
+
+    const labels = movimientoData.capitalPorMes.map(item => item.mes);
+    const capitalData = movimientoData.capitalPorMes.map(item => item.capitalPrestado);
+    const gananciaData = movimientoData.cobrosPorMes.map(item => item.totalCobrado);
+
+    const data = {
+      labels: labels,
+      datasets: [
+        {
+          label: "Capital Prestado",
+          data: capitalData,
+          borderColor: "#2B60E3",
+          backgroundColor: "rgba(43, 96, 227, 0.5)",
+          borderWidth: 2,borderRadius: 5,
         },
-        title: {
-          display: true,
-          text: "Capital Prestado y Ganancias Mensuales",
+        {
+          label: "Ganancias/Cobros",
+          data: gananciaData,
+          borderColor: "#5ABA8A",
+          backgroundColor: "#5ABA8A50",
+          borderWidth: 2,borderRadius: 5,
+          
         },
-      },
-      scales: {
-        y: {
-          beginAtZero: true,
-          ticks: {
-            callback: function (value) {
-              return new Intl.NumberFormat("es-AR", {
-                style: "currency",
-                currency: "ARS",
-              }).format(value);
+      ],
+    };
+
+    const config = {
+      type: "bar",
+      data: data,
+      options: {
+        responsive: true,
+        maintainAspectRatio: false, // Permite personalizar dimensiones
+        plugins: {
+          legend: {
+            position: "top",
+          },
+          title: {
+            display: true,
+            text: "Capital Prestado y Ganancias Mensuales (Últimos 6 Meses)",
+          },
+        },
+        scales: {
+          y: {
+            beginAtZero: true,
+            ticks: {
+              callback: function (value) {
+                return new Intl.NumberFormat("es-AR", {
+                  style: "currency",
+                  currency: "ARS",
+                }).format(value);
+              },
             },
           },
         },
       },
-    },
-  };
+    };
 
-  // Inicializar el gráfico
-  const movimientoMensualChart = new Chart(
-    document.getElementById("movimientoMensual"),
-    config
-  );
+    const movimientoMensualChart = new Chart(
+      document.getElementById("movimientoMensual"),
+      config
+    );
+  }
+  // Inicializar el gráfico al cargar la página
+  initChart();
 </script>

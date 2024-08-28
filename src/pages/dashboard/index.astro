@@ -32,10 +32,10 @@ const { user } = Astro.locals;
       <div
         class={`$ flex w-full gap-4 items-start justify-strech relative`}
       >
-        <ChartLine />
+        <ChartLine userId={user.id} />
         <ContenedorClientesDash user={user} />
       </div>
-      <div class={`$ flex w-full gap-4 items-start justify-start relative`}>
+      <div class={`$ flex flex-col w-full gap-4 items-start justify-start relative`}>
         <Stats />
       </div>
     </ContenedorDiv1>
