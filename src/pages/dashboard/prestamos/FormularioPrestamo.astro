@@ -88,7 +88,7 @@ try {
   </div>
 
   <ContenedorBoton>
-    <Button1 class="" id="generarPrestamo">simular Prestamo</Button1>
+    <Button1 class="" id="simularPrestamo">simular Prestamo</Button1>
   </ContenedorBoton>
 </FormCont>
 
@@ -96,8 +96,10 @@ try {
   import { busqueda, prestamoSimulado } from "../../../context/store";
   // Nos suscribimos a los cambios en 'busqueda'
 let userId=''
+let nombreCliente=''
   const unsubscribe = busqueda.subscribe((clientSelect) => {
     userId=clientSelect.clientSelect.usuarioId
+nombreCliente=clientSelect.clientSelect.nombre
     document.getElementById("selectCliente").value = "";
     if (clientSelect.clientSelect.nombre) {
       // Concatenamos los valores de 'nombre', 'apellido' y 'dni'
@@ -142,7 +144,7 @@ let userId=''
 }
 
   document
-    .getElementById("generarPrestamo")
+    .getElementById("simularPrestamo")
     .addEventListener("click", function (e) {
       e.preventDefault();
       let importe =document.getElementById("importeCredito").value
@@ -157,6 +159,7 @@ let userId=''
       prestamoSimulado.set({
         clienteId:busqueda.get().clientSelect.id,
         usuarioId:userId,
+        nombreCliente:'',
         montoCuota: montoCuota,
         nCuotas: nCuotas,
         modalidad,

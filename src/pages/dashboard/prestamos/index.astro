@@ -1,8 +1,9 @@
 ---
+import ContenedeorModal from "@/components/organismos/ContenedeorModal.astro";
 import Button1 from "../../../components/atomos/Button1.astro";
 import Titulo1 from "../../../components/atomos/Titulo1.astro";
 import ContenedorBoton from "../../../components/moleculas/ContenedorBoton.astro";
-import ContenedorInputForm from "../../../components/moleculas/ContenedorInputForm.astro";
+import PrevisualizacionPrestamo from './PrevisualizacionPrestamo'
 import FormularioDeBusqueda from "../../../components/organismos/FormularioDeBusqueda";
 import MainDash from "../../../components/organismos/MainDash.astro";
 import Layoutdash from "../layouts/Layoutdash.astro";
@@ -31,12 +32,18 @@ const clientes = await db
     <div
       class="flex w-2/6 flex-col   h-full  items-center  justify-center"
     >
+
+    <!-- previsualizacion a primera vista -->
     <div class="bg-primary-300/80 w-full m-auto  p-5 rounded-l-lg">
       <Titulo1>Prestamo Generado</Titulo1>
 
       <PrestamoGenerado />
 
       <ContenedorBoton>
+
+       <ContenedeorModal open="Previsualizar">
+          <PrevisualizacionPrestamo client:load/>
+       </ContenedeorModal>
         <Button1 id="cargarPrestamo">Confirmar</Button1>
         <Button1 id="limpiarSimulador">limpiar</Button1>
       </ContenedorBoton>
@@ -51,8 +58,8 @@ const clientes = await db
   document.getElementById("limpiarSimulador").addEventListener("click", () => {
     prestamoSimulado.set({
       usuarioId: "",
+      nombreCliente:'',
       clienteId: "",
-      importeCuota: 0,
       montoTotal: 0,
       interesGenerado: 0,
       tasaInteres: 0,
@@ -85,7 +92,7 @@ import {loader} from '@/components/loader/showLoader'
           }),
         });
         const data=await res.json()
-        console.log(data)
+        // console.log(data)
         if (res.ok) {
           loader(false)
           

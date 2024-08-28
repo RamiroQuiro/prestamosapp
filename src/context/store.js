@@ -26,6 +26,7 @@ const columnSelectTable=atom({
 
 const prestamoSimulado=atom({
     usuarioId:'',
+    nombreCliente:'',
     clienteId:'',
     montoCuota:0,
     montoTotal:0,
