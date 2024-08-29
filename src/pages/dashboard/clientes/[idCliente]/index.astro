@@ -1,28 +1,30 @@
 ---
-
 import LayoutClient from "./LayoutClient.astro";
-import ListadoPrestamo from './ListadoPrestamo.astro'
+import ListadoPrestamo from "./ListadoPrestamo.astro";
 const { idCliente } = Astro.params;
-
 ---
 
 <LayoutClient>
-  <div
-    class="h- flex items-center justify-center border p-5 rounded-lg shadow-md bg-gray-50"
-  >
-    <canvas id="modelsCarts"  class="p-5"> </canvas>
-  </div>
-  <div
-    class="h- flex w- items-center justify-center border p-5 rounded-lg shadow-md bg-gray-50"
-  >
-    <canvas id="conductaCliente" class="p-5"> </canvas>
-  </div>
-<!-- detallos de prestmos a este cliente -->
-  <div
-    class="h- flex w- items-center justify-center border p-5 rounded-lg shadow-md bg-gray-50 flex-col"
-  >
-    <h2 class="text-sm font-semibold text-primary-text">Fondos Prestados a Cliente</h2>
-  <ListadoPrestamo idCliente={idCliente}/>
+  <div class="flex w-full items-stretch justify-evenly gap-3">
+    <div
+      class="h- flex items-center justify-center border p-5 w-full rounded-lg shadow-md bg-gray-50"
+    >
+      <canvas id="modelsCarts" class=""> </canvas>
+    </div>
+    <div
+      class="h- flex w- items-center justify-center border p-5 w-full rounded-lg shadow-md bg-gray-50"
+    >
+      <canvas id="conductaCliente" class=""> </canvas>
+    </div>
+    <!-- detallos de prestmos a este cliente -->
+    <div
+      class="h- flex w- items-center justify-center border p-5 w-full rounded-lg shadow-md bg-gray-50 flex-col"
+    >
+      <h2 class="text-sm font-semibold text-primary-text">
+        Fondos Prestados a Cliente
+      </h2>
+      <ListadoPrestamo idCliente={idCliente} />
+    </div>
   </div>
 </LayoutClient>
 

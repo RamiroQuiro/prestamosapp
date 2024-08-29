@@ -5,11 +5,11 @@ import Sidebar from "../../../components/organismos/Sidebar.astro";
 
 interface Props {
   title: string;
-  dataCliente:string
+  dataCliente:string,
+  userData:string
 }
 
-const { title,dataCliente } = Astro.props;
-
+const { title,dataCliente,userData } = Astro.props;
 const url=Astro.url
 
 ---
@@ -25,11 +25,11 @@ const url=Astro.url
     <title>{title}</title>
   </head>
   <body
-    class="bg-primary-bg-claro min-h-screen h-full relative overflow-x-hidden flex flex-col"
+    class="bg-primary-bg-claro  min-h-screen h-full relative overflow-x-hidden flex flex-col"
   >
     <!-- <LoaderGral/> -->
 
-    <NavDash dataCliente={dataCliente}/>
+    <NavDash dataCliente={dataCliente} userData={userData}/>
     <Loader/>
     <Sidebar />
     <slot />

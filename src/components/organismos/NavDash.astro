@@ -7,7 +7,7 @@ import SubNavDash from "./SubNavDash";
 const { pathname } = Astro.url;
 const fecha = Date();
 const { idPrestamo, idCliente } = Astro.params;
-const { dataCliente } = Astro.props;
+const { dataCliente ,userData} = Astro.props;
 let id = null;
 if (pathname?.includes("cuota")) {
   id = idPrestamo;
@@ -19,36 +19,37 @@ if (pathname?.includes("cuota")) {
 ---
 
 <nav
-  class="fixed border-l-2 print:hidden border-primary-100/80 bg-primary-bg-componentes md:w-[88vw] w-full right-0 rounded-bl-3xl text-sm text-primary-texto shadow-md md:h-28 flex flex-col z-30 items-center justify-start"
+  class="fixed border-l-2 print:hidden border-primary-100/80 bg-primary-bg-componentes md:w-[89vw] w-full right-0 rounded-bl-3xl text-sm text-primary-texto shadow-md md:h-24 flex flex-col z-30 items-center justify-start"
 >
   <div class="w-full flex h-full items-center justify-center border-b pb-2">
     <div class="px-5 md:hidden">RamiroCode</div>
     <div class="flex items-center justify-start gap-3 px-5 w-1/2">
-      <Titulo1>Bienvenido {}!</Titulo1>
-      <span class="text-sm font-semibold fonme">
+      <h1 class="text-lg font-semibold my-1 text-primary-bg-componentes -rotate-1 bg-primary-100 px-1 rounded">PrestamosAPP</h1>
+      <span class="text-sm font-semibold ml-5">
         {
           new Date().toLocaleDateString("es-AR", {
             day: "2-digit",
-            month: "short",
+            month: "long",
             year: "numeric",
           })
         }</span
       >
     </div>
-    <div class="flex items-center justify-end gap-2 px-5 w-full flex-shrink">
+    <div class="flex items-center justify-end gap-2 pr-5 w-full flex-shrink">
       <Button2  id="btnConfeccion">confeccion</Button2>
       <form method="post" action="/api/auth/signout">
         <Button2>Sign out</Button2>
       </form>
     </div>
   </div>
-  <div class="w-full flex items-center px-3 py-2">
+  <div class="w-full flex items-center pl-3 h-10 py-2">
     <!-- <button onclick="window.history.back();" class="bg-primary-200/20 rounded-full px-1.5 hover:bg-primary-200/50 duration-300 active:scale-95">🔙</button> -->
     <SubNavDash
       pathname={pathname}
       idPrestamo={idPrestamo}
       idCliente={idCliente}
       dataCliente={dataCliente}
+      userData={userData}
       client:load
     />
     <!-- <slot name="subNash" >

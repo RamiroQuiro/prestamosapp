@@ -15,7 +15,6 @@ import { eq } from "astro:db";
 
 const { user } = Astro.locals;
 
- console.log('variable locales ->',user)
  const userInfo = (await db.select({nombre: User.nombre, apellido: User.apellido,userName:User.userName}).from(User).where(eq(User.id, user.id))).at(0)
 
 
@@ -29,7 +28,7 @@ const { user } = Astro.locals;
 // console.log(pagos)
 ---
 
-<Layoutdash title="Bienvenidos a PrestamosAPP">
+<Layoutdash userData={userInfo} title="Bienvenidos a PrestamosAPP">
   <MainDash>
     <ContenedorDiv1>
       <div
