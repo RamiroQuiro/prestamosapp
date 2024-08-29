@@ -19,7 +19,7 @@ if (pathname?.includes("cuota")) {
 ---
 
 <nav
-  class="fixed border-l-2 print:hidden border-primary-100/80 bg-primary-bg-componentes md:w-[89vw] w-full right-0 rounded-bl-3xl text-sm text-primary-texto shadow-md md:h-24 flex flex-col z-30 items-center justify-start"
+  class="fixed border-l-2 print:hidden border-primary-100/80 bg-primary-bg-componentes md:w-[88vw] w-full right-0 rounded-bl-3xl text-sm text-primary-texto shadow-md md:h-24 flex flex-col z-30 items-center justify-start"
 >
   <div class="w-full flex h-full items-center justify-center border-b pb-2">
     <div class="px-5 md:hidden">RamiroCode</div>
@@ -37,6 +37,7 @@ if (pathname?.includes("cuota")) {
     </div>
     <div class="flex items-center justify-end gap-2 pr-5 w-full flex-shrink">
       <Button2  id="btnConfeccion">confeccion</Button2>
+      <Button2  id="btnPagar">Pagar</Button2>
       <form method="post" action="/api/auth/signout">
         <Button2>Sign out</Button2>
       </form>
