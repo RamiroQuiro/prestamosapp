@@ -3,7 +3,7 @@ const { bg } = Astro.props;
 ---
 
 <article
-  class={`${bg} py-2 px-5 rounded-xl  flex items-stretch justify-normal w-full text-primary-400 text-sm gap-x-5`}
+  class={`${bg} py-2 px-5 rounded-xl  flex flex-col md:flex-row items-stretch justify-normal w-full text-primary-400 text-sm gap-x-5`}
 >
   <slot />
 </article>
