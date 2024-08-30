@@ -2,12 +2,13 @@
 import Button1 from "../atomos/Button1.astro";
 import Button2 from "../atomos/Button2.astro";
 import Titulo1 from "../atomos/Titulo1.astro";
+import BotonPagar from "./BotonPagar.astro";
 import SubNavDash from "./SubNavDash";
 
 const { pathname } = Astro.url;
 const fecha = Date();
 const { idPrestamo, idCliente } = Astro.params;
-const { dataCliente ,userData} = Astro.props;
+const { dataCliente, userData } = Astro.props;
 let id = null;
 if (pathname?.includes("cuota")) {
   id = idPrestamo;
@@ -19,11 +20,17 @@ if (pathname?.includes("cuota")) {
 ---
 
 <nav
-  class="fixed md:border-l-2 border-b-2 print:hidden border-primary-100/80 bg-primary-bg-componentes md:w-[88vw] w-full md:right-0  md:rounded-bl-3xl text-sm text-primary-texto shadow-md md:h-24 flex flex-col z-30 items-center justify-start"
+  class="fixed md:border-l-2 border-b-2 print:hidden border-primary-100/80 bg-primary-bg-componentes md:w-[88vw] w-full md:right-0 md:rounded-bl-3xl text-sm text-primary-texto shadow-md md:h-24 flex flex-col z-30 items-center justify-start"
 >
-  <div class="w-full flex flex-col md:flex-row md:m-0 mt-2 h-full items-center justify-center border-b pb-2">
+  <div
+    class="w-full flex flex-col md:flex-row md:m-0 mt-2 h-full items-center justify-center border-b pb-2"
+  >
     <div class="flex items-center justify-start gap-3 px-5 w-full md:w-1/2">
-      <h1 class="text-xl tracking-wider font-semibold my-1 text-primary-bg-componentes -rotate-1 bg-primary-100 px-1 rounded">PrestamosAPP</h1>
+      <h1
+        class="text-xl tracking-wider font-semibold my-1 text-primary-bg-componentes -rotate-1 bg-primary-100 px-1 rounded"
+      >
+        PrestamosAPP
+      </h1>
       <span class="text-sm font-semibold ml-5">
         {
           new Date().toLocaleDateString("es-AR", {
@@ -31,12 +38,12 @@ if (pathname?.includes("cuota")) {
             month: "long",
             year: "numeric",
           })
-        }</span
-      >
+        }
+      </span>
     </div>
     <div class="flex items-center justify-end gap-2 pr-5 w-full flex-shrink">
-      <Button2  id="btnConfeccion">confeccion</Button2>
-      <Button2  id="btnPagar">Pagar</Button2>
+      <Button2 id="btnConfeccion">confeccion</Button2>
+    
       <form method="post" action="/api/auth/signout">
         <Button2>Sign out</Button2>
       </form>
@@ -59,5 +66,10 @@ if (pathname?.includes("cuota")) {
 </nav>
 
 <script>
-  document.getElementById('btnConfeccion').addEventListener('click',()=>document.location.href='/dashboard/prestamos/')
+  document
+    .getElementById("btnConfeccion")
+    .addEventListener(
+      "click",
+      () => (document.location.href = "/dashboard/prestamos/")
+    );
 </script>

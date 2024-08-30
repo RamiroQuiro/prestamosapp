@@ -53,7 +53,7 @@ import { showToast } from "@/components/Toast/toastShow";
     formData.append("userId", userId.id);
     const data = Object.fromEntries(formData.entries());
 
-console.log(data)
+// console.log(data)
 if (!data.nombre || !data.apellido || !data.dni || !data.cel || !data.direccion) {
   showToast('complete todo los datos',{background:'bg-red-600'})
   btnCerrrarModal.click()
