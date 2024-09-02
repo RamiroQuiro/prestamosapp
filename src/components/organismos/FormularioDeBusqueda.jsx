@@ -9,7 +9,7 @@ export default function FormularioDeBusqueda({ value, clientes, id }) {
     const arr = []
     const $clienteSelect = useStore(busqueda)
 
-    // console.log($clienteSelect)
+    console.log('',$clienteSelect)
     const { encontrado, handleSearch, search, setSearch } = useBusquedaFiltros(clientes,['nombre','apellido','dni'])
 
     const handleClick = (leg) => {
