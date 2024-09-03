@@ -89,13 +89,17 @@ export default function ContenedorFormularioPagar({ userId, clientes }) {
         // Filtramos el array basándonos en la búsqueda
         const encontrado = arr?.filter((leg) => {
             // Comprobamos si cada campo coincide con la búsqueda
-            let busquedaNombre = leg.nameCliente?.toUpperCase().includes(search?.toUpperCase());
+            let busquedaNombre = leg.cliente?.toUpperCase().includes(search?.toUpperCase());
+
+            let dni = leg.dni?.includes(search);
+
             // Si alguno de los campos coincide y el elemento está activo, lo retornamos
-            if (busquedaNombre ) {
+            if (busquedaNombre || dni) {
                 // if (leg.activo == true) {
                 return leg;
                 // }
             }
+        
         });
 
         // Retornamos los elementos encontrados
@@ -114,7 +118,7 @@ export default function ContenedorFormularioPagar({ userId, clientes }) {
         <div className='w-full flex flex-col items-start justify-normal '>
             <input
                 onChange={handleSearch}
-                placeholder='Filtrar por nombre, activo o fecha...'
+                placeholder='Filtrar por nombre de cliente...'
                 value={search}
                 type="search" name="busquedaCliente" id="busquedaCliente" className=' w-full text-sm bg-primary-200/10  rounded-md group-hover:ring-2  border-gray-300  ring-primary-200/60 my-3 focus:ring-2  outline-none transition-colors duration-200 ease-in-out px-2 py-2' />
 
