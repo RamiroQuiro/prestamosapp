@@ -1,4 +1,4 @@
-import { and, between, Cuota, db, eq, gte, lte } from "astro:db";
+import { and, between, Cliente, Cuota, db, eq, gt, lte } from "astro:db";
 
 export async function GET({ params, props, request }) {
   const { userId } = await params;
@@ -11,22 +11,38 @@ export async function GET({ params, props, request }) {
   
   console.log("Endpoint de las cuotas", userId, end, start);
   try {
-    const cuotasBD = await db
-      .select()
-      .from(Cuota)
-      .where(
-        and(
-          eq(Cuota.usuarioId, userId),
-          gte(Cuota.fechaVencimiento, start),
+    const cuotasDB = await db.select({
+      cuota: {
+          id: Cuota.id,
+          prestamoId: Cuota.prestamoId,
+          clienteId: Cuota.clienteId,
+          fechaVencimiento: Cuota.fechaVencimiento,
+          monto: Cuota.monto,
+          numeroCuota:Cuota.numeroCuota,
+          pagada: Cuota.pagada,
+      },
+      cliente: {
+          nombre: Cliente.nombre,
+          apellido: Cliente.apellido,
+      }
+  })
+  .from(Cuota)
+  .innerJoin(Cliente, eq(Cuota.clienteId, Cliente.id))
+  .where(
+      and(
+          
+          eq(Cuota.pagada, false),
+          gt(Cuota.fechaVencimiento, start),
           lte(Cuota.fechaVencimiento, end)
-        )
       )
+  )
+  .orderBy(Cuota.fechaVencimiento, 'asc');
 
-const cuotasSinPagar=cuotasBD.filter(cuota=>cuota.pagada==false)
-    console.log('cuotas encontradas ->',cuotasBD);
+const cuotasSinPagar=cuotasDB.filter(cuota=>cuota.pagada==false)
+    console.log('cuotas encontradas ->',cuotasDB);
     return new Response(
       JSON.stringify({
-        data: cuotasSinPagar,
+        data: cuotasDB,
       }),
       { status: 200 }
     );

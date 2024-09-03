@@ -9,6 +9,9 @@ export default function ContenedorFormularioPagar({ userId, clientes }) {
 
     const $clienteSelect = useStore(busqueda)
     const [ultimasCuotas, setUltimasCuotas] = useState([])
+    const [loading, setLoading] = useState(false)
+    const [encontrado, setEncontrado] = useState([])
+    const [arrayBody, setArrayBody] = useState([])
     // console.log($clienteSelect)
     const startDate = new Date();
     const endDate = new Date(); // Crear una nueva fecha basada en la actual
@@ -18,6 +21,7 @@ export default function ContenedorFormularioPagar({ userId, clientes }) {
     useEffect(() => {
 
         const fetchinv = async () => {
+            setLoading(true)
             try {
                 const consultaFetch = await fetch(`/api/cuotas/${userId}`,
                     {
@@ -28,19 +32,39 @@ export default function ContenedorFormularioPagar({ userId, clientes }) {
                         }
                     })
                 const data = await consultaFetch.json()
-                setUltimasCuotas(data.data)
-                console.log(data)
+                let arrayBody = data.data?.map((element) => {
+
+                    const date = new Date(element.cuota.fechaVencimiento)
+                    return {
+                        href: `/dashboard/prestamos/${element?.cuota?.id}`,
+                        nameCliente: `${element?.cliente?.nombre} ${element?.cliente?.apellido}`,
+                        id: element?.cuota?.id,
+                        //   cliente: element?.Cliente.nombre + ' '+ element?.Cliente.apellido,
+                        montoCuota: `$ ${element?.cuota?.monto}`,
+                        nCuotas: element?.cuota?.numeroCuota,
+                        fechaVencimiento: date.toLocaleDateString(),
+                    };
+                });
+                setArrayBody(arrayBody)
+                setEncontrado(arrayBody)
+                setLoading(true)
+                // console.log(data)
             } catch (error) {
                 console.log(error)
+                setLoading(true)
             }
 
         }
         fetchinv()
-    }, [$clienteSelect])
+    }, [])
 
 
 
     const columnas = [
+        {
+            label: "Cliente",
+            id: 1,
+        },
         {
             label: "importe de cuota",
             id: 4,
@@ -54,38 +78,58 @@ export default function ContenedorFormularioPagar({ userId, clientes }) {
             label: "F. Vencimiento",
             id: 3,
         },
-      
-  
+
+
 
     ];
 
+    const [search, setSearch] = useState('')
 
-    let   arrayBody = ultimasCuotas?.map((element) => {
+    const busquedaFiltros = (arr, search) => {
+        // Filtramos el array basándonos en la búsqueda
+        const encontrado = arr?.filter((leg) => {
+            // Comprobamos si cada campo coincide con la búsqueda
+            let busquedaNombre = leg.nameCliente?.toUpperCase().includes(search?.toUpperCase());
+            // Si alguno de los campos coincide y el elemento está activo, lo retornamos
+            if (busquedaNombre ) {
+                // if (leg.activo == true) {
+                return leg;
+                // }
+            }
+        });
 
-        const date=new Date(element.fechaVencimiento)
-        return {
-          href:`/dashboard/prestamos/${element.id}`,
-          id:element?.id,
-        //   cliente: element?.Cliente.nombre + ' '+ element?.Cliente.apellido,
-          montoCuota: `$ ${element?.monto}`,
-          nCuotas: element?.numeroCuota,
-          fechaVencimiento: date.toLocaleDateString(),
-        };
-      });
+        // Retornamos los elementos encontrados
+        return encontrado;
+    }
+
+
+    const handleSearch = (e) => {
+        // Actualizamos el estado de 'search'
+        setSearch(e.target.value);
+       setEncontrado(busquedaFiltros(arrayBody, e.target.value))
+        // Actualizamos el estado de 'encontrado' con los resultados de la búsqueda
+    }
+
     return (
         <div className='w-full flex flex-col items-start justify-normal '>
+            <input
+                onChange={handleSearch}
+                placeholder='Filtrar por nombre, activo o fecha...'
+                value={search}
+                type="search" name="busquedaCliente" id="busquedaCliente" className=' w-full text-sm bg-primary-200/10  rounded-md group-hover:ring-2  border-gray-300  ring-primary-200/60 my-3 focus:ring-2  outline-none transition-colors duration-200 ease-in-out px-2 py-2' />
 
-
-            {$clienteSelect.clientSelect.id && <div className='text-gray-500 w-full rounded-lg my-2 border border-primary-100/50 p-1'>
-                <span className='capitalize'>{$clienteSelect?.clientSelect?.nombre}{" "}{$clienteSelect?.clientSelect?.apellido}{" "}{$clienteSelect?.clientSelect?.dni}</span>
-            </div>}
-            {ultimasCuotas && <div className='text-gray-500 w-full rounded-lg my-2 border border-primary-100/50 p-1'>
+            {loading ? <div className='text-gray-500 w-full rounded-lg my-2 border border-primary-100/50 p-1'>
                 <Table
                     columnas={columnas}
-                    arrayBody={arrayBody}
+                    arrayBody={encontrado}
                     client:load
                 />
-            </div>}
+            </div>
+                :
+                <div>
+                    <span>Esperando...</span>
+                </div>
+            }
 
         </div>
     )
