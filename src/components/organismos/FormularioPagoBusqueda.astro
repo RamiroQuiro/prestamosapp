@@ -1,6 +1,6 @@
 ---
 import Titulo1 from "../atomos/Titulo1.astro";
-import ContenedorFormularioPagar from "./ContenedorFormularioPagar";
+import ContenedorUltimasCuotas from "./ContenedorUltimasCuotas"
 import FormularioDeBusqueda from "./FormularioDeBusqueda";
 import { db, Cliente, eq } from "astro:db";
 const { user } = Astro.locals;
@@ -16,6 +16,6 @@ const clientes = await db
    
   </div>
   <div>
-    <ContenedorFormularioPagar client:load userId={user.id} />
+    <ContenedorUltimasCuotas client:load userId={user.id} />
   </div>
 </div>
