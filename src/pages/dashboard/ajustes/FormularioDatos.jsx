@@ -5,10 +5,10 @@ import FormularioFotoPerfil from './FormularioFotoPerfil'
 import { loader } from '@/components/loader/showLoader'
 import { showToast } from '@/components/Toast/toastShow'
 
-export default function FormularioDatos({user}) {
+export default function FormularioDatos({ user }) {
     const [formulario, setFormulario] = useState(user)
 
-    
+
     const onChangeForm = (e) => {
         const { value, name } = e.target
         setFormulario((state) => ({ ...state, [name]: value }))
@@ -16,18 +16,18 @@ export default function FormularioDatos({user}) {
 
 
     const handleActualizarData = async () => {
-    loader(true)
-    try {
-        const resFetch = await fetch(`/api/usuario/${user.id}`, {
-            method: 'PUT',
-            body: JSON.stringify(formulario)
-        })
-        
-        const respuesta = await resFetch.json()
-        if (resFetch.ok) {
+        loader(true)
+        try {
+            const resFetch = await fetch(`/api/usuario/${user.id}`, {
+                method: 'PUT',
+                body: JSON.stringify(formulario)
+            })
+
+            const respuesta = await resFetch.json()
+            if (resFetch.ok) {
                 loader(false)
-                showToast('Cambios guardados',{
-                    background:'bg-green-600'
+                showToast('Cambios guardados', {
+                    background: 'bg-green-600'
                 })
             }
         } catch (error) {
@@ -38,10 +38,10 @@ export default function FormularioDatos({user}) {
     }
 
     return (
-        <div className=" border-y bg-white p-5 w-full">
-            <form className='flex w-full gap-4 flex-row text-sm'>
+        <div className=" border-y bg-white md:p-5 w-full">
+            <form className='flex w-full gap-4 md:flex-row flex-col text-sm'>
 
-              <FormularioFotoPerfil user={user} key={1}/>
+                <FormularioFotoPerfil user={user} key={1} />
                 <div className='flex flex-wrap w-full items-start justify-start gap-3'>
 
                     <InputsDatos
@@ -94,12 +94,12 @@ export default function FormularioDatos({user}) {
                     />
 
 
-                    <div className='w-full items-center flex justify-end'>
+                    <div className='w-full items-center flex md:pb-0 justify-end'>
                         <Button3 onClick={handleActualizarData}>actualizar datos</Button3>
                     </div>
 
                 </div>
             </form>
         </div>
-  )
+    )
 }

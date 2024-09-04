@@ -11,7 +11,7 @@ export default function Table({ columnas,arrayBody, styleTable }) {
     
     return (
         <table
-            className={`${styleTable} items-center bg-transparent w-full border-collapse rounded-md overflow-hidden`}
+            className={`${styleTable} items-center bg-transparent w-full border-collapse rounded-md  overflow-hidden`}
         >
            <THead columnas={columnas} arrayBody={arrayBody}/>
            <TBody onClickFila={onClick} arrayBody={arrayBody}/>

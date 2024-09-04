@@ -4,7 +4,7 @@ const { cliente, id } = Astro.props;
 
 <div
   id={id}
-  class={`${cliente ? "cursor-pointer" : ""} relative justify-center flex-grow-0   flex px-5 py-1  flex-w text-primary-texto fill-primary-texto md:flex-row flex-col items-center rounded-xl border-[1px]  shadow-md shadow-primary-texto/15 gap-2 border-primary-texto/15 `}
+  class={`${cliente ? "cursor-pointer" : ""} relative justify-center flex-0 max-w-[30vw] md:max-w-[15vw] flex-grow md:w-auto  flex md:px-5 px-2 text-center md:text-left brwe py-1  flex-w text-primary-texto fill-primary-texto md:flex-row flex-col items-center rounded-xl border-[1px]  shadow-md shadow-primary-texto/15 gap-2 border-primary-texto/15 `}
 >
   <div class="w-auto flex items-center">
     <div class="rounded-full mx-auto bg-lightPrimary">

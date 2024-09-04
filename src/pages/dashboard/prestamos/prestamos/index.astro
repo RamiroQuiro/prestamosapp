@@ -4,18 +4,17 @@ import MainDash from "../../../../components/organismos/MainDash.astro";
 import Layoutdash from "../../layouts/Layoutdash.astro";
 import BotoneraFiltros from "./BotoneraFiltros.astro";
 import ConfeccionTablaPrestamos from "../tablas/ConfeccionTablaPrestamos.astro";
+import ContenedorDiv1 from "@/components/atomos/ContenedorDiv1.astro";
 ---
 
 <Layoutdash title="Prestamos">
   <MainDash>
-    <div
-      class="flex flex-col items-start justify-normal w-full px-5 py-2 relative"
-    >
+<ContenedorDiv1>
       <Titulo1> Prestamos </Titulo1>
       <BotoneraFiltros />
-      <div class="py-5 w-full px-5">
+      <div class="py-5 w-full md:px-5 overflow-scroll">
         <ConfeccionTablaPrestamos />
       </div>
-    </div>
+    </ContenedorDiv1>
   </MainDash>
 </Layoutdash>

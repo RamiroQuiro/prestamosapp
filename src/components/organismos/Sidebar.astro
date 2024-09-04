@@ -3,14 +3,14 @@ import ButtonSidebar from "../moleculas/ButtonSidebar.astro";
 ---
 
 <sidebar
-  class="print:hidden fixed bottom-0  z-20  md:top-0 shadow-md left-0 md:w-[10vw] w-screen bg-primary-bg-componentes h-20 md:h-screen flex md: flex-col items-start justify-normal gap-2"
+  class="print:hidden fixed bottom-0 md:border-r border-primary-100/30 z-20  md:top-0 shadow-md left-0 md:w-[10vw] w-screen bg-primary-bg-componentes  md:h-screen flex md: pb-2 flex-col items-start justify-normal md:gap-2"
 >
   <div class="border-b w-full h-1/6 hidden md:flex">
-   <img src="/ramaCode.png" alt="ramaCode" width="100"height={"100"} class="w-10/12 h-auto">
+   <!-- <img src="/ramaCode.png" alt="ramaCode" width="100"height={"100"} class="w-10/12 h-auto"> -->
   </div>
-  <div class="flex flex-col items-start w-full gap-6">
+  <div class="flex flex-col items-start w-full md:gap-6">
     <div class="w-full flex items-center justify-normal gap-3">
-      <div class="w-full pl-3 flex md:flex-col items-start gap-4 mt-5">
+      <div class="w-full pl-3 flex md:flex-col md:items-start items-center justify-evenly md:gap-4 mt-1 md:mt-5">
         <ButtonSidebar span="inicio" href="/dashboard">
           <g id="SVGRepo_bgCarrier" stroke-width="0"></g><g
             id="SVGRepo_tracerCarrier"

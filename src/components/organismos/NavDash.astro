@@ -25,13 +25,13 @@ if (pathname?.includes("cuota")) {
   <div
     class="w-full flex flex-col md:flex-row md:m-0 mt-2 h-full items-center justify-center border-b pb-2"
   >
-    <div class="flex items-center justify-start gap-3 px-5 w-full md:w-1/2">
+    <div class="md:flex hidden items-center md:justify-start justify-between gap-3 md:px-5 w-full md:w-1/2">
       <h1
         class="text-xl tracking-wider font-semibold my-1 text-primary-bg-componentes -rotate-1 bg-primary-100 px-1 rounded"
       >
         PrestamosAPP
       </h1>
-      <span class="text-sm font-semibold ml-5">
+      <span class="text-sm font-semibold md:ml-5">
         {
           new Date().toLocaleDateString("es-AR", {
             day: "2-digit",
@@ -41,7 +41,12 @@ if (pathname?.includes("cuota")) {
         }
       </span>
     </div>
-    <div class="flex items-center justify-end gap-2 pr-5 w-full flex-shrink">
+    <div class="flex items-center md:justify-end justify-evenly gap-2 md:pr-5 w-full flex-shrink">
+      <h1
+      class="md:text-xl text-lg flex md:hidden  tracking-wider font-semibold my-1 text-primary-bg-componentes -rotate-1 bg-primary-100 px-1 rounded"
+    >
+      PrestamosAPP
+    </h1>
       <Button2 id="btnConfeccion">confeccion</Button2>
     
       <form method="post" action="/api/auth/signout">

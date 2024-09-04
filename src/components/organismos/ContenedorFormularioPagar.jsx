@@ -1,14 +1,8 @@
-import { busqueda, clienteSelect } from '@/context/store'
-import { useStore } from '@nanostores/react'
 import React, { useEffect, useState } from 'react'
-import FormularioDeBusqueda from './FormularioDeBusqueda'
 import Table from '../tablaComponentes/Table'
 
 export default function ContenedorFormularioPagar({ userId, clientes }) {
 
-
-    const $clienteSelect = useStore(busqueda)
-    const [ultimasCuotas, setUltimasCuotas] = useState([])
     const [loading, setLoading] = useState(false)
     const [encontrado, setEncontrado] = useState([])
     const [arrayBody, setArrayBody] = useState([])
@@ -36,7 +30,7 @@ export default function ContenedorFormularioPagar({ userId, clientes }) {
 
                     const date = new Date(element.cuota.fechaVencimiento)
                     return {
-                        href: `/dashboard/prestamos/${element?.cuota?.id}`,
+                        href: `/dashboard/prestamos/${element.cuota.prestamoId}/cuota/${element?.cuota?.id}`,
                         nameCliente: `${element?.cliente?.nombre} ${element?.cliente?.apellido}`,
                         id: element?.cuota?.id,
                         //   cliente: element?.Cliente.nombre + ' '+ element?.Cliente.apellido,
@@ -122,7 +116,7 @@ export default function ContenedorFormularioPagar({ userId, clientes }) {
                 value={search}
                 type="search" name="busquedaCliente" id="busquedaCliente" className=' w-full text-sm bg-primary-200/10  rounded-md group-hover:ring-2  border-gray-300  ring-primary-200/60 my-3 focus:ring-2  outline-none transition-colors duration-200 ease-in-out px-2 py-2' />
 
-            {loading ? <div className='text-gray-500 w-full rounded-lg my-2 border border-primary-100/50 p-1'>
+            {loading ? <div className='text-gray-500 w-full rounded-lg my-2 border border-primary-100/50 p-1 overflow-x-scroll'>
                 <Table
                     columnas={columnas}
                     arrayBody={encontrado}

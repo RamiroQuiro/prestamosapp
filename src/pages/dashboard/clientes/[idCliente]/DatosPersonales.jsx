@@ -44,7 +44,7 @@ export default function DatosPersonales({ cliente }) {
 
     return (
         <div className=" border-y bg-white p-5 w-full">
-            <form className='flex w-full gap-4 flex-row text-sm'>
+            <form className='flex flex-col  w-full gap-4 md:flex-row text-sm'>
 
               <FormularioDni cliente={cliente}/>
                 <div className='flex flex-wrap w-full items-start justify-start gap-3'>
@@ -99,7 +99,7 @@ export default function DatosPersonales({ cliente }) {
                     />
 
 
-                    <div className='w-full items-center flex justify-end'>
+                    <div className='w-full items-center flex md:pb-0 justify-end'>
                         <Button3 onClick={handleActualizarData}>actualizar datos</Button3>
                     </div>
 

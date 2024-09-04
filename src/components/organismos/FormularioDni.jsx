@@ -77,7 +77,7 @@ export default function FormularioDni({ cliente }) {
         }
     }
     return (
-        <div className="w-1/3 flex items-center border-r flex-col gap-3">
+        <div className="md:w-1/3 w-full flex items-center border-r flex-col gap-3">
             <div className='w-52 h-28 flex m-auto items-center justify-center overflow-hidden rounded-lg shadow '>
                 {previewUrlFrente ?
                     <div className='relative w-full h-full group'>

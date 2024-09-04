@@ -46,17 +46,17 @@ const montoRestanteCuota=resultadoBase.Cuota.monto-montoPagoParcial
     <div
       data-idCuota
       id={idCuota}
-      class="flex flex-col items-start bg-0 print:hidden justify-normal w-full px-5 py-2 relative"
+      class="flex flex-col items-start bg-0 print:hidden justify-normal w-full md:px-5 px-2 py-2 relative"
     >
       <Titulo1>Cuota</Titulo1>
-      <div class="w-full flex items-starts justify-normal gap-3">
+      <div class="w-full flex md:flex-row flex-col items-starts justify-normal gap-3">
         <div
           id="reciboPrint"
           class="py-5 flex-grow w-full px-5 font-mono print:w-screen"
         >
           <ReciboPrint data={resultadoBase} pagosTodos={pagosTodos} montoRestanteCuota={montoRestanteCuota} />
         </div>
-        <div class="flex flex-col h-full flex- gap-4 items-start w-1/3 p-5">
+        <div class="flex flex-col h-full flex- gap-4 items-start md:w-1/3 p-5">
           <!-- botonera -->
           <div class="flex gap-2 items-center justify-start">
             <Button1 id="imprimir">imprimir</Button1>

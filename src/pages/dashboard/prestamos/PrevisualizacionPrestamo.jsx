@@ -59,7 +59,7 @@ export default function PrevisualizacionPrestamo() {
                 <h2 className='uppercase font-semibold text-sm '>Previsualizacion del prestamo generado</h2>
                 <Button3>pdf</Button3>
             </div>
-            <div className='text-gray-500 w-full rounded-lg my-2 border border-primary-100/50 p-1'>
+            <div className='text-gray-500 w-full rounded-lg my-2 border border-primary-100/50 p-1 overflow-scroll'>
 
                 <Table columnas={columnas} arrayBody={cuotasSimuladas} client:load />
             </div>
