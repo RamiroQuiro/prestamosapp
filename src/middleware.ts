@@ -45,7 +45,7 @@ export const onRequest = defineMiddleware(async (context, next) => {
         
 
           // Si la ruta comienza con "/api/" o "/passRestablecer", también dejamos pasar la solicitud
-    if (context.url.pathname.startsWith("/api/") || context.url.pathname.startsWith('/passRestablecer') ||context.url.pathname.startsWith('/cursos') ||context.url.pathname.startsWith('/payment/') ) {
+    if (context.url.pathname.startsWith("/api/") ||context.url.pathname.startsWith("/reportes/") || context.url.pathname.startsWith('/passRestablecer') ||context.url.pathname.startsWith('/cursos') ||context.url.pathname.startsWith('/payment/') ) {
         return next()
     }
         const sessionId = context.cookies.get(lucia.sessionCookieName)?.value ?? null;

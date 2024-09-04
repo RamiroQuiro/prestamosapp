@@ -4,60 +4,21 @@ import { buildPDF } from "../../../lib/pdfkit-table";
 import puppeteer from 'puppeteer';
 
 export async function GET({ request }) {
-  const browser = await puppeteer.launch();
+    const browser = await puppeteer.launch({
+        args: ['--no-sandbox', '--disable-setuid-sandbox'],
+        headless: true,
+      });
   const page = await browser.newPage();
 
   // Contenido HTML para el PDF
-  const htmlContent = `
-    <html>
-      <head>
-        <style>
-          body {
-            font-family: Arial, sans-serif;
-          }
-          h1 {
-            color: blue;
-          }
-          p {
-            font-size: 14px;
-          }
-          table {
-            width: 100%;
-            border-collapse: collapse;
-          }
-          th, td {
-            border: 1px solid black;
-            padding: 8px;
-            text-align: left;
-          }
-        </style>
-      </head>
-      <body>
-        <h1>Reporte Mensual</h1>
-        <p>Este es un reporte generado automáticamente.</p>
-        <table>
-          <tr>
-            <th>Cliente</th>
-            <th>Fecha</th>
-            <th>Monto</th>
-          </tr>
-          <tr>
-            <td>Juan Pérez</td>
-            <td>01/09/2024</td>
-            <td>$1000</td>
-          </tr>
-          <tr>
-            <td>Ana Gómez</td>
-            <td>02/09/2024</td>
-            <td>$1500</td>
-          </tr>
-        </table>
-      </body>
-    </html>
-  `;
+  await page.goto('http://localhost:4321/reportes/reportTabla', {
+    waitUntil: 'networkidle0',
+  });
 
-  await page.setContent(htmlContent);
-  const pdfBuffer = await page.pdf({ format: 'A4' });
+  const pdfBuffer = await page.pdf({
+    format: 'A4',
+    printBackground: true,
+  });
 
   await browser.close();
 
