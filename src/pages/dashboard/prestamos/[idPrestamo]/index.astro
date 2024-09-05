@@ -7,10 +7,11 @@ import ConfeccionTablaCuota from "../tablas/ConfeccionTablaCuota.astro";
 
 
 const { idPrestamo } = Astro.params;
-let prestamo = {};
-let cliente = {};
-let fechaFormateada = "";
-let cuotas = [];
+const infoData={
+  prestamo:{},
+  cliente:{},
+  cuotas:[]
+}
 
 export const formatHora = (date) => {
   const fecha = new Date(date);
@@ -29,31 +30,32 @@ export const formatHora = (date) => {
 try {
   const res = await fetch(`${Astro.url.origin}/api/prestamos/${idPrestamo}`);
   const data = await res.json();
-  prestamo = await data?.data.prestamo.Prestamo;
-  cliente = await data?.data.prestamo.Cliente;
-  cuotas = await data?.data.cuotas;
+  // console.log(data)
+  
+  infoData.prestamo=data.data.prestamo.prestamo
+  infoData.cliente=data.data.prestamo.cliente
+  infoData.cuotas=data.data.cuotas
 } catch (error) {
   console.log(error);
 }
 
-
 ---
 
-<Layoutdash title={cliente?.nombre + " " + cliente?.apellido + " prestamo"}>
+<Layoutdash title={infoData?.cliente?.nombre + " " + infoData?.cliente?.apellido + " prestamo"}>
   <MainDash>
     <div
       class="flex flex-col items-start bg-0 justify-normal w-full md:px-5 py-2 relative"
     >
       <ContenedorStats
-        prestamo={prestamo}
-        cliente={cliente}
-        fechaInicio={formatHora(prestamo?.fechaInicio)}
-        fechaFin={formatHora(prestamo?.fechaFin)}
+        prestamo={infoData?.prestamo}
+        cliente={infoData?.cliente}
+        fechaInicio={formatHora(infoData?.prestamo?.fechaInicio)}
+        fechaFin={formatHora(infoData?.prestamo?.fechaFin)}
       />
       <div class="w-full bg- flex flex-col mt-4 items-center justify-normal">
         <BotoneraOpcionesLista idPrestamo={idPrestamo}/>
         <div class="md:w-2/3 mb-5">
-          <ConfeccionTablaCuota prestamo={prestamo} cliente={cliente}/>
+          <ConfeccionTablaCuota infoData={infoData}/>
         </div>
       </div>
     </div>

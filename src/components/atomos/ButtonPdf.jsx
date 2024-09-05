@@ -5,12 +5,30 @@ export default function ButtonPdf({ handleClick, title, subtitle, children, id }
 
     const $dataTable = useStore(pdfPrint)
 
+    const content = `
+    <html>
+      <body>
+        <h1>Reporte</h1>
+        <table border="1">
+          <tr>
+            <th>Columna 1</th>
+            <th>Columna 2</th>
+          </tr>
+          <tr>
+            <td>Dato 1</td>
+            <td>Dato 2</td>
+          </tr>
+        </table>
+      </body>
+    </html>
+  `;
+
     const handlePdfGenerate = async () => {
         try {
             const res = await fetch('/api/report/prestamosReport', {
                 method: 'POST',
                 body: JSON.stringify({
-                    dataPDF: $dataTable,
+                    dataPDF: content,
                 })
             })
                 .then(response => response.blob())

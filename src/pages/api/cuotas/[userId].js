@@ -9,7 +9,7 @@ export async function GET({ params, props, request }) {
     const start = new Date(startDate);
     const end = new Date(endDate);
   
-  console.log("Endpoint de las cuotas", userId, end, start);
+  // console.log("Endpoint de las cuotas", userId, end, start);
   try {
     const cuotasDB = await db.select({
       cuota: {
@@ -39,7 +39,7 @@ export async function GET({ params, props, request }) {
   .orderBy(Cuota.fechaVencimiento, 'asc');
 
 const cuotasSinPagar=cuotasDB.filter(cuota=>cuota.pagada==false)
-    console.log('cuotas encontradas ->',cuotasDB);
+    // console.log('cuotas encontradas ->',cuotasDB);
     return new Response(
       JSON.stringify({
         data: cuotasDB,
