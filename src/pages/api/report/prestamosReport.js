@@ -35,7 +35,10 @@ export async function GET({ request }) {
 export async function POST({ request, params }) {
 
 const {dataPDF}=await request.json()
-console.log(dataPDF)
+// console.log(dataPDF)
+
+
+const constructurPDF=`  `
     try {
 
         
