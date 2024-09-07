@@ -3,7 +3,7 @@ import Button3 from "../../../../components/atomos/Button3";
 import ButtonPdf from "../../../../components/atomos/ButtonPdf";
 
 
-const {idPrestamo}=Astro.props
+const {idPrestamo,infoData}=Astro.props
 
 const title= `Cliente Rama Quiroga - Detalle de Prestamo`
 const subtitle= `ID del prestamos : ${idPrestamo}`
@@ -11,5 +11,5 @@ const subtitle= `ID del prestamos : ${idPrestamo}`
 <div class="flex items-center w- text-xs justify-evenly gap-5 py-3">
     <Button3>email</Button3>
     <Button3>whatsapp</Button3>
-    <ButtonPdf idPrestamo={idPrestamo} title={title} subtitle={subtitle} client:load>pdf</ButtonPdf>
+    <ButtonPdf idPrestamo={idPrestamo} title={title} infoData={infoData} subtitle={subtitle} client:load>pdf</ButtonPdf>
   </div>

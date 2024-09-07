@@ -2,7 +2,7 @@ import React from 'react'
 
 export default function InputsDatos({label,type,valueInput,name,id,onChange}) {
     return (
-        <div className='flex w-[45%] my-1 flex-grow  items-start justify-start px-2'>
+        <div className='flex md:w-[45%] my-1 flex-grow  items-start justify-start px-2'>
             <label htmlFor={name} className='mr-3   text-primary-100  font-thin'>
                {label}
             </label>

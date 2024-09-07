@@ -3,8 +3,11 @@ import Stats from "../moleculas/Stats.astro";
 
 
 const {prestamo,cliente,fechaInicio,fechaFin}=Astro.props
+
+
+
 ---
-<div class="w- items-start flex flex-wrap  gap-3 justify-start p-5 font-semibold">
+<div class="w- items-stretch flex flex-wrap  md:gap-3 justify-start md:p-5 p-2 gap-2 font-semibold">
     <Stats cliente={true} id={cliente?.id}>
         <p slot="label">Cliente</p>
         <p slot="value">{cliente?.nombre+' '+cliente?.apellido}</p>

@@ -63,8 +63,8 @@ export default function FormularioFotoPerfil({user}) {
         }
     }
     return (
-        <div className="w-1/3 flex items-center border-r flex-col gap-3">
-            <div className='w-52 h-52 flex fle m-auto items-center justify-center overflow-hidden rounded-lg shadow '>
+        <div className="md:w-1/3 flex items-center border-r flex-col gap-3">
+            <div className='md:w-52 md:h-52 w-28 h-28 flex fle m-auto items-center justify-center overflow-hidden rounded-lg shadow '>
                 {previewUrl ?
                     <div className='relative w-full h-full group'>
                         <label htmlFor="srcPhoto" className='border-dashed border absolute top-0 left-0 rounded-lg hidden group-hover:flex  border-primary-100 w-full h-full items-center justify-center uppercase font-semibold  m-auto cursor-pointer hover:bg-primary-100/40 duration-300 bg-transparent hover:text-white text-xs'>

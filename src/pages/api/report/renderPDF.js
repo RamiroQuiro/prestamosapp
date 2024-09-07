@@ -1,5 +1,4 @@
 import { renderPDF } from "../../../lib/renderPDF";
-import PDFRealizado from "../../../components/pdfComponent/PDFRealizado";
 
 export async function GET({ request, params }) {
   try {

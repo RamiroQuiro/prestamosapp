@@ -177,13 +177,13 @@ export default function FormularioLogin() {
             </div>}
             <button
                 onClick={!isRegister ? handleLogin : handleRegister}
-                className="bg-blue-400 text-base duration-200 rounded-md text-white px-2 py-1 w-1/3 mb-5 mx-auto"
+                className="bg-blue-400 text-base duration-200 rounded-md text-white py-1 w- px-3 mt-3 mx-auto"
             >
                 {!isRegister ? 'Inciar Sesion' : 'Registrar'}
             </button>
             <div className="text-sm w-full pb-2 capitalize my-4 flex items-center justify-evenly">
                 {!isRegister ? <p className='animate-aparecer'>¿No estas registrado?</p> : <p className='animate-aparecer'>¿ya estas registrado?</p>}
-                <button type='button' onClick={toogleRegister} className="font-semibold"> {!isRegister ? 'REGISTRAR' : 'INGRESAR'}</button>
+                <button type='button' onClick={toogleRegister} className="font-semibold "> {!isRegister ? 'REGISTRAR' : 'INGRESAR'}</button>
             </div>
             {errors.password && <p>{errors.username}</p>}
             {/* <ResetearContrasenia email={formulario.email} /> */}

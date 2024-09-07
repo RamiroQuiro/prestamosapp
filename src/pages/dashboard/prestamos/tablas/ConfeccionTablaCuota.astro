@@ -7,27 +7,24 @@ import { Cuota } from "astro:db";
 import TablaCuota from "./TablaCuota";
 import { formatHora } from "../[idPrestamo]/index.astro";
 import { PagoParcial } from "astro:db";
-let cuotas = [];
+// let cuotas = [];
 let arrayBody = [];
 
 const { idPrestamo } = Astro.params;
-const {cliente,prestamo}=Astro.props
+const {infoData}=Astro.props
 
-// console.log(prestamo)
+// console.log(infoData)
 try {
-  cuotas = await db
-    .select()
-    .from(Cuota)
-    .where(eq(Cuota.prestamoId, idPrestamo))
-// console.log(cuotas)
-  arrayBody = cuotas.map((element) => {
+
+  arrayBody = infoData.cuotas.map((element) => {
     // console.log('este es el array de cotas ->',element)
+const formatDate= new Date(element.fechaVencimiento)
 
     return {
       href:`/dashboard/prestamos/${element.prestamoId}/cuota/${element.id}`,
       id: element.id,
       cuota: element.numeroCuota,
-      fechaVencimiento: element.fechaVencimiento.toLocaleDateString(),
+      fechaVencimiento:formatDate.toLocaleDateString(),
       importeCuota: `$ ${element.monto.toLocaleString()}`,
       estado: element.pagada,
     };
@@ -39,8 +36,8 @@ try {
 ---
 
 <TablaCuota
-cliente={cliente}
-prestamo={prestamo}
+cliente={infoData.cliente}
+prestamo={infoData.prestamo}
 
   arrayBody={arrayBody}
   idPrestamo={idPrestamo}

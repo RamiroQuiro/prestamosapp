@@ -11,13 +11,13 @@ const isHrefInUrl = url.pathname == href;
 
 <a
   href={href}
-  class={`${isHrefInUrl ? "fill-white font bg-primary-100/10 border font-normal border-primary-100/50  " : "fill-primary-100 font-thin hover:font-sans border border-transparent"} z-20  rounded-lg text-primary-100 flex group gap- w   relative duration-300 cursor-pointer items-center justify-start text-xs  -md  gap-1 p-1`}
+  class={`${isHrefInUrl ? "fill-white font bg-primary-100/10 border font-normal border-primary-100/50  " : "fill-primary-100 font-thin hover:font-sans border border-transparent"} z-20  rounded-lg text-primary-100 flex flex-col-reverse md:flex-row group gap- w   relative duration-300 cursor-pointer items-center justify-start text-xs  -md  gap-1 p-1`}
 >
-<SvgSidebar isHrefInUrl={isHrefInUrl}>
-  <slot />
+  <SvgSidebar isHrefInUrl={isHrefInUrl}>
+    <slot />
   </SvgSidebar>
   <div
-    class="  text-white w- mx-auto w-full text-left py-0.5 -md duration-300  md:top-2 -top-full -semibold md:left-[105%] left group-hover:flex group-hover:translate-x-1.5  "
+    class="text-white w- mx-auto w-full text-left py-0.5 -md duration-300 md:top-2 -top-full -semibold md:left-[105%] left group-hover:flex md:group-hover:translate-x-1.5"
   >
     <SpanButtonSidebar span={span} />
   </div>

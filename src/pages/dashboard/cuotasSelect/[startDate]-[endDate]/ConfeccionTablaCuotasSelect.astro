@@ -4,27 +4,25 @@ import TablaCuotaSelect from "./TablaCuotaSelect";
 
 const { cuotasSeleccionadas } = Astro.props;
 const { id } = Astro.locals.user;
-console.log(id)
+// console.log(id)
 let prestamos = [];
 let arrayBody = [];
 let usuario = [];
 let columnas = [];
 try {
-  const clientesDB = await db.select({id: Cliente.id,nombre: Cliente?.nombre,apellido: Cliente?.apellido,}).from(Cliente).where(eq(Cliente.usuarioId, id))
+  // const clientesDB = await db.select({id: Cliente.id,nombre: Cliente?.nombre,apellido: Cliente?.apellido,}).from(Cliente).where(eq(Cliente.usuarioId, id))
 const clientesss=await db.select().from(Cliente)
   arrayBody = cuotasSeleccionadas.map((element, i) => {
-    const clienteName = clientesDB.find(
-      (cliente) => cliente.id == element.clienteId
-    );
-    const fecha = new Date(element?.fechaVencimiento);
+
+    const fecha = new Date(element?.cuota?.fechaVencimiento);
     return {
-      href: `/dashboard/prestamos/${element.prestamoId}/cuota/${element.id}`,
+      href: `/dashboard/prestamos/${element?.cuota?.prestamoId}/cuota/${element.cuota?.id}`,
       numero: i + 1,
-      cliente: `${clienteName.nombre} ${clienteName.apellido}`,
-      id: element?.id,
-      monto: `$ ${element?.monto.toLocaleString()}`,
-      numeroCuota: element?.numeroCuota,
-      prestamoId: element.prestamoId,
+      cliente: `${element?.cliente?.nombre} ${element?.cliente?.apellido}`,
+      id: element?.cuota?.id,
+      monto: `$ ${element?.cuota?.monto.toLocaleString()}`,
+      numeroCuota: element?.cuota?.numeroCuota,
+      prestamoId: element.cuota?.prestamoId,
       fechaVencimiento: fecha,
     };
   });
