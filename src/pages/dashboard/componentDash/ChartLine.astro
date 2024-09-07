@@ -1,41 +1,36 @@
 ---
-
-const {userId}=Astro.props
+const { userId } = Astro.props;
 // console.log(userId)
 ---
 
 <div
-id="userId"
-data-userId={userId}
+  id="userId"
+  data-userId={userId}
   class="flex w-full md:w-8/12 h-72 items-center justify-center border p-2 rounded-lg shadow-md bg-gray-50"
 >
-  <canvas id="movimientoMensual"  class="p- "></canvas>
+  <canvas id="movimientoMensual" class="p-"></canvas>
 </div>
 
 <script
   type="text/javascript"
-  src="https://cdn.jsdelivr.net/npm/chart.js/dist/chart.umd.min.js"
-></script>
+  src="https://cdn.jsdelivr.net/npm/chart.js/dist/chart.umd.min.js"></script>
 
 <script>
   // Datos de muestra
   // Obtener el dataset desde el atributo 'data-idClient' del elemento con id 'idCliente'
-  const userId = document
-    .getElementById("userId")
-    .getAttribute("data-userId");
-
+  const userId = document.getElementById("userId").getAttribute("data-userId");
 
   // Asignar el dataset al contexto del cliente
 
-//   console.log('id usuario',userId)
+  //   console.log('id usuario',userId)
 
   async function fetchMovimientoMensualData() {
     try {
       const response = await fetch(`/api/usuario/prestamos/${userId}`);
       const data = await response.json();
-      console.log(data)
+      console.log(data);
       if (data.status !== 200) {
-        console.error('Error al obtener los datos:', data.msg);
+        console.error("Error al obtener los datos:", data.msg);
         return null;
       }
       return data.data;
@@ -48,10 +43,13 @@ data-userId={userId}
     const movimientoData = await fetchMovimientoMensualData();
 
     if (!movimientoData) return;
-
-    const labels = movimientoData.capitalPorMes.map(item => item.mes);
-    const capitalData = movimientoData.capitalPorMes.map(item => item.capitalPrestado);
-    const gananciaData = movimientoData.cobrosPorMes.map(item => item.totalCobrado);
+    const labels = movimientoData.capitalPorMes.map((item) => item.mes);
+    const capitalData = movimientoData.capitalPorMes.map(
+      (item) => item.capitalPrestado
+    );
+    const gananciaData = movimientoData.cobrosPorMes.map(
+      (item) => item.totalCobrado
+    );
 
     const data = {
       labels: labels,
@@ -61,15 +59,16 @@ data-userId={userId}
           data: capitalData,
           borderColor: "#2B60E3",
           backgroundColor: "rgba(43, 96, 227, 0.5)",
-          borderWidth: 2,borderRadius: 5,
+          borderWidth: 2,
+          borderRadius: 5,
         },
         {
           label: "Ganancias/Cobros",
           data: gananciaData,
           borderColor: "#5ABA8A",
           backgroundColor: "#5ABA8A50",
-          borderWidth: 2,borderRadius: 5,
-          
+          borderWidth: 2,
+          borderRadius: 5,
         },
       ],
     };

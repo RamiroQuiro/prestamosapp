@@ -6,13 +6,12 @@ import BotonPagar from "@/components/organismos/BotonPagar.astro";
 
 interface Props {
   title: string;
-  dataCliente:string,
-  userData:string
+  dataCliente: string;
+  userData: string;
 }
 
-const { title,dataCliente,userData } = Astro.props;
-const url=Astro.url
-
+const { title, dataCliente, userData } = Astro.props;
+const url = Astro.url;
 ---
 
 <!doctype html>
@@ -26,15 +25,15 @@ const url=Astro.url
     <title>{title}</title>
   </head>
   <body
-    class="bg-primary-bg-claro   min-h-[125vh] relative overflow-x-hidden flex flex-col"
+    class="bg-primary-bg-claro min-h-[125vh] relative overflow-x-hidden flex flex-col"
   >
     <!-- <LoaderGral/> -->
 
-    <NavDash dataCliente={dataCliente} userData={userData}/>
-    <Loader/>
+    <NavDash dataCliente={dataCliente} userData={userData} />
+    <Loader />
     <Sidebar />
     <slot />
-    <BotonPagar/>
+    <BotonPagar />
   </body>
 </html>
 <style is:global>
@@ -59,7 +58,7 @@ const url=Astro.url
     );
   }
   html {
- }
+  }
   code {
     font-family:
       Menlo,
@@ -71,22 +70,23 @@ const url=Astro.url
       Courier New,
       monospace;
   }
-  input[type=number]::-webkit-inner-spin-button, 
-input[type=number]::-webkit-outer-spin-button { 
-  -webkit-appearance: none; 
-  margin: 0; 
-}
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
 
-input[type=number] { -moz-appearance:textfield; }
+  input[type="number"] {
+    -moz-appearance: textfield;
+  }
 </style>
 
 <script>
-import { rangoCuotasSelect } from "../../../context/store";
+  import { rangoCuotasSelect } from "../../../context/store";
 
+  const cuotas = rangoCuotasSelect.get();
 
-const cuotas=rangoCuotasSelect.get()
-
-rangoCuotasSelect.subscribe((state)=>{
-  // console.log(state.cuotas)
-})
+  rangoCuotasSelect.subscribe((state) => {
+    // console.log(state.cuotas)
+  });
 </script>
