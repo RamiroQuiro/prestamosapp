@@ -87,6 +87,9 @@ export default function TablaPrestamos({
     // Actualizamos el estado de 'encontrado' con los resultados de la búsqueda
     setEncontrado(busquedaFiltros(arrayBody, e.target.value));
   }
+
+  
+
   return (
     <div className="w-full ">
    {/* filtros */}

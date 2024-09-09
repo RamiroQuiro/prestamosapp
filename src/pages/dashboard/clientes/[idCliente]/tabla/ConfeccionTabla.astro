@@ -3,6 +3,7 @@ import { db } from "astro:db";
 import TablaPrestamosCliente from "./TablaPrestamosCliente";
 import { Prestamo } from "astro:db";
 import { eq } from "astro:db";
+import ButtonPdf from "@/components/atomos/ButtonPdf";
 
 const {id}=Astro.locals.user
 const {idCliente}=Astro.params
@@ -36,5 +37,6 @@ try {
 ---
 
 <div class="w-full overflow-x-auto my-5">
+  <ButtonPdf infoData={arrayBody} client:load>pdf</ButtonPdf>
     <TablaPrestamosCliente  arrayBody={arrayBody}  client:load/>
   </div>

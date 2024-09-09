@@ -1,6 +1,8 @@
 import React from 'react'
 import THead from './THead'
 import TBody from './TBody'
+import { useStore } from '@nanostores/react'
+import { reportPDF } from '@/context/store'
 
 export default function Table({ columnas,arrayBody, styleTable }) {
 
@@ -8,7 +10,10 @@ export default function Table({ columnas,arrayBody, styleTable }) {
       
     }
 
-    
+    reportPDF.set({
+        columnas,arrayBody
+    })
+
     return (
         <table
             className={`${styleTable} items-center bg-transparent w-full border-collapse rounded-md  overflow-hidden`}

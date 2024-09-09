@@ -46,15 +46,7 @@ const $cliente=useStore(clienteSelect)
           selector: 'estado'
         },
       ];
-      pdfPrint.set({
-        ...pdfPrint.get(),
-        lorem: `  Cliente : ${$cliente?.nombre?.toUpperCase()} ${$cliente?.apellido?.toUpperCase()} - DNI: ${$cliente?.dni} \n  Fecha de Inicio : ${arrayBody?.fechaInicio} - Fecha Vencimiento : ${arrayBody?.fechaFin} \n N° de Cuotas : ${arrayBody?.nCuotas} - Modalidad : ${arrayBody?.modalidad} \n Capital : $${arrayBody?.capital} , Monto Total : $${arrayBody?.montoTotal}, \n ID del prestamos : ${arrayBody?.idPrestamo}`,
-        headers: columnas.map(element => element.label),
-        rows: arrayBody? arrayBody.map(obj => {
-            let { id,  ...rest } = obj; // Excluye el campo 'id'
-            return Object.values({ ...rest});  // Devuelve solo los valores del objeto
-          }):[],
-      })
+
 
       const [search, setSearch] = useState('')
       const [encontrado, setEncontrado] = useState(arrayBody)

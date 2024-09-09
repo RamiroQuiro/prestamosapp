@@ -24,6 +24,12 @@ const columnSelectTable=atom({
     asc:true
 })
 
+
+
+const reportPDF=atom({
+    columnas:[],
+    arrayBody:[]
+})
 const prestamoSimulado=atom({
     usuarioId:'',
     nombreCliente:'',
@@ -48,4 +54,4 @@ const rangoCuotasSelect=atom({
     cuotas:[]
 })
 
-export {busqueda,rangoCuotasSelect, pdfPrint, filtrosBusquedaPrestamos,prestamoSimulado,clienteSelect,columnSelectTable}
+export {busqueda,rangoCuotasSelect, pdfPrint,reportPDF, filtrosBusquedaPrestamos,prestamoSimulado,clienteSelect,columnSelectTable}
