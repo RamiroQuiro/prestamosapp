@@ -1,17 +1,15 @@
 function generateHTMLTable(arrayBody, columnas, title) {
-
-
-
   return `
       <html>
       <head>
         <style>
           table {
-  width: 100%;
+  width: 95%;
   border-collapse: collapse;
   background-color: transparent;
   border-radius: 0.375rem; /* rounded-md */
   overflow: hidden;
+  margin:auto
 }
   thead {
   background-color:#8C6BEC
@@ -57,31 +55,37 @@ span {
       <body>
         <h1>${title}</h1>
         <table class="table-auto border-collapse border w-full">
-           <thead className="bg-primary-100/70 rounded-md text-white w-auto">
+           <thead class="bg-[#5B2CE4] rounded-md text-white w-auto">
             <tr id='cabeceraTable' className="rounded-md">
                ${columnas?.map((columna) => {
-    return (`<th class="align-middle border border-solid py-3 text-xs uppercase  border-l-0 border-r-0 whitespace-nowrap font-semibold text-center">
+                 return `<th class="align-middle border border-solid py-3 text-xs uppercase  border-l-0 border-r-0 whitespace-nowrap font-semibold text-center">
                           ${columna?.label}
-                          </th>`
-    )
-  })
-    }
-            </tr><<
+                          </th>`;
+               })}
+            </tr>
         </thead>
 
           <tbody>
-          ${arrayBody.map(cliente => {
+          ${arrayBody.map((cliente) => {
             const dataSinId = { ...cliente };
             delete dataSinId.id;
-            delete dataSinId.href
-            return(
-      `<tr>
-                     ${Object?.values(dataSinId)?.map((value, i) => (
-        `<td >${value}</td>`
-      ))}
-              </tr>`
-    )})
-    }
+            delete dataSinId.href;
+            return `<tr >
+                     ${Object?.values(dataSinId)?.map((value, i) => {
+                       return `<td class="border-t-0 px-2 align-middle text-center  py-3 border-l-0 border-r-0 text-xs whitespace-nowrap  ">
+                                ${
+                                  typeof value === "boolean"
+                                    ? `<span> ${
+                                        dataSinId.estado ? "✓" : "✕"
+                                      }</span>`
+                                    : value instanceof Date
+                                    ? `${value.toLocaleDateString()}`
+                                    : `${value}`
+                                }
+                        </td>`;
+                     })}
+              </tr>`;
+          })}
           </tbody>
         </table>
       </body>
