@@ -1,3 +1,4 @@
+import { generateHTMLTable } from "@/templatesPdf/templates";
 import { buildPDF } from "../../../lib/pdfkit-table";
 
 
@@ -35,11 +36,11 @@ export async function GET({ request }) {
 export async function POST({ request, params }) {
 
 const {dataPDF}=await request.json()
-// console.log(dataPDF)
+console.log(dataPDF)
 
 
-const constructurPDF=`  `
     try {
+      const content = generateHTMLTable(dataPDF.arrayBody,dataPDF.columnas,'Ramiro');
 
       const browser = await puppeteer.launch({
         args: ['--no-sandbox', '--disable-setuid-sandbox'],
@@ -48,7 +49,7 @@ const constructurPDF=`  `
           const page = await browser.newPage();
 
       
-          await page.setContent(dataPDF);
+          await page.setContent(content);
           const pdfBuffer = await page.pdf({ format: 'A4' });
           await browser.close();
       

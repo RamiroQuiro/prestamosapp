@@ -13,14 +13,13 @@ export default function ButtonPdf({ children, id, infoData, clienteId }) {
     try {
 
       // Generar contenido HTML con los datos obtenidos
-      const content = generateHTMLTable($reportesSeleccionados.arrayBody,$reportesSeleccionados.columnas,'Ramiro');
-
+     
 
       // Enviar el contenido al backend para generar el PDF
       const res = await fetch('/api/report/prestamosReport', {
         method: 'POST',
         body: JSON.stringify({
-          dataPDF: content,
+          dataPDF:  $reportesSeleccionados,
         })
       });
 

@@ -1,5 +1,6 @@
 
 import Button3 from '@/components/atomos/Button3'
+import ButtonPdf from '@/components/atomos/ButtonPdf'
 import Table from '@/components/tablaComponentes/Table'
 import { busqueda, prestamoSimulado } from '@/context/store'
 import simularCuotas from '@/lib/simularCuotas'
@@ -57,7 +58,7 @@ export default function PrevisualizacionPrestamo() {
             <div className='flex items-start w-full mt-6 my-3 justify-between'>
 
                 <h2 className='uppercase font-semibold text-sm '>Previsualizacion del prestamo generado</h2>
-                <Button3>pdf</Button3>
+                <ButtonPdf>pdf</ButtonPdf>
             </div>
             <div className='text-gray-500 w-full rounded-lg my-2 border border-primary-100/50 p-1 overflow-x-auto'>
 
