@@ -3,7 +3,13 @@ function generateHTMLTable(arrayBody, columnas, title) {
       <html>
       <head>
         <style>
-          table {
+          body {
+            font-family: Verdana, Arial, Helvetica, sans-serif
+          }
+            p {
+              }
+              table {
+               
                 width: 95%;
                 border-collapse: collapse;
                 background-color: transparent;
@@ -12,86 +18,75 @@ function generateHTMLTable(arrayBody, columnas, title) {
                 margin:auto
               }
 
-              .table-haead{
-                background-color: #5B2CE4;
-              }
-
-                thead {
-                background-color:#8C6BEC
-                color: white;
-              }
-                      th {
-                text-align: center;
-                font-size: 0.75rem; /* text-xs */
-                font-weight: 600; /* font-semibold */
-                text-transform: uppercase;
-                padding: 0.75rem 0; /* py-3 */
-                border: 1px solid; /* border border-solid */
-                border-left: none; /* border-l-0 */
-                border-right: none; /* border-r-0 */
-                white-space: nowrap;
-              }
-
-              td {
-                padding: 0.75rem 0.5rem; /* py-3, px-2 */
-                text-align: center;
-                font-size: 0.75rem; /* text-xs */
-                white-space: nowrap;
-                border-top: none; /* border-t-0 */
-                border-left: none; /* border-l-0 */
-                border-right: none; /* border-r-0 */
-                border-bottom: 1px solid; /* border-b */
-              }
 
               span {
-                background-color: #f87171; 
-                color: white;
                 font-size: 0.625rem; /* text-[10px] */
                 font-weight: 300; /* font-thin */
-                padding: 0.25rem 0.5rem; /* px-2, p-1 */
+               
                 border-radius: 9999px; /* rounded-full */
               }
-          h1 {
-            text-align: center;
-            color: #333;
+          .filaCabecera{
+              background-color:#5B2CE4;
+              border-top: 2px double #8C6BEC;
+              border-bottom: 2px double #8C6BEC;
+              border-top-left-radius: 10px;
+              border-top-rigth-radius: 10px;
+              // border-radius: 9999px; /* rounded-full */
+          }
+          .tablaCabecera{
+              text-transform: capitalize;
+              color:#121019;
+              font-Size:12px;
+              // border-left: 1px solid #cccccc;
+          
+              text-align: center;
+              padding: 0.75rem 0.5rem; /* py-3, px-2 */
+          }
+
+          .tablaBody {
+           padding: 0.75rem 0.5rem; /* py-3, px-2 */
+              color:#525659;
+              font-Size:11px;
+              border-left: 1px solid #cccccc50;
+              text-align: center;
           }
         </style>
       </head>
       <body>
         <h1>${title}</h1>
-        <table>
-           <thead class="bg-[#5B2CE4] table-haead rounded-md text-white w-auto">
-            <tr id='cabeceraTable' className="rounded-md">
-               ${columnas?.map((columna) => {
-                 return `<th class="align-middle border border-solid py-3 text-xs uppercase  border-l-0 border-r-0 whitespace-nowrap font-semibold text-center">
-                          ${columna?.label}
-                          </th>`;
-               })}
-            </tr>
-        </thead>
+        <table class="">
+           <thead class="">
+              <tr  class="filaCabecera" >
+                ${columnas?.map((columna) => {
+                  return `<th class="tablaCabecera">
+                            ${columna?.label}
+                            </th>`;
+                })}
+              </tr>
+            </thead>
 
-          <tbody>
-          ${arrayBody.map((cliente) => {
-            const dataSinId = { ...cliente };
-            delete dataSinId.id;
-            delete dataSinId.href;
-            return `<tr >
-                     ${Object?.values(dataSinId)?.map((value, i) => {
-                       return `<td class="border-t-0 px-2 align-middle text-center  py-3 border-l-0 border-r-0 text-xs whitespace-nowrap  ">
-                                ${
-                                  typeof value === "boolean"
-                                    ? `<span> ${
-                                        dataSinId.estado ? "✓" : "✕"
-                                      }</span>`
-                                    : value instanceof Date
-                                    ? `${value.toLocaleDateString()}`
-                                    : `${value}`
-                                }
-                        </td>`;
-                     })}
-              </tr>`;
-          })}
-          </tbody>
+            <tbody class="">
+            ${arrayBody.map((cliente) => {
+              const dataSinId = { ...cliente };
+              delete dataSinId.id;
+              delete dataSinId.href;
+              return `<tr >
+                      ${Object?.values(dataSinId)?.map((value, i) => {
+                        return `<td class="border-t-0 px-2  tablaBody  align-middle text-center  py-3 border-l-0 border-r-0 text-xs whitespace-nowrap  ">
+                                  ${
+                                    typeof value === "boolean"
+                                      ? `<span> ${
+                                          dataSinId.estado ? "✓" : "✕"
+                                        }</span>`
+                                      : value instanceof Date
+                                      ? `${value.toLocaleDateString()}`
+                                      : `${value}`
+                                  }
+                          </td>`;
+                      })}
+                </tr>`;
+            })}
+            </tbody>
         </table>
       </body>
       </html>
