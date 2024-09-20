@@ -18,25 +18,25 @@ export default function PrevisualizacionPrestamo() {
         const simulandoCuotas = simularCuotas(prestamosEnContexto, clienteSelect)
         setCuotasSimuladas(simulandoCuotas)
     }, [prestamosEnContexto])
-
-
+const usuarioId=prestamoSimulado?.value?.usuarioId
+console.log(usuarioId)
     const columnas = [
         {
             label: "cliente",
             id: 1,
             selector: 'cliente',
         },
-
-        {
-            label: "monto cuota",
-            id: 3,
-            selector: 'montoCuota',
-        },
         {
             label: "N° cuotas",
             id: 4,
             selector: 'nCuotas',
         },
+        {
+            label: "monto cuota",
+            id: 3,
+            selector: 'montoCuota',
+        },
+    
         {
             label: "F. vencimiento",
             id: 6,
@@ -49,7 +49,7 @@ export default function PrevisualizacionPrestamo() {
         },
 
     ];
-    let arrayBody = [];
+    let cabecera = {usuario:{id:usuarioId}};
 
     //   console.log(cuotasSimuladas)
     //   console.log(prestamosEnContexto)
@@ -58,7 +58,7 @@ export default function PrevisualizacionPrestamo() {
             <div className='flex items-start w-full mt-6 my-3 justify-between'>
 
                 <h2 className='uppercase font-semibold text-sm '>Previsualizacion del prestamo generado</h2>
-                <ButtonPdf>pdf</ButtonPdf>
+                <ButtonPdf infoCabecera={cabecera}>pdf</ButtonPdf>
             </div>
             <div className='text-gray-500 w-full rounded-lg my-2 border border-primary-100/50 p-1 overflow-x-auto'>
 

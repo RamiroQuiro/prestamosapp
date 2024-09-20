@@ -83,17 +83,3 @@ const url = Astro.url;
   }
 </style>
 
-<script >
-  import { rangoCuotasSelect, usuarioActivo } from "../../../context/store";
-
-  const cuotas = rangoCuotasSelect.get();
-
-  rangoCuotasSelect.subscribe((state) => {
-    // console.log(state.cuotas)
-  });
-
-  // usuarioActivo.set({nombre:'el rama'});
-  usuarioActivo.subscribe((state)=>{
-    console.log('este es el layout',state)
-  })
-</script>

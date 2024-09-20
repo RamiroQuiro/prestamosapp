@@ -1,14 +1,12 @@
 import { useStore } from "@nanostores/react";
-import { pdfPrint, reportPDF ,clienteSelect, usuarioActivo} from "../../context/store";
+import { reportPDF ,clienteSelect, usuarioActivo} from "../../context/store";
 import { generateHTMLTable } from "@/templatesPdf/templates";
 
-export default function ButtonPdf({ children, id, infoCabecera, clienteId }) {
-  const $dataTable = useStore(pdfPrint);
+export default function ButtonPdf({ children, id, infoCabecera, usuarioId }) {
   const $reportesSeleccionados = useStore(reportPDF)
   const $usuarioActivo = useStore(usuarioActivo)
-
+// console.log(infoCabecera)
   $reportesSeleccionados.cabecera = infoCabecera
-  console.log('este es el usuario activo ->',$usuarioActivo)
 
 
   const handlePdfGenerate = async () => {

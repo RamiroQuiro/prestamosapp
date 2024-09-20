@@ -3,6 +3,7 @@ import { buildPDF } from "../../../lib/pdfkit-table";
 
 
 import puppeteer from 'puppeteer';
+import { db, eq, User } from "astro:db";
 
 export async function GET({ request }) {
     const browser = await puppeteer.launch({
@@ -35,13 +36,17 @@ export async function GET({ request }) {
 
 export async function POST({ request, params }) {
 
-const {dataPDF}=await request.json()
-console.log('este es el data pdf que llega ',dataPDF)
+const {dataPDF:{arrayBody,columnas,cabecera}}=await request.json()
+console.log('este es el data pdf que llega ',cabecera.usuario.id)
 
 
     try {
-      const content = generateHTMLTable(dataPDF.arrayBody,dataPDF.columnas,dataPDF.cabecera,'Ramiro');
-
+      
+      const dataUser=await db.select({nombre:User.nombre, apellido:User.apellido, dni:User.dni,direccion:User.direccion}).from(User).where(eq(User.id,cabecera.usuario.id))
+      console.log(dataUser)
+      
+      
+      const content = generateHTMLTable(arrayBody,columnas,cabecera,'Ramiro');
       const browser = await puppeteer.launch({
         args: ['--no-sandbox', '--disable-setuid-sandbox'],
         headless: true,

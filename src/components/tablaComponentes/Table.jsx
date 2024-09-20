@@ -9,7 +9,6 @@ export default function Table({ columnas,arrayBody, styleTable }) {
     const onClick=(e)=>{
       
     }
-
     reportPDF.set({
         columnas,arrayBody
     })
