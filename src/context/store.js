@@ -55,4 +55,6 @@ const rangoCuotasSelect=atom({
     cuotas:[]
 })
 
-export {busqueda,rangoCuotasSelect, pdfPrint,reportPDF, filtrosBusquedaPrestamos,prestamoSimulado,clienteSelect,columnSelectTable}
+const usuarioActivo=atom({})
+
+export {busqueda,usuarioActivo,rangoCuotasSelect, pdfPrint,reportPDF, filtrosBusquedaPrestamos,prestamoSimulado,clienteSelect,columnSelectTable}

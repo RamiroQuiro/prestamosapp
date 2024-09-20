@@ -7,10 +7,12 @@ import BotonPagar from "@/components/organismos/BotonPagar.astro";
 interface Props {
   title: string;
   dataCliente: string;
-  userData: string;
+  userData: { nombre: string; apellido: string; userName: string };
 }
 
 const { title, dataCliente, userData } = Astro.props;
+
+
 const url = Astro.url;
 ---
 
@@ -25,9 +27,7 @@ const url = Astro.url;
     <title>{title}</title>
   </head>
   <body
-
-    class="bg-primary-bg-claro   md:min-h-[125vh] relative overflow-x-hidden flex flex-col"
-
+    class="bg-primary-bg-claro md:min-h-[125vh] relative overflow-x-hidden flex flex-col"
   >
     <!-- <LoaderGral/> -->
 
@@ -83,12 +83,17 @@ const url = Astro.url;
   }
 </style>
 
-<script>
-  import { rangoCuotasSelect } from "../../../context/store";
+<script >
+  import { rangoCuotasSelect, usuarioActivo } from "../../../context/store";
 
   const cuotas = rangoCuotasSelect.get();
 
   rangoCuotasSelect.subscribe((state) => {
     // console.log(state.cuotas)
   });
+
+  // usuarioActivo.set({nombre:'el rama'});
+  usuarioActivo.subscribe((state)=>{
+    console.log('este es el layout',state)
+  })
 </script>
