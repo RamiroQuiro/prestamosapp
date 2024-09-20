@@ -27,6 +27,7 @@ const columnSelectTable=atom({
 
 
 const reportPDF=atom({
+    cabecera:{},
     columnas:[],
     arrayBody:[]
 })

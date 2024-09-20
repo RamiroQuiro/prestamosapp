@@ -2,24 +2,27 @@ import { useStore } from "@nanostores/react";
 import { pdfPrint, reportPDF } from "../../context/store";
 import { generateHTMLTable } from "@/templatesPdf/templates";
 
-export default function ButtonPdf({ children, id, infoData, clienteId }) {
+export default function ButtonPdf({ children, id, infoCabecera, clienteId }) {
   const $dataTable = useStore(pdfPrint);
-  const $reportesSeleccionados=useStore(reportPDF)
+  const $reportesSeleccionados = useStore(reportPDF)
 
-  console.log($reportesSeleccionados)
+  $reportesSeleccionados.cabecera = infoCabecera
+  // console.log($reportesSeleccionados)
+
+
   const handlePdfGenerate = async () => {
 
     // Genera una tabla con los datos de los préstamos
     try {
 
       // Generar contenido HTML con los datos obtenidos
-     
+
 
       // Enviar el contenido al backend para generar el PDF
       const res = await fetch('/api/report/prestamosReport', {
         method: 'POST',
         body: JSON.stringify({
-          dataPDF:  $reportesSeleccionados,
+          dataPDF: $reportesSeleccionados,
         })
       });
 

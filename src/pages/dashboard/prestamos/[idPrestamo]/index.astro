@@ -35,6 +35,8 @@ try {
   infoData.prestamo=data.data.prestamo.prestamo
   infoData.cliente=data.data.prestamo.cliente
   infoData.cuotas=data.data.cuotas
+  infoData.prestamo.fechaInicio=formatHora(infoData?.prestamo?.fechaInicio)
+  infoData.prestamo.fechaFin=formatHora(infoData?.prestamo?.fechaFin)
 } catch (error) {
   console.log(error);
 }

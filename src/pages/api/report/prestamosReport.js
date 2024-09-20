@@ -36,11 +36,11 @@ export async function GET({ request }) {
 export async function POST({ request, params }) {
 
 const {dataPDF}=await request.json()
-console.log(dataPDF)
+console.log('este es el data pdf que llega ',dataPDF)
 
 
     try {
-      const content = generateHTMLTable(dataPDF.arrayBody,dataPDF.columnas,'Ramiro');
+      const content = generateHTMLTable(dataPDF.arrayBody,dataPDF.columnas,dataPDF.cabecera,'Ramiro');
 
       const browser = await puppeteer.launch({
         args: ['--no-sandbox', '--disable-setuid-sandbox'],
