@@ -10,10 +10,10 @@ export async function POST({
   cookies,
 }: APIContext): Promise<Response> {
   const formData = await request.json();
-
-  const { email, password, userName } = await formData;
+console.log(formData)
+  const { email, password, userName,nombre,apellido } = await formData;
   // console.log(email, password);
-  if (!email || !password || !userName) {
+  if (!email || !password || !userName || !nombre || !apellido ) {
     return new Response(
       JSON.stringify({
         data: "faltan campos requeridos",
@@ -54,9 +54,8 @@ export async function POST({
 
   await db.insert(User).values([
     {
-      userName: userName,
       id: userId,
-      email: email,
+      userName,email,nombre,apellido,
       password: hashPassword,
     },
   ]);

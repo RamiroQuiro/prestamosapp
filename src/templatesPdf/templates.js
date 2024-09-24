@@ -1,5 +1,5 @@
 function generateHTMLTable(arrayBody, columnas, cabecera) {
-  console.log(cabecera,arrayBody,cabecera)
+  console.log(cabecera, arrayBody, cabecera);
   return `
       <html>
       <head>
@@ -111,15 +111,29 @@ function generateHTMLTable(arrayBody, columnas, cabecera) {
               </div>
             </div>
             ${
-              cabecera?.cliente &&
-              `<div class="contenedorInfoCliente">
-                  <p >Cliente: ${cabecera?.cliente?.nombre} ${` `} ${cabecera?.cliente?.apellido} </p>
+              cabecera?.cliente
+                ? `<div class="contenedorInfoCliente">
+                  <p >Cliente: ${cabecera?.cliente?.nombre} ${` `} ${
+                    cabecera?.cliente?.apellido
+                  } </p>
                   <div class="flex">
-                      <p >DNI: ${cabecera?.cliente?.dni} </p>  <p >Dirección: ${cabecera?.cliente?.direccion} </p>
+                      <p >DNI: ${cabecera?.cliente?.dni} </p>  <p >Dirección: ${
+                    cabecera?.cliente?.direccion
+                  } </p>
                   </div>
               </div>`
+                : `<div></div>`
             }
+            
            ${
+             cabecera.title
+               ? `<div class="contenedorInfoPrestamo">
+              <p style="">${cabecera?.title} 👇 </p>
+            </div>`
+               : `<div></div>`
+           }
+
+                ${
              cabecera?.prestamo ?
              `<div class="contenedorInfoPrestamo">
               <p style="border-radius:20px; border: 1px solid #cecece; padding:0.25rem 0.4rem;">idPrestamo: ${cabecera?.prestamo?.id} </p>
@@ -138,36 +152,48 @@ function generateHTMLTable(arrayBody, columnas, cabecera) {
         <table class="">
             <thead>
               <tr  class="filaCabecera" >
-                ${columnas?.map((columna) => {
+                ${Object.values(columnas).map((columna) => {
                   return `<th class="tablaCabecera">
                             ${columna?.label}
                             </th>`;
-                })}
+                }).join("")}
               </tr>
             </thead>
 
-            <tbody>
-            ${arrayBody.map((cliente) => {
-              const dataSinId = { ...cliente };
-              delete dataSinId.id;
-              delete dataSinId.href;
-              return `<tr >
-                      ${Object?.values(dataSinId)?.map((value, i) => {
-                        return `<td class="border-t-0 px-2  tablaBody  align-middle text-center  py-3 border-l-0 border-r-0 text-xs whitespace-nowrap  ">
-                                  ${
-                                    typeof value === "boolean"
-                                      ? `<span> ${
-                                          dataSinId.estado ? "✓" : "✕"
-                                        }</span>`
-                                      : value instanceof Date
-                                      ? `${value.toLocaleDateString()}`
-                                      : `${value}`
-                                  }
-                          </td>`;
-                      })}
-                </tr>`;
-            })}
-            </tbody>
+        <tbody>
+            ${Object.values(arrayBody)
+              .map((cliente) => {
+                const dataSinId = { ...cliente };
+                delete dataSinId.id;
+                delete dataSinId.href;
+                return `
+                <tr>
+                  ${Object.values(dataSinId)
+                    .map((value) => {
+                      // Chequeo para evitar valores vacíos o nulos
+                      let displayValue = "";
+                      if (typeof value === "boolean") {
+                        displayValue = value ? "✓" : "✕";
+                      } else if (value instanceof Date) {
+                        displayValue = value.toLocaleDateString();
+                      } else if (value !== null && value !== undefined) {
+                        displayValue = value.toString().trim();
+                      }
+
+                      // Renderizar celda de la tabla
+                      return `
+                      <td class="border-t-0 px-2 tablaBody align-middle text-center py-3 border-l-0 border-r-0 text-xs whitespace-nowrap">
+                        ${displayValue || ""}
+                      </td>
+                    `;
+                    })
+                    .join("")}
+                </tr>
+              `;
+              })
+              .join("")}
+          </tbody>
+
         </table>
       </body>
       </html>

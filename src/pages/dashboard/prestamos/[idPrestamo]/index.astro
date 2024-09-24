@@ -51,8 +51,8 @@ try {
       <ContenedorStats
         prestamo={infoData?.prestamo}
         cliente={infoData?.cliente}
-        fechaInicio={formatHora(infoData?.prestamo?.fechaInicio)}
-        fechaFin={formatHora(infoData?.prestamo?.fechaFin)}
+        fechaInicio={infoData?.prestamo?.fechaInicio}
+        fechaFin={infoData?.prestamo?.fechaFin}
       />
       <div class="w-full bg- flex flex-col mt-4 items-center justify-normal">
         <BotoneraOpcionesLista infoData={infoData} idPrestamo={idPrestamo}/>
