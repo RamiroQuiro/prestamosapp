@@ -9,7 +9,9 @@ export default function FormularioLogin() {
         email: '',
         password: '',
         rePassword: '',
-        userName: ''
+        userName: '',
+        nombre:'',
+        apellido:'',
     })
 
     const [errors, setErrors] = useState({
@@ -66,7 +68,7 @@ export default function FormularioLogin() {
     }
     const handleRegister = async (e) => {
         e.preventDefault()
-        if (!formulario.password || !formulario.rePassword || !formulario.email || !formulario.userName) {
+        if (!formulario.password || !formulario.rePassword || !formulario.email ||  !formulario.userName || !formulario.nombre || !formulario.apellido ) {
             return showToast('Faltan campos por completar', {
                 background: 'bg-red-500'
             })
@@ -87,7 +89,9 @@ export default function FormularioLogin() {
                 body: JSON.stringify({
                     email: formulario.email,
                     password: formulario.password,
-                    userName: formulario.userName
+                    userName: formulario.userName,
+                    nombre:formulario.nombre,
+                    apellido:formulario.apellido
                 }), // Reemplazar 'nuevoEstado' con el nuevo estado deseado
             });
             const dataRes = await fetiiching.json();
@@ -121,13 +125,15 @@ export default function FormularioLogin() {
             id='registerClient'
             className="bg-white md:w-96 w-full  duration-300 shadow-xl rounded-lg text-xs  flex flex-col gap-4 items-center justify-between p-5"
         >
-            <div className="flex w-full items-center justify-evenly">
+            <div className="flex w-full animate-apDeArriba items-center justify-evenly">
 
-                <h2 className="text-xl my-3 duration-200 text-primary-200 font-semibold">
+                <h2 className="text-xl my-3  duration-200 text-primary-200 font-semibold">
                     {!isRegister ? 'Ingresar' : 'Registrar'}
                 </h2>
             </div>
-            {isRegister && <div className="animate-apDeArriba w-full flex items flex-col items-start gap-3 ">
+            {isRegister && 
+            <>
+            <div className="animate-apDeArriba w-full flex items flex-col items-start gap-3 ">
                 <label htmlFor="userName" className="text-primary-100 capitalize">nombre de usuario</label>
                 <input
                     onChange={handleChagne}
@@ -136,7 +142,31 @@ export default function FormularioLogin() {
                     id="userName"
                     className="w-full text-sm bg-primary-200/10  rounded-md group-hover:ring-2  border-gray-300  ring-primary-200/60 focus:ring-2  outline-none transition-colors duration-200 ease-in-out px-2 py-2"
                 />
-            </div>}
+            </div>
+            <div className="animate-apDeArriba w-full flex items gap-2 items-start  ">
+            <div className="animate-apDeArriba w-full flex items flex-col items-start gap-3 ">
+                <label htmlFor="nombre" className="text-primary-100 capitalize">nombre</label>
+                <input
+                    onChange={handleChagne}
+                    type="text"
+                    name="nombre"
+                    id="nombre"
+                    className="w-full text-sm bg-primary-200/10  rounded-md group-hover:ring-2  border-gray-300  ring-primary-200/60 focus:ring-2  outline-none transition-colors duration-200 ease-in-out px-2 py-2"
+                />
+            </div>
+            <div className="animate-apDeArriba w-full flex items flex-col items-start gap-3 ">
+                <label htmlFor="apellido" className="text-primary-100 capitalize">apellido</label>
+                <input
+                    onChange={handleChagne}
+                    type="text"
+                    name="apellido"
+                    id="apellido"
+                    className="w-full text-sm bg-primary-200/10  rounded-md group-hover:ring-2  border-gray-300  ring-primary-200/60 focus:ring-2  outline-none transition-colors duration-200 ease-in-out px-2 py-2"
+                />
+            </div>
+            </div>
+            </>
+            }
             <div
                 className="w-full flex items flex-col items-start gap-3"
             >

@@ -33,11 +33,13 @@ export async function GET({ request }) {
 }
 
 export async function POST({ request, params }) {
+
+
   const {
     dataPDF: { arrayBody, columnas, cabecera },
   } = await request.json();
-  // console.log("este es el data pdf que llega ", cabecera.usuario.id);
   if (!cabecera || !cabecera.usuario || !cabecera.usuario.id) {
+    console.log("no llegó la cabecera");
     return new Response(
       JSON.stringify({
         msg: "falta id del usuario o es inválido",

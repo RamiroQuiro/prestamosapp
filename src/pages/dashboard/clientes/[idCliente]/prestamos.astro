@@ -5,24 +5,43 @@ import { eq } from "astro:db";
 import ConfeccionTabla from "./tabla/ConfeccionTabla.astro";
 import BotoneraFiltros from "../../prestamos/prestamos/BotoneraFiltros.astro";
 import LayoutClient from "./LayoutClient.astro";
+import { Cliente } from "astro:db";
 
 const { idCliente } = Astro.params;
 let prestamos;
-
+const { user } = Astro.locals;
 try {
   prestamos = await db
-    .select()
+    .select({
+      cliente: {
+        dni: Cliente.dni,
+        nombre: Cliente.nombre,
+        apellido: Cliente.apellido,
+        direccion: Cliente.direccion,
+      },
+      prestamo: Prestamo,
+    })
     .from(Prestamo)
+    .innerJoin(Cliente, eq(Prestamo.clienteId, Cliente.id))
     .where(eq(Prestamo.clienteId, idCliente));
 
-  // console.log(prestamos);
+  console.log(prestamos);
 } catch (error) {
   console.log(error);
 }
+
+const infoCabecera = {
+  usuario: {
+    id: user.id,
+  },
+  cliente: prestamos[0].cliente,
+  title: "Prestamos de ",
+};
 ---
+
 <LayoutClient>
-      <div class="w-full flex flex-col items-center gap-3">
-        <BotoneraFiltros />
-        <ConfeccionTabla />
-      </div>
+  <div class="w-full flex flex-col items-center gap-3">
+    <BotoneraFiltros infoCabecera={infoCabecera} />
+    <ConfeccionTabla />
+  </div>
 </LayoutClient>

@@ -7,13 +7,10 @@ const {idPrestamo,infoData}=Astro.props
 
 const title= `Cliente Rama Quiroga - Detalle de Prestamo`
 const subtitle= `ID del prestamos : ${idPrestamo}`
-console.log('este es el info data de la botonera >',infoData)
-
+const {user}=Astro.locals
 const infoCabecera={
   usuario:{
-    nombre:"",
-    dni:33882244,
-    direccion:'El Ramaaaa'
+    id:user.id
   },
   prestamo:infoData.prestamo,
   cliente:infoData.cliente
