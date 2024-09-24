@@ -19,7 +19,6 @@ export default function PrevisualizacionPrestamo() {
         setCuotasSimuladas(simulandoCuotas)
     }, [prestamosEnContexto])
 const usuarioId=prestamoSimulado?.value?.usuarioId
-console.log(usuarioId)
     const columnas = [
         {
             label: "cliente",
@@ -49,9 +48,9 @@ console.log(usuarioId)
         },
 
     ];
-    let cabecera = {usuario:{id:usuarioId}};
+    let cabecera = {usuario:{id:usuarioId},cliente:clienteSelect.clientSelect};
 
-    //   console.log(cuotasSimuladas)
+      console.log(clienteSelect)
     //   console.log(prestamosEnContexto)
     return (
         <div className='p-2 flex relative flex-col items-start justify-normal'>

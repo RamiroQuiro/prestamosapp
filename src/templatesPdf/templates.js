@@ -1,4 +1,5 @@
-function generateHTMLTable(arrayBody, columnas, cabecera, title) {
+function generateHTMLTable(arrayBody, columnas, cabecera) {
+  console.log(cabecera,arrayBody,cabecera)
   return `
       <html>
       <head>
@@ -60,7 +61,9 @@ function generateHTMLTable(arrayBody, columnas, cabecera, title) {
 
             .contenedorInfoUsuario{
             display:flex;
+            flex-direction: column;
             font-size: 16px;
+             text-transform: capitalize;
               }
             .contenedorInfoCliente{
             width:full;
@@ -82,26 +85,42 @@ function generateHTMLTable(arrayBody, columnas, cabecera, title) {
             align-text:center;
 
             }
+            .flex{
+            width:auto;
+            display:flex;
+            flex-direction:row;
+            gap:25px
+            }
         </style>
       </head>
       <body>
         <header>
-        <div class="hero">
+        <div class="hero ">
             <h1 class=" tituloPrestaApp">
             PrestamosAPP
             </h1>
-            <div class="contenedorInfoUsuario">
-              <p >Prestamista: ${cabecera?.usuario?.nombre} </p>
+            <div class="contenedorInfoUsuario flex">
+              <div>
+              <img src="/logo.png" alt="logo" width="150px" heigth="150px"/>
+              </div>
+              <div>
+                  <p >Prestamista: ${cabecera?.usuario?.nombre} ${` `} ${cabecera?.usuario?.apellido}</p>
+                  <div class="flex">
+                  <p >DNI: ${cabecera?.usuario?.dni} </p>  <p >Dirección: ${cabecera?.usuario?.direccion} </p>
+                  </div>
+              </div>
             </div>
-            ${    
+            ${
               cabecera?.cliente &&
               `<div class="contenedorInfoCliente">
                   <p >Cliente: ${cabecera?.cliente?.nombre} ${` `} ${cabecera?.cliente?.apellido} </p>
-                  <p >DNI: ${cabecera?.cliente?.dni} </p>
+                  <div class="flex">
+                      <p >DNI: ${cabecera?.cliente?.dni} </p>  <p >Dirección: ${cabecera?.cliente?.direccion} </p>
+                  </div>
               </div>`
             }
            ${
-             cabecera?.prestamo &&
+             cabecera?.prestamo ?
              `<div class="contenedorInfoPrestamo">
               <p style="border-radius:20px; border: 1px solid #cecece; padding:0.25rem 0.4rem;">idPrestamo: ${cabecera?.prestamo?.id} </p>
               <p style="border-radius:20px; border: 1px solid #cecece; padding:0.25rem 0.4rem;">Capital: $${cabecera?.prestamo?.capital.toLocaleString()} </p>
@@ -111,11 +130,13 @@ function generateHTMLTable(arrayBody, columnas, cabecera, title) {
               <p style="border-radius:20px; border: 1px solid #cecece; padding:0.25rem 0.4rem;">Fecha de Inicio: ${cabecera?.prestamo?.fechaInicio} </p>
               <p style="border-radius:20px; border: 1px solid #cecece; padding:0.25rem 0.4rem;"> Fecha de Termino: ${cabecera?.prestamo?.fechaFin} </p>
             </div>`
+            :
+            `<div></div>`
            }
         </div>
         </header>
         <table class="">
-           <thead >
+            <thead>
               <tr  class="filaCabecera" >
                 ${columnas?.map((columna) => {
                   return `<th class="tablaCabecera">
