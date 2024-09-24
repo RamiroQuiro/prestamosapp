@@ -17,6 +17,7 @@ export async function GET({ request }) {
   });
 
   const pdfBuffer = await page.pdf({
+    path:'reportesPdf',
     format: "A4",
     printBackground: true,
   });

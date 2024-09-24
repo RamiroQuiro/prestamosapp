@@ -101,7 +101,7 @@ function generateHTMLTable(arrayBody, columnas, cabecera) {
             </h1>
             <div class="contenedorInfoUsuario flex">
               <div>
-              <img src="/logo.png" alt="logo" width="150px" heigth="150px"/>
+              <img src="http://localhost:4321/logo.png" alt="logo" width="150px" heigth="150px"/>
               </div>
               <div>
                   <p >Prestamista: ${cabecera?.usuario?.nombre} ${` `} ${cabecera?.usuario?.apellido}</p>
