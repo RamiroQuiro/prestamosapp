@@ -5,13 +5,20 @@ import Layoutdash from "../../layouts/Layoutdash.astro";
 import BotoneraFiltros from "./BotoneraFiltros.astro";
 import ConfeccionTablaPrestamos from "../tablas/ConfeccionTablaPrestamos.astro";
 import ContenedorDiv1 from "@/components/atomos/ContenedorDiv1.astro";
+
+const { id } = Astro.locals.user;
+
+const infoCabecera = {
+  usuario: { id },
+  title: "PRESTAMOS",
+};
 ---
 
 <Layoutdash title="Prestamos">
   <MainDash>
-<ContenedorDiv1>
+    <ContenedorDiv1>
       <Titulo1> Prestamos </Titulo1>
-      <BotoneraFiltros />
+      <BotoneraFiltros infoCabecera={infoCabecera} />
       <div class="py-5 w-full md:px-5 overflow-x-auto">
         <ConfeccionTablaPrestamos />
       </div>

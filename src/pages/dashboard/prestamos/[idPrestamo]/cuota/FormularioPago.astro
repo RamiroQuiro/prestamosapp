@@ -7,7 +7,7 @@ import { eq } from "astro:db";
 import { db,moraCuota } from "astro:db";
 
 const {
-  data: { Cuota, Cliente, Prestamo },montoRestanteCuota
+  data: { cuota, cliente, prestamo },montoRestanteCuota
 } = Astro.props;
 const {id}=Astro.locals.user
 
@@ -44,10 +44,10 @@ const metodoPagos = [
 <FormCont title="Nuevo Pago" id="nuevoPago">
   <div
     id="idCuota"
-    data-idCuota={Cuota.id}
+    data-idCuota={cuota?.id}
     class="flex md:flex-row text-sm font-semibold items-center gap-2 w-full justify-normal"
   >
-    <span>Id de Cuota : </span><p>{Cuota.id}</p>
+    <span>Id de Cuota : </span><p>{cuota?.id}</p>
   </div>
   <div id="moraId" data-moraInteres={tasaInteresMora} class="flex md:flex-row items-center gap-2 w-full justify-normal">
     <ContenedorInputForm
@@ -55,13 +55,13 @@ const metodoPagos = [
       type="text"
       name="nombre"
       styleInput=""
-      value={Cliente.nombre}
+      value={cliente.nombre}
     />
     <ContenedorInputForm
       label="apellido"
       type="text"
       name="apellido"
-      value={Cliente.apellido}
+      value={cliente.apellido}
     />
   </div>
   <div class="flex md:flex-row items-center gap-2 w-full justify-normal">
@@ -69,18 +69,18 @@ const metodoPagos = [
       label="DNI"
       type="text"
       name="dni"
-      value={Cliente.dni}
+      value={cliente.dni}
     />
     <ContenedorInputForm
       label="Id Prestamo"
       type="text"
       name="dni"
-      value={Prestamo.id}
+      value={prestamo.id}
     />
   </div>
   <div
-    data-fechaVencimiento={Cuota.fechaVencimiento}
-    data-montoCuota={montoRestanteCuota==0?Cuota.monto:montoRestanteCuota}
+    data-fechaVencimiento={cuota.fechaVencimiento}
+    data-montoCuota={montoRestanteCuota==0?cuota.monto:montoRestanteCuota}
     id="fechaVencimiento"
     class="flex md:flex-row items-center gap-2 w-full justify-normal"
   >
@@ -88,13 +88,13 @@ const metodoPagos = [
       label="monto cuota"
       type="text"
       name="montoCuota"
-      value={`$ ${montoRestanteCuota==0?Cuota.monto.toLocaleString():montoRestanteCuota.toLocaleString()}`}
+      value={`$ ${montoRestanteCuota==0?cuota.monto.toLocaleString():montoRestanteCuota.toLocaleString()}`}
     />
     <ContenedorInputForm
       label="Fecha de vencimiento"
       type="text"
       name="fechaVencimiento"
-      value={Cuota.fechaVencimiento.toLocaleDateString()}
+      value={cuota.fechaVencimiento.toLocaleDateString()}
     />
   </div>
 

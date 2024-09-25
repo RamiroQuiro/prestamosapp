@@ -9,29 +9,53 @@ import ContenedeorModal from "../../../../../components/organismos/ContenedeorMo
 import FormularioPago from "./FormularioPago.astro";
 import Button1 from "../../../../../components/atomos/Button1.astro";
 import { elements } from "chart.js";
+import { usuarioActivo } from "@/context/store";
+import { User } from "astro:db";
 
 const { idCuota } = Astro.params;
 let resultadoBase = {};
 let pagoParciales = [];
 try {
   const resBase = await db
-    .select()
+    .select({
+      cuota:Cuota,
+      prestamo:{
+        id:Prestamo.id,
+        nCuotas:Prestamo.nCuotas,
+        monto:Prestamo.montoTotal,
+        fechaInicio:Prestamo.fechaInicio,
+        fechaFin:Prestamo.fechaFin,
+      },
+      cliente:{
+        id:Cliente.id,
+        nombre:Cliente.nombre,
+        apellido:Cliente.apellido,
+        dni:Cliente.dni,
+        direccion:Cliente.direccion
+      },
+      usuario:{
+        nombre:User.nombre,
+        apellido:User.apellido
+      }
+    })
     .from(Cuota)
     .where(eq(Cuota.id, idCuota))
     .innerJoin(Prestamo, eq(Prestamo.id, Cuota.prestamoId))
     .innerJoin(Cliente, eq(Prestamo.clienteId, Cliente.id))
+    .innerJoin(User, eq(Cuota.usuarioId, User.id))
     .leftJoin(Pago, eq(Pago.cuotaId, idCuota));
-
+// console.log(resBase)
   pagoParciales = await db
     .select()
     .from(PagoParcial)
     .where(eq(PagoParcial.cuotaId, idCuota));
   resultadoBase = resBase[0];
+
 } catch (error) {
   console.log(error);
 }
 const montoPagoParcial=pagoParciales?.reduce((acc,currentValor)=>(acc+currentValor.monto),0)
-const montoRestanteCuota=resultadoBase.Cuota.monto-montoPagoParcial
+const montoRestanteCuota=resultadoBase.cuota.monto-montoPagoParcial
 //  console.log('montoRestante de la cuota ,',montoRestanteCuota)
 
 

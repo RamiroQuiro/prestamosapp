@@ -11,7 +11,7 @@ const options = {
   month: "long",
   day: "numeric",
 };
-const fechaVencimiento = formatHora(data?.Cuota?.fechaVencimiento);
+const fechaVencimiento = formatHora(data?.cuota?.fechaVencimiento);
 // console.log(pagosTodos)
 ---
 
@@ -19,71 +19,84 @@ const fechaVencimiento = formatHora(data?.Cuota?.fechaVencimiento);
   class="flex flex-col items-center justify-normal py-3 px-5 w-full rounded border shadow-md"
 >
   <div class="flex items-center py-5 justify-between w-full border-b">
-    <h2 class="text-xl font-bold">RamiroQ</h2>
+    <h2 class="text-xl font-bold capitalize">
+      {data?.usuario?.nombre}
+      {" "}
+      {data?.usuario?.apellido}
+    </h2>
     <span class="text- font-">{fechaFormateada}</span>
   </div>
-  <div class="flex flex-col items-start py-3 justify-between gap-2 w-full border-b">
+  <div
+    class="flex flex-col items-start py-3 justify-between gap-2 w-full border-b"
+  >
     <div class="flex items-start justify-normal gap-5">
       <p class="text-lg font-semibold capitalize">
-        {data?.Cliente?.nombre + " " + data?.Cliente.apellido}
+        {data?.cliente?.nombre + " " + data?.cliente.apellido}
       </p>
-      <p class="text-lg font-semibold capitalize">DNI: {data.Cliente.dni}</p>
+      <p class="text-lg font-semibold capitalize">DNI: {data.cliente.dni}</p>
     </div>
-    <div>
-    <p class="text-sm italic">{data.Cliente.direccion}</p>
-    <p class="text-sm italic">
-      {data.Cliente.ciudad + " | " + data.Cliente.departamento}
-    </p>
-  </div>
+    <div class="flex items-start justify-normal gap-5">
+      <p class="text-sm italic">{data.cliente.direccion}</p>
+      <p class="text-sm italic">
+        {data.cliente.ciudad + " | " + data?.cliente?.provincia}
+      </p>
+    </div>
   </div>
   <div class="flex items-center py-5 justify-between w-full border-b">
-    <div class="flex flex-col  items-start gap-2">
-    <p class="text-xs font-thin w-1/2 capitalize">
-      Id del Prestamo <span class="text-sm font-semibold">{data?.Prestamo?.id}</span>
-    </p>
-    <p class="text-xs font-thin w-1/2 capitalize">
-      Id de la Cuota <span class="text-sm font-semibold">{data?.Cuota?.id}</span>
-    </p>
-  </div>
+    <div class="flex flex-col items-start gap-2">
+      <p class="text-xs font-thin w-1/2 capitalize">
+        Id del prestamo <span class="text-sm font-semibold"
+          >{data?.prestamo?.id}</span
+        >
+      </p>
+      <p class="text-xs font-thin w-1/2 capitalize">
+        Id de la cuota <span class="text-sm font-semibold"
+          >{data?.cuota?.id}</span
+        >
+      </p>
+    </div>
     <div class="flex flex-col items-end w-1/2 border-l-2 px-2">
       <p class="text-sm font- text-end">
         F. Vencimiento <span class="font-bold text-sm tracking-tighter"
           >{fechaVencimiento}</span
         >
         <p class="text- font-">
-          Cuota <span class="font-bold text-lg">{data?.Cuota?.numeroCuota}</span
-          > de <span class="font-bold text-lg">{data?.Prestamo?.nCuotas}</span>
+          cuota <span class="font-bold text-lg">{data?.cuota?.numeroCuota}</span
+          > de <span class="font-bold text-lg">{data?.prestamo?.nCuotas}</span>
         </p>
       </p>
     </div>
   </div>
   <div class="flex items-center justify-between w-full py-4 border-b">
     <p
-      class={`${data?.Cuota.pagada ? "text-green-600" : "text-red-500"} text-xl font-semibold w-1/2 capitalize border-r-2`}
+      class={`${data?.cuota.pagada ? "text-green-600" : "text-red-500"} text-xl font-semibold w-1/2 capitalize border-r-2`}
     >
-      {data?.Cuota.pagada ? "Pagado" : "Inpago"}
+      {data?.cuota.pagada ? "Pagado" : "Inpago"}
     </p>
     <div class="text-end">
       <div class="flex items-center justify-end gap-2">
         {
-          pagosTodos?.length>0&&
-          pagosTodos?.map((pago, i) => (
-            <div class="flex px-1 border-x flex-col w-full items-center justify-end">
-              <div class="text-sm w-full">
-                <span class=" font-medium">Fecha de pago:{" "}
-                  {data?.Cuota?.fechaPago?.toLocaleDateString()}
-                </span>
+          pagosTodos?.length > 0 &&
+            pagosTodos?.map((pago, i) => (
+              <div class="flex px-1 border-x flex-col w-full items-center justify-end">
+                <div class="text-sm w-full">
+                  <span class=" font-medium">
+                    Fecha de pago:{" "}
+                    {data?.cuota?.fechaPago?.toLocaleDateString()}
+                  </span>
+                </div>
+                <p class="text- w-full font-black capitalize">
+                  Monto $ {pago?.monto?.toLocaleString()}
+                </p>
               </div>
-              <p class="text- w-full font-black capitalize">
-                Monto $ { pago?.monto?.toLocaleString()}
-              </p>
-            </div>
-          ))
+            ))
         }
       </div>
     </div>
   </div>
   <div class="flex items-center justify-between w-full py-4 border-b">
-    Monto de la Cuota : <span class="text-xl font-semibold">{data?.Cuota?.monto.toLocaleString()}</span>
+    Monto de la cuota : <span class="text-xl font-semibold"
+      >{data?.cuota?.monto.toLocaleString()}</span
+    >
   </div>
 </div>
