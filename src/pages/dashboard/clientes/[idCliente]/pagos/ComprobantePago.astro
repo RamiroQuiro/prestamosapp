@@ -2,7 +2,7 @@
 
 const {infoData}=Astro.props
 
-
+console.log(infoData)
 ---
 
 <>
@@ -11,10 +11,10 @@ const {infoData}=Astro.props
     <div class="header">
       <img src="logo.png" alt="Logo de la Empresa" class="logo" />
       <div class="company-info">
-        <h2>Nombre de la Empresa</h2>
-        <p>Dirección: Calle Falsa 123</p>
-        <p>Ciudad, Provincia</p>
-        <p>Teléfono: +54 123 456 789</p>
+        <h2>{infoData?.usuario?.userName}</h2>
+        <p>Dirección: {infoData?.usuario?.direccion}</p>
+        <p>{infoData?.usuario?.ciudad}, Provincia</p>
+        <p>Teléfono: {infoData?.usuario?.celular}</p>
       </div>
     </div>
 
@@ -29,7 +29,7 @@ const {infoData}=Astro.props
       </div>
       <div class="invoice-details">
         <h3>Detalles del Comprobante</h3>
-        <p>ID Comprobante: {"infoData.pago.id"}</p>
+        <p>ID Comprobante: {infoData?.pago?.id}</p>
         <p>Fecha: 23/09/2024</p>
         <p>Vencimiento: 30/09/2024</p>
       </div>
