@@ -1,0 +1,58 @@
+---
+import { db } from "astro:db";
+import LayoutClient from "../LayoutClient.astro";
+import ComprobantePago from "./ComprobantePago.astro";
+import { eq } from "astro:db";
+import { Pago } from "astro:db";
+import { User } from "astro:db";
+import { Cliente } from "astro:db";
+const { idCliente } = Astro.params;
+
+
+const {idPago}=Astro.params
+
+let dataPago={}
+try {
+    dataPago=(await db.select({
+        usuario:{
+            userName:User.userName,
+            nombre:User.nombre,
+            apellido:User.apellido,
+            dni:User.dni,
+            direccion:User.direccion,
+            provincia:User.ciudad,
+            celular:User.celular
+        },
+        cliente:{
+            id:Cliente.id,
+            nombre:Cliente.nombre,
+            apellido:Cliente.apellido,
+            dni:Cliente.dni,
+            direccion:Cliente.direccion,
+            ciudad:Cliente.ciudad,
+            celular:Cliente.celular
+        },
+        pago:{
+            id:Pago.id,
+            fechaPago:Pago.fechaPago,
+            metodo:Pago.metodoPago
+        }
+    }).from(Pago).where(eq(Pago.id,idPago)).innerJoin(User,(eq(User.id,Pago.usuarioId))).innerJoin(Cliente,(eq(Cliente.id,Pago.clienteId)))).at(0)
+    console.log(dataPago)
+} catch (error) {
+    console.log(error)
+    
+}
+
+---
+
+<LayoutClient>
+    <div class="flex md:flex-row flex-col w-full items-stretch justify-evenly gap-3">
+
+        <p>{idPago}</p>
+        <ComprobantePago infoData={dataPago}/>
+    </div>
+
+</LayoutClient>
+
+

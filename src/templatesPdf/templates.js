@@ -8,7 +8,6 @@ function generateHTMLTable(arrayBody, columnas, cabecera) {
             font-family: Verdana, Arial, Helvetica, sans-serif;
             padding: 25px 10px;
           }
-          
               table {
                 width: 95%;
                 border-collapse: collapse;
@@ -17,12 +16,9 @@ function generateHTMLTable(arrayBody, columnas, cabecera) {
                 overflow: hidden;
                 margin:auto
               }
-
-
               span {
                 font-size: 0.625rem; /* text-[10px] */
                 font-weight: 300; /* font-thin */
-               
                 border-radius: 9999px; /* rounded-full */
               }
           .filaCabecera{
@@ -58,7 +54,6 @@ function generateHTMLTable(arrayBody, columnas, cabecera) {
               color:#8C6BEC;
               font-size:26px;
             }
-
             .contenedorInfoUsuario{
             display:flex;
             flex-direction: column;
@@ -113,13 +108,9 @@ function generateHTMLTable(arrayBody, columnas, cabecera) {
             ${
               cabecera?.cliente
                 ? `<div class="contenedorInfoCliente">
-                  <p >Cliente: ${cabecera?.cliente?.nombre} ${` `} ${
-                    cabecera?.cliente?.apellido
-                  } </p>
+                  <p >Cliente: ${cabecera?.cliente?.nombre} ${` `} ${cabecera?.cliente?.apellido} </p>
                   <div class="flex">
-                      <p >DNI: ${cabecera?.cliente?.dni} </p>  <p >Dirección: ${
-                    cabecera?.cliente?.direccion
-                  } </p>
+                      <p >DNI: ${cabecera?.cliente?.dni} </p>  <p >Dirección: ${cabecera?.cliente?.direccion} </p>
                   </div>
               </div>`
                 : `<div></div>`

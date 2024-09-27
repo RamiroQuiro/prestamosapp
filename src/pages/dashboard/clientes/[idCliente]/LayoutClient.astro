@@ -21,7 +21,7 @@ try {
 }
 ---
 
-<Layoutdash title=`Cliente ${clienteDB?.nombre}` dataCliente={clienteDB}>
+<Layoutdash title=`Cliente ${clienteDB?.nombre.toUpperCase()}` dataCliente={clienteDB}>
   <div id={'idCliente'} data-idClient={JSON.stringify(clienteDB)} hidden></div>
   <MainDash>
     <ContenedorDiv1>

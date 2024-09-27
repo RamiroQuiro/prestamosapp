@@ -9,12 +9,12 @@ import FormularioPagoBusqueda from './FormularioPagoBusqueda.astro'
 
 <button
   id={'btnPagar'}
-  class={`fixed text-white rounded-full z-30 h-12 text-xs hover:shadow-lg bottom-24  md:bottom-10 md:right-10 right-5 active:translate-y-0.5 capitalize  px-2 py-1 border-2 border-white/50 hover:border-white duration-200 bg-[#F16937]`}
+  class={`fixed text-white print:hidden rounded-full z-30 h-12 text-xs hover:shadow-lg bottom-24  md:bottom-10 md:right-10 right-5 active:translate-y-0.5 capitalize  px-2 py-1 border-2 border-white/50 hover:border-white duration-200 bg-[#F16937]`}
 >pagar</button>
 <dialog
-  class="classPagar duration-300 open:fixed open:flex flex-col w-full md:open:min-w-[30vw] md:open:max-w-[40vw] open:min-h-[50vh] rounded-lg border-l-2 border-primary-100 backdrop:bg-primary-400/40 open:backdrop:backdrop-blur-sm"
+  class="classPagar duration-300 open:fixed print:hidden open:flex flex-col w-full md:open:min-w-[30vw] md:open:max-w-[40vw] open:min-h-[50vh] rounded-lg border-l-2 border-primary-100 backdrop:bg-primary-400/40 open:backdrop:backdrop-blur-sm"
 > 
-<form method="dialog"><Button1 id="btnCerrar" style="absolute top-1 right-1 z-30 ">✕</Button1></form>
+<form method="dialog"><Button1 id="btnCerrar" style="absolute print:hidden top-1 right-1 z-30 ">✕</Button1></form>
 <FormularioPagoBusqueda/>
 </dialog>
 
