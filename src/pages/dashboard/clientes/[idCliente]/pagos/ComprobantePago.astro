@@ -1,70 +1,63 @@
 ---
+const { infoData ,hidden} = Astro.props;
 
-const {infoData}=Astro.props
-
-console.log(infoData)
+// console.log(infoData)
 ---
 
 <>
-  <div class="container">
+  <div class={`container`}>
     <!-- Header: Logo and Company Information -->
     <div class="header">
-      <img src="logo.png" alt="Logo de la Empresa" class="logo" />
+      <img
+        width="130px"
+        height="130px"
+        src={infoData?.usuario?.src}
+        alt="Logo de la Empresa"
+        class="logo"
+      />
       <div class="company-info">
-        <h2>{infoData?.usuario?.userName}</h2>
+        <h2 class="semibold capitalize">{infoData?.usuario?.userName}</h2>
+        <p>
+          Nombre: {infoData?.usuario?.nombre}
+          {" "}{infoData?.usuario?.apellido}
+        </p>
         <p>Dirección: {infoData?.usuario?.direccion}</p>
-        <p>{infoData?.usuario?.ciudad}, Provincia</p>
+        <p>
+          Ciudad: {infoData?.usuario?.ciudad} Provincia: {
+            infoData?.usuario?.provincia
+          }
+        </p>
         <p>Teléfono: {infoData?.usuario?.celular}</p>
       </div>
     </div>
 
     <!-- Invoice Information: Customer and Invoice Details -->
     <div class="invoice-info">
-      <div class="customer-info">
-        <h3>Información del Cliente</h3>
-        <p>Nombre: Juan Pérez</p>
-        <p>Dirección: Av. Siempre Viva 742</p>
-        <p>Ciudad: Springfield</p>
-        <p>Teléfono: +54 987 654 321</p>
+      <div class="customer-info capitalize">
+        <h3 class="semibold">Información del Cliente</h3>
+        <p>
+          Nombre: {infoData?.cliente?.nombre}
+          {" "}{infoData?.cliente?.apellido}
+        </p>
+        <p>Dirección: {infoData?.cliente?.direccion}</p>
+        <p>
+          Ciudad: {infoData?.cliente?.ciudad} | {infoData?.cliente?.provincia}
+        </p>
+        <p>Teléfono: {infoData?.cliente?.celular}</p>
       </div>
       <div class="invoice-details">
-        <h3>Detalles del Comprobante</h3>
+        <h3 class="semibold">Detalles del Comprobante</h3>
         <p>ID Comprobante: {infoData?.pago?.id}</p>
-        <p>Fecha: 23/09/2024</p>
-        <p>Vencimiento: 30/09/2024</p>
+        <p>ID Cuota: {infoData?.pago?.cuotaId}</p>
+        <p>Fecha: {infoData?.pago?.fechaPago.toLocaleString()}</p>
+        <p>Metodo de Pago: {infoData?.pago?.metodoPago}</p>
       </div>
     </div>
 
-    <!-- Invoice Items Table -->
-    <table>
-      <thead>
-        <tr>
-          <th>Descripción</th>
-          <th>Cantidad</th>
-          <th>Precio Unitario</th>
-          <th>Total</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>Servicio de Consultoría</td>
-          <td>10 horas</td>
-          <td>$500</td>
-          <td>$5000</td>
-        </tr>
-        <tr>
-          <td>Desarrollo de Software</td>
-          <td>1 proyecto</td>
-          <td>$15000</td>
-          <td>$15000</td>
-        </tr>
-      </tbody>
-    </table>
-
     <!-- Total Section -->
     <div class="total-section">
-      <p class="total-label">Total a Pagar:</p>
-      <p class="total-amount">$20,000</p>
+      <p class="total-label">Total Pagado:</p>
+      <p class="total-amount">${infoData?.pago?.monto.toLocaleString()}</p>
     </div>
 
     <!-- Footer Section -->
@@ -84,6 +77,12 @@ console.log(infoData)
     background: #f8f8f8;
   }
 
+  .semibold {
+    font-weight: 600;
+  }
+  .capitalize {
+    text-transform: capitalize;
+  }
   .container {
     width: 70%;
     margin: 20px auto;
@@ -122,8 +121,11 @@ console.log(infoData)
   }
 
   .invoice-info {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
     margin-bottom: 20px;
-    border-bottom: 2px solid #e0e0e0;
+    gap: 10px 0;
     padding-bottom: 10px;
   }
 
@@ -131,7 +133,7 @@ console.log(infoData)
   .invoice-info .invoice-details {
     display: inline-block;
     vertical-align: top;
-    width: 48%;
+    border-bottom: 1px solid #e0e0e0;
   }
 
   .customer-info h3,

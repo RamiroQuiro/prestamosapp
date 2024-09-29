@@ -7,9 +7,10 @@ import { eq } from "astro:db";
 import ContenedorDiv1 from "../../../../components/atomos/ContenedorDiv1.astro";
 import Titulo1 from "../../../../components/atomos/Titulo1.astro";
 import DatosPersonales from "./DatosPersonales";
+import ComprobantePago from "./pagos/ComprobantePago.astro";
 
 const { idCliente } = Astro.params;
-
+const {dataPago}=Astro.props
 let clienteDB;
 try {
   clienteDB = (
@@ -21,7 +22,7 @@ try {
 }
 ---
 
-<Layoutdash title=`Cliente ${clienteDB?.nombre.toUpperCase()}` dataCliente={clienteDB}>
+<Layoutdash  title=`Cliente ${clienteDB?.nombre.toUpperCase()}` dataCliente={clienteDB}>
   <div id={'idCliente'} data-idClient={JSON.stringify(clienteDB)} hidden></div>
   <MainDash>
     <ContenedorDiv1>
@@ -33,6 +34,9 @@ try {
   
     </ContenedorDiv1>
   </MainDash>
+  <div class="screen:hidden">
+    <ComprobantePago infoData={dataPago} />
+  </div>
 </Layoutdash>
 <script>
 const dataSet = document.getElementById('idCliente').getAttribute('data-idClient')

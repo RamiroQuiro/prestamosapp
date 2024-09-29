@@ -81,8 +81,8 @@ export default function DatosPersonales({ cliente }) {
                     />
                     <InputsDatos
                         onChange={onChangeForm}
-                        name={'departamento'}
-                        label={'Departamento:'} valueInput={formulario.departamento}
+                        name={'provincia'}
+                        label={'Provincia:'} valueInput={formulario.provincia}
                     />
                     <InputsDatos
                         onChange={onChangeForm}

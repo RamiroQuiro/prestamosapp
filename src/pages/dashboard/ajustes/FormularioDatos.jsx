@@ -38,7 +38,7 @@ export default function FormularioDatos({ user }) {
     }
 
     return (
-        <div className=" border-y bg-white md:p-5 w-full">
+        <div className=" md:border-y bg-white md:p-5 w-full">
             <form className='flex w-full gap-4 md:flex-row flex-col text-sm'>
 
                 <FormularioFotoPerfil user={user} key={1} />
@@ -76,8 +76,8 @@ export default function FormularioDatos({ user }) {
                     />
                     <InputsDatos
                         onChange={onChangeForm}
-                        name={'departamento'}
-                        label={'Departamento:'} valueInput={formulario.departamento}
+                        name={'provincia'}
+                        label={'Provincia:'} valueInput={formulario.provincia}
                     />
                     <InputsDatos
                         onChange={onChangeForm}
