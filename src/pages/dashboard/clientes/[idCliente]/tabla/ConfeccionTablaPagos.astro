@@ -19,6 +19,10 @@ try {
 pagos = await db.select().from(Pago).where(eq(Pago.clienteId, idCliente))
 // cuotas= await db.select().from(Cuota).where(eq(Cuota.clienteId,idCliente))
 // console.log('cuotasa ->',cuotas)
+
+const clikAqui=(text)=>{
+console.log(text)
+}
 let pagosParciales= await db.select().from(PagoParcial).where(eq(PagoParcial.clienteId,idCliente))
 pagos =[...pagos,...pagosParciales]
  arrayBody=pagos.map((element, i) => {
@@ -31,6 +35,7 @@ pagos =[...pagos,...pagosParciales]
       montoCuota: element?.cuotaId,
       fechaPago: element?.fechaPago.toLocaleDateString(),
       montoTotal: `$ ${element?.monto.toLocaleString()}`,
+
     };
   });
 } catch (error) {
