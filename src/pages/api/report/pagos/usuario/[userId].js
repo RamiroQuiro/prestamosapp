@@ -4,7 +4,6 @@ export async function GET({ params, props, request }) {
     const { userId } = await params;
     const startDate = request.headers.get("startDate");
     const endDate = request.headers.get("endDate");
-  
       // Convertir las fechas a UTC
       const start = new Date(startDate);
       const end = new Date(endDate);
@@ -22,7 +21,7 @@ export async function GET({ params, props, request }) {
           )
         )
   
-      console.log('cuotas encontradas ->',pagosFind);
+      // console.log('cuotas encontradas ->',pagosFind);
       return new Response(
         JSON.stringify({
           data: pagosFind,

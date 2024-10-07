@@ -23,7 +23,7 @@ export default function RangoFechaPagos({userId}) {
     }
     const fetching=async ()=>{
       try {
-        const res=await fetch(`/api/report/pagos/${userId}`,{
+        const res=await fetch(`/api/report/pagos/usuario/${userId}`,{
             method:'GET',
             headers: {
                 'startDate':startDate,

@@ -18,7 +18,7 @@ if (!startDate || !endDate) {
   throw new Error("startDate and endDate must be provided");
 }
 try {
-  const res = await fetch(`${Astro.url.origin}/api/report/pagos/${user.id}`, {
+  const res = await fetch(`${Astro.url.origin}/api/report/pagos/usuario/${user.id}`, {
     method: "GET",
     headers: {
       startDate: dateStartDate,

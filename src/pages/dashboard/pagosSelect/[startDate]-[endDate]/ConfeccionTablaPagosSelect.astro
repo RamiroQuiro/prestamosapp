@@ -4,7 +4,7 @@ import TablaPagoSelect from "./TablaPagoSelect";
 
 const { cuotasSeleccionadas } = Astro.props;
 const { id } = Astro.locals.user;
-console.log(id)
+// console.log(id)
 let prestamos = [];
 let arrayBody = [];
 let usuario = [];
@@ -18,7 +18,7 @@ const clientesss=await db.select().from(Cliente)
     );
     const fecha = new Date(element?.fechaPago);
     return {
-      href: `/dashboard/prestamos/${element.prestamoId}/cuota/${element.id}`,
+      href: `/dashboard/clientes/${element.clienteId}/pagos/${element.id}`,
       numero: i + 1,
       cliente: `${clienteName.nombre} ${clienteName.apellido}`,
       id: element?.id,
