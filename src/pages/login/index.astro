@@ -1,17 +1,23 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import Formulario from './Formulario'
+import PrestamosApp from '@/components/atomos/PrestanosApp.astro'
 ---
 
 <Layout title="Bienvenido a APPrestamos">
   <main
-    class="flex flex-col items-center justify-center w-screen h-screen relative"
+    class="flex flex-col items-center justify-center w-screen bg-neutral-100 h-screen relative"
   >
     <div class="flex md:flex-row flex-col items-stretch relative md:w-3/5 w-full h-full md:h-[80vh]">
       <div
-        class="md:w-4/5 w-full md:rounded-3xl shadow-lg md:h-full bg-gradient-to-br from-primary-100 via-primary-100/90 to-primary-200 text-white flex items-center md:items-end justify-center flex-col p-10 md:absolute top-0 right-0">
-        <h1>Bienvenido a prestamosAPP</h1>
+        class="md:w-4/5 w-full md:rounded-3xl shadow-lg md:h-full bg-gradient-to-br relative -hidden backdrop-blur-sm border border-primary-100 from-white -primary-texto/40 to-primary-100/30 text-white flex items-center md:items-end justify-center flex-col p-10 md:absolute top-0 right-0">
+        <div class="z-50 shadow-[0px_0px_13px_2px_#f0f0f0  -white -translate--20 rounded scale-[3]">
+          <PrestamosApp/>
+        </div>
 
+        <div class=" overflow-hidden max-h-full w-full absolute top-0 left-0">
+          <img src="./login.png" alt="login" class="opacity-20 object-cover   top-0 left-0">
+        </div>
       </div>
 
     </div>
