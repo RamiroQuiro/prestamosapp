@@ -11,9 +11,9 @@ export async function POST({
 }: APIContext): Promise<Response> {
   const formData = await request.json();
 console.log(formData)
-  const { email, password, userName,nombre,apellido } = await formData;
+  const { email, password, nombre,apellido } = await formData;
   // console.log(email, password);
-  if (!email || !password || !userName || !nombre || !apellido ) {
+  if (!email || !password || !nombre || !apellido ) {
     return new Response(
       JSON.stringify({
         data: "faltan campos requeridos",
@@ -55,7 +55,9 @@ console.log(formData)
   await db.insert(User).values([
     {
       id: userId,
-      userName,email,nombre,apellido,
+      email:email,
+      nombre:nombre,
+      apellido:apellido,
       password: hashPassword,
     },
   ]);
@@ -65,7 +67,9 @@ console.log(formData)
     value:0,
     usuarioId:userId
   })
-  const session = await lucia.createSession(userId, {});
+  const session = await lucia.createSession(userId, {
+    nombre:nombre,apellido:apellido
+  });
   const sessionCookie = lucia.createSessionCookie(session.id);
   cookies.set(
     sessionCookie.name,

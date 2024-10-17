@@ -4,7 +4,7 @@ import { NOW, column, count, defineDb, defineTable } from "astro:db";
   columns: {
     id: column.text({ primaryKey: true }),
     email: column.text({ unique: true }),
-    userName: column.text({ unique:true}),
+    userName: column.text({ unique:true,optional:true}),
     nombre: column.text({optional:true}),
     apellido: column.text({optional:true}),
     password:column.text({optional:true}),

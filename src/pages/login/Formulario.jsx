@@ -9,7 +9,6 @@ export default function FormularioLogin() {
         email: '',
         password: '',
         rePassword: '',
-        userName: '',
         nombre:'',
         apellido:'',
     })
@@ -68,7 +67,7 @@ export default function FormularioLogin() {
     }
     const handleRegister = async (e) => {
         e.preventDefault()
-        if (!formulario.password || !formulario.rePassword || !formulario.email ||  !formulario.userName || !formulario.nombre || !formulario.apellido ) {
+        if (!formulario.password || !formulario.rePassword || !formulario.email || !formulario.nombre || !formulario.apellido ) {
             return showToast('Faltan campos por completar', {
                 background: 'bg-red-500'
             })
@@ -89,7 +88,6 @@ export default function FormularioLogin() {
                 body: JSON.stringify({
                     email: formulario.email,
                     password: formulario.password,
-                    userName: formulario.userName,
                     nombre:formulario.nombre,
                     apellido:formulario.apellido
                 }), // Reemplazar 'nuevoEstado' con el nuevo estado deseado
@@ -133,16 +131,7 @@ export default function FormularioLogin() {
             </div>
             {isRegister && 
             <>
-            <div className="animate-apDeArriba w-full flex items flex-col items-start gap-3 ">
-                <label htmlFor="userName" className="text-primary-100 capitalize">nombre de usuario</label>
-                <input
-                    onChange={handleChagne}
-                    type="text"
-                    name="userName"
-                    id="userName"
-                    className="w-full text-sm bg-primary-200/10  rounded-md group-hover:ring-2  border-gray-300  ring-primary-200/60 focus:ring-2  outline-none transition-colors duration-200 ease-in-out px-2 py-2"
-                />
-            </div>
+      
             <div className="animate-apDeArriba w-full flex items gap-2 items-start  ">
             <div className="animate-apDeArriba w-full flex items flex-col items-start gap-3 ">
                 <label htmlFor="nombre" className="text-primary-100 capitalize">nombre</label>

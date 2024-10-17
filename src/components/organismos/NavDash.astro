@@ -6,6 +6,8 @@ import PrestamosApp from '@/components/atomos/PrestanosApp.astro'
 import SubNavDash from "./SubNavDash";
 
 const { pathname } = Astro.url;
+const local=Astro.locals
+
 const fecha = Date();
 const { idPrestamo, idCliente } = Astro.params;
 const { dataCliente, userData } = Astro.props;
