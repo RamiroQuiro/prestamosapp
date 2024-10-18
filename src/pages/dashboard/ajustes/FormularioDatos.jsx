@@ -2,6 +2,7 @@ import Button3 from '@/components/atomos/Button3'
 import InputsDatos from '@/components/organismos/InputsDatos'
 import React, { useState } from 'react'
 import FormularioFotoPerfil from './FormularioFotoPerfil'
+import UsernameInput from './UsernameInput'
 import { loader } from '@/components/loader/showLoader'
 import { showToast } from '@/components/Toast/toastShow'
 
@@ -17,6 +18,7 @@ export default function FormularioDatos({ user }) {
 
     const handleActualizarData = async () => {
         loader(true)
+  
         try {
             const resFetch = await fetch(`/api/usuario/${user.id}`, {
                 method: 'PUT',
@@ -43,7 +45,11 @@ export default function FormularioDatos({ user }) {
 
                 <FormularioFotoPerfil user={user} key={1} />
                 <div className='flex flex-wrap w-full items-start justify-start gap-3'>
-
+                <UsernameInput
+                name={"userName"}
+                        value={formulario.userName}
+                        onChange={(newUsername) => onChangeForm(newUsername)}
+                    />
                     <InputsDatos
                         onChange={onChangeForm}
                         name={'nombre'}
