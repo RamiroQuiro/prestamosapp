@@ -1,4 +1,5 @@
 ---
+import FormularioSolicitante from "./FormularioSolicitante.astro"
 import Layout from "@/layouts/Layout.astro";
 import { eq } from "astro:db";
 import { exists } from "astro:db";
@@ -19,8 +20,14 @@ try {
 ---
 
 <Layout title={`Sitio de Informacion de ${username}`}>
-	<h1>{username}</h1>
+	<nav></nav>
+	<main class="flex item-center justify-evenly w-full h-full">
+		<div class="bg-white rounded-md shadow w-1/3 h-[70vh]">
+<FormularioSolicitante/>
+		</div>
 
+		<div>ss</div>
+	</main>
 </Layout>
 
 <style>
