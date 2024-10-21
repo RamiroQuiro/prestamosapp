@@ -7,6 +7,8 @@ export async function GET({ params }) {
     try {
 
        const usuarioDB=(await db.select().from(User).where(eq(User.id,usuarioId))).at(0)
+
+
        if (!usuarioDB) {
         return new Response(
             JSON.stringify({
@@ -37,10 +39,14 @@ export async function GET({ params }) {
 export async function PUT({params,request}){
 const data=await request.json()
 const {usuarioId}=params
-    console.log(data)
+    // console.log(data)
     delete data.fechaCreacion
 
     data.fechaActualizacion=new Date()
+    
+
+
+
     
     try {
 
