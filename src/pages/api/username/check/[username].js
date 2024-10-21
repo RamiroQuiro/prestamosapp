@@ -1,15 +1,18 @@
 // /pages/api/username/check.js
 
 import { db, eq, User } from "astro:db";
+import { exists } from "drizzle-orm";
 
 export async function GET({ params }) {
     const { username } = await params;
-
+const lowerCasee=username.toLowerCase()
     // Aquí debes conectar a la base de datos y verificar si el usuario ya existe
     // console.log("userName->", username)
     try {
-        const disponibleUser = (await db.select().from(User).where(eq(username, User.userName))).at(0)
+        const disponibleUser = (await db.select({username:User.userName}).from(User).where(eq(lowerCasee, User.userName))).at(0)
 
+
+        console.log(disponibleUser)
         if (disponibleUser) {
 
             return new Response(JSON.stringify({

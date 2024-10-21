@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { loader } from '@/components/loader/showLoader';
 
-export default function UsernameInput({ value, name, onChange }) {
+export default function UsernameInput({ value, name, onChange,setEsValido }) {
     const [username, setUsername] = useState(value);
     const [isAvailable, setIsAvailable] = useState(false);
     const [checking, setChecking] = useState(false);
@@ -35,6 +35,7 @@ export default function UsernameInput({ value, name, onChange }) {
             const res = await fetch(`/api/username/check/${newUsername}`);
             const data = await res.json();
             setIsAvailable(data.isAvailable);
+            setEsValido(data.isAvailable)
             setChecking(false);  // Desactivamos 'checking' al terminar la verificación
             loader(false);
         } catch (error) {
@@ -47,21 +48,16 @@ export default function UsernameInput({ value, name, onChange }) {
 
     return (
         <div className="w-full">
-            <label className="block mb-1">Username:</label>
-            <input
-                name={name}
-                type="text"
-                className={`border p-2 w-full ${checking ? 'border-yellow-500' : isAvailable ? 'border-green-500' : 'border-red-500'}`}
-                value={username}
-                onChange={handleUsernameChange}
-            />
+          <div className='w-full flex items-center justify-start'>
+          
+          </div>
             {checking && (
                 <span className="text-yellow-500 text-sm">Verificando...</span>
             )}
             {!checking && isAvailable && username?.length >= 3 && (
                 <span className="text-green-500 text-sm">✓ Nombre de usuario disponible</span>
             )}
-            {!checking && !isAvailable && username.length >= 3 && (
+            {!checking && !isAvailable && username?.length >= 3 && (
                 <span className="text-red-500 text-sm">✗ Este nombre de usuario ya está en uso</span>
             )}
             {error && <span className="text-red-500 text-sm">{error}</span>}
