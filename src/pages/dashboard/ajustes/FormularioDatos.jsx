@@ -9,7 +9,7 @@ import { showToast } from '@/components/Toast/toastShow'
 export default function FormularioDatos({ user }) {
     const [formulario, setFormulario] = useState(user)
     const [esValido, setEsValido] = useState(false)
-
+    let comprobacionMismoUserName = user.userName == formulario.userName
     const onChangeForm = (e) => {
         const { value, name } = e.target
         setFormulario((state) => ({ ...state, [name]: value }))
@@ -18,14 +18,14 @@ export default function FormularioDatos({ user }) {
 
     const handleActualizarData = async () => {
         loader(true)
-console.log('es valido?',esValido)
-if (!esValido &&user.userName!==formulario.userName)  {
-    loader(false)
-    showToast('Username no disponible', {
-        background: 'bg-red-600'
-    })
-    return
-}
+        // console.log('es valido?', esValido)
+        if (!esValido && !comprobacionMismoUserName) {
+            loader(false)
+            showToast('Username no disponible', {
+                background: 'bg-red-600'
+            })
+            return
+        }
         try {
             const resFetch = await fetch(`/api/usuario/${user.id}`, {
                 method: 'PUT',
@@ -53,6 +53,7 @@ if (!esValido &&user.userName!==formulario.userName)  {
                 <FormularioFotoPerfil user={user} key={1} />
                 <div className='flex flex-wrap w-full items-start justify-start gap-3'>
                     <UsernameInput
+                        isThisName={comprobacionMismoUserName}
                         name={"userName"}
                         setEsValido={(bool) => setEsValido(bool)}
                         value={formulario?.userName}

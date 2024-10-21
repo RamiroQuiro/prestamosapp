@@ -1,0 +1,27 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import { eq } from "astro:db";
+import { exists } from "astro:db";
+import { User } from "astro:db";
+import { db } from "astro:db";
+const {username}=Astro.params
+console.log(username)
+try {
+
+	const isExiste= (await db.select({username:User.userName,nombre:User.nombre,apellido:User.apellido,id:User.id}).from(User).where(eq(User.userName,username))).at(0)
+	if (!isExiste) {
+		return Astro.redirect('/406');
+	}
+} catch (error) {
+	console.log(error)
+}
+
+---
+
+<Layout title={`Sitio de Informacion de ${username}`}>
+	<h1>{username}</h1>
+
+</Layout>
+
+<style>
+</style>
