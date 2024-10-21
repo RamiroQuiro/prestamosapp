@@ -61,7 +61,10 @@ export default function UsernameInput({ value, name, onChange }) {
             {!checking && isAvailable && username?.length >= 3 && (
                 <span className="text-green-500 text-sm">✓ Nombre de usuario disponible</span>
             )}
-            {!checking && !isAvailable && username.length >= 3 && (
+            {!checking && isAvailable && username?.length >= 3 && (
+                <span className="text-red-500 text-sm">✗ Este nombre de usuario ya está en uso</span>
+            )}
+            {!checking && !isAvailable && username?.length >= 3 && (
                 <span className="text-red-500 text-sm">✗ Este nombre de usuario ya está en uso</span>
             )}
             {error && <span className="text-red-500 text-sm">{error}</span>}

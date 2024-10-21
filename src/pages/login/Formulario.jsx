@@ -40,7 +40,7 @@ export default function FormularioLogin() {
                     password: formulario.password
                 }), // Reemplazar 'nuevoEstado' con el nuevo estado deseado
             });
-            console.log(fetiiching)
+            // console.log(fetiiching)
             const dataRes = await fetiiching.json();
             if (dataRes.status == 200) {
                 window.location.href = '/dashboard'
