@@ -20,13 +20,26 @@ try {
 ---
 
 <Layout title={`Sitio de Informacion de ${username}`}>
-	<nav></nav>
-	<main class="flex item-center justify-evenly w-full h-full">
-		<div class="bg-white rounded-md shadow w-1/3 h-[70vh]">
+	<nav class="w-full bg-white h-20 mb-16 bordser-b shadow flex items-center justify-evenly">
+			{username}
+
+	</nav>
+	<main class="flex item-center  justify-evenly w-full h-full">
+		
+		<div class="border w-1/3 border-white bg-gray-50/50 rounded flex flex-col p-5">
+			<h2 class="uppercase border-b bg-white px-1 py-1 border-primary-100 rounded-b font-semibold text-primary-400">
+				Solicitá tu prestamo
+			</h2>
+
+				<div class="text-base pl-4 space-y-2 my-4 text-primary-400 ">
+					<p><span class="text-red-500 font-bold">○</span> Completa el formulario con tus datos personales</p>
+					<p><span class="text-red-500 font-bold">○</span>  Ingresa el monto a solicitar y las cuotasd</p>
+					<p><span class="text-red-500 font-bold">○</span>  Se enviara un whatsapp con tus datos para evaluar el pedido</p>
+				</div>
+		</div>
+		<div class="bg-white rounded-md shadow w- p-5 ">
 <FormularioSolicitante/>
 		</div>
-
-		<div>ss</div>
 	</main>
 </Layout>
 
