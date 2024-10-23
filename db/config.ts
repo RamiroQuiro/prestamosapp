@@ -1,3 +1,4 @@
+import { optional } from "astro/zod";
 import { NOW, column, count, defineDb, defineTable } from "astro:db";
 
  const User = defineTable({
@@ -18,6 +19,7 @@ import { NOW, column, count, defineDb, defineTable } from "astro:db";
     pais: column.text({optional:true}),
      fechaCreacion: column.date({default:NOW}),
      fechaActualizacion: column.date({optional:true}),
+     formulaPersonalizada:column.text({optional:true})
   },
 });
 
