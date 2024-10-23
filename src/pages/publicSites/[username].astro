@@ -1,47 +1,79 @@
 ---
-import FormularioSolicitante from "./FormularioSolicitante.astro"
+import PrestanosApp from "@/components/atomos/PrestanosApp.astro";
+import FormularioSolicitante from "./FormularioSolicitante.astro";
 import Layout from "@/layouts/Layout.astro";
 import { eq } from "astro:db";
 import { exists } from "astro:db";
 import { User } from "astro:db";
 import { db } from "astro:db";
-const {username}=Astro.params
-console.log(username)
+const { username } = Astro.params;
+let usuarioDB={}
 try {
-
-	const isExiste= (await db.select({username:User.userName,nombre:User.nombre,apellido:User.apellido,id:User.id}).from(User).where(eq(User.userName,username))).at(0)
-	if (!isExiste) {
-		return Astro.redirect('/406');
-	}
+  const isExiste = (
+    await db
+      .select({
+        username: User.userName,
+        nombre: User.nombre,
+        apellido: User.apellido,
+		dni:User.dni,
+		email:User.email,
+        id: User.id,
+      })
+      .from(User)
+      .where(eq(User.userName, username))
+  ).at(0);
+  if (!isExiste) {
+    return Astro.redirect("/406");
+  }
+  usuarioDB=isExiste
 } catch (error) {
-	console.log(error)
+  console.log(error);
 }
-
 ---
 
 <Layout title={`Sitio de Informacion de ${username}`}>
-	<nav class="w-full bg-white h-20 mb-16 bordser-b shadow flex items-center justify-evenly">
-			{username}
-
-	</nav>
-	<main class="flex item-center  justify-evenly w-full h-full">
-		
-		<div class="border w-1/3 border-white bg-gray-50/50 rounded flex flex-col p-5">
-			<h2 class="uppercase border-b bg-white px-1 py-1 border-primary-100 rounded-b font-semibold text-primary-400">
-				Solicitá tu prestamo
-			</h2>
-
-				<div class="text-base pl-4 space-y-2 my-4 text-primary-400 ">
-					<p><span class="text-red-500 font-bold">○</span> Completa el formulario con tus datos personales</p>
-					<p><span class="text-red-500 font-bold">○</span>  Ingresa el monto a solicitar y las cuotasd</p>
-					<p><span class="text-red-500 font-bold">○</span>  Se enviara un whatsapp con tus datos para evaluar el pedido</p>
-				</div>
+  <nav
+    class="w-full bg-white h-20 mb-16 bordser-b shadow flex items-center justify-evenly"
+  >
+<a class="cursor-pointer" href="/"  >  <PrestanosApp/></a>
+    <div class="border-y flex flex-col items-center px-3 rounded-b  ">
+		<p class="capitalize tracking-wider ">{username}</p>
+		<div class="flex  gap-3 text-xs w-full text-center">
+			<p>{usuarioDB?.nombre} {' '}{usuarioDB?.apellido}</p>
+			<p>{usuarioDB?.email}</p>
 		</div>
-		<div class="bg-white rounded-md shadow w- p-5 ">
-<FormularioSolicitante/>
-		</div>
-	</main>
+	</div>
+  </nav>
+  <main class="flex item-center justify-evenly w-full h-full">
+	  
+    <div
+      class="border w-1/3 border-white bg-gray-50/50 rounded flex flex-col p-5"
+    >
+      <h2
+        class="uppercase border-b bg-white px-1 py-2 border-primary-100 rounded-b font-semibold text-primary-400"
+      >
+        Solicitá tu prestamo
+      </h2>
+
+      <div class="text-base pl-4 space-y-2 mt-10 text-primary-400">
+        <p>
+          <span class="text-red-500 font-bold">○</span> Completa el formulario con
+          tus datos personales
+        </p>
+        <p>
+          <span class="text-red-500 font-bold">○</span> Ingresa el monto a solicitar
+          y las cuotasd
+        </p>
+        <p>
+          <span class="text-red-500 font-bold">○</span> Se enviara un whatsapp con
+          tus datos para evaluar el pedido
+        </p>
+      </div>
+    </div>
+    <div class="bg-white rounded-md shadow w- p-5">
+      <FormularioSolicitante />
+    </div>
+  </main>
 </Layout>
 
-<style>
-</style>
+<style></style>

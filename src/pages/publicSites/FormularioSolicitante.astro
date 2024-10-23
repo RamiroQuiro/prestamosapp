@@ -1,9 +1,16 @@
 ---
+import ContenedorInputSelected from "@/components/moleculas/ContenedorInputSelected.astro";
 import InputFormularioSolicitud from "@/components/moleculas/InputFormularioSolicitud.astro";
+
+const modalidad = [
+  { name: 'semanal', id: 1, value: 7 },
+  { name: 'quincenal', id: 2, value: 15},
+  { name: 'mensual', id: 3, value: 30},
+];
 ---
 
 <form action="" class="flex flex-col w-full items-center justify-normal p-3 text-primary-texto">
-
+  <div class="flex item-center w-full justify-normal gap-2 ">
   <InputFormularioSolicitud
     name="nombreApellido"
     id="nombreApellido"
@@ -12,51 +19,55 @@ import InputFormularioSolicitud from "@/components/moleculas/InputFormularioSoli
     Nombre y Apellido
   </InputFormularioSolicitud>
   <InputFormularioSolicitud
-    name="nombreApellido"
-    id="nombreApellido"
+    name="dni"
+    id="dni"
     type="number"
   >
     DNI
   </InputFormularioSolicitud>
+  </div>
   <InputFormularioSolicitud
-    name="nombreApellido"
-    id="nombreApellido"
-    type="text"
-  >
+    name="direccion"
+    id="direccion"
+    type="text">
     Dirección
   </InputFormularioSolicitud>
-  <div class="flex item-center w-full justify-normal gap-2">
+  <div class="flex item-center w-full justify-normal gap-2 ">
   <InputFormularioSolicitud
-    name="nombreApellido"
-    id="nombreApellido"
+    name="email"
+    id="email"
     type="text"
   >
     email
   </InputFormularioSolicitud>
   <InputFormularioSolicitud
-    name="nombreApellido"
-    id="nombreApellido"
-    type="email"
+    name="celular"
+    id="celular"
+    type="number"
   >
     Celular
   </InputFormularioSolicitud>
 </div>
-  <div class="flex item-cente justify-normal gap-2 w-full">
+  <div class="flex item-cente justify-normal gap-2 w-full border-t mt-4">
     <InputFormularioSolicitud
-      name="nombreApellido"
-      id="nombreApellido"
+      name="montoSolicitado"
+      id="montoSolicitado"
       type="number"
     >
       Monto a solicitar
     </InputFormularioSolicitud>
     <InputFormularioSolicitud
-      name="nombreApellido"
-      id="nombreApellido"
+      name="cuotas"
+      id="cuotas"
       type="number"
     >
       Cuotas
     </InputFormularioSolicitud>
   </div>
-
+  <ContenedorInputSelected
+  label="Modalidad de Pago"
+  name="modalidad"
+  options={modalidad}
+/>
   <button class="bg-blue-400 px-2 py-1 mt-2 w-auto text-white text-xs font-ssemibold mb-4 rounded shadow hover:bg-blue-600 duration-300">Enviar</button>
 </form>
