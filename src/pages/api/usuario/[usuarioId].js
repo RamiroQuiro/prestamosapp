@@ -44,10 +44,6 @@ const {usuarioId}=params
 
     data.fechaActualizacion=new Date()
     
-
-
-
-    
     try {
 
         const updateUser=await db.update(User).set(data)
