@@ -1,0 +1,59 @@
+---
+
+const {id,formula}=Astro.props
+---
+<div class="mt-10  border rounded border- pr-5 p-0.5 py-2">
+
+    {
+        formula&&
+        <p class="my-2 capitalize text-sm">esta es tu formula actual: <span class="ml-2 font-semibold  lowercase bg-gray-100 px-4 py-1">{formula}</span></p>
+    }
+
+
+    <input
+      type="text"
+      name="formulaPersonalizada"
+      id="formulaPersonalizada"
+      placeholder="Ingrese su formula"
+      class="my-2 px-2 py-1 bg-gray-100 shadows rounded focus:ring-0 outline-none text-sm mr-2"
+    />
+    <button
+      data-usuarioId={id}
+      id="btnGuardar"
+      class="bg-blue-500 text-white font-bold text-xs rounded hover:bg-blue-600 duration-300 px-2 py-1"
+      >Guardar formula</button
+    >
+    <p class="text-blue-500 text-xs">
+        <span class="font-bold">ejemplo de formula =</span> "(capital + (capital
+        * (porcentaje / 100))) / cuotas";
+      </p>
+  </div>
+
+  <script>
+    const btnGuardar = document.getElementById("btnGuardar");
+    const { usuarioid } = btnGuardar.dataset;
+    const inputFormula=document.getElementById("formulaPersonalizada");
+    
+    
+    
+  
+    btnGuardar.addEventListener("click", async () => {
+    
+      try {
+        const fetching = await fetch(
+          `/api/usuario/configuracionFinanciera/formulaPersonalizada`,
+          {
+            method: "PUT",
+            body: JSON.stringify({
+              usuarioId: usuarioid,
+              formula: inputFormula.value,
+            }),
+          }
+        );
+        console.log(fetching);
+      } catch (error) {
+        console.log(error);
+      }
+    });
+  </script>
+  

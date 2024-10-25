@@ -1,60 +1,40 @@
 ---
 import ContenedorDiv1 from "@/components/atomos/ContenedorDiv1.astro";
 import LayoutAjustes from "../LayoutAjustes.astro";
-import FormularioConfiguracionFinanzas from './FormularioConfiguracionFinanzas'
-import { db ,} from "astro:db";
-import { User,Intereses } from "astro:db";
+import FormularioConfiguracionFinanzas from "./FormularioConfiguracionFinanzas";
+import { db } from "astro:db";
+import { User, Intereses } from "astro:db";
 import { Cliente } from "astro:db";
 import { nCuotas } from "astro:db";
 import { moraCuota } from "astro:db";
 import { eq } from "astro:db";
+import FormulaPersonalizada from "./FormulaPersonalizada.astro";
 
-const {id}=Astro.locals.user
+const { id } = Astro.locals.user;
 
-let datosUsuario={intereses:[],nCuotas:[],moraCuota:[],formula:''}
+let datosUsuario = { intereses: [], nCuotas: [], moraCuota: [], formula: "" };
 try {
-    const consultaDB=await db.select().from(User).where(eq(User.id,id))
-    console.log(consultaDB)
-     datosUsuario.intereses = await db.select().from(Intereses).where(eq(Intereses.usuarioId,id))
-     datosUsuario.nCuotas = await db.select().from(nCuotas).where(eq(nCuotas.usuarioId,id))
-     datosUsuario.moraCuota = await db.select().from(moraCuota).where(eq(moraCuota.usuarioId,id))
-     datosUsuario.formula =( await db.select({formula:User.formulaPersonalizada}).from(User).where(eq(User.id,id))).at(0).formula
-    
-    console.log('data',datosUsuario)
+  datosUsuario.intereses = await db.select().from(Intereses).where(eq(Intereses.usuarioId, id));
+  datosUsuario.nCuotas = await db.select().from(nCuotas).where(eq(nCuotas.usuarioId, id));
+  datosUsuario.moraCuota = await db.select().from(moraCuota).where(eq(moraCuota.usuarioId, id));
+  datosUsuario.formula = (await db.select({ formula: User.formulaPersonalizada }).from(User).where(eq(User.id, id))).at(0).formula;
+//   console.log("data", datosUsuario);
 } catch (error) {
-    console.log(error)
+  console.log(error);
 }
-
 ---
 
 <LayoutAjustes>
-    <span slot="tituloAjustes">Datos Financieros</span>
-    <ContenedorDiv1>
-        <FormularioConfiguracionFinanzas dataUser={datosUsuario} usuarioId={id} client:load />
-        <div class="mt-10 text-sm">
-            <p class="text-blue-500"><span class="font-bold">ejemplo de formula =</span> "(capital + (capital * (porcentaje / 100))) / cuotas";</p>
-            <input type="text" name="formulaPersonalizada" id="formulaPersonalizada" placeholder="Ingrese su formula" class=" my-2 px-2 py-1 bg-gray-100 shadows rounded focus:ring-0 outline-none">
-            <button data-usuarioId={id} id='btnGuardar' class="bg-blue-500 text-white font-bold text-xs rounded hover:bg-blue-600 duration-300 px-2 py-1">Guardar formula</button>
-        </div>
-    </ContenedorDiv1>
+  <span slot="tituloAjustes">Datos Financieros</span>
+  <ContenedorDiv1>
+    <FormularioConfiguracionFinanzas
+      dataUser={datosUsuario}
+      usuarioId={id}
+      client:load
+    />
 
+<FormulaPersonalizada id={id} formula={datosUsuario.formula}/>
+    
+  </ContenedorDiv1>
 </LayoutAjustes>
 
-<script>
-    const btnGuardar=document.getElementById('btnGuardar')
-const {usuarioid}=btnGuardar.dataset
-console.log(usuarioid)
-    btnGuardar.addEventListener('click',async()=>{
-        try {
-            const fetching= await fetch(`/api/usuario/configuracionFinanciera/formulaPersonalizada`,{
-                method:'PUT',
-                body:JSON.stringify({
-                    usuarioId:usuarioid,
-                    formula:'(capital + (capital * (porcentaje / 100))) / cuotas'
-                })
-            })
-        } catch (error) {
-            console.log(error)
-        }
-    })
-</script>

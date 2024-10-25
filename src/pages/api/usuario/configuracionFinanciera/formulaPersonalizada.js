@@ -12,7 +12,7 @@ export async function PUT({ request }) {
       .set({
         formulaPersonalizada: formula,
       })
-      .where(User.id, usuarioId);
+      .where(eq(User.id, usuarioId))
 
     console.log("cliente ->", cliente);
     return new Response(

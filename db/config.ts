@@ -19,7 +19,7 @@ const User = defineTable({
     pais: column.text({ optional: true }),
     fechaCreacion: column.date({ default: NOW }),
     fechaActualizacion: column.date({ optional: true }),
-    formulaPersonalizada: column.text({ optional: true }),
+    formulaPersonalizada: column.text({default:'(capital + (capital * (porcentaje / 100))) / cuotas' }),
   },
 });
 
