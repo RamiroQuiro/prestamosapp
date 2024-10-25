@@ -23,19 +23,42 @@ const {id,formula}=Astro.props
       class="bg-blue-500 text-white font-bold text-xs rounded hover:bg-blue-600 duration-300 px-2 py-1"
       >Guardar formula</button
     >
+    <button
+      
+      id="resetFormula"
+      class="bg-orange-500 text-white font-bold text-xs rounded hover:bg-blue-600 duration-300 px-2 py-1"
+      >Resetar Formula</button
+    >
     <p class="text-blue-500 text-xs">
         <span class="font-bold">ejemplo de formula =</span> "(capital + (capital
-        * (porcentaje / 100))) / cuotas";
+        * (tasaInteres / 100))) / cuotas";
       </p>
   </div>
 
   <script>
     const btnGuardar = document.getElementById("btnGuardar");
+    const btnResetFormula = document.getElementById("resetFormula");
     const { usuarioid } = btnGuardar.dataset;
     const inputFormula=document.getElementById("formulaPersonalizada");
     
     
-    
+    btnResetFormula.addEventListener('click',async()=>{
+      try {
+        const fetching = await fetch(
+          `/api/usuario/configuracionFinanciera/formulaPersonalizada`,
+          {
+            method: "PUT",
+            body: JSON.stringify({
+              usuarioId: usuarioid,
+              formula: '(capital * tasaInteres * (1 + tasaInteres) ^ cuotas) / ((1 + tasaInteres) ^ cuotas - 1)',
+            }),
+          }
+        );
+        console.log(fetching);
+      } catch (error) {
+        console.log(error);
+      }
+    })
   
     btnGuardar.addEventListener("click", async () => {
     

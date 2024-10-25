@@ -1,4 +1,5 @@
-import { atom } from "nanostores";
+import { atom } from "nanostores"
+
 
 const busqueda=atom({
     clientSelect:{

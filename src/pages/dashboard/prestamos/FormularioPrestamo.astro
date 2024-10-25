@@ -93,7 +93,8 @@ try {
 </FormCont>
 
 <script>
-  import { busqueda, prestamoSimulado } from "../../../context/store";
+  import { busqueda, prestamoSimulado } from "@/context/store";
+import { calcularCuota,calcularGanancia } from "@/lib/formulas/calcularPrestamo";
   // Nos suscribimos a los cambios en 'busqueda'
   let userId = "";
   let nombreCliente = "";
@@ -113,48 +114,59 @@ try {
     }
   });
 
-  // funcion simulador
-  function calcularCuota(importe, tasaInteres, nCuotas) {
-    // Convertimos la tasa de interés a decimal y la dividimos entre 12 para obtener la tasa mensual
-    let tasaMensual = tasaInteres / 100 / 12;
 
-    // Calculamos el monto de cada cuota
-    let cuota =
-      importe * (tasaMensual / (1 - Math.pow(1 + tasaMensual, -nCuotas)));
+// formula de calulo de prestamos
+  // document.getElementById("simularPrestamo").addEventListener("click", function (e) {
+  //     e.preventDefault();
+  //     let importe = document.getElementById("importeCredito").value;
+  //     let tasaInteres = document.getElementById("tipoInteres").value;
+  //     let nCuotas = document.getElementById("nCuotas").value;
+  //     let modalidad = document.getElementById("modalidad").value;
+  //     let { montoCuota } = calcularCuota(importe, tasaInteres, nCuotas);
+  //     let { montoTotal } = calcularCuota(importe, tasaInteres, nCuotas);
+  //     let ganancia = calcularGanancia(importe, montoCuota, nCuotas);
+  //     const dateNow = new Date();
 
-    // calcular monto total a pagar
-    let total = cuota * nCuotas;
-    let montoTotal = parseFloat(total.toFixed(2));
-    let montoCuota = parseFloat(cuota.toFixed(2));
-    // console.log('monto cuota y monto total ->',montoCuota,montoTotal)
-    return { montoCuota, montoTotal };
-  }
+  //     prestamoSimulado.set({
+  //       clienteId: busqueda.get().clientSelect.id,
+  //       usuarioId: userId,
+  //       nombreCliente: "",
+  //       montoCuota: montoCuota,
+  //       nCuotas: nCuotas,modalidad,
+  //       capital: importe,
+  //       tasaInteres: tasaInteres,
+  //       interesGenerado: ganancia,
+  //       montoTotal: montoTotal,
+  //       fechaInicio: dateNow,
+  //     });
+  //   });
 
-  function calcularGanancia(importe, cuota, nCuotas) {
-    // Calculamos el monto total del préstamo
-    let totalPrestamo = cuota * nCuotas;
+  document.getElementById("simularPrestamo").addEventListener("click", async function (e) {
+  e.preventDefault();
 
-    // Calculamos la ganancia restando el monto original del préstamo al monto total del préstamo
-    let ganancia = totalPrestamo - importe;
+  let importe = document.getElementById("importeCredito").value;
+  let tasaInteres = document.getElementById("tipoInteres").value;
+  let nCuotas = document.getElementById("nCuotas").value;
+  let modalidad = document.getElementById("modalidad").value;
 
-    // Redondeamos la ganancia a dos decimales
-    ganancia = parseFloat(ganancia.toFixed(2));
+  try {
+    const response = await fetch(`/api/prestamos/calcularPrestamo`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        usuarioId: userId,
+        importe: parseFloat(importe),
+        tasaInteres: parseFloat(tasaInteres),
+        nCuotas: parseInt(nCuotas),
+      }),
+    });
 
-    return ganancia;
-  }
+    const data = await response.json();
 
-  document
-    .getElementById("simularPrestamo")
-    .addEventListener("click", function (e) {
-      e.preventDefault();
-      let importe = document.getElementById("importeCredito").value;
-      let tasaInteres = document.getElementById("tipoInteres").value;
-      let nCuotas = document.getElementById("nCuotas").value;
-      let modalidad = document.getElementById("modalidad").value;
-      let { montoCuota } = calcularCuota(importe, tasaInteres, nCuotas);
-      let { montoTotal } = calcularCuota(importe, tasaInteres, nCuotas);
-      let ganancia = calcularGanancia(importe, montoCuota, nCuotas);
-      const dateNow = new Date();
+    if (response.ok) {
+      const { montoCuota, montoTotal, ganancia } = data;
 
       prestamoSimulado.set({
         clienteId: busqueda.get().clientSelect.id,
@@ -167,7 +179,15 @@ try {
         tasaInteres: tasaInteres,
         interesGenerado: ganancia,
         montoTotal: montoTotal,
-        fechaInicio: dateNow,
+        fechaInicio: new Date(),
       });
-    });
+    } else {
+      console.log("Error en el cálculo del préstamo:", data.message);
+    }
+  } catch (error) {
+    console.error("Error en la solicitud:", error);
+  }
+});
+
+
 </script>

@@ -4,13 +4,13 @@ import { evaluate } from "mathjs";
 export async function POST({ request }) {
   const { usuarioId, importe, tasaInteres, nCuotas } = await request.json();
 
+
+console.log({usuarioId,importe,tasaInteres,nCuotas})
+
   try {
     // Obtén el usuario para verificar si tiene una fórmula personalizada
-    const usuario = await db
-      .select(User)
-      .where(eq(User.id, usuarioId))
-      .first();
-
+    const usuario = (await db.select(User).from(User).where(eq(User.id,usuarioId))).at(0)
+    
     // Definir fórmula por defecto (si no hay fórmula personalizada)
     let formula =
       usuario?.formulaPersonalizada ||
