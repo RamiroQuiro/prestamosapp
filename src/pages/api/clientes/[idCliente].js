@@ -2,7 +2,7 @@ import { Cliente, Cuota, db, eq, Pago, PagoParcial, Prestamo, User } from "astro
 
 export async function GET({ params }) {
     const { idCliente } = await params
-    console.log(idCliente)
+    // console.log(idCliente)
 
     try {
 

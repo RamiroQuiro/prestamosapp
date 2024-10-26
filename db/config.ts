@@ -19,7 +19,7 @@ const User = defineTable({
     pais: column.text({ optional: true }),
     fechaCreacion: column.date({ default: NOW }),
     fechaActualizacion: column.date({ optional: true }),
-    formulaPersonalizada: column.text({default:"(capital * tasaInteres * (1 + tasaInteres) ^ cuotas) / ((1 + tasaInteres) ^ cuotas - 1)"}),},
+    formulaPersonalizada: column.text({default:"capital * (tasaInteres * Math.pow((1 + tasaInteres), cuotas)) / (Math.pow((1 + tasaInteres), cuotas) - 1)"}),},
 });
 
 const Cliente = defineTable({
