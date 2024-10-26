@@ -94,7 +94,10 @@ try {
 
 <script>
   import { busqueda, prestamoSimulado } from "@/context/store";
-import { calcularCuota,calcularGanancia } from "@/lib/formulas/calcularPrestamo";
+  import {
+    calcularCuota,
+    calcularGanancia,
+  } from "@/lib/formulas/calcularPrestamo";
   // Nos suscribimos a los cambios en 'busqueda'
   let userId = "";
   let nombreCliente = "";
@@ -114,8 +117,7 @@ import { calcularCuota,calcularGanancia } from "@/lib/formulas/calcularPrestamo"
     }
   });
 
-
-// formula de calulo de prestamos
+  // formula de calulo de prestamos
   // document.getElementById("simularPrestamo").addEventListener("click", function (e) {
   //     e.preventDefault();
   //     let importe = document.getElementById("importeCredito").value;
@@ -141,53 +143,52 @@ import { calcularCuota,calcularGanancia } from "@/lib/formulas/calcularPrestamo"
   //     });
   //   });
 
-  document.getElementById("simularPrestamo").addEventListener("click", async function (e) {
-  e.preventDefault();
+  document
+    .getElementById("simularPrestamo")
+    .addEventListener("click", async function (e) {
+      e.preventDefault();
 
-  let importe = document.getElementById("importeCredito").value;
-  let tasaInteres = document.getElementById("tipoInteres").value;
-  let nCuotas = document.getElementById("nCuotas").value;
-  let modalidad = document.getElementById("modalidad").value;
+      let importe = document.getElementById("importeCredito").value;
+      let tasaInteres = document.getElementById("tipoInteres").value;
+      let nCuotas = document.getElementById("nCuotas").value;
+      let modalidad = document.getElementById("modalidad").value;
 
-  try {
-    const response = await fetch(`/api/prestamos/calcularPrestamo`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        usuarioId: userId,
-        importe: parseFloat(importe),
-        tasaInteres: parseFloat(tasaInteres),
-        nCuotas: parseInt(nCuotas),
-      }),
+      try {
+        const response = await fetch(`/api/prestamos/calcularPrestamo`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            usuarioId: userId,
+            importe: parseFloat(importe),
+            tasaInteres: parseFloat(tasaInteres),
+            nCuotas: parseInt(nCuotas),
+          }),
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+          const { cuotas, montoTotal, ganancia } = data;
+          prestamoSimulado.set({
+            clienteId: busqueda.get().clientSelect.id,
+            usuarioId: userId,
+            nombreCliente: "",
+            cuotas: cuotas,
+            nCuotas: cuotas.length,
+            modalidad,
+            capital: importe,
+            tasaInteres: tasaInteres,
+            interesGenerado: ganancia,
+            montoTotal: montoTotal,
+            fechaInicio: new Date(),
+          });
+        } else {
+          console.log("Error en el cálculo del préstamo:", data.message);
+        }
+      } catch (error) {
+        console.error("Error en la solicitud:", error);
+      }
     });
-
-    const data = await response.json();
-
-    if (response.ok) {
-      const { montoCuota, montoTotal, ganancia } = data;
-
-      prestamoSimulado.set({
-        clienteId: busqueda.get().clientSelect.id,
-        usuarioId: userId,
-        nombreCliente: "",
-        montoCuota: montoCuota,
-        nCuotas: nCuotas,
-        modalidad,
-        capital: importe,
-        tasaInteres: tasaInteres,
-        interesGenerado: ganancia,
-        montoTotal: montoTotal,
-        fechaInicio: new Date(),
-      });
-    } else {
-      console.log("Error en el cálculo del préstamo:", data.message);
-    }
-  } catch (error) {
-    console.error("Error en la solicitud:", error);
-  }
-});
-
-
 </script>

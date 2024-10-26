@@ -42,7 +42,7 @@ const unsubscribe = prestamoSimulado.subscribe((prestamoSimulado) => {
 
   document.getElementById(
     "montoCuota"
-  ).value = `$ ${prestamoSimulado.montoCuota.toLocaleString()}`;
+  ).value = `$ ${prestamoSimulado.cuotas[0].toLocaleString()}`;
   document.getElementById(
     "montoTotal"
   ).value = `$ ${prestamoSimulado.montoTotal.toLocaleString()}`;

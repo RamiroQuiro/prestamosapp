@@ -1,20 +1,20 @@
-function simularCuotas({ montoCuota, modalidad, nCuotas, fechaInicio ,tasaInteres},{clientSelect}) {
+function simularCuotas({ cuotas, modalidad, nCuotas, fechaInicio ,tasaInteres},{clientSelect}) {
     const modalidadDias = Number(modalidad);
-    const cuotas = [];
+    const cuotasNew = [];
     let fechaVencimiento = new Date(fechaInicio);
   
     for (let i = 0; i < nCuotas; i++) {
       fechaVencimiento.setDate(fechaVencimiento.getDate() + modalidadDias);
-      cuotas.push({
+      cuotasNew.push({
         nombreCliente:`${clientSelect.nombre} ${clientSelect.apellido}`,
         numeroCuota: i + 1,
-        montoCuota: montoCuota,
+        montoCuota: cuotas[i],
         fechaVencimiento: new Date(fechaVencimiento),
         tasaInteres:`${tasaInteres}%`
       });
     }
   
-    return cuotas;
+    return cuotasNew;
   }
 
   export default simularCuotas

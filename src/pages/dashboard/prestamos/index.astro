@@ -3,7 +3,7 @@ import ContenedeorModal from "@/components/organismos/ContenedeorModal.astro";
 import Button1 from "../../../components/atomos/Button1.astro";
 import Titulo1 from "../../../components/atomos/Titulo1.astro";
 import ContenedorBoton from "../../../components/moleculas/ContenedorBoton.astro";
-import PrevisualizacionPrestamo from './PrevisualizacionPrestamo'
+import PrevisualizacionPrestamo from "./PrevisualizacionPrestamo";
 import FormularioDeBusqueda from "../../../components/organismos/FormularioDeBusqueda";
 import MainDash from "../../../components/organismos/MainDash.astro";
 import Layoutdash from "../layouts/Layoutdash.astro";
@@ -11,7 +11,7 @@ import FormularioPrestamo from "./FormularioPrestamo.astro";
 import PrestamoGenerado from "./PrestamoGenerado.astro";
 
 import { eq, User, db, Cliente } from "astro:db";
-const user=Astro.locals.user
+const user = Astro.locals.user;
 const clientes = await db
   .select()
   .from(Cliente)
@@ -20,8 +20,7 @@ const clientes = await db
 
 <Layoutdash title="Prestamos">
   <MainDash>
-    
-    <div class="flex w-full p-5 flex-col items-center  justify-start ">
+    <div class="flex w-full p-5 flex-col items-center justify-start">
       <div class="flex mb-2 items-center justify-between w-full gap-5">
         <Titulo1>Prestamos</Titulo1>
         <FormularioDeBusqueda clientes={clientes} client:load />
@@ -31,25 +30,23 @@ const clientes = await db
       </div>
     </div>
     <div
-      class="flex md:w-2/6 w-full flex-col   h-full  items-center  justify-center"
+      class="flex md:w-2/6 w-full flex-col h-full items-center justify-center"
     >
+      <!-- previsualizacion a primera vista -->
+      <div class="bg-primary-300/80 w-full m-auto p-5 rounded-l-lg">
+        <Titulo1>Prestamo Generado</Titulo1>
 
-    <!-- previsualizacion a primera vista -->
-    <div class="bg-primary-300/80 w-full m-auto  p-5 rounded-l-lg">
-      <Titulo1>Prestamo Generado</Titulo1>
+        <PrestamoGenerado />
 
-      <PrestamoGenerado />
-
-      <ContenedorBoton>
-
-       <ContenedeorModal open="Previsualizar">
-          <PrevisualizacionPrestamo client:load/>
-       </ContenedeorModal>
-        <Button1 id="cargarPrestamo">Confirmar</Button1>
-        <Button1 id="limpiarSimulador">limpiar</Button1>
-      </ContenedorBoton>
+        <ContenedorBoton>
+          <ContenedeorModal open="Previsualizar">
+            <PrevisualizacionPrestamo client:load />
+          </ContenedeorModal>
+          <Button1 id="cargarPrestamo">Confirmar</Button1>
+          <Button1 id="limpiarSimulador">limpiar</Button1>
+        </ContenedorBoton>
+      </div>
     </div>
-  </div>
   </MainDash>
 </Layoutdash>
 
@@ -59,20 +56,20 @@ const clientes = await db
   document.getElementById("limpiarSimulador").addEventListener("click", () => {
     prestamoSimulado.set({
       usuarioId: "",
-      nombreCliente:'',
+      nombreCliente: "",
       clienteId: "",
-      montoTotal: 0,
+      cuotas:[],
       interesGenerado: 0,
       tasaInteres: 0,
       nCuotas: 0,
-      modalidad:'',
-      fechaInicio:''
+      modalidad: "",
+      fechaInicio: "",
     });
   });
 </script>
 <script>
   import { prestamoSimulado } from "@/context/store";
-import {loader} from '@/components/loader/showLoader'
+  import { loader } from "@/components/loader/showLoader";
   const formulario = document.getElementById(
     "prestamoGenerado"
   ) as HTMLFormElement;
@@ -81,10 +78,10 @@ import {loader} from '@/components/loader/showLoader'
   document
     .getElementById("cargarPrestamo")
     .addEventListener("click", async (e) => {
-      loader(true)
-      e.preventDefault()
+      loader(true);
+      e.preventDefault();
       const contextoPrestamo = prestamoSimulado.get();
-
+      console.log("contexto del prestamo a enviar", contextoPrestamo);
       try {
         const res = await fetch("/api/prestamos/setPrest", {
           method: "POST",
@@ -92,15 +89,15 @@ import {loader} from '@/components/loader/showLoader'
             contextoPrestamo,
           }),
         });
-        const data=await res.json()
+        const data = await res.json();
         // console.log(data)
         if (res.ok) {
-          loader(false)
-          
-        document.location.href= `/dashboard/prestamos/${data.id}`
+          loader(false);
+
+          document.location.href = `/dashboard/prestamos/${data.id}`;
         }
       } catch (error) {
-        loader(false)
+        loader(false);
         console.log(error);
       }
     });

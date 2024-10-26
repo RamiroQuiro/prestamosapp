@@ -26,7 +26,7 @@ const {id,formula}=Astro.props
     <button
       
       id="resetFormula"
-      class="bg-orange-500 text-white font-bold text-xs rounded hover:bg-blue-600 duration-300 px-2 py-1"
+      class="bg-orange-500 text-white font-bold text-xs rounded hover:bg-orange-600 duration-300 px-2 py-1"
       >Resetar Formula</button
     >
     <p class="text-blue-500 text-xs">
@@ -36,6 +36,8 @@ const {id,formula}=Astro.props
   </div>
 
   <script>
+import { showToast } from "@/components/Toast/toastShow";
+
     const btnGuardar = document.getElementById("btnGuardar");
     const btnResetFormula = document.getElementById("resetFormula");
     const { usuarioid } = btnGuardar.dataset;
@@ -55,6 +57,9 @@ const {id,formula}=Astro.props
           }
         );
         console.log(fetching);
+        if(fetching.status==200){
+        showToast('formula actualizada',{background:'bg-green-600'})
+      }
       } catch (error) {
         console.log(error);
       }
@@ -73,8 +78,13 @@ const {id,formula}=Astro.props
             }),
           }
         );
-        console.log(fetching);
-      } catch (error) {
+       if(fetching.status==200){
+        showToast('formula actualizada',{background:'bg-green-600'})
+      }
+      
+      
+    } catch (error) {
+        showToast('error al actualizar',{background:'bg-red-600'})
         console.log(error);
       }
     });

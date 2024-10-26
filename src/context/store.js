@@ -34,15 +34,16 @@ const reportPDF=atom({
 })
 const prestamoSimulado=atom({
     usuarioId:'',
+    cuotas:[],
     nombreCliente:'',
     clienteId:'',
-    montoCuota:0,
+
     montoTotal:0,
     capital:0,
     modalidad:'',
     interesGenerado:0,
     tasaInteres:0,
-    nCuotas:0,
+
     fechaInicio:new Date(),
 
 })
