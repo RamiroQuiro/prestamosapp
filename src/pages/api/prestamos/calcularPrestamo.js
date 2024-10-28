@@ -10,7 +10,7 @@ export async function POST({ request }) {
 
         // Definir fórmula por defecto usando el sistema de amortización francés si no hay fórmula personalizada
         let formula = formulaPersonalizada || "(capital * ((tasaInteres / 100 / 12) * (1 + tasaInteres / 100 / 12) ^ cuotas)) / ((1 + tasaInteres / 100 / 12) ^ cuotas - 1)";
-        
+
         // Preparar variables comunes para evaluación
         const tasaInteresDecimal = tasaInteres; // para convertir tasa de interés a decimal mensual agregar /100 /12
         let montoTotal = 0;
@@ -41,7 +41,9 @@ export async function POST({ request }) {
             montoTotal += montoCuota;
 
             // Actualizar saldo pendiente si el método requiere amortización del capital
-            saldoPendiente -= montoCuota - (saldoPendiente * tasaInteresDecimal); // Reducir saldo según cuota amortizada
+
+            // Actualiza el saldo pendiente restando la parte de amortización
+            saldoPendiente -= saldoPendiente / nCuotas;  // Reducir saldo según cuota amortizada
 
             console.log("Resultado de la fórmula para cuota", i, ":", montoCuota);
         }

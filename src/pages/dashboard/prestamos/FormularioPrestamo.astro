@@ -81,6 +81,7 @@ try {
     >
       <LabelForm>Intereses</LabelForm>
       <select
+      id="tipoInteres"
         class={`${"style"} w-full text-sm bg-primary-200/10 group-hover:ring-2 rounded-lg  border-gray-300  ring-primary-200/60 focus:ring-2  outline-none transition-colors duration-200 ease-in-out px-2 py-2`}
       >
         {
@@ -114,7 +115,8 @@ try {
 </FormCont>
 
 <script>
-  import { busqueda, prestamoSimulado } from "@/context/store";
+  import { showToast } from "@/components/Toast/toastShow";
+import { busqueda, prestamoSimulado } from "@/context/store";
   import {
     calcularCuota,
     calcularGanancia,
@@ -206,6 +208,7 @@ try {
             fechaInicio: new Date(),
           });
         } else {
+          showToast('error al generar prestamos',{background:'bg-red-600'})
           console.log("Error en el cálculo del préstamo:", data.message);
         }
       } catch (error) {

@@ -36,7 +36,7 @@ const { id, formula } = Astro.props;
   </div>
   <div class="my-2 border roundesd p-4">
     <span class="text-sm font-semibold"
-      >Ejemplos y expliucación de formulas mas usados 👇</span
+      >Ejemplos y explicación de formulas usadas 👇</span
     >
     <div class="flex flex-col border-y border-gray-600 my-1">
       <p class="text-blue-500 text-sm my-1">
@@ -46,15 +46,28 @@ const { id, formula } = Astro.props;
         (capital * ((tasaInteres / 100 / 12) * (1 + tasaInteres / 100 / 12) ^
         cuotas)) / ((1 + tasaInteres / 100 / 12) ^ cuotas - 1)</code
       >
-      <div class="flex flex-col text-xs ">
+      <div class="flex flex-col text-xs">
         <span class="font-semibold text-sm">Variables:</span>
-        <p><span class="font-semibold text-sm">Capital:</span> Monto total del préstamo solicitado.</p>
-        <p><span class="font-semibold text-sm">TasaInteres:</span> Tasa de interés anual, que se convierte a tasa mensual dentro de la fórmula. </p>
-        <p><span class="font-semibold text-sm">Cuotas:</span> Número total de cuotas en las que se devolverá el préstamo. Descripción: En el sistema francés, el cálculo se hace de manera que las cuotas  iguales durante todo el periodo del préstamo. </p>
-        
-        <p class="text-blue-500 font-bold my-1">La fórmula considera una tasa mensual y divide el capital en una serie
+        <p>
+          <span class="font-semibold text-sm">Capital:</span> Monto total del préstamo
+          solicitado.
+        </p>
+        <p>
+          <span class="font-semibold text-sm">TasaInteres:</span> Tasa de interés
+          anual, que se convierte a tasa mensual dentro de la fórmula.
+        </p>
+        <p>
+          <span class="font-semibold text-sm">Cuotas:</span> Número total de cuotas
+          en las que se devolverá el préstamo. Descripción: En el sistema francés,
+          el cálculo se hace de manera que las cuotas iguales durante todo el periodo
+          del préstamo.
+        </p>
+
+        <p class="text-blue-500 font-bold my-1">
+          La fórmula considera una tasa mensual y divide el capital en una serie
           de pagos iguales, donde el interés se calcula sobre el saldo pendiente
-          en cada cuota.</p>
+          en cada cuota.
+        </p>
       </div>
     </div>
     <div class="flex flex-col border-b border-gray-600 my-1">
@@ -62,21 +75,44 @@ const { id, formula } = Astro.props;
         <span class="font-bold">Sistema Aleman</span>
       </p>
       <code class="text-xs bg-gray-600 py-1 px-2 text-white">
-        (cuota = (capital / cuotas)
-        + (saldoPendiente * (tasaInteres / 100 / 12))</code
-      >
-      <div class="flex flex-col text-xs ">
+        (capital / cuotas) + (saldoPendiente * (tasaInteres/100/12))
+      </code>
+      <div class="flex flex-col text-xs">
         <span class="font-semibold text-sm">Variables:</span>
-        <p><span class="font-semibold text-sm">Capital:</span>Monto total del préstamo solicitado.</p>
-        <p><span class="font-semibold text-sm">TasaInteres:</span> Tasa de interés anual, que se convierte a tasa mensual dentro de la fórmula. </p>
-        <p><span class="font-semibold text-sm">Cuotas:</span> Número total de cuotas en las que se devolverá el préstamo. Descripción: En el sistema francés, el cálculo se hace de manera que las cuotas  iguales durante todo el periodo del préstamo. </p>
-        <p><span class="font-semibold text-sm">n:</span>  Número de la cuota actual (1, 2, 3, ..., cuotas).. </p>
-        
-        <p class="text-blue-500 font-bold my-1">En el sistema alemán, la fórmula genera cuotas decrecientes. La parte de capital se divide en pagos iguales, pero el interés se calcula cada mes sobre el saldo pendiente, por lo que disminuye con el tiempo. La cuota resultante es mayor al principio y va bajando conforme el saldo pendiente disminuye..</p>
+        <p>
+          <span class="font-semibold text-sm">Capital:</span>Monto total del
+          préstamo solicitado.
+        </p>
+        <p>
+          <span class="font-semibold text-sm">TasaInteres:</span> Tasa de interés
+          anual, que se convierte a tasa mensual dentro de la fórmula.
+        </p>
+        <p>
+          <span class="font-semibold text-sm">Cuotas:</span> Número total de cuotas
+          en las que se devolverá el préstamo. Descripción: En el sistema francés,
+          el cálculo se hace de manera que las cuotas iguales durante todo el periodo
+          del préstamo.
+        </p>
+        <p>
+          <span class="font-semibold text-sm">n:</span> Número de la cuota actual
+          (1, 2, 3, ..., cuotas)..
+        </p>
+
+        <p class="text-blue-500 font-bold my-1">
+          En el sistema alemán, la fórmula genera cuotas decrecientes. La parte
+          de capital se divide en pagos iguales, pero el interés se calcula cada
+          mes sobre el saldo pendiente, por lo que disminuye con el tiempo. La
+          cuota resultante es mayor al principio y va bajando conforme el saldo
+          pendiente disminuye..
+        </p>
       </div>
     </div>
     <div class="text-red-500 font-semibold my-1">
-      <p>Cuando ingrese una formula personalizada, siempre se debera usar las variables como capital; tasaInteres; cuotas; saldoPendiente; n. No necesariamnete se necesita obligatoriamente todas las variables</p>
+      <p>
+        Cuando ingrese una formula personalizada, siempre se debera usar las
+        variables como capital; tasaInteres; cuotas; saldoPendiente; n. No
+        necesariamnete se necesita obligatoriamente todas las variables
+      </p>
     </div>
   </div>
 </div>
