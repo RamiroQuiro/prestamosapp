@@ -1,92 +1,98 @@
 ---
-
-const {id,formula}=Astro.props
+const { id, formula } = Astro.props;
 ---
-<div class="mt-10  border rounded border- pr-5 p-0.5 py-2">
 
-    {
-        formula&&
-        <p class="my-2 capitalize text-sm">esta es tu formula actual: <span class="ml-2 font-semibold  lowercase bg-gray-100 px-4 py-1">{formula}</span></p>
-    }
-
-
-    <input
-      type="text"
-      name="formulaPersonalizada"
-      id="formulaPersonalizada"
-      placeholder="Ingrese su formula"
-      class="my-2 px-2 py-1 bg-gray-100 shadows rounded focus:ring-0 outline-none text-sm mr-2"
-    />
-    <button
-      data-usuarioId={id}
-      id="btnGuardar"
-      class="bg-blue-500 text-white font-bold text-xs rounded hover:bg-blue-600 duration-300 px-2 py-1"
-      >Guardar formula</button
-    >
-    <button
-      
-      id="resetFormula"
-      class="bg-orange-500 text-white font-bold text-xs rounded hover:bg-orange-600 duration-300 px-2 py-1"
-      >Resetar Formula</button
-    >
-    <p class="text-blue-500 text-xs">
-        <span class="font-bold">ejemplo de formula =</span> "(capital + (capital
-        * (tasaInteres / 100))) / cuotas";
+<div class="mt-10 border rounded border- pr-5 p-0.5 py-2">
+  {
+    formula && (
+      <p class="my-2 capitalize text-sm">
+        esta es tu formula actual:{" "}
+        <span class="ml-2 font-semibold  lowercase bg-gray-100 px-4 py-1">
+          {formula}
+        </span>
       </p>
-  </div>
+    )
+  }
 
-  <script>
-import { showToast } from "@/components/Toast/toastShow";
+  <input
+    type="text"
+    name="formulaPersonalizada"
+    id="formulaPersonalizada"
+    placeholder="Ingrese su formula"
+    class="my-2 px-2 py-1 bg-gray-100 shadows w-full rounded focus:ring-0 outline-none text-sm mr-2"
+  />
+  <button
+    data-usuarioId={id}
+    id="btnGuardar"
+    class="bg-blue-500 text-white font-bold text-xs rounded hover:bg-blue-600 duration-300 px-2 py-1"
+    >Guardar formula</button
+  >
+  <button
+    id="resetFormula"
+    class="bg-orange-500 text-white font-bold text-xs rounded hover:bg-orange-600 duration-300 px-2 py-1"
+    >Resetar Formula</button
+  >
+  <div>
+  <span class=" text-sm font-semibold">Ejemplos de formula =</span>
+  <p class="text-blue-500 text-xs">
+    <span class="font-bold">Sistema Frances=</span> "(capital + (capital * (tasaInteres
+    / 100))) / cuotas";
+  </p>
+  <p class="text-blue-500 text-xs">
+    <span class="font-bold">Sistema Aleman=</span> "(capital / cuotas) + (saldoPendiente
+    * tasaInteres)";
+  </p></div>
+</div>
 
-    const btnGuardar = document.getElementById("btnGuardar");
-    const btnResetFormula = document.getElementById("resetFormula");
-    const { usuarioid } = btnGuardar.dataset;
-    const inputFormula=document.getElementById("formulaPersonalizada");
-    
-    
-    btnResetFormula.addEventListener('click',async()=>{
-      try {
-        const fetching = await fetch(
-          `/api/usuario/configuracionFinanciera/formulaPersonalizada`,
-          {
-            method: "PUT",
-            body: JSON.stringify({
-              usuarioId: usuarioid,
-              formula: '(capital * tasaInteres * (1 + tasaInteres) ^ cuotas) / ((1 + tasaInteres) ^ cuotas - 1)',
-            }),
-          }
-        );
-        console.log(fetching);
-        if(fetching.status==200){
-        showToast('formula actualizada',{background:'bg-green-600'})
+<script>
+  import { showToast } from "@/components/Toast/toastShow";
+
+  const btnGuardar = document.getElementById("btnGuardar");
+  const btnResetFormula = document.getElementById("resetFormula");
+  const { usuarioid } = btnGuardar.dataset;
+  const inputFormula = document.getElementById("formulaPersonalizada");
+
+  btnResetFormula.addEventListener("click", async () => {
+    try {
+      const fetching = await fetch(
+        `/api/usuario/configuracionFinanciera/formulaPersonalizada`,
+        {
+          method: "PUT",
+          body: JSON.stringify({
+            usuarioId: usuarioid,
+            formula:
+              "(capital * tasaInteres * (1 + tasaInteres) ^ cuotas) / ((1 + tasaInteres) ^ cuotas - 1)",
+          }),
+        }
+      );
+      console.log(fetching);
+      if (fetching.status == 200) {
+        showToast("formula actualizada", { background: "bg-green-600" });
+        
       }
-      } catch (error) {
-        console.log(error);
-      }
-    })
-  
-    btnGuardar.addEventListener("click", async () => {
-    
-      try {
-        const fetching = await fetch(
-          `/api/usuario/configuracionFinanciera/formulaPersonalizada`,
-          {
-            method: "PUT",
-            body: JSON.stringify({
-              usuarioId: usuarioid,
-              formula: inputFormula.value,
-            }),
-          }
-        );
-       if(fetching.status==200){
-        showToast('formula actualizada',{background:'bg-green-600'})
-      }
-      
-      
     } catch (error) {
-        showToast('error al actualizar',{background:'bg-red-600'})
-        console.log(error);
+      console.log(error);
+    }
+  });
+
+  btnGuardar.addEventListener("click", async () => {
+    try {
+      const fetching = await fetch(
+        `/api/usuario/configuracionFinanciera/formulaPersonalizada`,
+        {
+          method: "PUT",
+          body: JSON.stringify({
+            usuarioId: usuarioid,
+            formula: inputFormula.value,
+          }),
+        }
+      );
+      if (fetching.status == 200) {
+        showToast("formula actualizada", { background: "bg-green-600" });
       }
-    });
-  </script>
-  
+    } catch (error) {
+      showToast("error al actualizar", { background: "bg-red-600" });
+      console.log(error);
+    }
+  });
+</script>

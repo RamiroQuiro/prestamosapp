@@ -12,7 +12,7 @@ export async function POST({ request }) {
         let formula = formulaPersonalizada || "capital * (tasaInteres * Math.pow((1 + tasaInteres), cuotas)) / (Math.pow((1 + tasaInteres), cuotas) - 1)";
         
         // Preparar variables comunes para evaluación
-        const tasaInteresDecimal = tasaInteres / 100 / 12; // Convertir tasa de interés a decimal mensual
+        const tasaInteresDecimal = tasaInteres; // Convertir tasa de interés a decimal mensual
         let montoTotal = 0;
         let cuotasArray = [];
         let saldoPendiente = importe; // Inicializar saldo pendiente con el capital inicial
