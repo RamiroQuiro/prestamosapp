@@ -25,16 +25,16 @@ try {
 ---
 
 <LayoutAjustes>
-  <span slot="tituloAjustes">Datos Financieros</span>
-  <ContenedorDiv1>
-    <FormularioConfiguracionFinanzas
+    <span slot="tituloAjustes">Datos Financieros</span>
+    <ContenedorDiv1>
+      <FormularioConfiguracionFinanzas
       dataUser={datosUsuario}
       usuarioId={id}
       client:load
-    />
-
-<FormulaPersonalizada id={id} formula={datosUsuario.formula}/>
-    
-  </ContenedorDiv1>
+      />
+      
+      
+      <FormulaPersonalizada id={id} formula={datosUsuario.formula}/>
+    </ContenedorDiv1>
 </LayoutAjustes>
 

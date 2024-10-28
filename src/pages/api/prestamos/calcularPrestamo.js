@@ -9,10 +9,10 @@ export async function POST({ request }) {
         const { formulaPersonalizada } = (await db.select({ formulaPersonalizada: User.formulaPersonalizada }).from(User).where(eq(User.id, usuarioId))).at(0);
 
         // Definir fórmula por defecto usando el sistema de amortización francés si no hay fórmula personalizada
-        let formula = formulaPersonalizada || "capital * (tasaInteres * Math.pow((1 + tasaInteres), cuotas)) / (Math.pow((1 + tasaInteres), cuotas) - 1)";
+        let formula = formulaPersonalizada || "(capital * ((tasaInteres / 100 / 12) * (1 + tasaInteres / 100 / 12) ^ cuotas)) / ((1 + tasaInteres / 100 / 12) ^ cuotas - 1)";
         
         // Preparar variables comunes para evaluación
-        const tasaInteresDecimal = tasaInteres; // Convertir tasa de interés a decimal mensual
+        const tasaInteresDecimal = tasaInteres; // para convertir tasa de interés a decimal mensual agregar /100 /12
         let montoTotal = 0;
         let cuotasArray = [];
         let saldoPendiente = importe; // Inicializar saldo pendiente con el capital inicial
