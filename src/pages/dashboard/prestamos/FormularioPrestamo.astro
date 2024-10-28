@@ -8,6 +8,7 @@ import ContenedorInputSelected from "../../../components/moleculas/ContenedorInp
 import { Intereses } from "astro:db";
 import { eq } from "astro:db";
 import { nCuotas } from "astro:db";
+import LabelForm from "@/components/atomos/LabelForm.astro";
 
 const { id } = Astro.locals.user;
 
@@ -48,7 +49,6 @@ try {
     .where(eq(nCuotas.usuarioId, id));
   interes = [...interes, ...interesesUser];
   cuotas = [...cuotas, ...nCuotasUser];
-  // console.log(interes)
 } catch (error) {
   console.log(error);
 }
@@ -74,12 +74,33 @@ try {
     />
   </div>
   <div class="flex items-center w-full justify-normal">
-    <ContenedorInputSelected
-      labelOption="%"
-      label="Seleccionar Interes"
-      name="tipoInteres"
-      options={interes}
-    />
+
+    <!-- seleccionar intereses -->
+    <div
+      class="w-full flex items flex-col items-start gap-1 duration-300 group -md p-3"
+    >
+      <LabelForm>Intereses</LabelForm>
+      <select
+        class={`${"style"} w-full text-sm bg-primary-200/10 group-hover:ring-2 rounded-lg  border-gray-300  ring-primary-200/60 focus:ring-2  outline-none transition-colors duration-200 ease-in-out px-2 py-2`}
+      >
+        {
+          interes.map((opcion) => {
+            if (opcion.selectDefault) {
+              return (
+                <option selected value={opcion.value} id={opcion.id} class="">
+                  {opcion.name || opcion.value} %
+                </option>
+              );
+            }
+            return (
+              <option value={opcion.value} id={opcion.id} class="">
+                {opcion.name || opcion.value} %
+              </option>
+            );
+          })
+        }
+      </select>
+    </div>
     <ContenedorInputSelected
       label="N° de Cuotas"
       name="nCuotas"
