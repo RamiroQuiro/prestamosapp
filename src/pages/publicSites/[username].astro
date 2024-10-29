@@ -1,6 +1,6 @@
 ---
 import PrestanosApp from "@/components/atomos/PrestanosApp.astro";
-import FormularioSolicitante from "./FormularioSolicitante.astro";
+import FormularioSolicitante from "./FormularioSolicitud";
 import Layout from "@/layouts/Layout.astro";
 import { eq } from "astro:db";
 import { exists } from "astro:db";
@@ -71,7 +71,7 @@ try {
       </div>
     </div>
     <div class="bg-white rounded-md shadow w- p-5">
-      <FormularioSolicitante />
+      <FormularioSolicitante usuarioId={usuarioDB.id} client:load />
     </div>
   </main>
 </Layout>

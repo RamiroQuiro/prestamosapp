@@ -1,18 +1,17 @@
-import { db, eq, User } from "astro:db";
+import { and, db, eq, Intereses, User } from "astro:db";
 import { evaluate } from "mathjs";
 
 export async function POST({ request }) {
     const { usuarioId, importe, tasaInteres, nCuotas } = await request.json();
-
+console.log(usuarioId)
     try {
         // Obtén el usuario para verificar si tiene una fórmula personalizada
-        const { formulaPersonalizada } = (await db.select({ formulaPersonalizada: User.formulaPersonalizada }).from(User).where(eq(User.id, usuarioId))).at(0);
-
+        const { formulaPersonalizada,tasaInteress } = (await db.select({ formulaPersonalizada: User.formulaPersonalizada,tasaInteress:Intereses.value }).from(User).innerJoin(Intereses,and(eq(Intereses.usuarioId,usuarioId),eq(Intereses.selectDefault,true))).where(eq(User.id, usuarioId))).at(0)
         // Definir fórmula por defecto usando el sistema de amortización francés si no hay fórmula personalizada
         let formula = formulaPersonalizada || "(capital * ((tasaInteres / 100 / 12) * (1 + tasaInteres / 100 / 12) ^ cuotas)) / ((1 + tasaInteres / 100 / 12) ^ cuotas - 1)";
 
         // Preparar variables comunes para evaluación
-        const tasaInteresDecimal = tasaInteres; // para convertir tasa de interés a decimal mensual agregar /100 /12
+        const tasaInteresDecimal = tasaInteres ||tasaInteress // para convertir tasa de interés a decimal mensual agregar /100 /12
         let montoTotal = 0;
         let cuotasArray = [];
         let saldoPendiente = importe; // Inicializar saldo pendiente con el capital inicial
