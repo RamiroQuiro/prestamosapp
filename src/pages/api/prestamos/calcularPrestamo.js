@@ -52,7 +52,7 @@ export async function POST({ request }) {
             // Actualizar saldo pendiente si el método requiere amortización del capital
             saldoPendiente -= saldoPendiente / nCuotas; // Reducir saldo según cuota amortizada
 
-            console.log("Resultado de la fórmula para cuota", i, ":", montoCuota);
+            // console.log("Resultado de la fórmula para cuota", i, ":", montoCuota);
         }
 
         const ganancia = montoTotal - importe;
