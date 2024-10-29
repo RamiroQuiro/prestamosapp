@@ -86,8 +86,8 @@ export default function FormularioDatos({ user }) {
                     />
                     <InputsDatos
                         onChange={onChangeForm}
-                        name={'localidad'}
-                        label={'Localidad :'} valueInput={formulario.localidad}
+                        name={'celular'}
+                        label={'Celular :'} valueInput={formulario.celular}
                     />
                     <InputsDatos
                         onChange={onChangeForm}

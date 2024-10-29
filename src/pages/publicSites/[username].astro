@@ -15,6 +15,7 @@ try {
         username: User.userName,
         nombre: User.nombre,
         apellido: User.apellido,
+        celular:User.celular,
 		dni:User.dni,
 		email:User.email,
         id: User.id,
@@ -31,7 +32,7 @@ try {
 }
 ---
 
-<Layout title={`Sitio de Informacion de ${username}`}>
+<Layout title={`PrestamosAPP || ${username}`}>
   <nav
     class="w-full bg-white h-20 mb-10 bordser-b shadow flex items-center justify-evenly"
   >
@@ -57,21 +58,22 @@ try {
 
       <div class="text-base pl-4 space-y-2 mt-10 text-primary-400">
         <p>
-          <span class="text-red-500 font-bold">○</span> Completa el formulario con
-          tus datos personales
+          <span class="text-red-500 font-bold">○</span>Rellena el formulario con los datos
         </p>
         <p>
           <span class="text-red-500 font-bold">○</span> Ingresa el monto a solicitar
-          y las cuotasd
+          y las cuotas
         </p>
         <p>
-          <span class="text-red-500 font-bold">○</span> Se enviara un whatsapp con
-          tus datos para evaluar el pedido
+          <span class="text-red-500 font-bold">○</span>Simula el prestamo y se visualizara las primeras cuotas
+        </p>
+        <p>
+          <span class="text-red-500 font-bold">○</span>Envia el pedido y seras respondido a la brevedad
         </p>
       </div>
     </div>
-    <div class="bg-white rounded-md shadow w-1/3 h-3/4 p-5">
-      <FormularioSolicitante usuarioId={usuarioDB.id} client:load />
+    <div class="bg-white rounded-lg shadow w-1/3 h-3/4 p-5 border-l border-primary-100">
+      <FormularioSolicitante usuarioId={usuarioDB.id} celular={usuarioDB.celular} client:load />
     </div>
   </main>
 </Layout>
