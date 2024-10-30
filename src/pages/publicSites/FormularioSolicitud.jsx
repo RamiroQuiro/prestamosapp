@@ -108,9 +108,9 @@ const [montoTotal, setMontoTotal] = useState('')
       {!isPrestamoSimulado ? (
         <form
           action=""
-          class="flex flex-col w-full items-center justify-normal p-3 text-primary-texto animate-aparecer"
+          className="flex flex-col w-full items-center justify-normal p-3 text-primary-texto animate-aparecer"
         >
-          <div class="flex item-center w-full justify-normal gap-2 ">
+          <div className="flex item-center w-full justify-normal gap-2 ">
             <InputFormularioSolicitud
               onchange={handleChange}
               name="nombreApellido"
@@ -136,7 +136,7 @@ const [montoTotal, setMontoTotal] = useState('')
           >
             Dirección
           </InputFormularioSolicitud>
-          <div class="flex item-center w-full justify-normal gap-2 ">
+          <div className="flex item-center w-full justify-normal gap-2 ">
             <InputFormularioSolicitud
               onchange={handleChange}
               name="email"
@@ -154,7 +154,7 @@ const [montoTotal, setMontoTotal] = useState('')
               Celular
             </InputFormularioSolicitud>
           </div>
-          <div class="flex item-cente justify-normal gap-2 w-full border-t mt-4 animate-aparecer">
+          <div className="flex item-cente justify-normal gap-2 w-full border-t mt-4 animate-aparecer">
             <InputFormularioSolicitud
               onchange={handleChange}
               name="importe"
@@ -172,18 +172,18 @@ const [montoTotal, setMontoTotal] = useState('')
               Cuotas
             </InputFormularioSolicitud>
           </div>
-          <div class="w-full flex items flex-col items-start gap-1 duration-300 group -md p-3">
+          <div className="w-full flex items flex-col items-start gap-1 duration-300 group -md p-3">
             <label className="text-primary-texto duration-300 group-hover  group-hover:text-primary-200 capitalize focus:text-primary-200 text-sm">
               Modalidad
             </label>
             <select
-              onchange={handleChange}
+              onChange={handleChange}
               id="tipoInteres"
-              class={`${"style"} w-full text-sm bg-primary-200/10 group-hover:ring-2 rounded-lg  border-gray-300  ring-primary-200/60 focus:ring-2  outline-none transition-colors duration-200 ease-in-out px-2 py-2`}
+              className={`${"style"} w-full text-sm bg-primary-200/10 group-hover:ring-2 rounded-lg  border-gray-300  ring-primary-200/60 focus:ring-2  outline-none transition-colors duration-200 ease-in-out px-2 py-2`}
             >
               {modalidad.map((opcion) => {
                 return (
-                  <option value={opcion.value} id={opcion.id} class="">
+                  <option value={opcion.value} id={opcion.id} className="">
                     {opcion.name || opcion.value}
                   </option>
                 );
@@ -201,8 +201,8 @@ const [montoTotal, setMontoTotal] = useState('')
         <div className="flex flex-col w-full text-g  h-full">
           <h2>Cuotas Iniciales</h2>
           {prestamosSimulado?.cuotas.slice(0, 3).map((cuota, i) => (
-           <InputFormularioSolicitud value={cuota} key={i}>
-              Cuota N°{i + 1}{"   -  "}
+           <InputFormularioSolicitud value={cuota.montoCuota} key={i}>
+              Cuota N°{i + 1}{"   -  "} Vencimiento - {cuota.fechaVencimiento}
            </InputFormularioSolicitud>
           ))}
           <p className="bg-red-400 text-white  rounded mt-5 px-1 py-2 font-semibold text-sm  capitalize">

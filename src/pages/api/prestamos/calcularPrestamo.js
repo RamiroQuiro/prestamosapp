@@ -2,7 +2,7 @@ import { and, db, eq, Intereses, User } from "astro:db";
 import { evaluate } from "mathjs";
 
 export async function POST({ request }) {
-    const { usuarioId, importe, tasaInteres, nCuotas } = await request.json();
+    const { usuarioId, importe, tasaInteres, nCuotas, modalidad } = await request.json();
     try {
         // Obtén la fórmula personalizada y la tasa de interés del usuario
         const result = (await db
@@ -18,25 +18,26 @@ export async function POST({ request }) {
             .where(eq(User.id, usuarioId))
         ).at(0);
 
-        // Configura la fórmula y la tasa de interés predeterminadas si no se encuentran en la base de datos
         const formula = result?.formulaPersonalizada || "(capital * ((tasaInteres / 100 / 12) * (1 + tasaInteres / 100 / 12) ^ cuotas)) / ((1 + tasaInteres / 100 / 12) ^ cuotas - 1)";
-        const tasaInteresDecimal = tasaInteres || result?.tasaInteress || 0.05; // Tasa predeterminada de ejemplo (5%)
+        const tasaInteresDecimal = tasaInteres || result?.tasaInteress || 0.05;
+        
+        const diasModalidad = modalidad || 30; // Define modalidad en días (ej: 7 para semanal, 15 quincenal, 30 mensual)
+        const fechaInicio = new Date(); // La fecha inicial para el cálculo de vencimientos
 
         let montoTotal = 0;
         let cuotasArray = [];
-        let saldoPendiente = importe; // Inicializar saldo pendiente con el capital inicial
+        let saldoPendiente = importe;
 
-        // Calcular cada cuota de forma individual y acumular el monto total
+        // Calcular cada cuota de forma individual, acumular el monto total y calcular fecha de vencimiento
         for (let i = 1; i <= nCuotas; i++) {
             const variables = {
                 capital: importe,
                 tasaInteres: tasaInteresDecimal,
                 cuotas: nCuotas,
-                n: i, // Número de la cuota actual
-                saldoPendiente, // Usado en fórmulas que requieren el saldo pendiente
+                n: i,
+                saldoPendiente,
             };
 
-            // Evaluar la fórmula para la cuota actual
             let montoCuota;
             try {
                 montoCuota = evaluate(formula, variables);
@@ -45,14 +46,17 @@ export async function POST({ request }) {
                 return new Response(JSON.stringify({ message: "Error en la fórmula personalizada" }), { status: 500 });
             }
 
-            // Guardar la cuota calculada y acumular el monto total
-            cuotasArray.push(parseFloat(montoCuota.toFixed(2)));
+            // Calcular la fecha de vencimiento de la cuota actual
+            const fechaVencimiento = new Date(fechaInicio);
+            fechaVencimiento.setDate(fechaInicio.getDate() + diasModalidad * i);
+
+            cuotasArray.push({
+                montoCuota: parseFloat(montoCuota.toFixed(2)),
+                fechaVencimiento: fechaVencimiento.toISOString().split("T")[0], // Formato de fecha simplificado
+            });
+
             montoTotal += montoCuota;
-
-            // Actualizar saldo pendiente si el método requiere amortización del capital
-            saldoPendiente -= saldoPendiente / nCuotas; // Reducir saldo según cuota amortizada
-
-            // console.log("Resultado de la fórmula para cuota", i, ":", montoCuota);
+            saldoPendiente -= saldoPendiente / nCuotas; // Amortización del saldo
         }
 
         const ganancia = montoTotal - importe;
