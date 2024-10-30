@@ -5,7 +5,7 @@ import LabelForm from "../atomos/LabelForm.astro";
 const { htmlFor,disabled,label,type,name,styleInput,value ,styleContenedor ,placeholder}=Astro.props
 ---
 
-<div class= {`${styleContenedor} w-full flex items flex-col items-start gap- duration-300 group -md `}>
+<div  class= {`${styleContenedor} w-full flex items flex-col items-start gap- duration-300 group -md `}>
   <LabelForm name={name}>{label}</LabelForm>
   <InputForm placeholder={placeholder}  disabled={disabled} value={value} type={type} name={name} style={styleInput} />
 </div>

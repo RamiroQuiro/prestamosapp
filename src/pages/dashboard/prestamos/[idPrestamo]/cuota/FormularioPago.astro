@@ -55,12 +55,14 @@ const metodoPagos = [
       type="text"
       name="nombre"
       styleInput=""
+      disabled={true}
       value={cliente.nombre}
     />
     <ContenedorInputForm
       label="apellido"
       type="text"
       name="apellido"
+      disabled={true}
       value={cliente.apellido}
     />
   </div>
@@ -69,12 +71,14 @@ const metodoPagos = [
       label="DNI"
       type="text"
       name="dni"
+      disabled={true}
       value={cliente.dni}
     />
     <ContenedorInputForm
       label="Id Prestamo"
       type="text"
       name="dni"
+      disabled={true}
       value={prestamo.id}
     />
   </div>
@@ -88,9 +92,11 @@ const metodoPagos = [
       label="monto cuota"
       type="text"
       name="montoCuota"
+      disabled={true}
       value={`$ ${montoRestanteCuota==0?cuota.monto.toLocaleString():montoRestanteCuota.toLocaleString()}`}
     />
     <ContenedorInputForm
+    disabled={true}
       label="Fecha de vencimiento"
       type="text"
       name="fechaVencimiento"
@@ -99,7 +105,7 @@ const metodoPagos = [
   </div>
 
   <div class="flex md:flex-row items-center gap-2 w-full justify-center">
-    <ContenedorInputForm label="Monto de Mora" type="text" name="montoMora" />
+    <ContenedorInputForm label="Monto de Mora" disabled={true} type="text" name="montoMora" />
     <label
       for="sinMora"
       class="w-1/6 text-xs flex flex-col items-center gap-2 justify-center"
@@ -110,7 +116,7 @@ const metodoPagos = [
         id="sinMora"
       /></label
     >
-    <ContenedorInputForm label="Fecha de Pago" type="date" name="fechaPago" />
+    <ContenedorInputForm label="Fecha de Pago" type="date" disabled={true} name="fechaPago" />
   </div>
   <div class="flex md:flex-row items-center gap-2 w-full justify-center">
     <ContenedorInputForm
@@ -132,6 +138,7 @@ const metodoPagos = [
 <script>
   import { showToast } from "@/components/Toast/toastShow";
   import { calcularMora } from "@/lib/formulas/calculoMora";
+import currency from "@/lib/formulas/convertidorMoneda";
 
   const formulario = document.getElementById("nuevoPago") as HTMLFormElement;
   let mora = 0;
@@ -188,7 +195,7 @@ const metodoPagos = [
       montoTotal.value = `$ ${(Number(montoCuota) + Number(mora)).toFixed(2)}`;
     }
   });
-  montoTotal.value = `$ ${(Number(montoCuota) + Number(mora)).toFixed(2)}`;
+  montoTotal.value = ` ${currency(Number(montoCuota) + Number(mora))}`;
   //  boton para pagar
   const btnPagar = document.getElementById("pagarCuota");
   const idCuota = document
@@ -197,8 +204,8 @@ const metodoPagos = [
   btnPagar.addEventListener("click", async (e) => {
     e.preventDefault();
     // separar el valuje de monto Total
-    const valor = montoTotal.value.split(" ")[1];
-    data.montoTotal = Number(valor);
+    const valor = montoTotal.value
+    data.montoTotal = valor,
     data.montoMora=Number(mora.toFixed(2))
     try {
       const res = await fetch(`/api/pagos/${idCuota}`, {
