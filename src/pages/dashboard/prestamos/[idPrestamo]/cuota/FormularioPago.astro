@@ -4,20 +4,23 @@ import FormCont from "@/components/atomos/FormCont.astro";
 import SelectedFormulario from "@/components/atomos/SelectedFormulario.astro";
 import ContenedorInputForm from "@/components/moleculas/ContenedorInputForm.astro";
 import { eq } from "astro:db";
-import { db,moraCuota } from "astro:db";
+import { db, moraCuota } from "astro:db";
 
 const {
-  data: { cuota, cliente, prestamo },montoRestanteCuota
+  data: { cuota, cliente, prestamo },
+  montoRestanteCuota,
 } = Astro.props;
-const {id}=Astro.locals.user
+const { id } = Astro.locals.user;
 
-let tasaInteresMora=0
+let tasaInteresMora = 0;
 try {
-  const dataDb=await db.select().from(moraCuota).where(eq(moraCuota.usuarioId,id))
-  tasaInteresMora=dataDb[0].value
-
+  const dataDb = await db
+    .select()
+    .from(moraCuota)
+    .where(eq(moraCuota.usuarioId, id));
+  tasaInteresMora = dataDb[0].value;
 } catch (error) {
-  console.log(error)
+  console.log(error);
 }
 
 const metodoPagos = [
@@ -37,8 +40,6 @@ const metodoPagos = [
     name: "deposito",
   },
 ];
-
-
 ---
 
 <FormCont title="Nuevo Pago" id="nuevoPago">
@@ -49,7 +50,11 @@ const metodoPagos = [
   >
     <span>Id de Cuota : </span><p>{cuota?.id}</p>
   </div>
-  <div id="moraId" data-moraInteres={tasaInteresMora} class="flex md:flex-row items-center gap-2 w-full justify-normal">
+  <div
+    id="moraId"
+    data-moraInteres={tasaInteresMora}
+    class="flex md:flex-row items-center gap-2 w-full justify-normal"
+  >
     <ContenedorInputForm
       label="nombre"
       type="text"
@@ -84,7 +89,7 @@ const metodoPagos = [
   </div>
   <div
     data-fechaVencimiento={cuota.fechaVencimiento}
-    data-montoCuota={montoRestanteCuota==0?cuota.monto:montoRestanteCuota}
+    data-montoCuota={montoRestanteCuota == 0 ? cuota.monto : montoRestanteCuota}
     id="fechaVencimiento"
     class="flex md:flex-row items-center gap-2 w-full justify-normal"
   >
@@ -93,10 +98,10 @@ const metodoPagos = [
       type="text"
       name="montoCuota"
       disabled={true}
-      value={`$ ${montoRestanteCuota==0?cuota.monto.toLocaleString():montoRestanteCuota.toLocaleString()}`}
+      value={`$ ${montoRestanteCuota == 0 ? cuota.monto.toLocaleString() : montoRestanteCuota.toLocaleString()}`}
     />
     <ContenedorInputForm
-    disabled={true}
+      disabled={true}
       label="Fecha de vencimiento"
       type="text"
       name="fechaVencimiento"
@@ -105,7 +110,12 @@ const metodoPagos = [
   </div>
 
   <div class="flex md:flex-row items-center gap-2 w-full justify-center">
-    <ContenedorInputForm label="Monto de Mora" disabled={true} type="text" name="montoMora" />
+    <ContenedorInputForm
+      label="Monto de Mora"
+      disabled={true}
+      type="text"
+      name="montoMora"
+    />
     <label
       for="sinMora"
       class="w-1/6 text-xs flex flex-col items-center gap-2 justify-center"
@@ -116,7 +126,12 @@ const metodoPagos = [
         id="sinMora"
       /></label
     >
-    <ContenedorInputForm label="Fecha de Pago" type="date" disabled={true} name="fechaPago" />
+    <ContenedorInputForm
+      label="Fecha de Pago"
+      type="date"
+      disabled={true}
+      name="fechaPago"
+    />
   </div>
   <div class="flex md:flex-row items-center gap-2 w-full justify-center">
     <ContenedorInputForm
@@ -127,7 +142,11 @@ const metodoPagos = [
     />
     <div class="flex md:flex-row items-center gap-2 w-full justify-normal">
       <label for="metodoPago" class="text-xs w-">Metodo de pago</label>
-      <SelectedFormulario defaultSelect={true} options={metodoPagos} name="metodoPago" />
+      <SelectedFormulario
+        defaultSelect={true}
+        options={metodoPagos}
+        name="metodoPago"
+      />
     </div>
   </div>
   <div class="my-2 w-full items-center justify-end flex">
@@ -138,7 +157,7 @@ const metodoPagos = [
 <script>
   import { showToast } from "@/components/Toast/toastShow";
   import { calcularMora } from "@/lib/formulas/calculoMora";
-import currency from "@/lib/formulas/convertidorMoneda";
+  import currency from "@/lib/formulas/convertidorMoneda";
 
   const formulario = document.getElementById("nuevoPago") as HTMLFormElement;
   let mora = 0;
@@ -147,11 +166,8 @@ import currency from "@/lib/formulas/convertidorMoneda";
   const sinMora = document.getElementById("sinMora");
   const fechaVencimientoId = document.getElementById("fechaVencimiento");
   const nodoMora = document.getElementById("moraId");
-  const tasaInteresMora=nodoMora.getAttribute('data-moraInteres')
-  // const fechaVencimiento=fechaVencimientoId.getAttribute('data-fechaVencimiento')
-  // const fechaVencimiento = "07-01-2024";
-  // const tasaInteresMora = 0.6432;
-// console.log(tasaInteresMora)
+  const tasaInteresMora = nodoMora.getAttribute("data-moraInteres");
+
   const montoCuota = fechaVencimientoId.getAttribute("data-montoCuota");
   const metodoPago = document.getElementById("metodoPago");
   const formData = new FormData(formulario);
@@ -161,6 +177,11 @@ import currency from "@/lib/formulas/convertidorMoneda";
     data[key] = value;
   });
   // console.log("formulario data ->", data);
+
+  montoTotal.addEventListener("input", (e) => {
+    const cursorPos = e.target.selectionStart;
+  });
+
   // funcion parar obtener del select metodo de pago
   const obtenerMetodoPago = (e) => {
     data["metodoPago"] = e.target.value;
@@ -195,7 +216,10 @@ import currency from "@/lib/formulas/convertidorMoneda";
       montoTotal.value = `$ ${(Number(montoCuota) + Number(mora)).toFixed(2)}`;
     }
   });
-  montoTotal.value = ` ${currency(Number(montoCuota) + Number(mora))}`;
+
+  const montoFormat = Number(montoCuota) + Number(mora);
+  montoTotal.value = currency(montoFormat);
+
   //  boton para pagar
   const btnPagar = document.getElementById("pagarCuota");
   const idCuota = document
@@ -204,9 +228,22 @@ import currency from "@/lib/formulas/convertidorMoneda";
   btnPagar.addEventListener("click", async (e) => {
     e.preventDefault();
     // separar el valuje de monto Total
-    const valor = montoTotal.value
-    data.montoTotal = valor,
-    data.montoMora=Number(mora.toFixed(2))
+    // Validación y extracción de valor de montoTotal
+    let valor = montoTotal.value.trim();
+    if (valor.includes("$")) {
+      valor = valor.trim().split("$")[1]
+    }
+    valor = Number(valor); // Convierte el valor a número después de limpiar
+console.log(valor)
+    // Verifica que el valor sea un número válido
+    if (isNaN(valor)) {
+      showToast("Monto inválido. Por favor, verifique el valor ingresado.");
+      return;
+    }
+
+    data.montoTotal = valor;
+    data.montoMora = Number(mora.toFixed(2));
+
     try {
       const res = await fetch(`/api/pagos/${idCuota}`, {
         method: "POST",
