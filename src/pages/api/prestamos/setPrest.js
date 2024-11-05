@@ -15,7 +15,7 @@ export async function POST({ request }) {
       nCuotas,
     },
   } = await request.json();
-console.log('cuotas ->', cuotas)
+
   try {
     const id = generateId(20);
     const now = new Date(fechaInicio);
@@ -28,7 +28,7 @@ console.log('cuotas ->', cuotas)
       montoCuota: cuotas[0].montoCuota,  // Asigna el monto de la primera cuota
       usuarioId,
       montoTotal,
-      modalidad: modalidad === 30 ? 'mensual' : modalidad === 15 ? 'quincenal' : 'semanal',
+      modalidad: modalidad == 30 ? 'mensual' : modalidad == 15 ? 'quincenal' : 'semanal',
       capital,
       tasaInteres,
       nCuotas,
@@ -45,7 +45,6 @@ console.log('cuotas ->', cuotas)
       let fechaVencimiento = new Date(cuotas[i].fechaVencimiento);
       const cuotaId = generateId(15);
 
-console.log('fecha vencimiento por cuota ->', cuotas[i],'este es el numero de cuotas ->',nCuotas)
 
       await db.insert(Cuota).values({
         id: cuotaId,

@@ -21,13 +21,14 @@ export async function GET({ params }) {
         capital: Prestamo.capital,
         montoTotal: Prestamo.montoTotal,
         modalidad: Prestamo.modalidad,
+        tasaInteres:Prestamo.tasaInteres,
       }
     })
     .from(Prestamo)
     .where(eq(Prestamo.id, idPrestamo))
     .innerJoin(Cliente, eq(Cliente.id, Prestamo.clienteId));
   
-    //    console.log('prestamo encontrado ->',prestamoCliente)
+      //  console.log('prestamo encontrado ->',prestamoCliente)
     if (prestamoCliente.length == 0) {
       return new Response(
         JSON.stringify({

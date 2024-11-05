@@ -176,6 +176,7 @@ import { busqueda, prestamoSimulado } from "@/context/store";
       let nCuotas = document.getElementById("nCuotas").value;
       let modalidad = document.getElementById("modalidad").value;
 
+
       try {
         const response = await fetch(`/api/prestamos/calcularPrestamo`, {
           method: "POST",
