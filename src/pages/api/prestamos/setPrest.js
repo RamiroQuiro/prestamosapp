@@ -15,7 +15,7 @@ export async function POST({ request }) {
       nCuotas,
     },
   } = await request.json();
-
+console.log('cuotas ->', cuotas)
   try {
     const id = generateId(20);
     const now = new Date(fechaInicio);
@@ -25,7 +25,7 @@ export async function POST({ request }) {
       id,
       cuotas,
       clienteId,
-      montoCuota: cuotas[0],  // Asigna el monto de la primera cuota
+      montoCuota: cuotas[0].montoCuota,  // Asigna el monto de la primera cuota
       usuarioId,
       montoTotal,
       modalidad: modalidad === 30 ? 'mensual' : modalidad === 15 ? 'quincenal' : 'semanal',
@@ -37,19 +37,15 @@ export async function POST({ request }) {
 
     // Verificar modalidad y calcular días
     const modalidadDias = Number(modalidad);
-    let fechaVencimiento = new Date(now);
-    fechaVencimiento.setDate(fechaVencimiento.getDate() + modalidadDias);
-
-    let fechaFin;
-
+    
+    let fechaFin=new Date(cuotas[cuotas.length -1].fechaVencimiento)
+    
     // Insertar cada cuota con su fecha de vencimiento y monto precalculado
-    for (let i = 0; i < nCuotas; i++) {
+    for (let i = 0; i < cuotas.length; i++) {
+      let fechaVencimiento = new Date(cuotas[i].fechaVencimiento);
       const cuotaId = generateId(15);
 
-      // Guardar la fecha de vencimiento de la última cuota
-      if (i === nCuotas - 1) {
-        fechaFin = new Date(fechaVencimiento);
-      }
+console.log('fecha vencimiento por cuota ->', cuotas[i],'este es el numero de cuotas ->',nCuotas)
 
       await db.insert(Cuota).values({
         id: cuotaId,
@@ -58,14 +54,11 @@ export async function POST({ request }) {
         clienteId,
         numeroCuota: i + 1,
         fechaVencimiento,
-        monto: parseFloat(cuotas[i].toFixed(2)),  // Usar la cuota calculada recibida
+        monto: parseFloat(cuotas[i].montoCuota.toFixed(2)),  // Usar la cuota calculada recibida
         pagada: false,
       });
 
-      // Actualizar fecha para la siguiente cuota
-      fechaVencimiento.setDate(fechaVencimiento.getDate() + modalidadDias);
     }
-
     // Actualizar el préstamo con la FechaFin calculada
     await db.update(Prestamo).set({
       fechaFin,

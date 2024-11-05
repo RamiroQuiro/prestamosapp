@@ -6,11 +6,11 @@ function simularCuotas({ cuotas, modalidad, nCuotas, fechaInicio ,tasaInteres},{
     for (let i = 0; i < nCuotas; i++) {
       fechaVencimiento.setDate(fechaVencimiento.getDate() + modalidadDias);
       cuotasNew.push({
-        nombreCliente:`${clientSelect.nombre} ${clientSelect.apellido}`,
+        // nombreCliente:`${clientSelect.nombre} ${clientSelect.apellido}`,
         numeroCuota: i + 1,
-        montoCuota: cuotas[i],
+        montoCuota: cuotas[i].montoCuota,
         fechaVencimiento: new Date(fechaVencimiento),
-        tasaInteres:`${tasaInteres}%`
+        // tasaInteres:`${tasaInteres}%`
       });
     }
   

@@ -21,11 +21,6 @@ export default function PrevisualizacionPrestamo() {
     const usuarioId = prestamoSimulado?.value?.usuarioId
     const columnas = [
         {
-            label: "cliente",
-            id: 1,
-            selector: 'cliente',
-        },
-        {
             label: "N° cuotas",
             id: 4,
             selector: 'nCuotas',
@@ -41,23 +36,23 @@ export default function PrevisualizacionPrestamo() {
             id: 6,
             selector: 'fechaVencimiento',
         },
-        {
-            label: "tasa interes",
-            id: 7,
-            selector: 'tasaInteres',
-        },
-
     ];
     let cabecera = { usuario: { id: usuarioId }, cliente: clienteSelect.clientSelect };
 
     //   console.log(clienteSelect)
-    //   console.log(prestamosEnContexto)
+      console.log(prestamosEnContexto)
     return (
         <div className='p-2 flex relative flex-col items-start justify-normal'>
             <div className='flex items-start w-full mt-6 my-3 justify-between'>
 
                 <h2 className='uppercase font-semibold text-sm '>Previsualizacion del prestamo generado</h2>
                 <ButtonPdf infoCabecera={cabecera}>pdf</ButtonPdf>
+            </div>
+            <div>
+                <p>cliente: {cabecera.cliente.nombre} {' '} {cabecera.cliente.apellido}</p>
+                <p>dni: {cabecera.cliente.dni}</p>
+                <p>Capital Solicitado: ${prestamosEnContexto.capital.toLocaleString()}</p>
+                <p>tasa Interes: {prestamosEnContexto.tasaInteres}%</p>
             </div>
             <div className='text-gray-500 w-full rounded-lg my-2 border border-primary-100/50 p-1 overflow-x-auto'>
 

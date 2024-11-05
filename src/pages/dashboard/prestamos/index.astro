@@ -33,7 +33,7 @@ const clientes = await db
       class="flex md:w-2/6 w-full flex-col h-full items-center justify-center"
     >
       <!-- previsualizacion a primera vista -->
-      <div class="bg-primary-300/80 w-full m-auto p-5 rounded-l-lg">
+      <div class="bg-primary-300/80 w-full m-auto py-3 px-5 rounded-l-lg">
         <Titulo1>Prestamo Generado</Titulo1>
 
         <PrestamoGenerado />
@@ -81,7 +81,7 @@ const clientes = await db
       loader(true);
       e.preventDefault();
       const contextoPrestamo = prestamoSimulado.get();
-      console.log("contexto del prestamo a enviar", contextoPrestamo);
+      // console.log("contexto del prestamo a enviar", contextoPrestamo);
       try {
         const res = await fetch("/api/prestamos/setPrest", {
           method: "POST",

@@ -4,20 +4,23 @@ import ContenedorInputForm from "../../../components/moleculas/ContenedorInputFo
 
 <form
   id="prestamoGenerado"
-  class="flex flex-col items-start w-full justify-normal gap-2 border-y py-5"
+  class="flex flex-col items-start w-full justify-normal gap-2 border-y py-3"
 >
   <ContenedorInputForm
     label="importe de cuota inicial"
     type="text"
     name="montoCuota"
+    disabled={true}
   />
-  <ContenedorInputForm label="total a pagar" type="text" name="montoTotal" />
+  <ContenedorInputForm label="vencimiento 1° Cuota" type="date" name="fechaPrimeraCuota" disabled={true}/>
+  <ContenedorInputForm label="total a pagar" type="text" name="montoTotal" disabled={true}/>
   <ContenedorInputForm
     label="Interes Generado"
     type="text"
     name="interesGenerado"
+    disabled={true}
   />
-  <ContenedorInputForm label="fecha" type="date" name="fechaInicio" />
+  <ContenedorInputForm label="fecha" type="date" name="fechaInicio" disabled={true}/>
 </form>
 
 <script src="./generadorPrestamo.js">
