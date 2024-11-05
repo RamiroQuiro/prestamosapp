@@ -54,10 +54,10 @@ const [montoTotal, setMontoTotal] = useState('')
   };
 
   const handleChange = (e) => {
-    setFormularioSolicitud({
-      ...formularioSolicitud,
+    setFormularioSolicitud((state)=>({
+      ...state,
       [e.target.name]: e.target.value,
-    });
+    }));
   };
 
   const handleSolicitar = async () => {
@@ -178,12 +178,14 @@ const [montoTotal, setMontoTotal] = useState('')
             </label>
             <select
               onChange={handleChange}
-              id="tipoInteres"
+              id="modalidad"
+              name="modalidad"
               className={`${"style"} w-full text-sm bg-primary-200/10 group-hover:ring-2 rounded-lg  border-gray-300  ring-primary-200/60 focus:ring-2  outline-none transition-colors duration-200 ease-in-out px-2 py-2`}
             >
+              <option disabled selected className="text-xs" value="">seleccionar modalidad...</option>
               {modalidad.map((opcion) => {
                 return (
-                  <option value={opcion.value} id={opcion.id} className="">
+                  <option value={opcion.value} key={opcion.id} className="">
                     {opcion.name || opcion.value}
                   </option>
                 );

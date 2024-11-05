@@ -19,7 +19,7 @@ export async function POST({ request }) {
             .where(eq(User.id, usuarioId))
         ).at(0);
 
-        const formula = result?.formulaPersonalizada || "(capital * ((tasaInteres / 100 / 12) * (1 + tasaInteres / 100 / 12) ^ cuotas)) / ((1 + tasaInteres / 100 / 12) ^ cuotas - 1)";
+        const formula = result?.formulaPersonalizada || "capital / ((1 - (1 / (1 + (tasaInteres / 100 / 12)) ^ cuotas)) / (tasaInteres / 100 / 12))";
         const tasaInteresDecimal = tasaInteres || result?.tasaInteress || 0.05;
         
         const diasModalidad = modalidad || 30; // Define modalidad en días (ej: 7 para semanal, 15 quincenal, 30 mensual)
