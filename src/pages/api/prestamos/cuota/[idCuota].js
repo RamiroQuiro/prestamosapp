@@ -1,6 +1,7 @@
-import { Cuota, Pago, Prestamo, db, eq } from "astro:db";
 import { generateId } from "lucia";
-
+import {cuotas as Cuota,prestamos as Prestamo} from '@/db/schema'
+import db from "@/db";
+import { eq } from "drizzle-orm";
 export async function PUT({ params }) {
   const { idCuota } = params;
   try {

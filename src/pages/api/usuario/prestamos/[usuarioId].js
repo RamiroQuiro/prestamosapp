@@ -1,5 +1,5 @@
-import { Cliente, Cuota, db, eq, Prestamo, Pago } from "astro:db";
-import { sql } from "astro:db"; // Para consultas SQL avanzadas
+import db from "@/db";
+import { prestamos as Prestamo,clientes as Cliente} from "@/db/schema";
 
 export async function GET({ params }) {
     const { usuarioId } = params;

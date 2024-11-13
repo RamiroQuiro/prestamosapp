@@ -2,7 +2,9 @@ import { generateHTMLTable } from "@/templatesPdf/templates";
 import { buildPDF } from "../../../lib/pdfkit-table";
 
 import puppeteer from "puppeteer";
-import { db, eq, User } from "astro:db";
+import { db} from "@/db";
+import { users as User} from "@/db/schema";
+import { eq } from "drizzle-orm";
 
 export async function GET({ request }) {
   const browser = await puppeteer.launch({

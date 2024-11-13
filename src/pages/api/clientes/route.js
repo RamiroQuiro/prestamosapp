@@ -1,5 +1,7 @@
-import { Cliente, User, db, eq } from "astro:db";
+import db from "@/db";
+import { clientes as Cliente} from "@/db/schema";
 import { createHash, randomBytes } from "crypto";
+import { eq } from "drizzle-orm";
 
 export const generateUidEmail = (email) => {
   return createHash("sha256").update(email).digest("hex");

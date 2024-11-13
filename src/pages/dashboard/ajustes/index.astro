@@ -4,8 +4,10 @@ import Layoutdash from "../layouts/Layoutdash.astro";
 import Titulo1 from "@/components/atomos/Titulo1.astro";
 import ContenedorDiv1 from "@/components/atomos/ContenedorDiv1.astro";
 import FormularioDatos from "./FormularioDatos";
-import { db, User, eq } from "astro:db";
+import { users as User } from "@/db/schema";
 import LayoutAjustes from "./LayoutAjustes.astro";
+import db from "@/db";
+import { eq } from "drizzle-orm";
 
 const { id } = Astro.locals.user;
 let userData = {};

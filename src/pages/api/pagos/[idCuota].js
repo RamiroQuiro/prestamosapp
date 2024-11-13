@@ -1,14 +1,15 @@
-import { Cuota, Pago, PagoParcial, db, eq } from "astro:db";
+import db from "@/db";
+import { cuotas, pagoParciales, pagos } from "@/db/schema";
 import { generateId } from "lucia";
 
 export async function POST({ params, request }) {
   const { idCuota } = params;
   const { data } = await request.json();
-console.log(data)
+// console.log(data)
   try {
     // Buscar la cuota en la base de datos
     const cuotaFind = (
-      await db.select().from(Cuota).where(eq(Cuota.id, idCuota))
+      await db.select().from(cuotas).where(eq(cuotas.id, idCuota))
     ).at(0);
 
     if (!cuotaFind) {
@@ -35,8 +36,8 @@ console.log(data)
     // Sumar los montos de pagos parciales anteriores
     const pagosParcialesDeLaCuota = await db
       .select()
-      .from(PagoParcial)
-      .where(eq(PagoParcial.cuotaId, idCuota));
+      .from(pagoParciales)
+      .where(eq(pagoParciales.cuotaId, idCuota));
     const sumaPagosParciales = pagosParcialesDeLaCuota.reduce((acc, element) => {
       return acc + element.monto;
     }, 0);
@@ -60,7 +61,7 @@ console.log(data)
     if (montoTotalPagado < cuotaFind.monto + (data.montoMora || 0)) {
       // Pago parcial
       try {
-        await db.insert(PagoParcial).values({
+        await db.insert(pagoParciales).values({
           id: generateId(15),
           cuotaId: idCuota,
           clienteId: cuotaFind.clienteId,
@@ -72,11 +73,11 @@ console.log(data)
           metodoPago: data.metodoPago,
         });
 
-        await db.update(Cuota).set({
+        await db.update(cuotas).set({
           montoPagado: sumaPagosParciales + data.montoTotal,
           montoMora: data.montoMora || 0,
           mora: (data.montoMora || 0) > 0,
-        }).where(eq(Cuota.id, idCuota));
+        }).where(eq(cuotas.id, idCuota));
 
         return new Response(
           JSON.stringify({
@@ -98,7 +99,7 @@ console.log(data)
     } else {
       // Pago completo
       try {
-        await db.insert(Pago).values({
+        await db.insert(pagos).values({
           id: generateId(15),
           cuotaId: idCuota,
           clienteId: cuotaFind.clienteId,
@@ -111,13 +112,13 @@ console.log(data)
           metodoPago: data.metodoPago,
         });
 
-        await db.update(Cuota).set({
+        await db.update(cuotas).set({
           montoPagado: data.montoTotal,
           pagada: true,
           fechaPago: new Date(),
           montoMora: data.montoMora || 0,
           mora: (data.montoMora || 0) > 0,
-        }).where(eq(Cuota.id, idCuota));
+        }).where(eq(cuotas.id, idCuota));
 
         return new Response(
           JSON.stringify({

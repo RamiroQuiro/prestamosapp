@@ -1,10 +1,8 @@
 ---
-import { db } from "astro:db";
+import db from "@/db";
 import TablaPrestamosCliente from "./TablaPrestamosCliente";
-import { Prestamo } from "astro:db";
-import { eq } from "astro:db";
-import ButtonPdf from "@/components/atomos/ButtonPdf";
-
+import {prestamos as Prestamo} from '@/db/schema/prestamos.sql'
+import { eq } from "drizzle-orm";
 const {id}=Astro.locals.user
 const {idCliente}=Astro.params
 let prestamos = [];

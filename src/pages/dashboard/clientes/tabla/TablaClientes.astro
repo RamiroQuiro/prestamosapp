@@ -1,9 +1,8 @@
 ---
+import db from "@/db";
 import Table from "../../../../components/tablaComponentes/Table";
-import { Prestamo } from "astro:db";
-import { db } from "astro:db";
-import { Cliente } from "astro:db";
-import { eq } from "astro:db";
+import { prestamos as Prestamo, clientes as Cliente } from "@/db/schema";
+import { eq } from "drizzle-orm";
 
 const { user } = Astro.locals;
 

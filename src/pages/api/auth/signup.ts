@@ -1,8 +1,12 @@
 import type { APIContext } from "astro";
-import { User, db, eq, moraCuota } from "astro:db";
+
 import { generateId } from "lucia";
 import bcrypt from "bcryptjs";
 import { lucia } from "../../../lib/auth";
+import db from "@/db";
+import { users } from "@/db/schema/users.sql";
+import { eq } from "drizzle-orm";
+import { moraCuotas } from "@/db/schema/mora.sql";
 
 export async function POST({
   request,
@@ -33,8 +37,8 @@ console.log(formData)
   //   verificar si el usuario existe
   const existingUser = await db
     .select()
-    .from(User)
-    .where(eq(User.email, email));
+    .from(users)
+    .where(eq(users.email, email));
   // console.log(existingUser);
 
   if (existingUser.length > 0) {
@@ -52,7 +56,7 @@ console.log(formData)
   // Hacemos hash de la contraseña
   const hashPassword = await bcrypt.hash(password, 12);
 
-  await db.insert(User).values([
+  await db.insert(users).values([
     {
       id: userId,
       email:email,
@@ -62,7 +66,7 @@ console.log(formData)
     },
   ]);
 
-  await db.insert(moraCuota).values({
+  await db.insert(moraCuotas).values({
     id:generateId(15),
     value:0,
     usuarioId:userId

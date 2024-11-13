@@ -1,8 +1,10 @@
 import type { APIContext } from "astro";
-import { User, db, eq } from "astro:db";
 import { generateId } from "lucia";
 import bcrypt from "bcryptjs";
 import { lucia } from "../../../lib/auth";
+import db from "@/db";
+import { users } from "@/db/schema/users.sql";
+import { eq } from "drizzle-orm";
 
 export async function POST({
   request,
@@ -20,8 +22,8 @@ export async function POST({
 //   verificar si el usuario existe
   const findUser = (await db
     .select()
-    .from(User)
-    .where(eq(User.email, email))).at(0);
+    .from(users)
+    .where(eq(users.email, email))).at(0);
 
     if (!findUser) {
         return new Response(JSON.stringify({ data: 'email o contraseña incorrecta',status:401}))

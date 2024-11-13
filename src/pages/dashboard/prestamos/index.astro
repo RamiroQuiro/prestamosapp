@@ -10,7 +10,9 @@ import Layoutdash from "../layouts/Layoutdash.astro";
 import FormularioPrestamo from "./FormularioPrestamo.astro";
 import PrestamoGenerado from "./PrestamoGenerado.astro";
 
-import { eq, User, db, Cliente } from "astro:db";
+import { clientes as Cliente } from "@/db/schema";
+import db from "@/db";
+import { eq } from "drizzle-orm";
 const user = Astro.locals.user;
 const clientes = await db
   .select()

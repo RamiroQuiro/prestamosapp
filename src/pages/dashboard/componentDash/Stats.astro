@@ -4,13 +4,13 @@ import Stat from "../../../components/atomos/Stat.astro";
 import StatsDePrestamos from "../../../components/organismos/StatsDePrestamos.astro";
 import StatsDeMontos from "../../../components/organismos/StatsDeMontos.astro";
 import InputDate from "../../../components/atomos/InputDate";
-import { db } from "astro:db";
-import { Prestamo } from "astro:db";
-import { eq } from "astro:db";
-import { Pago } from "astro:db";
-import { Cuota } from "astro:db";
+import { prestamos as Prestamo } from "@/db/schema/prestamos.sql";
+import { pagos as Pago } from "@/db/schema/pagos.sql";
+import { cuotas as Cuota } from "@/db/schema/cuota.sql";
 import RangoFechaCuotas from "./RangoFechaCuotas";
 import RangoFechaPagos from "./RangoFechaPagos";
+import db from "@/db";
+import { eq } from "drizzle-orm";
 
 const todayValue = new Date().toLocaleDateString();
 

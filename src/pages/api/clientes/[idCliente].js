@@ -1,4 +1,6 @@
-import { Cliente, Cuota, db, eq, Pago, PagoParcial, Prestamo, User } from "astro:db";
+import db from "@/db";
+import { clientes as Cliente, cuotas as Cuota,pagos as Pago,pagoParciales as PagoParcial,prestamos  as Prestamo } from "@/db/schema";
+import { eq } from "drizzle-orm";
 
 export async function GET({ params }) {
     const { idCliente } = await params

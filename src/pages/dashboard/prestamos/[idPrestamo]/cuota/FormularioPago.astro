@@ -3,8 +3,9 @@ import Button1 from "@/components/atomos/Button1.astro";
 import FormCont from "@/components/atomos/FormCont.astro";
 import SelectedFormulario from "@/components/atomos/SelectedFormulario.astro";
 import ContenedorInputForm from "@/components/moleculas/ContenedorInputForm.astro";
-import { eq } from "astro:db";
-import { db, moraCuota } from "astro:db";
+import db from "@/db";
+import { moraCuotas } from "@/db/schema/mora.sql";
+
 
 const {
   data: { cuota, cliente, prestamo },
@@ -16,8 +17,8 @@ let tasaInteresMora = 0;
 try {
   const dataDb = await db
     .select()
-    .from(moraCuota)
-    .where(eq(moraCuota.usuarioId, id));
+    .from(moraCuotas)
+    .where(eq(moraCuotas.usuarioId, id));
   tasaInteresMora = dataDb[0].value;
 } catch (error) {
   console.log(error);

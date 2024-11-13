@@ -1,4 +1,6 @@
-import { and, db, eq, gte, lte, Pago } from "astro:db";
+import db from "@/db";
+import { pagos } from "@/db/schema/pagos.sql";
+import { and, eq, gte, lte } from "drizzle-orm";
 
 export async function GET({ params, props, request }) {
     const { userId } = await params;
@@ -12,12 +14,12 @@ export async function GET({ params, props, request }) {
     try {
       const pagosFind = await db
         .select()
-        .from(Pago)
+        .from(pagos)
         .where(
           and(
-            eq(Pago.usuarioId, userId),
-            gte(Pago.fechaPago, start),
-            lte(Pago.fechaPago, end)
+            eq(pagos.usuarioId, userId),
+            gte(pagos.fechaPago, start),
+            lte(pagos.fechaPago, end)
           )
         )
   

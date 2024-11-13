@@ -2,7 +2,7 @@
 import react from "@astrojs/react";
 import tailwind from "@astrojs/tailwind";
 import node from '@astrojs/node';
-import db from "@astrojs/db";
+// import db from "@astrojs/db";
 
 // https://astro.build/config
 export default defineConfig({
@@ -13,7 +13,10 @@ export default defineConfig({
   devToolbar:{
     enabled:false
   },
-  integrations: [react(), tailwind(), db()],
+  security:{
+    checkOrigin:true
+  },
+  integrations: [react(), tailwind()],
   output: 'server',
   adapter: node({
     mode: 'standalone'

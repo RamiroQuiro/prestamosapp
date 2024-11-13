@@ -1,4 +1,6 @@
-import { and, between, Cliente, Cuota, db, eq, gt, lte } from "astro:db";
+import db from "@/db";
+import { clientes ,cuotas} from "@/db/schema";
+import { and, eq, gt, lte } from "drizzle-orm";
 
 export async function GET({ params, props, request }) {
   const { userId } = await params;
@@ -14,30 +16,30 @@ export async function GET({ params, props, request }) {
     const cuotasDB = await db
       .select({
         cuota: {
-          id: Cuota.id,
-          prestamoId: Cuota.prestamoId,
-          clienteId: Cuota.clienteId,
-          fechaVencimiento: Cuota.fechaVencimiento,
-          monto: Cuota.monto,
-          numeroCuota: Cuota.numeroCuota,
-          pagada: Cuota.pagada,
+          id: cuotas.id,
+          prestamoId: cuotas.prestamoId,
+          clienteId: cuotas.clienteId,
+          fechaVencimiento: cuotas.fechaVencimiento,
+          monto: cuotas.monto,
+          numeroCuota: cuotas.numeroCuota,
+          pagada: cuotas.pagada,
         },
         cliente: {
-          nombre: Cliente.nombre,
-          apellido: Cliente.apellido,
+          nombre: clientes.nombre,
+          apellido: clientes.apellido,
         },
       })
-      .from(Cuota)
-      .innerJoin(Cliente, eq(Cuota.clienteId, Cliente.id))
+      .from(cuotas)
+      .innerJoin(clientes, eq(cuotas.clienteId, clientes.id))
       .where(
         and(
-          eq(Cuota.usuarioId,userId),
-          eq(Cuota.pagada, false),
-          gt(Cuota.fechaVencimiento, start),
-          lte(Cuota.fechaVencimiento, end)
+          eq(cuotas.usuarioId,userId),
+          eq(cuotas.pagada, false),
+          gt(cuotas.fechaVencimiento, start),
+          lte(cuotas.fechaVencimiento, end)
         )
       )
-      .orderBy(Cuota.fechaVencimiento, "asc");
+      .orderBy(cuotas.fechaVencimiento, "asc");
 
     const cuotasSinPagar = cuotasDB.filter((cuota) => cuota.pagada == false);
     // console.log('cuotas encontradas ->',cuotasDB);

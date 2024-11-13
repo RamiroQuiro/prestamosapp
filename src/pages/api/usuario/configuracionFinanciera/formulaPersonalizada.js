@@ -1,4 +1,6 @@
-import { db, eq, User } from "astro:db";
+import db from "@/db";
+import {  users as User } from "@/db/schema";
+import { eq } from "drizzle-orm";
 
 export async function PUT({ request }) {
   const { usuarioId, formula } = await request.json();

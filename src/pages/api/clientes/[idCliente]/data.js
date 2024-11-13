@@ -1,4 +1,9 @@
-import { Cliente, Cuota, db, eq, Pago, PagoParcial, Prestamo, User } from "astro:db";
+import db from "@/db"
+import { clientes } from "@/db/schema/clientes.sql"
+import { cuotas } from "@/db/schema/cuota.sql"
+import { pagos } from "@/db/schema/pagos.sql"
+import { pagoParciales } from "@/db/schema/pagosParcial.sql"
+import { eq } from "drizzle-orm"
 
 export async function GET({ params }) {
     const { idCliente } = await params
@@ -6,11 +11,11 @@ export async function GET({ params }) {
 
     try {
 
-        const clienteFind = await db.select().from(Cliente).where(eq(Cliente.id, idCliente))
-        const prestamosCliente = await db.select().from(Prestamo).where(eq(Prestamo.clienteId, idCliente))
-        const pagosDelCliente = await db.select().from(Pago).where(eq(Pago.clienteId, idCliente))
-        const pagosParciales = await db.select().from(PagoParcial).where(eq(PagoParcial.clienteId, idCliente))
-        const cuotasCliente=await db.select().from(Cuota).where(eq(Cuota.clienteId,idCliente))
+        const clienteFind = await db.select().from(clientes).where(eq(clientes.id, idCliente))
+        const prestamosCliente = await db.select().from(prestamos).where(eq(prestamos.clienteId, idCliente))
+        const pagosDelCliente = await db.select().from(pagos).where(eq(pagos.clienteId, idCliente))
+        const pagosParciales = await db.select().from(pagoParciales).where(eq(pagoParciales.clienteId, idCliente))
+        const cuotasCliente=await db.select().from(cuotas).where(eq(Cuota.clienteId,idCliente))
         const dataTotal = { cliente: clienteFind[0], prestamos: prestamosCliente, pagos: pagosDelCliente,cuotas:cuotasCliente, pagosParciales: pagosParciales }
         // console.log('este es el cliente encontrado',dataTotal)
 

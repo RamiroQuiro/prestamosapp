@@ -1,16 +1,6 @@
-import {
-  Cliente,
-  Cuota,
-  db,
-  eq,
-  Intereses,
-  moraCuota,
-  nCuotas,
-  Pago,
-  PagoParcial,
-  Prestamo,
-  User,
-} from "astro:db";
+import db from "@/db";
+import {intereses as Intereses,moraCuotas as moraCuota,nCuotas,} from "@/db/schema";
+import { eq } from "drizzle-orm";
 import { generateId } from "lucia";
 
 // export async function GET({ params }) {

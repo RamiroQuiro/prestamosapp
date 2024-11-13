@@ -1,8 +1,10 @@
+import db from "@/db";
+import { sessions } from "@/db/schema/sessions.sql";
+import { users } from "@/db/schema/users.sql";
 import { DrizzleSQLiteAdapter } from "@lucia-auth/adapter-drizzle";
-import { db,Session,User } from "astro:db";
 import { Lucia } from "lucia";
 
-const adapter = new DrizzleSQLiteAdapter(db as any,Session,User); // your adapter
+const adapter = new DrizzleSQLiteAdapter(db,sessions,users); // your adapter
 
 export const lucia = new Lucia(adapter, {
 	sessionCookie: {

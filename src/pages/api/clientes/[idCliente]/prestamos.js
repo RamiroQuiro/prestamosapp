@@ -1,12 +1,14 @@
-import { Cliente, Cuota, db, eq, Pago, PagoParcial, Prestamo, User } from "astro:db";
+import db from "@/db";
+import { prestamos } from "@/db/schema/prestamos.sql";
+import { eq } from "drizzle-orm";
 
 
 export async function GET({ params }) {
     const { idCliente } = await params
-    console.log(idCliente)
+    // console.log(idCliente)
 
     try {
-const prestamosDb=await db.select().from(Prestamo).where(eq(Prestamo.clienteId,idCliente))
+const prestamosDb=await db.select().from(prestamos).where(eq(prestamos.clienteId,idCliente))
 // console.log(prestamosDb)
         return new Response(
             JSON.stringify({

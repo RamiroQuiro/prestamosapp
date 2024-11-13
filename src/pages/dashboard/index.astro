@@ -1,21 +1,18 @@
 ---
-import { Prestamo } from "astro:db";
 import MainDash from "../../components/organismos/MainDash.astro";
 import Layout from "../../layouts/Layout.astro";
 import Layoutdash from "./layouts/Layoutdash.astro";
 import ChartLine from "@/pages/dashboard/componentDash/ChartLine.astro";
-import { db, User, Cliente } from "astro:db";
-import { Session } from "astro:db";
-import { Pago } from "astro:db";
 import ContenedorDiv1 from "../../components/atomos/ContenedorDiv1.astro";
 import Stats from "./componentDash/Stats.astro";
 import ContenedorClientesDash from "../../components/organismos/ContenedorClientesDash.astro";
-import { Intereses } from "astro:db";
-import { eq } from "astro:db";
+import db from "@/db";
+import { users } from "@/db/schema/users.sql";
+import { eq } from "drizzle-orm";
 
 const { user } = Astro.locals;
 
- const userInfo = (await db.select({nombre: User.nombre, apellido: User.apellido,userName:User.userName}).from(User).where(eq(User.id, user.id))).at(0)
+ const userInfo = (await db.select({nombre: users.nombre, apellido: users.apellido,usersName:users.userName}).from(users).where(eq(users.id, user.id))).at(0)
 
 
  // const clientes = await db.select().from(Cliente);

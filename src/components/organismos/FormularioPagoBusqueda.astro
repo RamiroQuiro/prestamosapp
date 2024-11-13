@@ -1,9 +1,11 @@
 ---
+import db from "@/db";
 import Titulo1 from "../atomos/Titulo1.astro";
 import ContenedorUltimasCuotas from "./ContenedorUltimasCuotas"
 import FormularioDeBusqueda from "./FormularioDeBusqueda";
-import { db, Cliente, eq } from "astro:db";
+import { eq } from "drizzle-orm";
 const { user } = Astro.locals;
+import {clientes as Cliente} from '@/db/schema/clientes.sql'
 const clientes = await db
   .select()
   .from(Cliente)

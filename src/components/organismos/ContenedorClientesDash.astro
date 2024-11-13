@@ -1,7 +1,8 @@
 ---
-import { eq } from "astro:db";
-import { Cliente } from "astro:db";
-import { db } from "astro:db";
+import db from "@/db";
+import { clientes } from "@/db/schema/clientes.sql";
+import { eq } from "drizzle-orm";
+
 
 const { user } = Astro.props;
 
@@ -10,8 +11,8 @@ let consultaClientes = [];
 try {
   consultaClientes = await db
     .select()
-    .from(Cliente)
-    .where(eq(Cliente.usuarioId, user.id));
+    .from(clientes)
+    .where(eq(clientes.usuarioId, user.id));
   //   console.log("culsont ->", consultaClientes);
   nClientes = consultaClientes.length;
 } catch (error) {

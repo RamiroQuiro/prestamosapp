@@ -1,20 +1,19 @@
 ---
-import { db } from "astro:db";
 import MainDash from "../../../../components/organismos/MainDash.astro";
 import Layoutdash from "../../layouts/Layoutdash.astro";
-import { Cliente } from "astro:db";
-import { eq } from "astro:db";
 import ContenedorDiv1 from "../../../../components/atomos/ContenedorDiv1.astro";
 import Titulo1 from "../../../../components/atomos/Titulo1.astro";
 import DatosPersonales from "./DatosPersonales";
 import ComprobantePago from "./pagos/ComprobantePago.astro";
+import { clientes } from "@/db/schema/clientes.sql";
+import db from "@/db";
 
 const { idCliente } = Astro.params;
 const {dataPago}=Astro.props
 let clienteDB;
 try {
   clienteDB = (
-    await db.select().from(Cliente).where(eq(Cliente.id, idCliente))
+    await db.select().from(clientes).where(eq(clientes.id, idCliente))
   ).at(0);
   // console.log(clienteDB);
 } catch (error) {

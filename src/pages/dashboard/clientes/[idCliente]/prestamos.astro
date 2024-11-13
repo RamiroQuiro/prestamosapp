@@ -1,12 +1,12 @@
 ---
-import { db } from "astro:db";
-import { Prestamo } from "astro:db";
-import { eq } from "astro:db";
+
 import ConfeccionTabla from "./tabla/ConfeccionTabla.astro";
 import BotoneraFiltros from "../../prestamos/prestamos/BotoneraFiltros.astro";
 import LayoutClient from "./LayoutClient.astro";
-import { Cliente } from "astro:db";
-
+import db from "@/db";
+import { clientes } from "@/db/schema/clientes.sql";
+import {prestamos as Prestamo} from '@/db/schema/prestamos.sql'
+import { eq } from "drizzle-orm";
 const { idCliente } = Astro.params;
 let prestamos;
 const { user } = Astro.locals;
@@ -14,15 +14,15 @@ try {
   prestamos = await db
     .select({
       cliente: {
-        dni: Cliente.dni,
-        nombre: Cliente.nombre,
-        apellido: Cliente.apellido,
-        direccion: Cliente.direccion,
+        dni: clientes.dni,
+        nombre: clientes.nombre,
+        apellido: clientes.apellido,
+        direccion: clientes.direccion,
       },
       prestamo: Prestamo,
     })
     .from(Prestamo)
-    .innerJoin(Cliente, eq(Prestamo.clienteId, Cliente.id))
+    .innerJoin(clientes, eq(Prestamo.clienteId, clientes.id))
     .where(eq(Prestamo.clienteId, idCliente));
 
   console.log(prestamos);

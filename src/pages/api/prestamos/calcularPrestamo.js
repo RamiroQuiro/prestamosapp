@@ -1,9 +1,10 @@
-import { and, db, eq, Intereses, User } from "astro:db";
+import { intereses  as Intereses,users as User } from "@/db/schema";
+import { and, eq } from "drizzle-orm";
 import { evaluate } from "mathjs";
 
 export async function POST({ request }) {
     const { usuarioId, importe, tasaInteres, nCuotas, modalidad } = await request.json();
-    console.log(importe,usuarioId,tasaInteres,nCuotas,modalidad)
+    // console.log(importe,usuarioId,tasaInteres,nCuotas,modalidad)
     try {
         // Obtén la fórmula personalizada y la tasa de interés del usuario
         const result = (await db

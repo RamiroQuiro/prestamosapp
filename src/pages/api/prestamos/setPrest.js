@@ -1,4 +1,5 @@
-import { Prestamo, db, Cuota, eq, User } from "astro:db";
+import db from "@/db";
+import { prestamos as Prestamo,cuotas as Cuota } from "@/db/schema";
 import { generateId } from "lucia";
 
 export async function POST({ request }) {

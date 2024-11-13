@@ -1,7 +1,7 @@
+import db from "@/db";
 import { generateHTMLComprobantePago } from "@/templatesPdf/comprobantePagoTemplate";
-import { and, Cliente, db, eq, gte, lte, Pago, User } from "astro:db";
 import puppeteer from "puppeteer";
-
+import {users as User, clientes as Cliente, pagos as Pago} from '@/db/schema'
 export async function GET({ params, props, request }) {
     const { idPago } = await params;
     try {

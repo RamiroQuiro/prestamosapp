@@ -1,12 +1,13 @@
-import { Cliente, Cuota, db, eq, Pago, PagoParcial, Prestamo, User } from "astro:db";
+import db from "@/db";
+import { users } from "@/db/schema";
+import { eq } from "drizzle-orm";
 
 export async function GET({ params }) {
     const { usuarioId } = await params
-    console.log(usua)
 
     try {
 
-       const usuarioDB=(await db.select().from(User).where(eq(User.id,usuarioId))).at(0)
+       const usuarioDB=(await db.select().from(users).where(eq(users.id,usuarioId))).at(0)
 
 
        if (!usuarioDB) {
@@ -46,8 +47,8 @@ const {usuarioId}=params
     
     try {
 
-        const updateUser=await db.update(User).set(data)
-        .where(eq(User.id, usuarioId));
+        const updateUser=await db.update(users).set(data)
+        .where(eq(users.id, usuarioId));
 
         
         return new Response(

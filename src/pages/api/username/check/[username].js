@@ -1,7 +1,8 @@
 // /pages/api/username/check.js
 
-import { db, eq, User } from "astro:db";
-import { exists } from "drizzle-orm";
+import db from "@/db";
+import { eq } from "drizzle-orm";
+import {users as User} from '@/db/schema'
 
 export async function GET({ params }) {
     const { username } = await params;
@@ -12,7 +13,7 @@ const lowerCasee=username.toLowerCase()
         const disponibleUser = (await db.select({username:User.userName}).from(User).where(eq(lowerCasee, User.userName))).at(0)
 
 
-        console.log(disponibleUser)
+        // console.log(disponibleUser)
         if (disponibleUser) {
 
             return new Response(JSON.stringify({
