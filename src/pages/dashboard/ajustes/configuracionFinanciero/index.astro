@@ -2,13 +2,10 @@
 import ContenedorDiv1 from "@/components/atomos/ContenedorDiv1.astro";
 import LayoutAjustes from "../LayoutAjustes.astro";
 import FormularioConfiguracionFinanzas from "./FormularioConfiguracionFinanzas";
-import { db } from "astro:db";
-import { User, Intereses } from "astro:db";
-import { Cliente } from "astro:db";
-import { nCuotas } from "astro:db";
-import { moraCuota } from "astro:db";
-import { eq } from "astro:db";
+import {users as User, intereses as Intereses, nCuotas, moraCuotas as moraCuota } from "@/db/schema";
 import FormulaPersonalizada from "./FormulaPersonalizada.astro";
+import db from "@/db";
+import { eq } from "drizzle-orm";
 
 const { id } = Astro.locals.user;
 

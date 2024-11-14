@@ -4,19 +4,19 @@ import { clientes } from "./clientes.sql";
 import { users } from "./users.sql";
 
 export const prestamos = sqliteTable("prestamos", {
-    id: text().primaryKey().unique(),
-    clienteId: text().references(() => clientes.id),
-    usuarioId: text().references(() => users.id),
+    id: text('id').primaryKey().unique(),
+    clienteId: text('clienteId').references(() => clientes.id),
+    usuarioId: text('usuarioId').references(() => users.id),
     montoTotal: real().notNull(),
     montoCuota: real().notNull(),
     capital: real().notNull(),
     tasaInteres: real().notNull(),
-    modalidad: text().default("mensual"),
-    nCuotas: integer({mode:'number'}).notNull(),
-    fechaInicio: integer({mode:'timestamp'}),
-    fechaFin: integer({mode:'timestamp'}),
+    modalidad: text('modalidad').default("mensual"),
+    nCuotas: integer('nCuotas',{mode:'number'}).notNull(),
+    fechaInicio: integer('fechaInicio',{mode:'timestamp'}),
+    fechaFin: integer('fechaFin',{mode:'timestamp'}),
     montoRestante: real(),
-    estado: text().default("activo"),
-    terminado: integer({mode:'boolean'}).default(false),
+    estado: text('estado').default("activo"),
+    terminado: integer('terminado',{mode:'boolean'}).default(false),
     ...timestamps
   });

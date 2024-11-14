@@ -28,7 +28,7 @@ fInicio.addEventListener("change", (e) => {
 });
 
 const unsubscribe = prestamoSimulado.subscribe((prestamoSimulado) => {
-  console.log("estamos en la parte presamos", prestamoSimulado);
+  // console.log("estamos en la parte presamos", prestamoSimulado);
   const fecha = prestamoSimulado.fechaInicio;
   const año = fecha.getFullYear();
   const mes = fecha.getMonth() + 1; // getMonth() devuelve un índice basado en 0, por lo que se suma 1

@@ -1,5 +1,4 @@
 ---
-import { db, eq, Cuota, Pago, Cliente, Prestamo, PagoParcial } from "astro:db";
 
 import ReciboPrint from "./ReciboPrint.astro";
 import Layoutdash from "../../../layouts/Layoutdash.astro";
@@ -10,7 +9,9 @@ import FormularioPago from "./FormularioPago.astro";
 import Button1 from "../../../../../components/atomos/Button1.astro";
 import { elements } from "chart.js";
 import { usuarioActivo } from "@/context/store";
-import { User } from "astro:db";
+import { users as User, cuotas as Cuota, pagos as Pago, clientes as Cliente, prestamos as Prestamo, pagoParciales as PagoParciales } from "@/db/schema";
+import db from "@/db";
+import { eq } from "drizzle-orm";
 
 const { idCuota } = Astro.params;
 let resultadoBase = {};
@@ -55,12 +56,12 @@ try {
   console.log(error);
 }
 const montoPagoParcial=pagoParciales?.reduce((acc,currentValor)=>(acc+currentValor.monto),0)
-const montoRestanteCuota=resultadoBase.cuota.monto-montoPagoParcial
+const montoRestanteCuota=resultadoBase?.cuota?.monto-montoPagoParcial
 //  console.log('montoRestante de la cuota ,',montoRestanteCuota)
 
 
  //  cambiar objeto de la cuota si hay pagos parciales
- const pagosTodos=[...pagoParciales,resultadoBase.Pago]
+ const pagosTodos=[...pagoParciales,resultadoBase?.Pago]
 // console.log('pagos todos ->',pagosTodos)
 
 ---
@@ -100,13 +101,13 @@ const montoRestanteCuota=resultadoBase.cuota.monto-montoPagoParcial
             <h3 class="font-semibold w-full mb-2 border-b">Pagos Parciales</h3>
 
             {
-              pagoParciales.length>0 ? (
+              pagoParciales?.length>0 ? (
                 <div class=" w-full overflow-hidden pb-3  flex-col text-sm  text-neutral-800 font-semibold  mr-3  h-full flex items-stretch">
                   {pagoParciales?.map((element, i) => (
                     <div class="bg-gray-100 hover:bg-gray-50/50 cursor-pointer text- w-full flex justify-start gap-4 items-center border-b  border-primary-400 px-3 py-1">
                       {" "}
-                      <p>{element.fechaPago.toLocaleDateString()}</p>
-                      <p>${" "}{element.monto.toLocaleString()}</p>
+                      <p>{element?.fechaPago.toLocaleDateString()}</p>
+                      <p>${" "}{element?.monto.toLocaleString()}</p>
                     </div>
                   ))}
                   <div class="text-white mt-2 font-bold">

@@ -1,5 +1,6 @@
 import db from "@/db";
 import { prestamos as Prestamo,cuotas as Cuota } from "@/db/schema";
+import { eq } from "drizzle-orm";
 import { generateId } from "lucia";
 
 export async function POST({ request }) {

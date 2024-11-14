@@ -6,13 +6,13 @@ import { cuotas } from "./cuota.sql";
 
 
 export const pagoParciales = sqliteTable("pagoParciales", {
-    id: text().primaryKey().unique(),
-    cuotaId: text().references(() => cuotas.id),
-    prestamoId: text().references(() => prestamos.id),
-    clienteId: text().references(() => clientes.id),
-    usuarioId: text().references(() => users.id),
+    id: text('id').primaryKey().unique(),
+    cuotaId: text('cuotaId').references(() => cuotas.id),
+    prestamoId: text('prestamoId').references(() => prestamos.id),
+    clienteId: text('clienteId').references(() => clientes.id),
+    usuarioId: text('usuarioId').references(() => users.id),
     monto: real().notNull(),
-    fechaPago: integer({mode:'timestamp'}),
-    metodoPago: text(),
-    lugarPago: text(),
+    fechaPago: integer('fechaPago',{mode:'timestamp'}),
+    metodoPago: text('metodoPago'),
+    lugarPago: text('lugarPago'),
   });

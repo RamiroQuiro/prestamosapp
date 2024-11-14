@@ -95,7 +95,7 @@ export default function DatosPersonales({ cliente }) {
                         label={'Pais:'} valueInput={formulario.pais}
                     />
                     <InputsDatos
-                        label={'Fecha Creación:'} valueInput={formulario.fechaCreacion.toLocaleString()}
+                        label={'Fecha Creación:'} valueInput={formulario?.fechaCreacion?.toLocaleString()}
                     />
 
 

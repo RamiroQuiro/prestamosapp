@@ -62,14 +62,14 @@ const metodoPagos = [
       name="nombre"
       styleInput=""
       disabled={true}
-      value={cliente.nombre}
+      value={cliente?.nombre}
     />
     <ContenedorInputForm
       label="apellido"
       type="text"
       name="apellido"
       disabled={true}
-      value={cliente.apellido}
+      value={cliente?.apellido}
     />
   </div>
   <div class="flex md:flex-row items-center gap-2 w-full justify-normal">
@@ -78,19 +78,19 @@ const metodoPagos = [
       type="text"
       name="dni"
       disabled={true}
-      value={cliente.dni}
+      value={cliente?.dni}
     />
     <ContenedorInputForm
       label="Id Prestamo"
       type="text"
       name="dni"
       disabled={true}
-      value={prestamo.id}
+      value={prestamo?.id}
     />
   </div>
   <div
-    data-fechaVencimiento={cuota.fechaVencimiento}
-    data-montoCuota={montoRestanteCuota == 0 ? cuota.monto : montoRestanteCuota}
+    data-fechaVencimiento={cuota?.fechaVencimiento}
+    data-montoCuota={montoRestanteCuota == 0 ? cuota?.monto : montoRestanteCuota}
     id="fechaVencimiento"
     class="flex md:flex-row items-center gap-2 w-full justify-normal"
   >
@@ -99,14 +99,14 @@ const metodoPagos = [
       type="text"
       name="montoCuota"
       disabled={true}
-      value={`$ ${montoRestanteCuota == 0 ? cuota.monto.toLocaleString() : montoRestanteCuota.toLocaleString()}`}
+      value={`$ ${montoRestanteCuota == 0 ? cuota?.monto?.toLocaleString() : montoRestanteCuota?.toLocaleString()}`}
     />
     <ContenedorInputForm
       disabled={true}
       label="Fecha de vencimiento"
       type="text"
       name="fechaVencimiento"
-      value={cuota.fechaVencimiento.toLocaleDateString()}
+      value={cuota?.fechaVencimiento?.toLocaleDateString()}
     />
   </div>
 

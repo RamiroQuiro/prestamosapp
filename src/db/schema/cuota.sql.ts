@@ -10,10 +10,10 @@ export const cuotas = sqliteTable("cuotas", {
     usuarioId: text('usuarioId').references(() => users.id),
     numeroCuota: integer({mode:'number'}).notNull(),
     fechaVencimiento: integer({mode:'timestamp'}),
-    mora: integer({mode:'boolean'}).default(false),
+    mora: integer('mora',{mode:'boolean'}).default(false),
     montoMora: real().default(0),
     monto: real().notNull(),
     montoPagado: real().default(0),
-    pagada: integer({mode:'boolean'}).default(false),
-    fechaPago: integer({mode:'timestamp'}),
+    pagada: integer('pagada',{mode:'boolean'}).default(false),
+    fechaPago: integer('fechaPago',{mode:'timestamp'}),
   });

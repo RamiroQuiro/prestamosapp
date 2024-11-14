@@ -1,11 +1,8 @@
 ---
-import { db } from "astro:db";
-import { Cliente } from "astro:db";
-import { Prestamo } from "astro:db";
-import { Pago } from "astro:db";
-import { PagoParcial } from "astro:db";
-import { Cuota } from "astro:db";
-import { eq } from "astro:db";
+
+import db from '@/db';
+import {clientes as Cliente, prestamos as Prestamo, pagoParciales as PagoParcial, pagos as Pago} from '@/db/schema'
+import { eq } from 'drizzle-orm';
 const { idCliente } = Astro.props;
 
 let totalPrestado, totalPagado, prestamosMensuales, pagosMensuales;
@@ -114,7 +111,7 @@ try {
   <div class="flex text-sm gap-2 mb-3">
     <h3 class="text-sm">Total de Fondos </h3>
     <span class="font-semibold">
-      ${totalPrestado.toLocaleString()}
+      ${totalPrestado?.toLocaleString()}
     </span>
   </div>
 

@@ -1,5 +1,6 @@
 import db from "@/db";
 import { prestamos as Prestamo,clientes as Cliente} from "@/db/schema";
+import { eq, sql } from "drizzle-orm";
 
 export async function GET({ params }) {
     const { usuarioId } = params;

@@ -2,10 +2,9 @@
 import PrestanosApp from "@/components/atomos/PrestanosApp.astro";
 import FormularioSolicitante from "./FormularioSolicitud";
 import Layout from "@/layouts/Layout.astro";
-import { eq } from "astro:db";
-import { exists } from "astro:db";
-import { User } from "astro:db";
-import { db } from "astro:db";
+import {users as User} from '@/db/schema'
+import db from "@/db";
+import { eq } from "drizzle-orm";
 const { username } = Astro.params;
 let usuarioDB={}
 try {

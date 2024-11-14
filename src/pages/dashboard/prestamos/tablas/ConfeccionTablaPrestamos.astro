@@ -1,12 +1,8 @@
 ---
-import { db } from "astro:db";
-import { Prestamo } from "astro:db";
-import { eq } from "astro:db";
-import { Cliente } from "astro:db";
+import {users as User, prestamos as Prestamo , clientes as Cliente} from "@/db/schema";
 import TablaPrestamos from "./TablaPrestamos";
-import { asc } from "astro:db";
-import { desc } from "astro:db";
-import { User } from "astro:db";
+import db from "@/db";
+import { desc, eq } from "drizzle-orm";
 let prestamos = [];
 let arrayBody = [];
 let usuario=[]

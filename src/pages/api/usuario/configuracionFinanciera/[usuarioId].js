@@ -3,45 +3,12 @@ import {intereses as Intereses,moraCuotas as moraCuota,nCuotas,} from "@/db/sche
 import { eq } from "drizzle-orm";
 import { generateId } from "lucia";
 
-// export async function GET({ params }) {
-//     const { usuarioId } = await params
-//     console.log(usua)
-
-//     try {
-
-//        const usuarioDB=(await db.select().from(Intereses).where(eq(User.id,usuarioId))).at(0)
-//        if (!usuarioDB) {
-//         return new Response(
-//             JSON.stringify({
-//           msg:'no se encontro el usuario'
-//             },{
-//                 status:400
-//             })
-//         );
-//        }
-
-//         return new Response(
-//             JSON.stringify({
-//                 data: dataTotal,
-//             })
-//         );
-//     } catch (error) {
-//         console.log(error)
-//         return new Response(
-//             JSON.stringify({
-//                 data: "error",
-//             }, {
-//                 code: 404
-//             })
-//         );
-//     }
-// }
 
 export async function PUT({ params, request }) {
   const data = await request.json();
   const { usuarioId } = params;
 
-  console.log(data);
+  // console.log(data);
   try {
     if (data.mora) {
       const id = generateId(15);
@@ -89,7 +56,7 @@ export async function PUT({ params, request }) {
 export async function POST({ params, request }) {
   const data = await request.json();
   const { usuarioId } = params;
-
+console.log('data  ->',data)
   try {
     if (data.interes) {
       const id = generateId(15);
@@ -111,7 +78,7 @@ export async function POST({ params, request }) {
       const id = generateId(15);
       const updateUser = await db.insert(nCuotas).values({
         id,
-        value: data.nCuotas,
+        value: Number(data.nCuotas),
         usuarioId,
       });
     }
@@ -140,7 +107,6 @@ export async function DELETE({ request, params }) {
   const { data } = await request.json();
   const { usuarioId } = params;
 
-  console.log(data);
 
   try {
     if (data.interes) {

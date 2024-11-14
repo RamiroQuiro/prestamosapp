@@ -1,11 +1,8 @@
 ---
-import { db } from "astro:db";
+import db from "@/db";
 import TablaPagoCliente from "./TablaPagoCliente";
-import { Prestamo } from "astro:db";
-import { eq } from "astro:db";
-import { Pago } from "astro:db";
-import { PagoParcial } from "astro:db";
-import { Cuota } from "astro:db";
+import {pagos as  Pago , pagoParciales as PagoParcial} from "@/db/schema";
+import { eq } from "drizzle-orm";
 
 const { id } = Astro.locals.user;
 const { idCliente } = Astro.params;

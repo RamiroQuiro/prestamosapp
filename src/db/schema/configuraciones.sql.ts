@@ -3,11 +3,11 @@ import timestamps from "./date.helpers";
 import { users } from "./users.sql";
 
 export const configuraciones = sqliteTable("configuraciones", {
-    id: text().primaryKey().unique(),
-    usuarioId: text().references(() => users.id),
+    id: text('id').primaryKey().unique(),
+    usuarioId: text('usuarioId').references(() => users.id),
     tasaInteres: real().notNull(),
-    periodos: integer({mode:'number'}).notNull(),
-    numeroCuotas: integer({mode:'number'}).notNull(),
+    periodos: integer('periodos',{mode:'number'}).notNull(),
+    numeroCuotas: integer('numeroCuotas',{mode:'number'}).notNull(),
     ...timestamps
   });
   

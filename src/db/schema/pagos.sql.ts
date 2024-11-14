@@ -5,14 +5,14 @@ import { clientes } from "./clientes.sql";
 import { cuotas } from "./cuota.sql";
 
 export const pagos = sqliteTable("pagos", {
-  id: text().primaryKey().unique(),
-    prestamoId: text().references(() => prestamos.id),
-    clienteId: text().references(() => clientes.id),
-    usuarioId: text().references(() => users.id),
-    cuotaId: text().references(() => cuotas.id),
+  id: text('id').primaryKey().unique(),
+    prestamoId: text('prestamoId').references(() => prestamos.id),
+    clienteId: text('clienteId').references(() => clientes.id),
+    usuarioId: text('usuarioId').references(() => users.id),
+    cuotaId: text('cuotaId').references(() => cuotas.id),
     monto: real().notNull(),
-    estado: text().notNull(),
-    fechaPago: integer({mode:'timestamp'}),
-    metodoPago: text(),
-    lugarPago: text(),
+    estado: text('estado').notNull(),
+    fechaPago: integer('fechaPago',{mode:'timestamp'}),
+    metodoPago: text('metodoPago'),
+    lugarPago: text('lugarPago'),
   });

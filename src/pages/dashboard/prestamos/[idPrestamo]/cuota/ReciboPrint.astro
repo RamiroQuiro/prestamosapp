@@ -31,14 +31,14 @@ const fechaVencimiento = formatHora(data?.cuota?.fechaVencimiento);
   >
     <div class="flex items-start justify-normal gap-5">
       <p class="text-lg font-semibold capitalize">
-        {data?.cliente?.nombre + " " + data?.cliente.apellido}
+        {data?.cliente?.nombre + " " + data?.cliente?.apellido}
       </p>
-      <p class="text-lg font-semibold capitalize">DNI: {data.cliente.dni}</p>
+      <p class="text-lg font-semibold capitalize">DNI: {data.clientes?.dni}</p>
     </div>
     <div class="flex items-start justify-normal gap-5">
-      <p class="text-sm italic">{data.cliente.direccion}</p>
+      <p class="text-sm italic">{data.clientes?.direccion}</p>
       <p class="text-sm italic">
-        {data.cliente.ciudad + " | " + data?.cliente?.provincia}
+        {data.clientes?.ciudad + " | " + data?.clientes?.provincia}
       </p>
     </div>
   </div>
@@ -69,9 +69,9 @@ const fechaVencimiento = formatHora(data?.cuota?.fechaVencimiento);
   </div>
   <div class="flex items-center justify-between w-full py-4 border-b">
     <p
-      class={`${data?.cuota.pagada ? "text-green-600" : "text-red-500"} text-xl font-semibold w-1/2 capitalize border-r-2`}
+      class={`${data?.cuota?.pagada ? "text-green-600" : "text-red-500"} text-xl font-semibold w-1/2 capitalize border-r-2`}
     >
-      {data?.cuota.pagada ? "Pagado" : "Impago"}
+      {data?.cuota?.pagada ? "Pagado" : "Impago"}
     </p>
     <div class="text-end">
       <div class="flex items-center justify-end gap-2">

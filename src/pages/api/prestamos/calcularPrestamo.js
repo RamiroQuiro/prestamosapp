@@ -1,3 +1,4 @@
+import db from "@/db";
 import { intereses  as Intereses,users as User } from "@/db/schema";
 import { and, eq } from "drizzle-orm";
 import { evaluate } from "mathjs";

@@ -4,8 +4,8 @@ import timestamps from "./date.helpers";
 import { sqliteTable, text } from "drizzle-orm/sqlite-core";
 
 export const registroActividades = sqliteTable("registroActividades", {
-    id: text().primaryKey().unique(),
-    usuarioId: text().references(() => users.id),
-    actividad: text().notNull(),
+    id: text('id').primaryKey().unique(),
+    usuarioId: text('usuarioId').references(() => users.id),
+    actividad: text('actividad').notNull(),
     ... timestamps,
   });

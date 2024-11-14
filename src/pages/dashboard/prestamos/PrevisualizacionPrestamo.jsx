@@ -40,7 +40,7 @@ export default function PrevisualizacionPrestamo() {
     let cabecera = { usuario: { id: usuarioId }, cliente: clienteSelect.clientSelect };
 
     //   console.log(clienteSelect)
-      console.log(prestamosEnContexto)
+    //   console.log(prestamosEnContexto)
     return (
         <div className='p-2 flex relative flex-col items-start justify-normal'>
             <div className='flex items-start w-full mt-6 my-3 justify-between'>

@@ -1,9 +1,9 @@
 ---
-import { db } from 'astro:db';
 import DatosPersonales from './DatosPersonales'
-import { Cliente } from 'astro:db';
-import { eq } from 'astro:db';
+import { clientes as Cliente } from '@/db/schema';
 import LayoutClient from './LayoutClient.astro';
+import db from '@/db';
+import { eq } from 'drizzle-orm';
 const { idCliente } = Astro.params;
 
 let clienteDB;
