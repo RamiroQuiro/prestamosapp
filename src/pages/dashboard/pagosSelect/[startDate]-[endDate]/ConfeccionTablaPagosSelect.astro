@@ -1,6 +1,8 @@
 ---
-import { db,eq,Cliente,Cuota } from "astro:db";
+import { clientes as Cliente,cuotas as Cuota } from "@/db/schema";
 import TablaPagoSelect from "./TablaPagoSelect";
+import db from "@/db";
+import { eq } from "drizzle-orm";
 
 const { cuotasSeleccionadas } = Astro.props;
 const { id } = Astro.locals.user;

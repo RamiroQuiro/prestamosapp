@@ -13,16 +13,8 @@ import { eq } from "drizzle-orm";
 const { user } = Astro.locals;
 
  const userInfo = (await db.select({nombre: users.nombre, apellido: users.apellido,usersName:users.userName}).from(users).where(eq(users.id, user.id))).at(0)
+console.log('usuario info ->',userInfo)
 
-
- // const clientes = await db.select().from(Cliente);
-// const prestamos = await db.select().from(Prestamo);
-// const sesiones = await db.select().from(Session);
-// const pagos = await db.select().from(Pago);
-// console.log("prestamos ->", prestamos);
-// console.log(' datos del usuario activo ->',userInfo)
-// console.log(local)
-// console.log(pagos)
 ---
 
 <Layoutdash userData={userInfo} title="Bienvenidos a PrestamosAPP">

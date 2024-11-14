@@ -30,7 +30,7 @@ export const formatHora = (date) => {
 try {
   const res = await fetch(`${Astro.url.origin}/api/prestamos/${idPrestamo}`);
   const data = await res.json();
-  // console.log(data)
+  console.log(data)
   
   infoData.prestamo=data.data.prestamo.prestamo
   infoData.cliente=data.data.prestamo.cliente

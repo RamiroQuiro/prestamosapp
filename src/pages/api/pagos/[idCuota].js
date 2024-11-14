@@ -1,11 +1,12 @@
 import db from "@/db";
 import { cuotas, pagoParciales, pagos } from "@/db/schema";
+import { eq } from "drizzle-orm";
 import { generateId } from "lucia";
 
 export async function POST({ params, request }) {
   const { idCuota } = params;
   const { data } = await request.json();
-// console.log(data)
+console.log(data)
   try {
     // Buscar la cuota en la base de datos
     const cuotaFind = (

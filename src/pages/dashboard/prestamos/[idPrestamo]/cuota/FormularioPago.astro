@@ -5,6 +5,7 @@ import SelectedFormulario from "@/components/atomos/SelectedFormulario.astro";
 import ContenedorInputForm from "@/components/moleculas/ContenedorInputForm.astro";
 import db from "@/db";
 import { moraCuotas } from "@/db/schema/mora.sql";
+import { eq } from "drizzle-orm";
 
 
 const {
@@ -177,7 +178,7 @@ const metodoPagos = [
   formData.forEach((value, key) => {
     data[key] = value;
   });
-  // console.log("formulario data ->", data);
+  console.log("formulario data ->", montoTotal);
 
   montoTotal.addEventListener("input", (e) => {
     const cursorPos = e.target.selectionStart;
@@ -234,8 +235,11 @@ const metodoPagos = [
     if (valor.includes("$")) {
       valor = valor.trim().split("$")[1]
     }
-    valor = Number(valor); // Convierte el valor a número después de limpiar
-console.log(valor)
+    valor = valor.replace(/\./g, "").replace(",", ".");
+
+// Paso 3: Convertir el valor a número
+valor = Number(valor);
+
     // Verifica que el valor sea un número válido
     if (isNaN(valor)) {
       showToast("Monto inválido. Por favor, verifique el valor ingresado.");

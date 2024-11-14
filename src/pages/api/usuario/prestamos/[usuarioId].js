@@ -1,5 +1,5 @@
 import db from "@/db";
-import { prestamos as Prestamo,clientes as Cliente} from "@/db/schema";
+import { prestamos as Prestamo,clientes as Cliente,pagos as Pago} from "@/db/schema";
 import { eq, sql } from "drizzle-orm";
 
 export async function GET({ params }) {
@@ -15,7 +15,6 @@ export async function GET({ params }) {
         .from(Prestamo)
         .where(eq(Prestamo.usuarioId, usuarioId))
         .innerJoin(Cliente, eq(Cliente.id, Prestamo.clienteId));
-
         if (prestamosFind.length === 0) {
             return new Response(JSON.stringify({
                 status: 400,
@@ -34,7 +33,7 @@ export async function GET({ params }) {
 
         // Consulta para obtener el capital prestado por mes en los últimos seis meses
         const capitalPorMes = await db.select({
-            mes: sql`strftime('%Y-%m', ${Prestamo.fechaInicio})`.as('mes'),
+            mes: sql`strftime('%Y-%m', ${Prestamo.fechaInicio})`,
             capitalPrestado: sql`SUM(${Prestamo.montoTotal})`.as('capitalPrestado')
         })
         .from(Prestamo)
@@ -45,6 +44,7 @@ export async function GET({ params }) {
         .groupBy('mes')
         .orderBy('mes', 'asc');
 
+        console.log('capital por mes', capitalPorMes)
         // Consulta para obtener los cobros por mes en los últimos seis meses
         const cobrosPorMes = await db.select({
             mes: sql`strftime('%Y-%m', ${Pago.fechaPago})`.as('mes'),

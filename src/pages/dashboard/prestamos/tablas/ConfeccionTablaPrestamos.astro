@@ -7,7 +7,6 @@ let prestamos = [];
 let arrayBody = [];
 let usuario=[]
 const {id}=Astro.locals.user
-const {idPrestamo}=Astro.params
 
 try {
 usuario=await db.select().from(User).where(eq(User.id,id))
@@ -15,19 +14,19 @@ usuario=await db.select().from(User).where(eq(User.id,id))
     .select()
     .from(Prestamo)
     .where(eq(Prestamo.usuarioId, id))
-    .innerJoin(Cliente, eq(Prestamo.clienteId, Cliente.id)).orderBy(desc(Prestamo.fechaCreacion));
+    .innerJoin(Cliente, eq(Prestamo.clienteId, Cliente.id))
 // console.log(prestamos)
   arrayBody = prestamos.map((element) => {
     return {
-      href:`/dashboard/prestamos/${element.Prestamo.id}`,
-      id:element?.Prestamo.id,
-      cliente: element?.Cliente.nombre + ' '+ element?.Cliente.apellido,
-      montoCuota: `$ ${element?.Prestamo?.montoCuota.toLocaleString()}`,
-      nCuotas: element?.Prestamo.nCuotas,
-      montoTotal:`$ ${ element?.Prestamo.montoTotal.toLocaleString()}`,
-      fechaVencimiento: element?.Prestamo.fechaFin,
-      tasaInteres: `${element?.Prestamo.tasaInteres}%`,
-      estado:element?.Prestamo.estado
+      href:`/dashboard/prestamos/${element.prestamos.id}`,
+      id:element?.prestamos.id,
+      cliente: element?.clientes.nombre + ' '+ element?.clientes.apellido,
+      montoCuota: `$ ${element?.prestamos?.montoCuota.toLocaleString()}`,
+      nCuotas: element?.prestamos.nCuotas,
+      montoTotal:`$ ${ element?.prestamos.montoTotal.toLocaleString()}`,
+      fechaVencimiento: element?.prestamos.fechaFin,
+      tasaInteres: `${element?.prestamos.tasaInteres}%`,
+      estado:element?.prestamos.estado
     };
   });
 } catch (error) {

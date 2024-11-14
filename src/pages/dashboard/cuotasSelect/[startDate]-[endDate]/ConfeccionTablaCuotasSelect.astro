@@ -1,6 +1,7 @@
 ---
-import { db,eq,Cliente,Cuota } from "astro:db";
+import { clientes as Cliente} from "@/db/schema";
 import TablaCuotaSelect from "./TablaCuotaSelect";
+import db from "@/db";
 
 const { cuotasSeleccionadas } = Astro.props;
 const { id } = Astro.locals.user;

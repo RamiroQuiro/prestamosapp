@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
 import flatpickr from "flatpickr";
 import "flatpickr/dist/flatpickr.min.css";
-import { rangoCuotasSelect } from "../../../context/store";
 
 export default function RangoFechaPagos({userId}) {
   let hoy = new Date().toISOString().split('T')[0];
+
   const [startDate, setStartDate] = useState(hoy);
   const [endDate, setEndDate] = useState(hoy);
   const [dataResult, setDataResult] = useState(null)

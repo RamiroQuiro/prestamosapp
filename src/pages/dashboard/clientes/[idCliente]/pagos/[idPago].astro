@@ -1,14 +1,10 @@
 ---
-import { db } from "astro:db";
 import LayoutClient from "../LayoutClient.astro";
 import ComprobantePago from "./ComprobantePago.astro";
-import { eq } from "astro:db";
-import { Pago } from "astro:db";
-import { User } from "astro:db";
-import { Cliente } from "astro:db";
+import { pagos as Pago, users as User, clientes as Cliente } from "@/db/schema";
 import Button1 from "@/components/atomos/Button1.astro";
-import ButtonPdf from "@/components/atomos/ButtonPdf";
-const { idCliente } = Astro.params;
+import db from "@/db";
+import { eq } from "drizzle-orm";
 
 const { idPago } = Astro.params;
 
