@@ -19,7 +19,7 @@ export default function SubNavDash({ pathname, idPrestamo, idCliente, dataClient
         )
     } else if (pathname.startsWith('/dashboard')) {
         return (
-            <div className='flex items-center justify-start gap-4  w-full px-5'>
+            <div className='flex items-center justify-start gap-4  w-full overflow-hidden px-0.5 md:px-5'>
                 <div className='text-sm font-thin capitalize rounded-lg px-2 py-1  duration-200 '> 👋 {userData?.nombre}</div>
 
             </div>

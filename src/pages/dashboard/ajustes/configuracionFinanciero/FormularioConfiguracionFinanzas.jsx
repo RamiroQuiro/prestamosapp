@@ -119,7 +119,7 @@ export default function FormularioConfiguracionFinanzas({
   return (
     <div className="flex w-full gap-2 flex-col text-sm">
       <div className="flex flex-wrap w-full items-start justify-start gap-y-1 500 flex-col ">
-        <div className="flex items-center justify-start gap-3 my-3">
+        <div className="flex items-center flex-wrap justify-start gap-3 my-3">
           <span className="font-semibold">Tasa de Interes :</span>
           <div className="flex items-center text-xs justify-start gap-2">
             <div className="border-primary-100/50 mr-2 bg-gray-100 border rounded p-1.5 m-auto relative">
@@ -166,17 +166,14 @@ export default function FormularioConfiguracionFinanzas({
           </div>
         </div>
 
-        <div className="flex items-center justify-start gap-3 my-3">
+        <div className="flex items-center flex-wrap justify-start gap-3 my-3">
           <span className="font-semibold">Numero de Cuotas :</span>
-          <div className="flex items-center text-xs justify-start gap-2">
+          <div className="flex items-center text-xs justify-start flex-wrap gap-2">
             <div className="border-primary-100/50 mr-2 bg-gray-100 border w-7 flex rounded p-1.5 m-auto relative ">
               <span className="w-full text-center"> 3</span>
             </div>
             <div className="border-primary-100/50 mr-2 bg-gray-100 border w-7 flex rounded p-1.5 m-auto relative">
               <span className="w-full text-center"> 6</span>
-            </div>
-            <div className="border-primary-100/50 mr-2 bg-gray-100 border w-7 flex rounded p-1.5 m-auto relative">
-              <span className="w-full text-center"> 9</span>
             </div>
             <div className="border-primary-100/50 mr-2 bg-gray-100 border w-7 flex rounded p-1.5 m-auto relative">
               <span className="w-full text-center"> 12</span>

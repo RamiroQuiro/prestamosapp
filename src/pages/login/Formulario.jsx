@@ -40,10 +40,15 @@ export default function FormularioLogin() {
                     password: formulario.password
                 }), // Reemplazar 'nuevoEstado' con el nuevo estado deseado
             });
-            // console.log(fetiiching)
             const dataRes = await fetiiching.json();
+            // console.log(dataRes)
             if (dataRes.status == 200) {
                 window.location.href = '/dashboard'
+                loader(false)
+            }
+            if (dataRes.status == 400) {
+                showToast(dataRes.data,
+                    { background: 'bg-red-600' })
                 loader(false)
             }
             if (dataRes.status == 401) {

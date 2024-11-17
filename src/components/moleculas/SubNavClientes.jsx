@@ -27,7 +27,7 @@ export default function SubNavClientes({ idClients, pathname, dataCliente }) {
   ]
 
   return (
-    <div className='flex items-center justify-start gap-4  w-full px-5'>
+    <div className='flex items-center  justify-start gap-4  w-full px-0.5 md:px-5'>
       <LinkSubMenu
         href={links[0].href}
         isActive={links[0].href.toLowerCase().includes(pathname.toLowerCase())}

@@ -34,7 +34,7 @@ export async function POST({
   // Hacemos comapracion  hash de la contraseña
   if (!await bcrypt.compare(password, findUser.password) ) {
     return new Response(JSON.stringify({
-        message: 'contraseña incorrecta',
+      data: 'contraseña incorrecta',
         status: 402
     }));
 } 
