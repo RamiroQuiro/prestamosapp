@@ -5,13 +5,15 @@ const { id, formula } = Astro.props;
 <div class="w- flex flex-col b">
   {
     formula && (
+<div class="flex items-start justify-normal w-full md:flex-row flex-col">
       <p class="my-2 capitalize text-sm">
         esta es tu formula actual:{" "}
-        <span class="ml-2 font-semibold  lowercase bg-gray-100 px-4 py-1">
+      </p>
+        <span class="md:ml-2 font-semibold  lowercase bg-gray-100 px-4 py-1">
           {formula}
         </span>
-      </p>
-    )
+</div>  
+  )
   }
 
   <input
@@ -33,6 +35,13 @@ const { id, formula } = Astro.props;
       class="bg-orange-500 text-white font-bold text-xs rounded hover:bg-orange-600 duration-300 px-2 py-1"
       >Resetar Formula</button
     >
+  </div>
+  <div class="text-red-500 font-semibold md:my-1 p-2 border border-red-400 rounded my-3">
+    <p>
+      Cuando ingrese una formula personalizada, siempre se debera usar las
+      variables como capital; tasaInteres; cuotas; saldoPendiente; n. No
+      necesariamnete se necesita obligatoriamente todas las variables
+    </p>
   </div>
   <div class="my-2 border roundesd p-4">
     <span class="text-sm font-semibold"
@@ -104,13 +113,7 @@ const { id, formula } = Astro.props;
         </p>
       </div>
     </div>
-    <div class="text-red-500 font-semibold my-1">
-      <p>
-        Cuando ingrese una formula personalizada, siempre se debera usar las
-        variables como capital; tasaInteres; cuotas; saldoPendiente; n. No
-        necesariamnete se necesita obligatoriamente todas las variables
-      </p>
-    </div>
+   
   </div>
 </div>
 

@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { loader } from '@/components/loader/showLoader';
 
-export default function UsernameInput({ value, name, onChange,setEsValido,isThisName }) {
+export default function UsernameInput({ value, name, onChange, setEsValido, isThisName }) {
     const [username, setUsername] = useState(value);
     const [isAvailable, setIsAvailable] = useState(false);
     const [checking, setChecking] = useState(false);
@@ -50,36 +50,36 @@ export default function UsernameInput({ value, name, onChange,setEsValido,isThis
 
     return (
         <div className="w-full">
-          <div className='w-full flex items-center gap-2 justify-start'>
-          <div className='w-full flex items-center gap-2 justify-start'>
-          <label className="block mb-1">Username:</label>
-            <input
-                name={name}
-                type="text"
-                className={`border-b px-2 w-full rounded-md valid:ring-0 py-0.5  outline-none   focus:outline-none ${checking ? 'border-yellow-500 ' : isThisName? 'border-primary-100': isAvailable ? 'border-green-500 bg-green-400/20' : 'border-red-500 bg-red-500/30 '}`}
-                value={username}
-                onChange={handleUsernameChange}
-            />
-          </div>
-          <a 
-          href={`/publicSites/${value}`}
-          target='_blank'
-          className='text-xs w-1/12 text-center border rounded-md py-1 cursor-pointer hover:bg-primary-100/50 duration-150'>
-            ir 🚀
-          </a>
-          </div>
-          {isThisName&&(
+            <div className='w-full flex items-center gap-2 justify-start'>
+                <div className='w-full flex items-center gap-2 justify-start'>
+                    <label className="block mb-1">Username:</label>
+                    <input
+                        name={name}
+                        type="text"
+                        className={`border-b px-2 w-full rounded-md valid:ring-0 py-0.5  outline-none   focus:outline-none ${checking ? 'border-yellow-500 ' : isThisName ? 'border-primary-100' : isAvailable ? 'border-green-500 bg-green-400/20' : 'border-red-500 bg-red-500/30 '}`}
+                        value={username}
+                        onChange={handleUsernameChange}
+                    />
+                </div>
+                <a
+                    href={`/publicSites/${value}`}
+                    target='_blank'
+                    className='text-xs md:w-1/12 w-2/12 text-center border rounded-md py-1 cursor-pointer hover:bg-primary-100/50 duration-150'>
+                    ir 🚀
+                </a>
+            </div>
+            {isThisName && (
                 <span className="text-primary-100 text-sm">Este nombre de usuario ya lo estás usando</span>
             )}
             {checking && (
                 <span className="text-yellow-500 text-sm">Verificando...</span>
             )}
-        
+
             {!checking && isAvailable && username?.length >= 3 && (
                 <span className="text-green-500 text-sm">✓ Nombre de usuario disponible</span>
             )}
-         
-            {!checking && !isAvailable && username?.length >= 3 &&  !isThisName&&(
+
+            {!checking && !isAvailable && username?.length >= 3 && !isThisName && (
                 <span className="text-red-500 text-sm">✗ Este nombre de usuario ya está en uso</span>
             )}
             {error && <span className="text-red-500 text-sm">{error}</span>}
