@@ -194,7 +194,7 @@ const [montoTotal, setMontoTotal] = useState('')
           </div>
           <button
             onClick={handleClick}
-            className="bg-blue-400 px-2 py-1 mt-2 w-auto text-white text-xs md:text-sm font-ssemibold mb-4 rounded shadow hover:bg-blue-600 duration-300"
+            className="bg-blue-400 px-2 md:py-1 py-2 mt-2 md:w-auto w-full text-white text-xs md:text-sm font-ssemibold mb-4 rounded shadow hover:bg-blue-600 duration-300"
           >
             Simular
           </button>

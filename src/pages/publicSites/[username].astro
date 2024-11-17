@@ -2,11 +2,11 @@
 import PrestanosApp from "@/components/atomos/PrestanosApp.astro";
 import FormularioSolicitante from "./FormularioSolicitud";
 import Layout from "@/layouts/Layout.astro";
-import {users as User} from '@/db/schema'
+import { users as User } from "@/db/schema";
 import db from "@/db";
 import { eq } from "drizzle-orm";
 const { username } = Astro.params;
-let usuarioDB={}
+let usuarioDB = {};
 try {
   const isExiste = (
     await db
@@ -14,9 +14,9 @@ try {
         username: User.userName,
         nombre: User.nombre,
         apellido: User.apellido,
-        celular:User.celular,
-		dni:User.dni,
-		email:User.email,
+        celular: User.celular,
+        dni: User.dni,
+        email: User.email,
         id: User.id,
       })
       .from(User)
@@ -25,7 +25,7 @@ try {
   if (!isExiste) {
     return Astro.redirect("/406");
   }
-  usuarioDB=isExiste
+  usuarioDB = isExiste;
 } catch (error) {
   console.log(error);
 }
@@ -35,19 +35,18 @@ try {
   <nav
     class="w-full bg-white h-20 mb-10 bordser-b shadow flex items-center justify-evenly"
   >
-<a class="cursor-pointer" href="/"  >  <PrestanosApp/></a>
-    <div class="border-y flex flex-col items-center px-3 rounded-b  ">
-		<p class="capitalize tracking-wider ">{username}</p>
-		<div class="flex  gap-3 text-xs w-full text-center">
-			<p>{usuarioDB?.nombre} {' '}{usuarioDB?.apellido}</p>
-			<p>{usuarioDB?.email}</p>
-		</div>
-	</div>
+    <a class="cursor-pointer" href="/"> <PrestanosApp /></a>
+    <div class="border-y flex flex-col items-center px-3 rounded-b">
+      <p class="capitalize tracking-wider">{username}</p>
+      <div class="flex gap-3 text-xs w-full text-center">
+        <p>{usuarioDB?.nombre} {" "}{usuarioDB?.apellido}</p>
+        <p>{usuarioDB?.email}</p>
+      </div>
+    </div>
   </nav>
-  <main class="flex items-stretch justify-evenly w-full h-full">
-	  
+  <main class="flexmd:flex-row flex-col items-stretch justify-evenly w-full h-full">
     <div
-      class="border w-1/3 border-white bg-gray-50/50 rounded flex flex-col p-5"
+      class="border md:w-1/3 border-white bg-gray-50/50 rounded flex flex-col p-5"
     >
       <h2
         class="uppercase border-b bg-white px-1 py-2 border-primary-100 rounded-b font-semibold text-primary-400"
@@ -57,22 +56,31 @@ try {
 
       <div class="text-base pl-4 space-y-2 mt-10 text-primary-400">
         <p>
-          <span class="text-red-500 font-bold">○</span>Rellena el formulario con los datos
+          <span class="text-red-500 font-bold">○</span>Rellena el formulario con
+          los datos
         </p>
         <p>
           <span class="text-red-500 font-bold">○</span> Ingresa el monto a solicitar
           y las cuotas
         </p>
         <p>
-          <span class="text-red-500 font-bold">○</span>Simula el prestamo y se visualizara las primeras cuotas
+          <span class="text-red-500 font-bold">○</span>Simula el prestamo y se
+          visualizara las primeras cuotas
         </p>
         <p>
-          <span class="text-red-500 font-bold">○</span>Envia el pedido y seras respondido a la brevedad
+          <span class="text-red-500 font-bold">○</span>Envia el pedido y seras
+          respondido a la brevedad
         </p>
       </div>
     </div>
-    <div class="bg-white rounded-lg shadow w-1/3 h-3/4 p-5 border-l border-primary-100">
-      <FormularioSolicitante usuarioId={usuarioDB.id} celular={usuarioDB.celular} client:load />
+    <div
+      class="bg-white rounded-lg shadow md:w-1/3 md:h-3/4 p-5 border-l border-primary-100"
+    >
+      <FormularioSolicitante
+        usuarioId={usuarioDB.id}
+        celular={usuarioDB.celular}
+        client:load
+      />
     </div>
   </main>
 </Layout>
