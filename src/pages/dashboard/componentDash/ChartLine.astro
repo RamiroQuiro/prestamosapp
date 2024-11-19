@@ -28,7 +28,7 @@ const { userId } = Astro.props;
     try {
       const response = await fetch(`/api/usuario/prestamos/${userId}`);
       const data = await response.json();
-      // console.log(data);
+      console.log(data);
       if (data.status !== 200) {
         console.error("Error al obtener los datos:", data.msg);
         return null;
