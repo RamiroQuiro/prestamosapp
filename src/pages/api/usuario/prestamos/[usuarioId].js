@@ -53,7 +53,7 @@ export async function GET({ params }) {
 
     // Consulta para obtener el capital prestado por mes en los últimos seis meses
     const capitalPorMes = await db.select({
-        mes: sql`strftime('%Y-%m', ${Prestamo.fechaInicio})`.as("mes"),
+        mes: Prestamo.fechaInicio,
         capitalPrestado: sql`SUM(${Prestamo.montoTotal})`.as("capitalPrestado"),
       })
       .from(Prestamo)
@@ -79,7 +79,7 @@ export async function GET({ params }) {
     // Consulta para obtener los cobros por mes en los últimos seis meses
     const cobrosPorMes = await db
       .select({
-        mes: sql`strftime('%Y-%m', ${Pago.fechaPago})`.as("mes"),
+        mes: Pago.fechaPago,
         totalCobrado: sql`SUM(${Pago.monto})`.as("totalCobrado"),
       })
       .from(Pago)
@@ -90,15 +90,20 @@ export async function GET({ params }) {
       .groupBy("mes")
       .orderBy("mes", "asc");
 
+        
+    console.log("cobros por mes", cobrosPorMes);
     // Crear mapas para acceder rápidamente a los datos
     const capitalMap = new Map();
     capitalPorMes.forEach((item) => {
-      capitalMap.set(item.mes, item.capitalPrestado);
+      const date = new Date(item.mes);
+      const mes = date.toISOString().slice(0, 7); // Formato 'YYYY-MM'
+      capitalMap.set(mes, item.capitalPrestado);
     });
-
     const cobrosMap = new Map();
     cobrosPorMes.forEach((item) => {
-      cobrosMap.set(item.mes, item.totalCobrado);
+      const date = new Date(item.mes);
+      const mes = date.toISOString().slice(0, 7); // Formato 'YYYY-MM'
+      cobrosMap.set(mes, item.totalCobrado);
     });
 
     // Asegurar que todos los últimos seis meses estén presentes
