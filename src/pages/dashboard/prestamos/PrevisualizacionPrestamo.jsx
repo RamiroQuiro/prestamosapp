@@ -37,7 +37,7 @@ export default function PrevisualizacionPrestamo() {
             selector: 'fechaVencimiento',
         },
     ];
-    let cabecera = { usuario: { id: usuarioId }, cliente: clienteSelect.clientSelect };
+    let cabecera = { usuario: { id: usuarioId }, cliente: {...clienteSelect.clientSelect,capital:prestamosEnContexto.capital,tasaInteres:prestamosEnContexto.tasaInteres }};
 
     //   console.log(clienteSelect)
     //   console.log(prestamosEnContexto)
@@ -48,11 +48,11 @@ export default function PrevisualizacionPrestamo() {
                 <h2 className='uppercase font-semibold text-sm '>Previsualizacion del prestamo generado</h2>
                 <ButtonPdf infoCabecera={cabecera}>pdf</ButtonPdf>
             </div>
-            <div>
-                <p>cliente: {cabecera.cliente.nombre} {' '} {cabecera.cliente.apellido}</p>
-                <p>dni: {cabecera.cliente.dni}</p>
-                <p>Capital Solicitado: ${prestamosEnContexto.capital.toLocaleString()}</p>
-                <p>tasa Interes: {prestamosEnContexto.tasaInteres}%</p>
+            <div className='text-sm flex items-center justify-start gap-2 flex-wrap'>
+                <p><b>Cliente:</b> {cabecera.cliente.nombre} {' '} {cabecera.cliente.apellido}</p>
+                <p> <b>DNI:</b> {cabecera.cliente.dni}</p>
+                <p><b>Capital Solicitado:</b> ${prestamosEnContexto.capital.toLocaleString()}</p>
+                <p><b>Tasa Interes:</b> {prestamosEnContexto.tasaInteres}%</p>
             </div>
             <div className='text-gray-500 w-full rounded-lg my-2 border border-primary-100/50 p-1 overflow-x-auto'>
 

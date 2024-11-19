@@ -2,8 +2,8 @@ import { generateHTMLTable } from "@/templatesPdf/templates";
 import { buildPDF } from "../../../lib/pdfkit-table";
 
 import puppeteer from "puppeteer";
-import  db from "@/db";
-import { users as User} from "@/db/schema";
+import db from "@/db";
+import { users as User } from "@/db/schema";
 import { eq } from "drizzle-orm";
 
 export async function GET({ request }) {
@@ -19,7 +19,7 @@ export async function GET({ request }) {
   });
 
   const pdfBuffer = await page.pdf({
-    path:'reportesPdf',
+    path: "reportesPdf",
     format: "A4",
     printBackground: true,
   });
@@ -35,8 +35,6 @@ export async function GET({ request }) {
 }
 
 export async function POST({ request, params }) {
-
-
   const {
     dataPDF: { arrayBody, columnas, cabecera },
   } = await request.json();
@@ -48,18 +46,21 @@ export async function POST({ request, params }) {
       })
     );
   }
-  
+
   try {
-    const dataUser = (await db.select({
-        nombre: User.nombre,
-        apellido: User.apellido,
-        dni: User.dni,
-        direccion: User.direccion,
-      })
-      .from(User)
-      .where(eq(User.id, cabecera.usuario.id))).at(0)
+    const dataUser = (
+      await db
+        .select({
+          nombre: User.nombre,
+          apellido: User.apellido,
+          dni: User.dni,
+          direccion: User.direccion,
+        })
+        .from(User)
+        .where(eq(User.id, cabecera.usuario.id))
+    ).at(0);
     // console.log('datos del ausuario',dataUser);
-cabecera.usuario={...cabecera.usuario,...dataUser}
+    cabecera.usuario = { ...cabecera.usuario, ...dataUser };
     const content = generateHTMLTable(arrayBody, columnas, cabecera, "Ramiro");
     const browser = await puppeteer.launch({
       args: ["--no-sandbox", "--disable-setuid-sandbox"],

@@ -92,14 +92,14 @@ function generateHTMLTable(arrayBody, columnas, cabecera) {
         <header>
         <div class="hero ">
             <h1 class=" tituloPrestaApp">
-            PrestamosAPP
+            APPrestamos
             </h1>
             <div class="contenedorInfoUsuario flex">
               <div>
               <img src="http://localhost:4321/logo.png" alt="logo" width="150px" heigth="150px"/>
               </div>
               <div>
-                  <p >Prestamista: ${cabecera?.usuario?.nombre} ${` `} ${cabecera?.usuario?.apellido}</p>
+                  <p >Usuario: ${cabecera?.usuario?.nombre} ${` `} ${cabecera?.usuario?.apellido}</p>
                   <div class="flex">
                   <p >DNI: ${cabecera?.usuario?.dni} </p>  <p >Dirección: ${cabecera?.usuario?.direccion} </p>
                   </div>
@@ -111,6 +111,8 @@ function generateHTMLTable(arrayBody, columnas, cabecera) {
                   <p >Cliente: ${cabecera?.cliente?.nombre} ${` `} ${cabecera?.cliente?.apellido} </p>
                   <div class="flex">
                       <p >DNI: ${cabecera?.cliente?.dni} </p>  <p >Dirección: ${cabecera?.cliente?.direccion} </p>
+                      <p >Capital: $ ${cabecera?.cliente?.capital.toLocaleString()} </p>
+                      <p >Interes:% ${cabecera?.cliente?.tasaInteres}</p>
                   </div>
               </div>`
                 : `<div></div>`
@@ -161,6 +163,8 @@ function generateHTMLTable(arrayBody, columnas, cabecera) {
                 <tr>
                   ${Object.values(dataSinId)
                     .map((value) => {
+                      console.log('este es el valor',value ,'y el tipo ->',typeof(value))
+                      
                       // Chequeo para evitar valores vacíos o nulos
                       let displayValue = "";
                       if (typeof value === "boolean") {
