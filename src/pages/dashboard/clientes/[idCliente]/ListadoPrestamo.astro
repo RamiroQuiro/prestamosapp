@@ -1,5 +1,5 @@
 ---
-
+import ListadoPrestamo from './ListadoPrestamo'
 import db from '@/db';
 import {clientes as Cliente, prestamos as Prestamo, pagoParciales as PagoParcial, pagos as Pago} from '@/db/schema'
 import { eq } from 'drizzle-orm';
@@ -8,14 +8,11 @@ const { idCliente } = Astro.props;
 let totalPrestado, totalPagado, prestamosMensuales, pagosMensuales;
 
 try {
-  const clienteFind = await db
-    .select({ nombre: Cliente.nombre, email: Cliente.email })
-    .from(Cliente)
-    .where(eq(Cliente.id, idCliente));
+
   const prestamosCliente = await db
     .select({
       id: Prestamo.id,
-      fechaCreacion: Prestamo.fechaCreacion,
+      fechaCreacion: Prestamo?.fechaCreacion,
       montoTotal: Prestamo.montoTotal,
       capital: Prestamo.capital,
       cuota: Prestamo.montoCuota,
@@ -41,12 +38,11 @@ try {
     .from(PagoParcial)
     .where(eq(PagoParcial.clienteId, idCliente));
   const dataTotal = {
-    cliente: clienteFind[0],
     prestamos: prestamosCliente,
     pagos: pagosDelCliente,
     pagosParciales: pagosParciales,
   };
-  //   console.log("este es el cliente encontrado", dataTotal);
+    console.log("este es el cliente encontrado", dataTotal);
 
   function calcularTotalPrestado(prestamos) {
     return prestamos.reduce((total, prestamo) => total + prestamo.capital, 0);
@@ -108,25 +104,5 @@ try {
 ---
 
 <div class="my-3 flex flex-col w-full h-full items-start justify-normal">
-  <div class="flex text-sm gap-2 mb-3">
-    <h3 class="text-sm">Total de Fondos </h3>
-    <span class="font-semibold">
-      ${totalPrestado?.toLocaleString()}
-    </span>
-  </div>
-
-  <div class="w-full flex flex-col items-start ">
-    {
-      prestamosMensuales?.map((prestamo, i) => {
-        // const date = new Date(prestamo[0]);
-
-        return (
-          <div class=" w-full bg-primary-300/30 px-1 border-y py-0.5 font- text-sm ">
-            → {`${prestamo[0]}`} |{" "}
-            {`$${prestamo[1].toLocaleString()}`}
-          </div>
-        );
-      })
-    }
-  </div>
+ <ListadoPrestamo client:load />
 </div>
